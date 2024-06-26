@@ -450,7 +450,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 		weapon: [	// TODO: Add a "rank" parameter? It would allow weapons to be displayed in different orders per class, without needing to duplicate entries using "only" and "not"
 	{name:"Weapon"},
 	// Mercenary Runewords
-	{synth_wep:"1", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
+//	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
 	{only:"Rogue Scout",	rarity:"rw", name:"Plague ­ ­ - ­ ­ Hydra Bow", sup:15, twoHanded:1, req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"bow", base:"Hydra Bow", pod_changes:1},
 	{only:"Desert Guard",	rarity:"rw", name:"Plague ­ ­ - ­ ­ Giant Thresher", ethereal:1, twoHanded:1, req_level:68, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"polearm", base:"Giant Thresher", pod_changes:1},
 	{only:"Iron Wolf",		rarity:"rw", name:"Plague ­ ­ - ­ ­ Cryptic Sword", ethereal:1, req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"sword", base:"Cryptic Sword", pod_changes:1},
@@ -925,7 +925,10 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"craft", name:"Cruel Master's Blood Axe", req_level:64, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, life_leech:4, life:20, req:-30, type:"axe", base:"Berserker Axe"},
 	{rarity:"craft", name:"Grandmaster's Hitpower Maul", req_level:65, ctc:[[5,4,"Frost Nova","when hit"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, damage_max:20, thorns:7, req:-30, twoHanded:1, type:"hammer", base:"Thunder Maul"},
 	// User found synth items
-//	{synth_wep:"1", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
+//	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
+	{synth:"true", name:"Zardoz's Synthesized Hexfire", req_level:33, ctc:[[25,19,"fissure","on striking"]], skills_fire_all:3, skills_elemental:7, explosive_attack:6, e_damage:467, itd:1, dexterity:38, energy:10, fres:25, type:"sword", base:"Shamshir", pod_changes:1, img:"Hexfire"},
+	{synth:"true", name:"Kg's Synthesized Fleshripper", req_level:68, all_skills:4, fcr:45, e_damage:276, cblow:25, owounds:50, oskill_Ball_Lightning:20, type:"dagger", base:"Fanged Knife", img:"The_Jade_Tan_Do"},
+
 		],
 
 		offhand: [

@@ -44,6 +44,7 @@
 	changeDifficulty
 	toggleCoupling
 	toggleAutocast
+	toggleSynthwep
 	toggleParameters
 	changeMonster
 	loadMonsters
@@ -409,10 +410,13 @@ function toggleAutocast(autocast) {
 // togglesynthwep - Changes whether adding/removing skill points can affect character level
 //	coupling: name identifier for 'Skill Level Coupling' checkbox element
 // ---------------------------------
-function togglesynthwep(synthwep) {
+function toggleSynthwep(synthwep) {
 	if (synthwep.checked) { settings.synthwep = 1 } else { settings.synthwep = 0 }
 	updateURL()
-	loadItems()
+//	setCharacterInfo()
+	getCharacterInfo()
+	loadEquipment()
+//	loadItems()
 }
 
 // toggleParameters - Changes whether parameters are shown in the address bar
@@ -515,7 +519,7 @@ function loadParams() {
 		var param_url = ~~params.get('url');
 		var param_coupling = 1;
 		if (params.has('coupling') == true) { param_coupling = params.get('coupling') }
-		var param_synthwep = 0;
+		var param_synthwep = 1;
 		if (params.has('synthwep') == true) { param_synthwep = params.get('synthwep') }
 		var param_autocast = 1;
 		if (params.has('autocast') == true) { param_autocast = params.get('autocast') }
@@ -1336,6 +1340,9 @@ function loadEquipment(className) {
 //	className: name of the character class
 // ---------------------------------
 function loadItems(group, dropdown, className) {
+	var showsynth = ""
+	if (document.getElementById("synthwep").checked) {showsynth = "yes"}
+	else {showsynth = "no"}
 	if (group.length == 0) { document.getElementById(dropdown).innerHTML = "<option></option>" }
 	else {
 		var choices = "";
@@ -1349,6 +1356,11 @@ function loadItems(group, dropdown, className) {
 			if (typeof(item.only) == 'undefined' || item.only == className) {
 				var halt = 0;
 				if (className == "clear") { halt = 1 }
+//				if (toggleSynthwep() == 0 && settings.synthwep == "0") { halt = 1 }
+//				if (document.getElementById("synthwep").checked = false && item.synth == "true") { halt = 1 }
+//				else if (synthwep.checked = "true" && item.synth == "true") { halt = 1 }
+				if (item.synth == "true" && showsynth != "yes") { halt = 1 }
+//				else if (settings.synthwep == "1" && item.synth == "true") { halt = 0 }
 				if (typeof(item.not) != 'undefined') { for (let l = 0; l < item.not.length; l++) { if (item.not[l] == className) { halt = 1 } } }
 				if (className == "Rogue Scout") { if (group == "offhand" || (group == "weapon" && item.type != "bow" && item.type != "crossbow" && item.name != "Weapon")) { halt = 1 } }
 				if (className == "Desert Guard") { if (group == "offhand" || (group == "weapon" && item.type != "polearm" && item.type != "spear" && item.name != "Weapon")) { halt = 1 } }
@@ -1357,8 +1369,9 @@ function loadItems(group, dropdown, className) {
 				if (halt == 0) {
 					var addon = "";
 					if (choices == "") {
-						if (settings.synthwep == "0" && item.synth_wep == "1") { addon = "" }
-						if (settings.synthwep == "1" && item.synth_wep == "1") { addon = "<option class='dropdown-debug'>" + item.name + "</option>" }
+//						if (item.synth == "true") { addon = "" }
+//						if (settings.synthwep == "0" && item.synth == "true") { halt = 1 }
+						if (item.synth == "true") { addon = "<option class='dropdown-unique'>" + item.name + "</option>" }
 						if (group != "charms") { addon = "<option selected>" + "­ ­ ­ ­ " + item.name + "</option>" }
 						else { addon = "<option disabled selected>" + "­ ­ ­ ­ " + item.name + "</option>" }
 					} else {
@@ -1366,6 +1379,7 @@ function loadItems(group, dropdown, className) {
 							if (typeof(item.pd2) != 'undefined') { addon = "" }
 							else if (typeof(item.debug) != 'undefined') { addon = "<option class='dropdown-debug'>" + item.name + "</option>" }
 							else if (typeof(item.rarity) != 'undefined') { addon = "<option class='dropdown-"+item.rarity+"'>" + item.name + "</option>" }
+//							else if (settings.synthwep == "1" && item.synth_wep == "true") { addon = "" }
 							else { addon = "<option class='dropdown-unique'>" + item.name + "</option>" }
 						} else {
 							if (typeof(item.pod) != 'undefined') { addon = "" }
@@ -2449,7 +2463,7 @@ function setCharacterInfo(className) {
 	startup(className)
 	if (settings.coupling == 0) { document.getElementById("coupling").checked = true; toggleCoupling(document.getElementById("coupling")); }
 	if (settings.autocast == 0) { document.getElementById("autocast").checked = true; toggleAutocast(document.getElementById("autocast")); }
-	if (settings.synthwep == 0) { document.getElementById("synthwep").checked = true; togglesynthwep(document.getElementById("synthwep")); }
+	if (settings.synthwep == 0) { document.getElementById("synthwep").checked = true; toggleSynthwep(document.getElementById("synthwep")); }
 	if (character.difficulty != fileInfo.character.difficulty) { document.getElementById("difficulty3").checked = false; document.getElementById("difficulty"+fileInfo.character.difficulty).checked = true; changeDifficulty(fileInfo.character.difficulty) }
 	if (character.running != fileInfo.character.running) { document.getElementById("running").checked = true; toggleRunning(document.getElementById("running")) }
 	if (character.quests_completed != fileInfo.character.quests_completed) { document.getElementById("quests").checked = true; toggleQuests(document.getElementById("quests")) }
@@ -2526,7 +2540,7 @@ function setCharacterInfo(className) {
 	for (stat in fileInfo.character) { character[stat] = fileInfo.character[stat] }
 	if (settings.coupling != fileInfo.settings.coupling) { if (settings.coupling == 1) { document.getElementById("coupling").checked = false }; toggleCoupling(document.getElementById("coupling")) }
 	if (settings.autocast != fileInfo.settings.autocast) { if (settings.autocast == 1) { document.getElementById("autocast").checked = false }; toggleAutocast(document.getElementById("autocast")) }
-	if (settings.synthwep != fileInfo.settings.synthwep) { if (settings.synthwep == 1) { document.getElementById("synthwep").checked = false }; togglesynthwep(document.getElementById("synthwep")) }
+	if (settings.synthwep != fileInfo.settings.synthwep) { if (settings.synthwep == 1) { document.getElementById("synthwep").checked = false }; toggleSynthwep(document.getElementById("synthwep")) }
 	//updateStats()
 	document.getElementById("inputTextToSave").value = ""
 	update()
