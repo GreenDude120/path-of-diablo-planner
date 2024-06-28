@@ -1,4 +1,5 @@
 <!--
+	This is qords playground, testing here before pushing to GD"s
 	Character Build Planner for Path of Diablo
 	The original program is available at https://betweenwalls.github.io/portal/ Copyright © 2020 BetweenWalls
 	More information (source, copyright, contact, etc) is available at https://github.com/BetweenWalls/portal
@@ -82,12 +83,12 @@
         <input id="autocast" type="checkbox" name="autocast" value="1" onclick="return toggleAutocast(this);" checked>
         <label for="autocast">&nbsp;&nbsp;&nbsp;&nbsp;New Effects Begin Enabled&nbsp;&nbsp;</label>
       </div></div>
-	  <div class="nav-dropdown-content-item" title="Optional because weaons already has lots of entries"><div class="nav-option">
+     <div class="nav-dropdown-content-item" title="Optional because weaons already has lots of entries"><div class="nav-option">
         <input id="synthwep" type="checkbox" name="synthwep" value="0" onclick="return toggleSynthwep(this);" checked>
         <label for="synthwep">&nbsp;&nbsp;&nbsp;&nbsp;Show Synthesized Items&nbsp;&nbsp;</label>
       </div></div> 
     </div>
-   </div>
+  </div>
   <div class="nav-dropdown">
     <button class="nav-dropbtn">Character</button>
     <div class="nav-dropdown-content">
@@ -416,31 +417,31 @@
 
 <!--		skill details		-->
 <div class="no_selection" id="skill_details">
-<div id="ar_spacing"><br><br><br><br><br><br><br><br></div>
-<div class="gray" id="skill_details_active">
-<div id="skill_details_basic">
-<!-- <div id="disclaimer"><a>Disclaimer:</a><a id="disclaimer"></a><br></div> -->
-	<div id="mainhand_basic"><a>Basic Attack: </a><a id="basic_attack"></a><br></div>
-	<div id="offhand_basic"> ­ ­ ­ ­ ­ ­ ­ Offhand: <a id="offhand_basic_damage"></a><br></div>
-	<a>Attack Rating: </a><a id="ar"></a>
-</div>
-<div id="skill_details_1" class="skill_detail_wrapper">
-	<div id="skillDetail1" class="skill_detail">
-	<select class="dropdown-skill" id="dropdown_skill1" onChange="checkSkill(this.value, 1)" oncontextmenu="checkSkill(' ­ ­ ­ ­ Skill 1', 1)"><option class="gray-all" disabled selected> ­ ­ ­ ­ Skill 1</option></select><font size="4"><a id="skill1_info">: </a></font>
+	<div id="ar_spacing"><br><br><br><br><br><br><br><br></div>
+	<div class="gray" id="skill_details_active">
+	<div id="skill_details_basic">
+<!--		<div id="disclaimer"><a><font color=red size="2">Attacks and skills below may include damage from procs; toggle on right to disable </font color></a><a id="disclaimer"></a><br></div> -->
+		<div id="mainhand_basic"><a>Basic Attack: </a><a id="basic_attack"></a><br></div>
+		<div id="offhand_basic"> ­ ­ ­ ­ ­ ­ ­ Offhand: <a id="offhand_basic_damage"></a><br></div>
+		<a>Attack Rating: </a><a id="ar"></a>
 	</div>
-	<div id="offhand_skill1"><a id="offhand_skill1_damage"></a><br></div>
-	<a style="visibility:hidden">&ensp;&ensp;&ensp;&ensp;&ensp;AR: </a><a id="ar_skill1"></a>
-</div>
-<div id="skill_details_2" class="skill_detail_wrapper">
-	<div id="skillDetail2" class="skill_detail">
-	<select class="dropdown-skill" id="dropdown_skill2" onChange="checkSkill(this.value, 2)" oncontextmenu="checkSkill(' ­ ­ ­ ­ Skill 2', 2)"><option class="gray-all" disabled selected> ­ ­ ­ ­ Skill 2</option></select><font size="4"><a id="skill2_info">: </a></font>
+	<div id="skill_details_1" class="skill_detail_wrapper">
+		<div id="skillDetail1" class="skill_detail">
+		<select class="dropdown-skill" id="dropdown_skill1" onChange="checkSkill(this.value, 1)" oncontextmenu="checkSkill(' ­ ­ ­ ­ Skill 1', 1)"><option class="gray-all" disabled selected> ­ ­ ­ ­ Skill 1</option></select><a id="skill1_info">: </a>
+		</div>
+		<div id="offhand_skill1"><a id="offhand_skill1_damage"></a><br></div>
+		<a style="visibility:hidden">AR: </a><a id="ar_skill1"></a>
 	</div>
-	<div id="offhand_skill2"><a id="offhand_skill2_damage"></a><br></div>
-	<a style="visibility:hidden">&ensp;&ensp;&ensp;&ensp;&ensp;AR: </a><a id="ar_skill2"></a>
-</div>
-</div>
-<div class="gray" id="skill_details_inactive"></div>
-</div> <!-- /skill details -->
+	<div id="skill_details_2" class="skill_detail_wrapper">
+		<div id="skillDetail2" class="skill_detail">
+		<select class="dropdown-skill" id="dropdown_skill2" onChange="checkSkill(this.value, 2)" oncontextmenu="checkSkill(' ­ ­ ­ ­ Skill 2', 2)"><option class="gray-all" disabled selected> ­ ­ ­ ­ Skill 2</option></select><a id="skill2_info">: </a>
+		</div>
+		<div id="offhand_skill2"><a id="offhand_skill2_damage"></a><br></div>
+		<a style="visibility:hidden">AR: </a><a id="ar_skill2"></a>
+	</div>
+	</div>
+	<div class="gray" id="skill_details_inactive"></div>
+	</div> <!-- /skill details -->
 
 <!--		stats		-->
 <div class="gray" id="stats">
@@ -477,8 +478,12 @@
 	<font size="2">Breakpoints: </font> <br>
 	<font size="2">Faster Hit Recovery:<br> </font><font size="2" id="fhr_bp"></font><br>
 	<font size="2">Faster Cast Rate:<br> </font><font size="2" id="fcr_bp"></font><br>
-	<font size="2">IAS: </font><font size="2" id="ias_url"></font><br><br>
-
+	<font size="2">IAS: </font><font size="2" id="ias_url"></font><br>
+  
+	<div class="nav-dropdown">
+    	<button class="nav-dropbtn" style="cursor:pointer;" onClick=getmmmpld()>mmmpld's IAS Calculator</a></button>
+ 	 </div>
+	<br><br>
 </div>
 <div class="stat-text-wrapper stat-2">
 	<br><br>

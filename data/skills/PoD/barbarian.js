@@ -35,7 +35,10 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		if (skill.name == "Bash" && elem == 3) { 			result += (10*skills[25].level) }
 		if (skill.name == "Leap Attack" && elem == 0) { 	result += (20*skills[22].level) }
 		if (skill.name == "Ethereal Throw" && elem < 2) { 	result *= ((1 + (0.04*skills[27].level + 0.04*skills[28].level)) * (1+character.mDamage/100)) }
-		if (skill.name == "Whirling Axes" && elem < 2) { 	result *= ((1 + (0.14*skills[8].level + 0.14*skills[21].level + 0.01*Math.floor(character.dexterity + character.all_attributes)))) }
+//		if (skill.name == "Whirling Axes" && elem < 2) { 	result *= ((1 + (0.14*skills[8].level + 0.14*skills[21].level + 0.01*Math.floor(character.dexterity + character.all_attributes)))) }
+		if (skill.name == "Whirling Axes" && elem < 2) { 	result *= ((1 + 0.14*skills[8].level + 0.14*skills[21].level + 0.01*((character.dexterity + character.all_attributes)))) }
+//		if (skill.name == "Flame Dash" && elem < 3 && elem > 0) { result *= ((1 + 0.10*skills[1].level + 0.01*((character.energy + character.all_attributes)*(1+character.max_energy/100))) * (1+character.fDamage/100)) }
+//		if (skill.name == "Discharge" && elem < 3 && elem > 0) { result *= ((1 + 0.03*sk[12].level + 0.03*sk[14].level + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
 	return result
 	},
 	
