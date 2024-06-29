@@ -413,10 +413,8 @@ function toggleAutocast(autocast) {
 function toggleSynthwep(synthwep) {
 	if (synthwep.checked) { settings.synthwep = 1 } else { settings.synthwep = 0 }
 	updateURL()
-//	setCharacterInfo()
 	getCharacterInfo()
 	loadEquipment()
-//	loadItems()
 }
 
 // toggleParameters - Changes whether parameters are shown in the address bar
@@ -1347,20 +1345,12 @@ function loadItems(group, dropdown, className) {
 	else {
 		var choices = "";
 		var choices_offhand = "";
-//			if(synthwep != 0)
-//		{
-//			equipment["weapon"] =+ '{debug:1, name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},'
-//		}
 		for (itemNew in equipment[group]) {
 			var item = equipment[group][itemNew];
 			if (typeof(item.only) == 'undefined' || item.only == className) {
 				var halt = 0;
 				if (className == "clear") { halt = 1 }
-//				if (toggleSynthwep() == 0 && settings.synthwep == "0") { halt = 1 }
-//				if (document.getElementById("synthwep").checked = false && item.synth == "true") { halt = 1 }
-//				else if (synthwep.checked = "true" && item.synth == "true") { halt = 1 }
 				if (item.synth == "true" && showsynth != "yes") { halt = 1 }
-//				else if (settings.synthwep == "1" && item.synth == "true") { halt = 0 }
 				if (typeof(item.not) != 'undefined') { for (let l = 0; l < item.not.length; l++) { if (item.not[l] == className) { halt = 1 } } }
 				if (className == "Rogue Scout") { if (group == "offhand" || (group == "weapon" && item.type != "bow" && item.type != "crossbow" && item.name != "Weapon")) { halt = 1 } }
 				if (className == "Desert Guard") { if (group == "offhand" || (group == "weapon" && item.type != "polearm" && item.type != "spear" && item.name != "Weapon")) { halt = 1 } }
@@ -1369,8 +1359,6 @@ function loadItems(group, dropdown, className) {
 				if (halt == 0) {
 					var addon = "";
 					if (choices == "") {
-//						if (item.synth == "true") { addon = "" }
-//						if (settings.synthwep == "0" && item.synth == "true") { halt = 1 }
 						if (item.synth == "true") { addon = "<option class='dropdown-unique'>" + item.name + "</option>" }
 						if (group != "charms") { addon = "<option selected>" + "­ ­ ­ ­ " + item.name + "</option>" }
 						else { addon = "<option disabled selected>" + "­ ­ ­ ­ " + item.name + "</option>" }
@@ -1379,7 +1367,6 @@ function loadItems(group, dropdown, className) {
 							if (typeof(item.pd2) != 'undefined') { addon = "" }
 							else if (typeof(item.debug) != 'undefined') { addon = "<option class='dropdown-debug'>" + item.name + "</option>" }
 							else if (typeof(item.rarity) != 'undefined') { addon = "<option class='dropdown-"+item.rarity+"'>" + item.name + "</option>" }
-//							else if (settings.synthwep == "1" && item.synth_wep == "true") { addon = "" }
 							else { addon = "<option class='dropdown-unique'>" + item.name + "</option>" }
 						} else {
 							if (typeof(item.pod) != 'undefined') { addon = "" }
@@ -1394,7 +1381,6 @@ function loadItems(group, dropdown, className) {
 							}
 						}
 					}
-//					if (synthwep != 0 && item.synth_wep == "1") { addon = "<option class='dropdown-debug'>" + item.name + "</option>" }
 					choices += addon
 					if (className == "assassin" && item.name == "Offhand") { choices += offhandSetup }	// weapons inserted into offhand dropdown list
 					if (className == "assassin" && item.type == "claw") { choices_offhand += addon }
