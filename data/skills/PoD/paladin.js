@@ -24,7 +24,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 		if (skill.name == "Cleansing" && elem == 0) {			result = Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[0][skills[0].level+skills[0].extra_levels] }
 		if (skill.name == "Cleansing" && elem == 1) {			result = Math.floor(skill.level/2); character.pRes_skillup = result; }
 		if (skill.name == "Meditation" && elem == 0) {			result = Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[0][skills[0].level+skills[0].extra_levels] }
-//		if (skill.name == "Blessed Aim" && elem == 0) { 		result = (5*skill.level); character.ar_skillup = result; }
+		if (skill.name == "Blessed Aim" && elem == 0) { 		result = (5*skill.level); character.ar_skillup = result; }
 		if (skill.name == "Holy Fire" && elem < 4) { 			result *= ((1+(0.08*skills[1].level + 0.08*skills[9].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Holy Freeze" && elem < 4) { 			result *= ((1+(0.04*skills[3].level + 0.06*skills[9].level)) * (1+character.cDamage/100)) }
 		if (skill.name == "Holy Shock" && elem < 4) { 			result *= ((1+(0.04*skills[5].level + 0.06*skills[9].level)) * (1+character.lDamage/100)) }
@@ -97,8 +97,8 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.radius = 12;
 		}
 		if (skill.name == "Precision") { result.pierce = skill.data.values[0][lvl]; result.cstrike = skill.data.values[2][lvl]; result.ar_bonus = skill.data.values[3][lvl]; result.radius = 16; }
-//		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[2][lvl]; result.hammer_on_hit = skill.data.values[1][lvl]; result.radius = 16; }
-		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[1][lvl]; result.hammer_on_hit = skill.data.values[0][lvl]; result.radius = 16; }
+		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[2][lvl]; result.hammer_on_hit = skill.data.values[1][lvl]; result.radius = 16; }
+//		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[1][lvl]; result.hammer_on_hit = skill.data.values[0][lvl]; result.radius = 16; }
 		if (skill.name == "Concentration") { result.ar = skill.data.values[0][lvl]; result.damage_bonus = skill.data.values[1][lvl]; result.hammer_bonus = skill.data.values[2][lvl]; result.radius = 16; }
 		if (skill.name == "Holy Freeze") {
 			result.cDamage_min = skill.data.values[0][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100);
@@ -277,7 +277,7 @@ function disableAuras(skill) {
 		["attack rating",50,70,90,110,130,150,170,190,210,230,250,270,290,310,330,350,370,390,410,430,450,470,490,510,530,550,570,590,610,630,650,670,690,710,730,750,770,790,810,830,850,870,890,910,930,950,970,990,1010,1030,1050,1070,1090,1110,1130,1150,1170,1190,1210,1230,], 
 ]};
 /*[13] Blessed Aim		*/ var d231 = {values:[
-//		["passive attack rating",], 
+		["passive attack rating",], 
 		["hammer chance",1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63,65,67,69,71,73,75,77,79,81,83,85,87,89,91,93,95,97,99,101,103,105,107,109,111,113,115,117,119,], 
 		["attack rating",100,115,130,145,160,175,190,205,220,235,250,265,280,295,310,325,340,355,370,385,400,415,430,445,460,475,490,505,520,535,550,565,580,595,610,625,640,655,670,685,700,715,730,745,760,775,790,805,820,835,850,865,880,895,910,925,940,955,970,985,], 
 ]};
