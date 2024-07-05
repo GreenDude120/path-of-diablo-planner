@@ -928,6 +928,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 //	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
 	{synth:"true", name:"Synth Zardoz's Hexfire", req_level:33, ctc:[[25,19,"fissure","on striking"]], skills_fire_all:3, skills_elemental:7, explosive_attack:6, e_damage:467, itd:1, dexterity:38, energy:10, fres:25, type:"sword", base:"Shamshir", pod_changes:1, img:"Hexfire"},
 	{synth:"true", name:"Synth Kg's Fleshripper", req_level:68, all_skills:4, fcr:45, e_damage:276, cblow:25, owounds:50, oskill_Ball_Lightning:20, type:"dagger", base:"Fanged Knife", img:"The_Jade_Tan_Do"},
+	{synth:"true", name:"Aramex's Synth Gargoyle's Bite", req_level:70, damage_min:15, damage_max:45, pDamage_all:1039, pDamage_duration:10, pDamage:14, owounds:30, skill_Desecrate:4, skill_Deadly_Poison:5, slows_target:50, cRes:5, lRes:5, fRes:5, pRes:100, autoreplenish:1, type:"javelin", base:"Winged Harpoon", img:"Gargoyle's_Bite", cskill:[[11,"Plague Javelin",60]]},
 
 		],
 
@@ -1166,10 +1167,6 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{debug:1, name:"+5% magic", req_level:100, mDamage:5},
 	{debug:1, name:"+10% magic", req_level:100, mDamage:10},
 	{debug:1, name:"+20% magic", req_level:100, mDamage:20},
-	{debug:1, name:"Beast on Swap", oskill_Werebear:3, oskill_Lycanthropy:3},
-	{debug:1, name:"CTA on Swap", oskill_Battle_Cry:4, oskill_Battle_Orders:6, oskill_Battle_Command:6},
-	{debug:1, name:"BO buff lvl 20", oskill_Battle_Orders:20},
-	{debug:1, name:"BO buff lvl 40", oskill_Battle_Orders:40},
 //	{debug:1, name:"Party Fanat 5", e_damage:45, ias:25, ar:60},
 //	{debug:1, name:"Party Fanat 10", e_damage:70, ias:30, ar:85},
 //	{debug:1, name:"Party Fanat 15", e_damage:95, ias:33, ar:110},
@@ -1181,6 +1178,11 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{debug:1, name:"-50 on-weapon ed", req_level:100, e_damage:-50},
 	{debug:1, name:"-100 on-weapon ed", req_level:100, e_damage:-100},
 //	{debug:1, name:"Map Mod-Decrep", req_level:100, e_damage:-100},
+	{debug:1, only:"sorceress", name:"Memory on Swap", skill_Energy_Shield:9},
+	{debug:1, name:"Beast on Swap", oskill_Werebear:3, oskill_Lycanthropy:3},
+	{debug:1, name:"CTA on Swap", oskill_Battle_Cry:4, oskill_Battle_Orders:6, oskill_Battle_Command:6},
+	{debug:1, name:"BO buff lvl 20", oskill_Battle_Orders:20},
+	{debug:1, name:"BO buff lvl 40", oskill_Battle_Orders:40},
 	{debug:1, name:"Enflame sorc in party", fDamage_min:837, fDamage_max:1113},
 	{debug:1, name:"Frigerate sorc in party", cDamage_min:552, cDamage_max:758},
 
