@@ -99,7 +99,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rw", name:"Hearth ­ ­ - ­ ­ Diadem", fhr:20, e_def:100, vitality:10, cDamage_min:40, cRes:30, cAbsorb:15, cbf:1, extra_arrows_Cold_Arrow:2, base:"Diadem"},
 	{rarity:"rw", name:"Metamorphosis ­ ­ - ­ ­ Diadem", req_level:67, metamorphosis_wolf:1, metamorphosis_wolf1:1, skill_Summon_Dire_Wolf:5, metamorphosis_bear:1, metamorphosis_bear1:1, metamorphosis_bear2:1, skills_shapeshifting:5, cblow:25, defense_bonus:80, strength:10, vitality:10, all_res:10, cbf:1, base:"Diadem"},
 	{rarity:"rw", name:"Temper ­ ­ - ­ ­ Diadem", req_level:35, fhr:20, e_def:100, vitality:10, fDamage_min:91, fDamage_max:130, fRes:30, fAbsorb:15, life_per_hit:4, life_per_ranged_hit:3, base:"Diadem"},
-	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce_skillup:33, ar:25, mana_per_hit:8, e_def:30, energy:10, slower_stam_drain:15, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
+	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce:33, ar:25, mana_per_hit:8, e_def:30, energy:10, slower_stam_drain:15, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
 	// Iron Golem RW replacements
 		{only:"none", rarity:"rw", name:"Lore ­ ­ - ­ ­ Coronet", req_level:27, all_skills:1, energy:10, lRes:30, damage_reduced:7, mana_per_kill:2, light_radius:2, base:"Coronet"},
 		{only:"none", rarity:"rw", name:"Nadir ­ ­ - ­ ­ Circlet", req_level:13, e_def:50, defense:10, missile_defense:30, strength:5, mana_per_kill:2, gf:-33, light_radius:-3, base:"Circlet", cskill:[[13,"Cloak of Shadows",9]]},

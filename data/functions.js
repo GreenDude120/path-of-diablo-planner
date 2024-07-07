@@ -3991,7 +3991,18 @@ function updatePrimaryStats() {
 	var dmg = getNonPhysWeaponDamage("weapon");
 	var basic_min = Math.floor(physDamage[0]*physDamage[2] + dmg.fMin + dmg.cMin + dmg.lMin + dmg.pMin + dmg.mMin);
 	var basic_max = Math.floor(physDamage[1]*physDamage[2] + dmg.fMax + dmg.cMax + dmg.lMax + dmg.pMax + dmg.mMax);
-	if (basic_min > 0 || basic_max > 0) { document.getElementById("basic_attack").innerHTML = basic_min + "-" + basic_max + " {"+Math.ceil((basic_min+basic_max)/2)+"}"}
+	if (basic_min > 0 || basic_max > 0) { document.getElementById("basic_attack").innerHTML = basic_min + "-" + basic_max + " {"+Math.ceil((basic_min+basic_max)/2)+"}";
+		var breakdown = "Damage Breakdown- "; // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_maz  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max
+		if (Math.floor(physDamage[0]*physDamage[2]) > 0) {breakdown += "\nPhys Damage: " + Math.floor(physDamage[0]*physDamage[2]) + "-" + Math.floor(physDamage[1]*physDamage[2])};
+		if (dmg.fMin > 0) {breakdown += "\nFire Damage: " + dmg.fMin + "-" + dmg.fMax};
+		if (dmg.cMin > 0) {breakdown += "\nCold Damage: " + dmg.cMin + "-" + dmg.cMax};
+		if (dmg.lMin > 0) {breakdown += "\nLight Damage: " + dmg.lMin + "-" + dmg.lMax};
+		if (dmg.mMin > 0) {breakdown += "\nMagic Damage: " + dmg.mMin + "-" + dmg.mMax};
+		if (dmg.pMin > 0) {breakdown += "\nPoison Damage: " + dmg.pMin + "-" + dmg.pMax};
+		var TooltipElement = document.getElementById("basic_attack");
+		TooltipElement.title = breakdown;
+	}
+
 	else { document.getElementById("basic_attack").innerHTML = "" }
 	if (offhandType == "weapon") {
 		var ohd = getNonPhysWeaponDamage("offhand");
@@ -3999,7 +4010,17 @@ function updatePrimaryStats() {
 		var basic_min_offhand = Math.floor(physDamage_offhand[0]*physDamage_offhand[2] + ohd.fMin + ohd.cMin + ohd.lMin + ohd.pMin + ohd.mMin);
 		var basic_max_offhand = Math.floor(physDamage_offhand[1]*physDamage_offhand[2] + ohd.fMax + ohd.cMax + ohd.lMax + ohd.pMax + ohd.mMax);
 		if (equipped.weapon.name != "none") {
-			if (basic_min_offhand > 0 || basic_max_offhand > 0) { document.getElementById("offhand_basic_damage").innerHTML = basic_min_offhand + "-" + basic_max_offhand + " {"+Math.ceil((basic_min_offhand+basic_max_offhand)/2)+"}"}
+			if (basic_min_offhand > 0 || basic_max_offhand > 0) { document.getElementById("offhand_basic_damage").innerHTML = basic_min_offhand + "-" + basic_max_offhand + " {"+Math.ceil((basic_min_offhand+basic_max_offhand)/2)+"}"
+				var ohdbreakdown = "Damage Breakdown- "; // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_maz  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max
+				if (Math.floor(physDamage_offhand[0]*physDamage_offhand[2]) > 0) {ohdbreakdown += "\nPhys Damage: " + Math.floor(physDamage_offhand[0]*physDamage_offhand[2]) + "-" + Math.floor(physDamage_offhand[1]*physDamage_offhand[2])};
+				if (ohd.fMin > 0) {ohdbreakdown += "\nFire Damage: " + ohd.fMin + "-" + ohd.fMax};
+				if (ohd.cMin > 0) {ohdbreakdown += "\nCold Damage: " + ohd.cMin + "-" + ohd.cMax};
+				if (ohd.lMin > 0) {ohdbreakdown += "\nLight Damage: " + ohd.lMin + "-" + ohd.lMax};
+				if (ohd.mMin > 0) {ohdbreakdown += "\nMagic Damage: " + ohd.mMin + "-" + ohd.mMax};
+				if (ohd.pMin > 0) {ohdbreakdown += "\nPoison Damage: " + ohd.pMin + "-" + ohd.pMax};
+				var TooltipElement = document.getElementById("offhand_basic_damage");
+				TooltipElement.title = ohdbreakdown;
+			}
 			else { document.getElementById("offhand_basic_damage").innerHTML = "" }
 		} else {
 			if (basic_min_offhand > 0 || basic_max_offhand > 0) { document.getElementById("basic_attack").innerHTML = basic_min_offhand + "-" + basic_max_offhand + " {"+Math.ceil((basic_min_offhand+basic_max_offhand)/2)+"}"; document.getElementById("offhand_basic").style.display = "none"; }
