@@ -928,7 +928,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 //	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
 	{synth:"true", name:"Synth Zardoz's Hexfire", req_level:33, ctc:[[25,19,"fissure","on striking"]], skills_fire_all:3, skills_elemental:7, explosive_attack:6, e_damage:467, itd:1, dexterity:38, energy:10, fres:25, type:"sword", base:"Shamshir", pod_changes:1, img:"Hexfire"},
 	{synth:"true", name:"Synth Kg's Fleshripper", req_level:68, all_skills:4, fcr:45, e_damage:276, cblow:25, owounds:50, oskill_Ball_Lightning:20, type:"dagger", base:"Fanged Knife", img:"The_Jade_Tan_Do"},
-	{synth:"true", name:"Aramex's Synth Gargoyle's Bite", req_level:70, damage_min:15, damage_max:45, pDamage_all:1039, pDamage_duration:10, pDamage:14, owounds:30, skill_Desecrate:4, skill_Deadly_Poison:5, slows_target:50, cRes:5, lRes:5, fRes:5, pRes:100, autoreplenish:1, ethereal:1, type:"javelin", base:"Winged Harpoon", img:"Gargoyle's_Bite", cskill:[[11,"Plague Javelin",60]]},
+	{synth:"true", name:"Synth Aramex's Gargoyle's Bite", req_level:70, damage_min:15, damage_max:45, pDamage_all:1039, pDamage_duration:10, pDamage:14, owounds:30, skill_Desecrate:4, skill_Deadly_Poison:5, slows_target:50, cRes:5, lRes:5, fRes:5, pRes:100, autoreplenish:1, type:"javelin", base:"Winged Harpoon", img:"Gargoyle's_Bite", cskill:[[11,"Plague Javelin",60]]},
+	{synth:"true", name:"Synth Chaos' Bloodrise", req_level:15, all_skills:2, skills_fire:3, ias:10, e_damage:175, ar_bonus:50, owounds:25, skill_Sacrifice:3, skill_Teleport:3, defense:450, melee_defense:200, all_res:16, damage_to_mana:30, type:"mace", base:"Morning Star", img:"Bloodrise"},
 
 		],
 
