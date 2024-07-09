@@ -81,6 +81,11 @@ var character_any = {
 			["lightning max",40,60,80,100,120,140,160,180,220,260,300,340,380,420,460,500,560,620,680,740,800,860,935,1010,1085,1160,1235,1310,1385,1460,1535,1610,1685,1760,1835,1910,1985,2060,2135,2210,2285,2360,2435,2510,2585,2660,2735,2810,2885,2960,3035,3110,3185,3260,3335,3410,3485,3560,3635,3710,]]}}; 
 		if (skillName == "CTC Nova Proc") { skill = sk_CTC_Nova_Proc }
 
+		var sk_CTC_Fissure_Proc = {data:{values:[
+			["fire min",15,23,30,38,47,55,63,70,84,98,112,127,141,155,169,183,203,223,243,263,283,303,329,355,381,407,433,459,491,523,555,587,619,651,683,715,747,779,811,843,875,907,939,971,1003,1035,1067,1099,1131,1163,1195,1227,1259,1291,1323,1355,1387,1419,1451,1483,], 
+			["fire max",25,35,45,55,65,75,85,95,112,127,143,158,175,190,207,223,244,267,289,311,333,355,383,411,439,467,495,523,558,593,628,663,698,733,768,803,838,873,908,943,978,1013,1048,1083,1118,1153,1188,1223,1258,1293,1328,1363,1398,1433,1468,1503,1538,1573,1608,1643,]]}};
+		if (skillName == "CTC Fissure Proc") { skill = sk_CTC_Fissure_Proc }
+
 
 		var result = skill.data.values[elem][lvl];
 		var lycan_lvl = ~~character["oskill_Lycanthropy"] + character.all_skills + Math.ceil(character.all_skills_per_level*character.level);
@@ -114,6 +119,7 @@ var character_any = {
 		if (skillName == "CTC MBoulder Proc" && elem > 3 && elem < 6) { 	result *= ((1 + (0.17*skills[0].level)) * (1+character.fDamage/100)) }
 		if (skillName == "CTC Volcano Proc" && elem < 2) { 						result *= (1 + (0.20*skills[1].level)) }
 		if (skillName == "CTC Volcano Proc" && elem > 1 && elem < 4) { 			result *= ((1 + (0.14*skills[4].level + 0.14*skills[9].level)) * (1+character.fDamage/100)) }
+		if (skillName == "CTC Fissure Proc" && elem < 2) { 						result *= ((1 + (0.15*skills[0].level + 0.15*skills[7].level)) * (1+character.fDamage/100)) }
 
 		// Necromancer
 		if (skillName == "Desecrate" && elem > 0 && elem < 3) { 	result *= (1+character.pDamage/100) }
@@ -243,6 +249,7 @@ var character_any = {
 		else if (skillName == "CTC MBoulder Proc") { 		attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }
 		else if (skillName == "CTC Volcano Proc") { 			attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }		
 		else if (skillName == "CTC Nova Proc") {			attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
+		else if (skillName == "CTC Fissure Proc") {			attack = 0; spell = 1; fDamage_min = character_any.getSkillData(skillName,lvl,0); fDamage_max = character_any.getSkillData(skillName,lvl,1); }
 
 		// else if (skillName == "Valkyrie") {		attack = 0; spell = 1; }
 		else if (skillName == "Magic Arrow") {		attack = 1; spell = 0; mDamage_min = character_any.getSkillData(skillName,lvl,1); mDamage_max = character_any.getSkillData(skillName,lvl,2); }
