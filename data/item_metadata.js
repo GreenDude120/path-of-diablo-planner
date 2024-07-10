@@ -1331,6 +1331,7 @@ oskill_CTC_Nova_Proc:{index:["oskill_CTC_Nova_Proc"], format:["CTC level "," Nov
 oskill_CTC_Discharge_Proc:{index:["oskill_CTC_Discharge_Proc"], format:["CTC level "," Discharge Proc"]},
 oskill_CTC_Chain_Light_Proc:{index:["oskill_CTC_Chain_Light_Proc"], format:["CTC level "," Chain Light Proc"]},
 oskill_CTC_Fissure_Proc:{index:["oskill_CTC_Fissure_Proc"], format:["CTC level "," Fissure Proc"]},
+oskill_CTC_Bone_Spear_Proc:{index:["oskill_CTC_Bone_Spear_Proc"], format:["CTC level "," Bone Spear Proc"]},
 
 oskill_Inner_Sight:{index:["oskill_Inner_Sight"], format:["+"," to Inner Sight"]},
 oskill_Evade:{index:["oskill_Evade"], format:["+"," to Evade"]},

@@ -86,6 +86,10 @@ var character_any = {
 			["fire max",25,35,45,55,65,75,85,95,112,127,143,158,175,190,207,223,244,267,289,311,333,355,383,411,439,467,495,523,558,593,628,663,698,733,768,803,838,873,908,943,978,1013,1048,1083,1118,1153,1188,1223,1258,1293,1328,1363,1398,1433,1468,1503,1538,1573,1608,1643,]]}};
 		if (skillName == "CTC Fissure Proc") { skill = sk_CTC_Fissure_Proc }
 
+		var sk_CTC_Bone_Spear_Proc = {data:{values:[
+			["damage min",36,56,78,98,120,140,162,182,215,247,279,310,343,375,407,438,486,533,579,626,674,721,777,833,889,945,1001,1056,1125,1194,1264,1333,1402,1470,1539,1608,1677,1746,1815,1884,1953,2022,2091,2160,2230,2298,2367,2436,2505,2574,2643,2712,2781,2850,2919,2988,3057,3126,3195,3264,], 
+			["damage max",58,79,100,121,141,163,183,205,236,268,301,333,364,396,429,461,507,554,602,649,695,743,798,854,910,966,1022,1079,1148,1217,1286,1354,1423,1493,1562,1631,1700,1769,1838,1907,1976,2045,2114,2183,2252,2321,2390,2459,2528,2597,2666,2735,2804,2873,2942,3011,3080,3149,3218,3287,]]}}; 
+		if (skillName == "CTC Bone Spear Proc") { skill = sk_CTC_Bone_Spear_Proc }
 
 		var result = skill.data.values[elem][lvl];
 		var lycan_lvl = ~~character["oskill_Lycanthropy"] + character.all_skills + Math.ceil(character.all_skills_per_level*character.level);
@@ -123,6 +127,7 @@ var character_any = {
 
 		// Necromancer
 		if (skillName == "Desecrate" && elem > 0 && elem < 3) { 	result *= (1+character.pDamage/100) }
+		if (skillName == "CTC Bone Spear Proc" && elem < 2) { 		result *= ((1 + (0.07*skills[12].level + 0.07*skills[18].level)) * (1+character.mDamage/100)) }
 	// Paladin
 		var phys_min = 0;
 		var phys_max = 0;
@@ -250,6 +255,7 @@ var character_any = {
 		else if (skillName == "CTC Volcano Proc") { 			attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }		
 		else if (skillName == "CTC Nova Proc") {			attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC Fissure Proc") {			attack = 0; spell = 1; fDamage_min = character_any.getSkillData(skillName,lvl,0); fDamage_max = character_any.getSkillData(skillName,lvl,1); }
+		else if (skillName == "CTC Bone Spear Proc") {		attack = 0; spell = 1; mDamage_min = character_any.getSkillData(skillName,lvl,0); mDamage_max = character_any.getSkillData(skillName,lvl,1); }
 
 		// else if (skillName == "Valkyrie") {		attack = 0; spell = 1; }
 		else if (skillName == "Magic Arrow") {		attack = 1; spell = 0; mDamage_min = character_any.getSkillData(skillName,lvl,1); mDamage_max = character_any.getSkillData(skillName,lvl,2); }
