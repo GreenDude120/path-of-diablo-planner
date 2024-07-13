@@ -3,7 +3,7 @@
 ### Features:
 * up to date with current patch 21 Shungite
 * all skill info up to level 60 & synergy calculations
-* charm inventory, includes theory-crafting charms to emulate functions like high level BO or support sorc with enflame, etc.
+* charm inventory, includes theory-crafting charms to emulate functions like high level BO, support sorc with enflame, +/- damage from various sources, etc.
   
 ![image](https://github.com/user-attachments/assets/17cd8140-a386-4d26-baeb-70bc640ce60a)
 
