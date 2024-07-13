@@ -4,18 +4,21 @@
 * up to date with current patch 21 Shungite
 * all skill info up to level 60 & synergy calculations
 * charm inventory, includes theory-crafting charms to emulate functions like high level BO or support sorc with enflame, etc.
+  
 ![image](https://github.com/user-attachments/assets/17cd8140-a386-4d26-baeb-70bc640ce60a)
 
 * saving/loading, URL-sharing
 * equipment selection & modification (corrupting, socketing, upgrading)
 * skill damage calculation
 * breakdown of basic damage sources
+  
 ![image](https://github.com/user-attachments/assets/af88094a-958d-4793-83a0-d64fe5dff44d)
 
 * all character stats
 * mercenary selection
 * snapshotting for buffs
 * important breakpoints, including a direct pre-filled link to mmmpld's ias calculator
+  
 ![image](https://github.com/user-attachments/assets/4cadde05-de50-4df4-89cb-75e90df870b3)
 
 
@@ -24,6 +27,7 @@
 * Use right click to remove points or items
 * Shift and ctrl modify the amount added or removed (also works on items in the charm inventory)
 * Corruptions may be selected via the narrow dropdowns to the left of each item dropdown
+  
 ![image](https://github.com/user-attachments/assets/b55d8e28-4ab5-4172-af0c-bb173a222e7c)
 
 * Upgrading can be done by ctrl-clicking the equipped item (ctrl + right-click to downgrade)
