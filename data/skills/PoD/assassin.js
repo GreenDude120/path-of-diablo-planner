@@ -114,7 +114,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		var kick_damage_min = 0; var kick_damage_max = 0; var kick_bonus = 0;
 		var strTotal = (character.strength + character.all_attributes + character.level*character.strength_per_level);	// used in Kick calculations
 		var e_damage_offhand = 0; if (offhandType == "weapon") { e_damage_offhand = (~~(equipped["offhand"].e_damage) + ~~(socketed["offhand"].totals.e_damage) + ~~(corruptsEquipped["offhand"].e_damage)) };
-		var damage_enhanced = character.damage_bonus + character.e_damage - e_damage_offhand;
+		var damage_enhanced = character.damage_bonus + character.e_damage - e_damage_offhand + character.physicalDamage;
 
 		if (skill.name == "Dragon Claw") { 				damage_bonus = character.getSkillData(skill,lvl,0); ar_bonus = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Fists of Fire") { 		ar_bonus = character.getSkillData(skill,lvl,8); }

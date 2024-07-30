@@ -101,7 +101,7 @@ var character_amazon = {class_name:"Amazon", strength:20, dexterity:25, vitality
 		var skillMin = 0; var skillMax = 0; var skillAr = 0;
 		var attack = 0;	// 0 = no basic damage, 1 = includes basic attack damage, 2 = includes basic throw damage
 		var spell = 2;	// 0 = uses attack rating, 1 = no attack rating, 2 = non-damaging
-		var damage_enhanced = character.damage_bonus + character.e_damage;
+		var damage_enhanced = character.damage_bonus + character.e_damage + character.physicalDamage;
 
 		if (skill.name == "Jab") { 						attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,0); damage_bonus = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Power Strike") { 		attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,0); lDamage_min = character.getSkillData(skill,lvl,1); lDamage_max = character.getSkillData(skill,lvl,2); }
