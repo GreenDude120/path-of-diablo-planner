@@ -46,7 +46,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		if (skill.name == "Werebear" && elem == 0) { if (skills[12].level > 0) { result = (15 + skills[12].data.values[1][skills[12].level+skills[12].extra_levels]) } else { result = 15 } }
 		if (skill.name == "Werebear" && elem == 1) { if (skills[12].level > 0) { result += (skills[12].data.values[0][skills[12].level+skills[12].extra_levels]) } }
 		if (skill.name == "Fire Claws" && elem < 2) {							 result *= ((1 + (0.12*skills[0].level + 0.12*skills[1].level + 0.12*skills[7].level + 0.12*skills[9].level)) * (1+character.fDamage/100)) }
-		if (skill.name == "Shock Wave" && elem < 2) {							 result *= (1 + (0.08*skills[15].level)) }
+		if (skill.name == "Shock Wave" && elem < 2) {							 result *= (1 + (0.08*skills[15].level)) * (1+character.physicalDamage/100)}
 		if (skill.name == "Rabies" && elem > 0 && elem < 3) {					 result *= ((1 + (0.20*skills[22].level + 0.20*skills[27].level)) * (1+character.pDamage/100)) }
 
 		if (skill.name == "Raven" && elem < 3 && elem > 0) { 			result *= (1 + (0.20*skills[5].level + 0.20*skills[6].level + character.summon_damage/100)) }

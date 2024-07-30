@@ -16,7 +16,7 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 	getSkillData : function(skill, lvl, elem) {
 		var result = skill.data.values[elem][lvl];
 		
-		if (skill.name == "War Cry" && elem < 2) { 			result *= ((1 + (0.17*skills[2].level + 0.17*skills[5].level))) }
+		if (skill.name == "War Cry" && elem < 2) { 			result *= ((1 + (0.17*skills[2].level + 0.17*skills[5].level)) * (1+character.physicalDamage/100)) }
 		//if (skill.name == "War Cry" && elem == 2) { 		result = Math.floor((1+result/100)*8) }	// TOCHECK: replace 8 with actual radius (show total radius instead of radius bonus?)
 		if (skill.name == "Battle Command" && elem == 0) { 	result = 1+Math.floor(skill.level/10) }
 		if (skill.name == "Double Swing" && elem == 0) { 	result += (5*skills[28].level) }
@@ -27,7 +27,7 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		if (skill.name == "Frenzy" && elem == 1) { 			result *= (1 + (0.10*skills[28].level)) }
 		
 		if (skill.name == "Concentrate" && elem == 2) { 	result += (5*skills[28].level + 10*skills[2].level + 10*skills[6].level) }
-		if (skill.name == "Cleave" && elem < 2) { 			result *= (1 + (0.15*skills[21].level)) }
+		if (skill.name == "Cleave" && elem < 2) { 			result *= (1 + (0.15*skills[21].level)) * (1+character.physicalDamage/100) }
 		//if (skill.name == "Pulverize" && elem < 2) { 			result *= (1 + (0.15*skills[31].level)) }
 		if (skill.name == "Stun" && elem < 2) { 			result *= ((1 + (0.10*skills[28].level + 0.10*skills[8].level)) * (1+character.mDamage/100)) }
 		if (skill.name == "Stun" && elem == 2) { 			result += (5*skills[23].level) }
