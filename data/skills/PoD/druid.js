@@ -26,18 +26,18 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		if (skill.name == "Firestorm" && elem > 0 && elem < 3) { 		result *= ((1 + (0.30*skills[1].level + 0.30*skills[4].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Flame Dash" && elem == 0) { 					result = Math.min(8,Math.max(0.5, (8.4 - 0.4*skill.level))) }
 		if (skill.name == "Flame Dash" && elem < 3 && elem > 0) { 		result *= ((1 + 0.10*skills[1].level + 0.01*((character.energy + character.all_attributes)*(1+character.max_energy/100))) * (1+character.fDamage/100)) }
-		if (skill.name == "Molten Boulder" && elem < 2) { 				result *= (1 + (0.20*skills[7].level)) }
+		if (skill.name == "Molten Boulder" && elem < 2) { 				result *= (1 + (0.20*skills[7].level)) * (1+character.physicalDamage/100) }
 		if (skill.name == "Molten Boulder" && elem > 1 && elem < 4) { 	result *= ((1 + (0.23*skills[0].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Molten Boulder" && elem > 3 && elem < 6) { 	result *= ((1 + (0.17*skills[0].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Fissure" && elem < 2) { 						result *= ((1 + (0.15*skills[0].level + 0.15*skills[7].level)) * (1+character.fDamage/100)) }
-		if (skill.name == "Volcano" && elem < 2) { 						result *= (1 + (0.20*skills[1].level)) }
+		if (skill.name == "Volcano" && elem < 2) { 						result *= (1 + (0.20*skills[1].level)) * (1+character.physicalDamage/100) }
 		if (skill.name == "Volcano" && elem > 1 && elem < 4) { 			result *= ((1 + (0.14*skills[4].level + 0.14*skills[9].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Armageddon" && elem == 0) { 					result += (2*skills[4].level) }
-		if (skill.name == "Armageddon" && elem < 3 && elem > 0) { 		result *= (1 + (0.12*skills[1].level)) }
+		if (skill.name == "Armageddon" && elem < 3 && elem > 0) { 		result *= (1 + (0.12*skills[1].level)) * (1+character.physicalDamage/100) }
 		if (skill.name == "Armageddon" && elem < 5 && elem > 2) { 		result *= ((1 + (0.12*skills[0].level + 0.12*skills[7].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Arctic Blast" && elem < 2) { 				result *= ((1 + (0.10*skills[5].level + 0.10*skills[10].level)) * (1+character.cDamage/100)) }
-		if (skill.name == "Twister" && elem < 2) { 						result *= (1 + (0.30*skills[8].level + 0.30*skills[10].level)) }
-		if (skill.name == "Tornado" && elem < 2) { 						result *= (1 + (0.07*skills[5].level + 0.18*skills[6].level + 0.18*skills[10].level)) }
+		if (skill.name == "Twister" && elem < 2) { 						result *= (1 + (0.30*skills[8].level + 0.30*skills[10].level)) * (1+character.physicalDamage/100) }
+		if (skill.name == "Tornado" && elem < 2) { 						result *= (1 + (0.07*skills[5].level + 0.18*skills[6].level + 0.18*skills[10].level)) * (1+character.physicalDamage/100)}
 		if (skill.name == "Hurricane" && elem == 0) { 					result += (2*skills[5].level) }
 		if (skill.name == "Hurricane" && elem < 3 && elem > 0) { 		result *= ((1 + (0.04*skills[3].level + 0.04*skills[6].level + 0.04*skills[8].level)) * (1+character.cDamage/100)) }
 		
