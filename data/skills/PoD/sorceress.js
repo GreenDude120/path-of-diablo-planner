@@ -135,7 +135,7 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 		else if (skill.name == "Charged Bolt") {	attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,1); lDamage_max = character.getSkillData(skill,lvl,2); }
 		else if (skill.name == "Telekinesis") {		attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,0); lDamage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Nova") {			attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,0); lDamage_max = character.getSkillData(skill,lvl,1); }
-		else if (skill.name == "Lightning Surge") {	attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,0); lDamage_max = character.getSkillData(skill,lvl,1); damage_min = lDamage_min*character.phys_Lightning_Surge/100; damage_max = lDamage_max*character.phys_Lightning_Surge/100; }
+		else if (skill.name == "Lightning Surge") {	attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,0); lDamage_max = character.getSkillData(skill,lvl,1); damage_min = (lDamage_min*character.phys_Lightning_Surge/100) * (1+character.physicalDamage/100); damage_max = (lDamage_max*character.phys_Lightning_Surge/100) * (1+character.physicalDamage/100); }
 		else if (skill.name == "Chain Lightning") {	attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,1); lDamage_max = character.getSkillData(skill,lvl,2); }
 		else if (skill.name == "Discharge") {		attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,1); lDamage_max = character.getSkillData(skill,lvl,2); }
 		else if (skill.name == "Thunder Storm") {	attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,2); lDamage_max = character.getSkillData(skill,lvl,3); }
