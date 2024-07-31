@@ -1129,6 +1129,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{debug:1, only:"druid", name:"+1 skill (elemental)", req_level:100, skills_elemental:1},
 	{debug:1, only:"druid", name:"+1 skill (shape shifting)", req_level:100, skills_shapeshifting:1},
 	{debug:1, only:"druid", name:"+1 skill (summoning)", req_level:100, skills_summoning_druid:1},
+	{debug:1, only:"druid", name:"Mang Song Snapshot", req_level:100, skill_Werebear:5, skill_Lycanthropy:5},
 	{debug:1, only:"necromancer", name:"+1 skill (summons)", req_level:100, skills_summoning_necromancer:1},
 	{debug:1, only:"necromancer", name:"+1 skill (poison/bone)", req_level:100, skills_poisonBone:1},
 	{debug:1, only:"necromancer", name:"+1 skill (curses)", req_level:100, skills_curses:1},
