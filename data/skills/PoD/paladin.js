@@ -161,7 +161,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 		else if (skill.name == "Vengeance") {			attack = 1; spell = 0; fDamage_min = character.getSkillData(skill,lvl,2); fDamage_max = character.getSkillData(skill,lvl,3); cDamage_min = character.getSkillData(skill,lvl,4); cDamage_max = character.getSkillData(skill,lvl,5); lDamage_min = character.getSkillData(skill,lvl,6); lDamage_max = character.getSkillData(skill,lvl,7); ar_bonus = character.getSkillData(skill,lvl,11); }
 		else if (skill.name == "Blessed Hammer") {		attack = 0; spell = 1; mDamage_min = character.getSkillData(skill,lvl,0); mDamage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Fist of the Heavens") {	attack = 0; spell = 1; mDamage_min = character.getSkillData(skill,lvl,0); mDamage_max = character.getSkillData(skill,lvl,1); lDamage_min = character.getSkillData(skill,lvl,2); lDamage_max = character.getSkillData(skill,lvl,3); }
-		else if (skill.name == "Dashing Strike") {		attack = 1; spell = 1; mDamage_min = character.getSkillData(skill,lvl,1); mDamage_max = character.getSkillData(skill,lvl,2); }
+		else if (skill.name == "Dashing Strike") {		attack = 0; spell = 1; mDamage_min = character.getSkillData(skill,lvl,1); mDamage_max = character.getSkillData(skill,lvl,2); }
 		else if (skill.name == "Conversion") {			attack = 1; spell = 0; }
 
 		if (typeof(skill.reqWeapon) != 'undefined') { var match = 0; for (let w = 0; w < skill.reqWeapon.length; w++) {
