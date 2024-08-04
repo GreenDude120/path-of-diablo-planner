@@ -176,9 +176,24 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
 		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
-		
+
+		skill2Breakdown = "Skill damage Breakdown-" ;  // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_max  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max ;
+		if (phys_min > 0) {skill2Breakdown += "\nPhys Damage: " + Math.floor(phys_min) + "-" + Math.floor(phys_max)};
+		if (fDamage_min > 0) {skill2Breakdown += "\nFire Damage: " + Math.floor(fDamage_min) + "-" + Math.floor(fDamage_max)};
+		if (cDamage_min > 0) {skill2Breakdown += "\nCold Damage: " + Math.floor(cDamage_min) + "-" + Math.floor(cDamage_max)};
+		if (lDamage_min > 0) {skill2Breakdown += "\nLight Damage: " + Math.floor(lDamage_min) + "-" + Math.floor(lDamage_max)};
+		if (mDamage_min > 0) {skill2Breakdown += "\nMagic Damage: " + Math.floor(mDamage_min) + "-" + Math.floor(mDamage_max)};
+		if (pDamage_min > 0) {skill2Breakdown += "\nPoison Damage: " + Math.floor(pDamage_min) + "-" + Math.floor(pDamage_max)};
+		if (attack == 1){
+			addmore = "yes"
+		}
+		if (skill.i = 30){
+			addmore = "no"
+		}
+
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
 		return result
+		return skill2Breakdown; 		
 	},
 	
 	// setSkillAmounts - helps update class-related skill levels, called by calculateSkillAmounts()

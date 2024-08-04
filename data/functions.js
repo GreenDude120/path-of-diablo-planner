@@ -4652,6 +4652,7 @@ function updateSkills() {
 //	num: 1 or 2 (for skill1 or skill2)
 // ---------------------------------
 function checkSkill(skillName, num) {
+	skill2Breakdown = ""
 	if (skillName == " ­ ­ ­ ­ Skill "+num) { document.getElementById("dropdown_skill"+num).selectedIndex = 0 }
 	if (document.getElementById("dropdown_skill"+num).selectedIndex == 0) { skillName = " ­ ­ ­ ­ Skill "+num }
 	selectedSkill[num-1] = skillName
@@ -4695,6 +4696,18 @@ function checkSkill(skillName, num) {
 		var output = ": " + outcome.min + "-" + outcome.max + " {"+Math.ceil((outcome.min+outcome.max)/2)+"}";
 		if (~~outcome.min != 0 && ~~outcome.max != 0) { document.getElementById("skill"+num+"_info").innerHTML = output } else { document.getElementById("skill"+num+"_info").innerHTML = ":" }
 		if (outcome.ar != 0) { document.getElementById("ar_skill"+num).innerHTML = "AR: " + outcome.ar + " ("+hit_chance+"%)" } else { document.getElementById("ar_skill"+num).innerHTML = "" }
+
+//		if (addmore == "yes" && skill.name != "War Cry") {
+		if (addmore == "yes") {
+			if (dmg.fMin > 0) {skill2Breakdown += "\nAdded Fire Damage: " + Math.floor(dmg.fMin) + "-" + Math.floor(dmg.fMax)};
+			if (dmg.cMin > 0) {skill2Breakdown += "\nAdded Cold Damage: " + Math.floor(dmg.cMin) + "-" + Math.floor(dmg.cMax)};
+			if (dmg.lMin > 0) {skill2Breakdown += "\nAdded Light Damage: " + Math.floor(dmg.lMin) + "-" + Math.floor(dmg.lMax)};
+			if (dmg.mMin > 0) {skill2Breakdown += "\nAdded Magic Damage: " + Math.floor(dmg.mMin) + "-" + Math.floor(dmg.mMax)};
+			if (dmg.pMin > 0) {skill2Breakdown += "\nAdded Poison Damage: " + Math.floor(dmg.pMin) + "-" + Math.floor(dmg.pMax)};
+		}
+		TooltipElement = document.getElementById("skill2_info");
+		TooltipElement.title = skill2Breakdown;
+		
 	}
 	if (offhandType == "weapon" && (skillName == "Dual Strike" || skillName == "Double Swing" || skillName == "Frenzy" || skillName == "Whirlwind") && equipped.weapon.name != "none") {
 		document.getElementById("offhand_skill"+num).style.display = "inline"
@@ -4907,7 +4920,17 @@ function getmmmpld() {
 
 }
 
-
+// Trying to break down the damage that makes the combined skill damage
+// would be cool to see how much of total is from each element
+// Works when added to class js but not when called as a function
+function addSomemore() {
+	if (Math.floor(physDamage[0]*physDamage[2]) > 0) {skill2Breakdown += "\nWPhys Damage: " + Math.floor(physDamage[0]*physDamage[2]) + "-" + Math.floor(physDamage[1]*physDamage[2])};
+	if (dmg.fMin > 0) {skill2Breakdown += "\nWFire Damage: " + dmg.fMin + "-" + dmg.fMax};
+	if (dmg.cMin > 0) {skill2Breakdown += "\nWCold Damage: " + dmg.cMin + "-" + dmg.cMax};
+	if (dmg.lMin > 0) {skill2Breakdown += "\nWLight Damage: " + dmg.lMin + "-" + dmg.lMax};
+	if (dmg.mMin > 0) {skill2Breakdown += "\nWMagic Damage: " + dmg.mMin + "-" + dmg.mMax};
+	if (dmg.pMin > 0) {skill2Breakdown += "\nWPoison Damage: " + dmg.pMin + "-" + dmg.pMax};
+}
 
 
 
