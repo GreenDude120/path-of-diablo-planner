@@ -138,9 +138,9 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		if (lDamage_min > 0) {skill2Breakdown += "\nSkill Light Damage: " + Math.floor(lDamage_min) + "-" + Math.floor(lDamage_max)};
 		if (mDamage_min > 0) {skill2Breakdown += "\nSkill Magic Damage: " + Math.floor(mDamage_min) + "-" + Math.floor(mDamage_max)};
 		if (pDamage_min > 0) {skill2Breakdown += "\nSkill Poison Damage: " + Math.floor(pDamage_min) + "-" + Math.floor(pDamage_max)};
-		if (attack != 0){
+//		if (attack != 0){
 		addmore = "yes"
-		}
+//		}
 		if (skill.i = 8){
 		addmore = "no"
 		}
