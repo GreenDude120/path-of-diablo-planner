@@ -167,7 +167,10 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 		if (attack != 0){
 			addmore = "yes"
 	
-		}		
+		}	
+		if (attack == 0){
+			addmore = "no"
+		}			
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
 		return result
 	},

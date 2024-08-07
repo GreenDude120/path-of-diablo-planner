@@ -201,6 +201,9 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		if (attack != 0){
 			addmore = "yes"
 		}
+		if (attack == 0){
+			addmore = "no"
+		}		
 
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
 		return result
