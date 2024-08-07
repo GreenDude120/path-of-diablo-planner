@@ -275,14 +275,14 @@ input[type="file"] {
 
 /* The dropdown container */
 
-.nav-dropdown {
+.nav-dropdown, .nav-mmmpld {
   float: left;
   overflow: hidden;
 }
 
 /* Dropdown button */
 
-.nav-dropbtn, .nav-dropbtn a {
+.nav-dropbtn, .nav-dropbtn a, .nav-mmmpld {
   margin: 0;
   border: none;
   color: #ddd;
@@ -296,6 +296,13 @@ input[type="file"] {
 .nav-dropbtn a {
   padding: 0;
 }
+
+/* MMMPLD link */
+.nav-mmmpld {
+  background-color: #333;
+  color: green;
+}
+
 /* Highlight navbar options on hover */
 .nav-dropdown:hover, .nav-dropbtn:hover, .nav-dropbtn:hover a, .nav-dropdown-content-item:hover {
   background-color: #222;

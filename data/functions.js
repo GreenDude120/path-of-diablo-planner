@@ -4889,11 +4889,18 @@ function getmmmpld() {
 //	get ias for url
 	iasurl = null
 	try{
-		thisias = offwepias + wias;
+		thisias = offwepias; // + wias;
 		iasurl = "&io=" + thisias;
 	}
 	catch(error){
 		iasurl = "&io=0";
+	}
+	try{
+		onwepias = wias
+		iasurl2 = "&i1=" + wias;
+	}
+	catch(error){
+		iasurl2 = "&i1=0";
 	}
 //	get weapon id for url
 	thisiasindex = equipped.weapon.iasindex
@@ -4915,6 +4922,7 @@ function getmmmpld() {
 	if (wereurl != null) {ias_link += wereurl}
 	if (iasurl != null) {ias_link += iasurl}
 	if (wepindex != null) {ias_link += wepindex}
+	if (iasurl2 != null) {ias_link += iasurl2}
 //	go to the url
 	window.open(ias_link);
 
