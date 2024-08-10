@@ -93,8 +93,10 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 			result.life_regen = 2; result.duration = skill.data.values[0][lvl];
 		}
 		if (skill.name == "Energy Shield") {
-			result.absorb_es_deplete = (6 + 4*skills[13].level);
+			result.absorb_es_deplete = (6 + 4*skills[13].level); 
 			result.absorb_es_redirect = skill.data.values[2][lvl]; result.duration = skill.data.values[1][lvl];
+			eseff = (6 + 4*skills[13].level); 
+			esprcnt = skill.data.values[2][lvl];
 		}
 		if (skill.name == "Warmth") { result.ar_bonus = skill.data.values[0][lvl]; result.mana_regen = skill.data.values[1][lvl]; }
 		if (skill.name == "Cold Mastery") { result.cPierce = skill.data.values[0][lvl]; result.cDamage = skill.data.values[1][lvl]; }

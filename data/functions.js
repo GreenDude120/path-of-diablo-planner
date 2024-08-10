@@ -4180,6 +4180,21 @@ function updateSecondaryStats() {
 	if (c.lAbsorb == 0 && c.lAbsorb_flat == 0) { lAbs = 0 }
 	document.getElementById("labsorb").innerHTML = lAbs
 	document.getElementById("mabsorb").innerHTML = c.mAbsorb_flat
+
+	if (eseff > 0) {
+		document.getElementById("eseff_label").style.visibility = "visible"
+		document.getElementById("eseff").innerHTML = eseff
+	} else {
+		document.getElementById("eseff_label").style.visibility = "hidden"
+		document.getElementById("eseff").innerHTML = ""
+	}	
+	if (esprcnt > 0) {
+		document.getElementById("esprcnt_label").style.visibility = "visible"
+		document.getElementById("esprcnt").innerHTML = esprcnt
+	} else {
+		document.getElementById("esprcnt_label").style.visibility = "hidden"
+		document.getElementById("esprcnt").innerHTML = ""
+	}	
 	
 	document.getElementById("cdr").innerHTML = c.cdr; if (c.cdr > 0) { document.getElementById("cdr").innerHTML += "%" }
 	var fcrTotal = c.fcr + Math.floor(c.level*c.fcr_per_level);
