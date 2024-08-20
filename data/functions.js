@@ -4334,8 +4334,13 @@ function updateSecondaryStats() {
 	if (character.class_name != "Druid"){document.getElementById("fhr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + c.fhr_bp}
 	else if (character.class_name == "Druid") {document.getElementById("fhr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-hand swing: " + c.fhr_bp_alt + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All other weapon: " + c.fhr_bp + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werebear: " + c.fhr_bp_werebear + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werewolf: " + c.fhr_bp_werewolf}
 	if (character.class_name == "Amazon"||"Assassin"||"Barbarian"||"Paladin"||"Necromancer"){document.getElementById("fcr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + c.fcr_bp}
-	if (character.class_name == "Druid") {document.getElementById("fcr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + c.fcr_bp + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werebear: " + c.fcr_bp_werebear + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werewolf: " + c.fcr_bp_werewolf}
+	if (character.class_name == "Druid") {document.getElementById("fcr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unchanged: " + c.fcr_bp + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werebear: " + c.fcr_bp_werebear + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werewolf: " + c.fcr_bp_werewolf}
 	if (character.class_name == "Sorceress") {document.getElementById("fcr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + c.fcr_bp + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Light/Chain Light: " + c.fcr_bp_alt}
+	if (character.class_name == "Sorceress"||"Assassin"||"Barbarian"||"Necromancer"){document.getElementById("fbr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + c.fbr_bp}
+	if (character.class_name == "Amazon") {document.getElementById("fbr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1-hand swing: " + c.fbr_bp_alt + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All other weapon: " + c.fbr_bp}
+	if (character.class_name == "Paladin") {document.getElementById("fbr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Holy Sheild active: " + c.fbr_bp_alt + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No Holy Sheild: " + c.fbr_bp}
+	if (character.class_name == "Druid") {document.getElementById("fbr_bp").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unchanged: " + c.fbr_bp + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werebear: " + c.fbr_bp_werebear + "<br>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Werewolf: " + c.fbr_bp_werewolf}
+
 
 
 //	document.write("<a href='" + link + "'>" + text + "</a>");
