@@ -507,7 +507,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"Iron Wolf",		rarity:"rw", name:"Malice ­ ­ - ­ ­ Rune Sword", ethereal:1, req_level:25, e_damage:33, damage_max:9, target_defense:-25, ar:50, owounds:100, pmh:1, monster_defense_per_hit:-100, life_replenish:-5, type:"sword", base:"Rune Sword"},
 	{only:"Barb (merc)",	rarity:"rw", name:"Malice ­ ­ - ­ ­ Zweihander", ethereal:1, twoHanded:1, req_level:25, e_damage:33, damage_max:9, target_defense:-25, ar:50, owounds:100, pmh:1, monster_defense_per_hit:-100, life_replenish:-5, type:"sword", base:"Zweihander"},
 	// Class Weapons
-	{rarity:"craft", not:["barbarian","paladin","druid"], name:"Class Specific----------------------", type:"mace", special:2, img:"pod"},
+	{rarity:"craft", not:["barbarian","paladin","druid"], name:"Class Specific----------------------", img:"../../../portal"},
 	{only:"amazon", name:"Titan's Revenge", req_level:42, skills_javelins:2, skills_amazon:2, e_damage:200, damage_min:25, damage_max:50, life_leech:9, frw:30, strength:20, dexterity:20, stack_size:1, autoreplenish:1, type:"javelin", base:"Ceremonial Javelin"},
 	{only:"amazon", name:"Thunderstroke", req_level:69, ctc:[[20,14,"Lightning Surge","on striking"]], skills_javelins:4, skill_Lightning_Bolt:3, e_damage:200, lDamage_min:1, lDamage_max:511, ias:15, enemy_lRes:-15, type:"javelin", base:"Matriarchal Javelin"},
 	{rarity:"magic", only:"amazon", name:"Lancer's Javelin of Quickness", req_level:45, skills_javelins:6, ias:40, type:"javelin", base:"Maiden Javelin"},
@@ -939,7 +939,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Hellrack", req_level:76, oskill_Immolation_Arrow:18, e_damage:230, ar_bonus:150, fDamage_min:63, fDamage_max:324, cDamage_min:63, cDamage_max:324, lDamage_min:63, lDamage_max:324, ias:20, sockets:2, twoHanded:1, type:"crossbow", base:"Colossus Crossbow", img:"Hellcast"},
 	{name:"Gut Siphon", req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
 	// Non-Unique
-	{name:"Rare/Craft/Synth--------------------", type:"mace", special:2, img:"pod"},
+	{name:"Rare/Craft/Synth--------------------", img:"../../../portal"},
 	{rarity:"rare", name:"Heavenly Blade", req_level:54, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:450, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, req:-30, type:"sword", base:"Phase Blade"},
 	{rarity:"craft", name:"Cruel Master's Blood Axe", req_level:64, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, life_leech:4, life:20, req:-30, type:"axe", base:"Berserker Axe"},
 	{rarity:"craft", name:"Grandmaster's Hitpower Maul", req_level:65, ctc:[[5,4,"Frost Nova","when hit"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, damage_max:20, thorns:7, req:-30, twoHanded:1, type:"hammer", base:"Thunder Maul"},
@@ -969,7 +969,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"paladin", name:"Alma Negra", req_level:77, skills_paladin:2, e_def:210, cdr:30, ibc:20, fbr:30, damage_bonus:75, ar_bonus:75, mDamage_reduced:9, type:"shield", base:"Sacred Rondache", pod_changes:1},
 	{only:"paladin", name:"Dragonscale", req_level:80, oskill_Hydra:15, e_def:200, fDamage_min:211, fDamage_max:371, fDamage:15, fRes_max:5, strength:25, fAbsorb:20, type:"shield", base:"Zakarum Shield"},
 	{only:"paladin", set_Gris:1, name:"Griswold's Honor", req_level:68, defense:108, fbr:65, ibc:20, all_res:45, sockets:3, type:"shield", base:"Vortex Shield", rarity:"set", set_bonuses:["set_Gris",{},{},{},{}], img:"Griswold's_Honor"},
-	{rarity:"craft", name:"Runewords--------------", type:"shield", special:2, img:"Bverrit_Keep"},	
+	{rarity:"craft", name:"Runewords--------------", img:"../../../pod"},	
 	{only:"paladin", rarity:"rw", name:"Exile ­ ­ - ­ ­ Sacred Targe", req_level:57, ctc:[[15,5,"Life Tap","on striking"]], aura:"Defiance", aura_lvl:16, skills_offensive:2, fbr:30, freezes_target:1, e_def:260, life_replenish:7, cRes_max:5, fRes_max:5, mf:25, all_res:45, autorepair:1, ethereal:1, type:"shield", base:"Sacred Targe"},
 	{only:"paladin", rarity:"rw", name:"Spirit ­ ­ - ­ ­ Sacred Targe", req_level:47, all_skills:2, fcr:35, fhr:55, vitality:22, mana:112, cRes:35, lRes:35, pRes:35, missile_defense:250, thorns:14, mAbsorb_flat:8, all_res:45, type:"shield", base:"Sacred Targe"},
 	{only:"paladin", rarity:"rw", name:"Phoenix ­ ­ - ­ ­ Sacred Targe", req_level:65, ctc:[[100,40,"Blaze","on level-up"],[40,22,"Fire Ball","on striking"]], aura:"Redemption", aura_lvl:10, damage_bonus:350, enemy_fRes:-28, missile_defense:400, fAbsorb_flat:21, life:50, lRes_max:5, fRes_max:10, all_res:45, type:"shield", base:"Sacred Targe", pod_changes:1},
@@ -1039,7 +1039,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Hailstorm", type:"quiver", req_level:12, cDamage_max_per_level:2, cRes:15, extra_arrows_Cold_Arrow:2, pod_changes:1},
 	{name:"Ice Shards", type:"quiver", req_level:18, skills_cold_all:2, ias:20, energy:20, extra_arrows_Ice_Arrow:2, pod_changes:1},
 	{name:"Moonfire", type:"quiver", req_level:21, ar_bonus:15, mDamage_reduced:4, extra_conversion_Magic_Arrow:10, extra_arrows_Magic_Arrow:2, pod_changes:1},
-	{only:"barbarian", rarity:"rare", name:"Weapons++++++++++++++++", type:"mace", special:2, img:"Wirt's_Leg"} ,
+//	{only:"barbarian", rarity:"rare", name:"Weapons++++++++++++++++", type:"mace", special:2, img:"portal"} ,
+	{only:"barbarian", rarity:"rare", name:"Weapons++++++++++++++++", img:"../../../portal"} ,
 		],
 		charms: [
 	{name:"Charms"},
