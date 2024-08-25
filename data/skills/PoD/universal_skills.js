@@ -91,6 +91,11 @@ var character_any = {
 			["damage max",58,79,100,121,141,163,183,205,236,268,301,333,364,396,429,461,507,554,602,649,695,743,798,854,910,966,1022,1079,1148,1217,1286,1354,1423,1493,1562,1631,1700,1769,1838,1907,1976,2045,2114,2183,2252,2321,2390,2459,2528,2597,2666,2735,2804,2873,2942,3011,3080,3149,3218,3287,]]}}; 
 		if (skillName == "CTC Bone Spear Proc") { skill = sk_CTC_Bone_Spear_Proc }
 
+		var sk_CTC_Poison_Nova_Proc = {data:{values:[
+			["poison min",65,81,96,112,128,144,159,175,200,225,250,275,300,325,350,375,412,450,487,525,562,600,659,719,778,837,897,956,1022,1087,1153,1219,1284,1350,1415,1481,1547,1612,1678,1744,1809,1875,1941,2006,2072,2137,2203,2269,2334,2400,2465,2531,2597,2662,2728,2794,2859,2925,2990,3056,], 
+			["poison max",121,137,152,168,184,199,215,231,256,281,306,331,356,381,406,431,468,506,543,581,619,656,715,775,834,894,953,1012,1078,1144,1209,1275,1340,1406,1472,1537,1603,1669,1734,1800,1866,1931,1997,2063,2128,2194,2259,2325,2391,2456,2522,2587,2653,2719,2784,2850,2916,2981,3047,3112,]]}}; 
+		if (skillName == "CTC Poison Nova Proc") { skill = sk_CTC_Poison_Nova_Proc }
+
 		var result = skill.data.values[elem][lvl];
 		var lycan_lvl = ~~character["oskill_Lycanthropy"] + character.all_skills + Math.ceil(character.all_skills_per_level*character.level);
 		var phys_min = ((1+(character.e_damage+character.damage_bonus)/100)*((character.level-1)*character.min_damage_per_level+character.base_damage_min))+character.damage_min;
@@ -128,7 +133,9 @@ var character_any = {
 		// Necromancer
 		if (skillName == "Desecrate" && elem > 0 && elem < 3) { 	result *= (1+character.pDamage/100) }
 		if (skillName == "CTC Bone Spear Proc" && elem < 2) { 		result *= ((1 + (0.07*skills[12].level + 0.07*skills[18].level)) * (1+character.mDamage/100)) }
-	// Paladin
+		if (skillName == "CTC Poison Nova Proc" && elem < 2) { 		result *= ((1 + (0.13*skills[11].level + 0.13*skills[15].level)) * (1+character.pDamage/100)) }
+
+		// Paladin
 		var phys_min = 0;
 		var phys_max = 0;
 		if (skillName == "Vengeance" && equipped.weapon.name != "none" && elem < 8) {
@@ -256,6 +263,7 @@ var character_any = {
 		else if (skillName == "CTC Nova Proc") {			attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC Fissure Proc") {			attack = 0; spell = 1; fDamage_min = character_any.getSkillData(skillName,lvl,0); fDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC Bone Spear Proc") {		attack = 0; spell = 1; mDamage_min = character_any.getSkillData(skillName,lvl,0); mDamage_max = character_any.getSkillData(skillName,lvl,1); }
+		else if (skillName == "CTC Poison Nova Proc") {		attack = 0; spell = 1; lvl += character.skills_poison_all; pDamage_min = character_any.getSkillData(skillName,lvl,0); pDamage_max = character_any.getSkillData(skillName,lvl,1); pDamage_duration = 2; }
 
 		// else if (skillName == "Valkyrie") {		attack = 0; spell = 1; }
 		else if (skillName == "Magic Arrow") {		attack = 1; spell = 0; mDamage_min = character_any.getSkillData(skillName,lvl,1); mDamage_max = character_any.getSkillData(skillName,lvl,2); }
