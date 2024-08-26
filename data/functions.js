@@ -4282,6 +4282,9 @@ function updateSecondaryStats() {
 	document.getElementById("cblow").innerHTML = c.cblow; if (c.cblow > 0) { document.getElementById("cblow").innerHTML += "%" }
 	document.getElementById("dstrike").innerHTML = c.dstrike + Math.floor(c.level*c.dstrike_per_level); if (c.dstrike > 0 || c.dstrike_per_level > 0) { document.getElementById("dstrike").innerHTML += "%" }
 	document.getElementById("cstrike").innerHTML = c.cstrike + c.cstrike_skillup; if (c.cstrike > 0 || c.cstrike_skillup > 0) { document.getElementById("cstrike").innerHTML += "%" }
+	var doubled = (c.cstrike + c.dstrike * (100 - c.cstrike)/100) ;
+	TooltipElementdoubled = document.getElementById("dstrike");
+	TooltipElementdoubled.title = doubled + "% chance of double damage from " + c.cstrike + "% CS and " + c.dstrike + "% DS chances" ; // \nFormula is Critical Strike + Deadly Strike * (100 - Critical Strike)/100";
 	document.getElementById("owounds").innerHTML = c.owounds; if (c.owounds > 0) { document.getElementById("owounds").innerHTML += "%" }
 
 //	document.getElementById("damage_reduced").innerHTML = c.damage_reduced; if (c.damage_reduced > 0) { document.getElementById("damage_reduced")}
