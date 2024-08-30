@@ -44,6 +44,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	var equipment = {
 		helm: [
 	{name:"Helm"},
+//	{rarity:"craft", name:"Qords Diadem of Socket Testing", req_level:64, sockets:3, base:"Diadem"},
 	{not:["amazon","assassin","druid","necromancer","paladin","sorceress","Rogue Scout","Desert Guard","Iron Wolf"], name:"Arreat's Face", req_level:42, skills_combat_barbarian:2, skills_barbarian:2, fhr:30, ar_bonus:20, life_leech:6, e_def:200, strength:20, dexterity:20, all_res:30, base:"Slayer Guard"},
 	{not:["amazon","assassin","druid","necromancer","paladin","sorceress","Rogue Scout","Desert Guard","Iron Wolf"], name:"Wolfhowl", req_level:79, skills_warcries:3, oskill_Lycanthropy:6, oskill_Werewolf:6, oskill_Feral_Rage:6, e_def:150, strength:15, dexterity:15, vitality:15, base:"Fury Visor", cskill:[[15,"Summon Dire Wolf",18]]},	// TODO: something goes wrong when trying to switch to a Druid while Wolfhowl is equipped on the current character
 	{not:["amazon","assassin","druid","necromancer","paladin","sorceress","Rogue Scout","Desert Guard","Iron Wolf"], name:"Demonhorn's Edge", req_level:61, skills_warcries:3, skills_masteries:3, skills_combat_barbarian:3, e_def:160, ias:10, life_leech:6, thorns:77, base:"Destroyer Helm"},
@@ -453,6 +454,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Weapon"},
 	// Mercenary Runewords
 //	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
+//	{rarity:"craft", name:"Qord's Leg of Testing", type:"mace", special:2, damage_vs_undead:50, base_damage_min:100, base_damage_max:100, durability:0, max_sockets:3, sockets:3, img:"Wirt's_Leg"},
 	{only:"Rogue Scout",	rarity:"rw", name:"Plague ­ ­ - ­ ­ Hydra Bow", sup:15, twoHanded:1, req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"bow", base:"Hydra Bow", pod_changes:1},
 	{only:"Desert Guard",	rarity:"rw", name:"Plague ­ ­ - ­ ­ Giant Thresher", ethereal:1, twoHanded:1, req_level:68, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"polearm", base:"Giant Thresher", pod_changes:1},
 	{only:"Iron Wolf",		rarity:"rw", name:"Plague ­ ­ - ­ ­ Cryptic Sword", ethereal:1, req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"sword", base:"Cryptic Sword", pod_changes:1},
