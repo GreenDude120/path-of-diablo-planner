@@ -7,4 +7,11 @@ In functions.js:
 Change lifetotal variable to global so it can be read by other funtions
 Change life_regen formula to include lifetotal and output accurate number (this is mainly informative if using prayer aura)
 
+Goal: add minus eneby phy resists on right with the other minus resists
+Index.html: add line for enemy_physRes below enemy_mres
+functions: add line for enemy_physRes below enemy_mres
+barbarian.js: add effect:5 to the skills_barbarian definition of grim ward to allow it to be counted in enemy_physRes
 
+Goal: add phys facet type damage where other facet damages show on left
+Index: add line for physicalDamage below mdamage
+functions: add line for physicalDamage below mdamage
