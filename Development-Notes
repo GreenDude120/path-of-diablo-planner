@@ -1,0 +1,10 @@
+Development notes
+Trying to get in the habit of verbose note taking 
+
+31 Aug 2024
+Goal: Make the life regen on right side include number of actual replenishment like 1% + 24 (the actual number)
+In functions.js: 
+Change lifetotal variable to global so it can be read by other funtions
+Change life_regen formula to include lifetotal and output accurate number (this is mainly informative if using prayer aura)
+
+
