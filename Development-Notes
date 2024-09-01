@@ -15,3 +15,8 @@ barbarian.js: add effect:5 to the skills_barbarian definition of grim ward to al
 Goal: add phys facet type damage where other facet damages show on left
 Index: add line for physicalDamage below mdamage
 functions: add line for physicalDamage below mdamage
+
+Fix evade buff from hustle not showing on right
+Add evade to zon buffdata section of universal_skills
+Add evade 0skill entries in BOTH places of basic_variables
+

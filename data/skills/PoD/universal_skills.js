@@ -189,6 +189,7 @@ var character_any = {
 		
 		if (skill.name == "Inner Sight") { result.enemy_defense_flat = skill.data.values[0][lvl]; result.radius = skill.data.values[1][lvl]; }
 		if (skill.name == "Lethal Strike") { result.cstrike = skill.data.values[0][lvl]; }
+		if (skill.name == "Evade") { result.evade = skill.data.values[0][lvl]; }
 		if (skill.name == "Battle Command") { result.all_skills = 1; result.duration = skill.data.values[1][lvl]; }
 		if (skill.name == "Battle Orders") { result.max_stamina = skill.data.values[1][lvl]; result.max_life = Math.round(skill.data.values[2][lvl]/2); result.max_mana = Math.round(skill.data.values[3][lvl]/2); result.duration = skill.data.values[0][lvl]; }
 		if (skill.name == "Werewolf") {	// cannot be used with Werebear
