@@ -26,4 +26,7 @@ Items.js: add min/max properties for tick damage
 item_metadata: add min/max properties, display format for tick damage
 functions: alter aura entries (holy freeze/fire/shock and sanctuary) in getAuradata function to include the newly created min & max tick damage propeties. Need to account for sorc masteries, paladin synergies, and facet-type boosts.
 
-Also added righteous flame damage back in, not sure when it was commented out
+Also added righteous flame damage back in, not sure when it was commented out in index
+
+5 sep
+Added Fortitude in Mat Pike
