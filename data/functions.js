@@ -506,6 +506,7 @@ function loadParams() {
 		//params_string = params_string.split(",").join("%2C")
 		//params_string = params_string.split("~").join("%C2%AD")
 		//params = new URLSearchParams(params_string);
+		checkShorturl()
 		
 		var spent_skillpoints = 0;
 		var param_level = Math.floor(Math.max(1,Math.min(99,~~params.get('level'))));
