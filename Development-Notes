@@ -36,3 +36,8 @@ Fixing frenzy's bash synergy, it's adding 10% per level instead of 1%?
 Made Oath CB ethereal
 Working on shortlinks; not sure it's sustainable in this fashion
 
+11 Sep
+Added the CTC Ball light as a selectable skill for Stormspire so you can approximate the CTC damage
+Created ball light copycat skill in universal skills
+Added the new skill in item_metadata, items, and basic variables
+Added the new skill to stormspire in items
