@@ -1458,9 +1458,13 @@ totalwhirly:{index:["totalwhirly"], format:["","% chance to release Whirling Axe
 synthfrom1:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
 synthfrom2:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Grandfather <br>Doombringer <br>Suicide Branch <br>Blackhand Key"+'</span>']},
 synthfrom3:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Doomslinger <br>Death's Web <br>Arioc's Needle <br>Blackbog's Sharp"+'</span>']},
-synthfrom4:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
-synthfrom5:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
-synthfrom6:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
+synthfrom4:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Thereal Edge <br>Tomb Reaver"+'</span>']},
+synthfrom5:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Schaeffer's Hammer <br>Stormspire <br>Thunderstroke"+'</span>']},
+synthfrom6:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Wizendraw <br>Hellrack <br>Mang Song"+'</span>']},
+synthfrom7:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Gull <br>Tomb Reaver <br>Blade of Ali Baba"+'</span>']},
+synthfrom8:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
+synthfrom9:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
+synthfrom10:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
 
 // debug:{index:[],format:['<span style="color:red; font-size:12px">'+"Item does not exist in game,<br>only exists here for ease of testing"+'</span>']},
 

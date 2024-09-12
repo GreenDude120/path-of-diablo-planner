@@ -930,6 +930,9 @@ function equip(group, val) {
 							equipped[group][affix] = Math.ceil(multEth*bases[base][affix])
 							character[affix] += Math.ceil(multEth*bases[base][affix])
 						} else if (affix == "req_strength" || affix == "req_dexterity") {
+//							if (equipment[src_group][item]["req"] != 'undefined')
+//								{equipped[group][affix] = Math.max(0,Math.ceil((multReq*bases[base][affix] - reqEth) += (equipment[src_group][item]["req"]/100)))}
+//							else {equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))}
 							equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))
 						} else if (affix == "tier") {
 							equipped[group][affix] = bases[base][affix]
@@ -951,6 +954,11 @@ function equip(group, val) {
 					equipped[group][affix] = equipment[src_group][item][affix]
 					if (affix == "req_strength" || affix == "req_dexterity") {
 						if (equipment[src_group][item][affix] > equipped[group][affix]) { equipped[group][affix] = equipment[src_group][item][affix] }	// these affixes aren't additive (only the largest matters)
+//						if ((equipment[src_group][item]["req"]) != 'undefined') { equipped[group][affix] += (equipment[src_group][item]["req"]/100) }
+//						if ((equipment[src_group][item]["req"]) != 'undefined') {equipped[group][affix] -= (equipment[src_group][item]["req"]/100)  }
+
+
+//						if (equipment[src_group][item][affix] > equipped[group][affix]) { equipped[group][affix] = equipment[src_group][item][affix] }	// these affixes aren't additive (only the largest matters)
 					} else {
 						equipped[group][affix] = equipment[src_group][item][affix]
 						if (affix == "aura") { auraName = equipment[src_group][item][affix]; auraLevel = equipment[src_group][item].aura_lvl; }
@@ -4631,6 +4639,14 @@ function checkRequirements() {
 			if (equipped[group][item].req_dexterity > highest_dex) { highest_dex = equipped[group][item].req_dexterity }
 		} }
 		if (equipped[group].req_level > highest_level) { highest_level = equipped[group].req_level }
+//if (typeof(equipment[src_group][item]["req"]) != 'undefined') 
+//{ multReq += (equipment[src_group][item]["req"]/100) }
+//		if ((equipped[group][item]["req"]) < 0 || (equipped[group][item]["req"]) != 'undefined') 
+//			{ equipped[group][item].req_strength += equipped[group][item]["req"]/100; equipped[group][item].req_dexterity += equipped[group][item]["req"]/100;}
+//		
+//		if (equipped[group].req_strength > highest_str) { highest_str = equipped[group].req_strength }
+//		if (equipped[group].req_dexterity > highest_dex) { highest_dex = equipped[group].req_dexterity }
+//		if (equipped[group].req_level > highest_level) { highest_level = equipped[group].req_level }
 		if (equipped[group].req_strength > highest_str) { highest_str = equipped[group].req_strength }
 		if (equipped[group].req_dexterity > highest_dex) { highest_dex = equipped[group].req_dexterity }
 	}
