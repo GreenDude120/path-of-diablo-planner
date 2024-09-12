@@ -27,44 +27,16 @@ var character_any = {
 			["lightning max",30,44,58,72,86,100,125,150,175,200,236,272,308,344,380,427,474,521,568,615,662,720,778,836,894,952,1010,1068,1137,1206,1275,1344,1413,1482,1551,1620,1689,1758,1827,1896,1965,2034,2103,2172,2241,2310,2379,2448,2517,2586,2655,2724,2793,2862,2931,3000,3069,3138,3207,3276]]}};
 		if (skillName == "CTC Ball Lightning Proc") { skill = sk_CTC_Ball_Lightning_Proc }
 
-//		var sk_Dangoon_Discharge_Proc = {data:{values:[
-//			["lightning min",75,89,103,117,131,145,159,173,187,201,215,229,243,257,271,285,299,313,327,341,355,369,383,397,411,425,439,453,467,481,495,509,523,537,551,565,579,593,607,621,635,649,663,677,691,705,719,733,747,761,775,789,803,817,831,845,859,873,887,901], 
-//			["lightning max",240,281,322,363,404,445,486,527,568,609,650,691,732,773,814,855,896,937,978,1019,1060,1101,1142,1183,1224,1265,1306,1347,1388,1429,1470,1511,1552,1593,1634,1675,1716,1757,1798,1839,1880,1921,1962,2003,2044,2085,2126,2167,2208,2249,2290,2331,2372,2413,2454,2495,2536,2577,2618,2659]]}};
-//		if (skillName == "Dangoon Discharge Proc") { skill = sk_Dangoon_Discharge_Proc }
 		var sk_CTC_Discharge_Proc = {data:{values:[
 			["lightning min",75,89,103,117,131,145,159,173,187,201,215,229,243,257,271,285,299,313,327,341,355,369,383,397,411,425,439,453,467,481,495,509,523,537,551,565,579,593,607,621,635,649,663,677,691,705,719,733,747,761,775,789,803,817,831,845,859,873,887,901], 
 			["lightning max",240,281,322,363,404,445,486,527,568,609,650,691,732,773,814,855,896,937,978,1019,1060,1101,1142,1183,1224,1265,1306,1347,1388,1429,1470,1511,1552,1593,1634,1675,1716,1757,1798,1839,1880,1921,1962,2003,2044,2085,2126,2167,2208,2249,2290,2331,2372,2413,2454,2495,2536,2577,2618,2659]]}};
 		if (skillName == "CTC Discharge Proc") { skill = sk_CTC_Discharge_Proc }
 
-//		var sk_DangoonChain_Proc = {data:{values:[
-//			["lightning min",1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 
-//			["lightning max",160,200,240,280,320,360,400,440,488,536,584,632,680,728,776,824,880,936,992,1048,1104,1160,1224,1288,1352,1416,1480,1544,1616,1688,1760,1832,1904,1976,2048,2120,2192,2264,2336,2408,2480,2552,2624,2696,2768,2840,2912,2984,3056,3128,3200,3272,3344,3416,3488,3560,3632,3704,3776,3848]]}};
-//		if (skillName == "DangoonChain Proc") { skill = sk_DangoonChain_Proc }
 		var sk_CTC_Chain_Light_Proc = {data:{values:[
 			["lightning min",1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 
 			["lightning max",160,200,240,280,320,360,400,440,488,536,584,632,680,728,776,824,880,936,992,1048,1104,1160,1224,1288,1352,1416,1480,1544,1616,1688,1760,1832,1904,1976,2048,2120,2192,2264,2336,2408,2480,2552,2624,2696,2768,2840,2912,2984,3056,3128,3200,3272,3344,3416,3488,3560,3632,3704,3776,3848]]}};
 		if (skillName == "CTC Chain Light Proc") { skill = sk_CTC_Chain_Light_Proc }
 
-//		var sk_DestructionVolcano_Proc = {data:{values:[
-//			["damage min",8,10,12,13,16,18,19,22,25,29,33,38,41,45,49,53,59,65,71,77,84,90,104,118,132,146,160,174,192,210,228,246,264,282,300,318,336,354,372,390,408,426,444,462,480,498,516,534,552,570,588,606,624,642,660,678,696,714,732,750,], 
-//			["damage max",10,13,16,18,22,24,28,30,37,43,48,54,60,66,72,78,88,98,108,118,129,139,155,171,187,203,219,235,257,279,301,323,345,367,389,411,433,455,477,499,521,543,565,587,609,631,653,675,697,719,741,763,785,807,829,851,873,895,917,939,], 
-//			["fire min",8,10,11,13,16,18,19,22,25,30,33,38,41,46,50,54,60,66,72,77,84,90,98,106,114,122,130,138,149,160,171,182,193,204,215,226,237,248,259,270,281,292,303,314,325,336,347,358,369,380,391,402,413,424,435,446,457,468,479,490,], 
-//			["fire max",10,11,13,16,18,19,22,24,27,32,36,39,44,47,52,55,61,68,74,80,86,92,100,108,116,124,132,140,153,166,179,192,205,218,231,244,257,270,283,296,309,322,335,348,361,374,387,400,413,426,439,452,465,478,491,504,517,530,543,556,]]}};
-//		if (skillName == "DestructionVolcano Proc") { skill = sk_DestructionVolcano_Proc }
-
-//		var sk_DestructionMBoulder_Proc = {data:{values:[
-//			["damage min",1,3,5,7,9,11,13,15,20,25,30,35,40,45,50,55,67,79,91,103,115,127,146,165,184,203,222,241,268,295,322,349,376,403,430,457,484,511,538,565,592,619,646,673,700,727,754,781,808,835,862,889,916,943,970,997,1024,1051,1078,1105,], 
-//			["damage max",2,5,8,11,14,17,20,23,29,35,41,47,53,59,65,71,84,97,110,123,136,149,169,189,209,229,249,269,297,325,353,381,409,437,465,493,521,549,577,605,633,661,689,717,745,773,801,829,857,885,913,941,969,997,1025,1053,1081,1109,1137,1165,], 
-//			["fire min",2,3,7,10,11,14,15,20,24,28,32,36,40,44,48,52,59,70,80,92,103,114,142,170,198,226,254,282,322,362,402,442,482,522,562,602,642,682,722,762,802,842,882,922,962,1002,1042,1082,1122,1162,1202,1242,1282,1322,1362,1402,1442,1482,1522,1562,], 
-//			["fire max",3,7,12,15,19,22,24,31,37,44,49,54,61,67,72,78,85,98,111,124,138,151,185,219,253,287,321,355,401,447,493,539,585,631,677,723,769,815,861,907,953,999,1045,1091,1137,1183,1229,1275,1321,1367,1413,1459,1505,1551,1597,1643,1689,1735,1781,1827,], 
-//			["avg fire min",1,3,4,8,9,12,15,16,21,26,31,36,39,44,50,54,64,73,83,92,102,111,122,132,143,153,164,174,186,198,210,221,233,245,257,269,281,293,305,317,329,341,353,365,377,389,401,413,425,437,449,461,473,485,497,509,521,533,545,557,], 
-//			["avg fire max",2,3,7,9,10,14,15,18,22,27,32,37,42,45,50,56,65,74,84,93,103,112,123,133,144,154,165,176,188,199,211,223,234,246,258,270,282,294,306,318,330,342,354,366,378,390,402,414,426,438,450,462,474,486,498,510,522,534,546,558,]]}};
-//		if (skillName == "DestructionMBoulder Proc") { skill = sk_DestructionMBoulder_Proc }
-
-//		var sk_DestructionNova_Proc = {data:{values:[
-//			["lightning min",1,1,1,1,1,1,1,1,6,11,16,21,26,31,36,41,51,61,71,81,91,101,121,141,161,181,201,221,244,267,290,313,336,359,382,405,428,451,474,497,520,543,566,589,612,635,658,681,704,727,750,773,796,819,842,865,888,911,934,957,], 
-//			["lightning max",40,60,80,100,120,140,160,180,220,260,300,340,380,420,460,500,560,620,680,740,800,860,935,1010,1085,1160,1235,1310,1385,1460,1535,1610,1685,1760,1835,1910,1985,2060,2135,2210,2285,2360,2435,2510,2585,2660,2735,2810,2885,2960,3035,3110,3185,3260,3335,3410,3485,3560,3635,3710,]]}}; 
-//		if (skillName == "DestructionNova Proc") { skill = sk_DestructionNova_Proc }
 		var sk_CTC_Volcano_Proc = {data:{values:[
 			["damage min",8,10,12,13,16,18,19,22,25,29,33,38,41,45,49,53,59,65,71,77,84,90,104,118,132,146,160,174,192,210,228,246,264,282,300,318,336,354,372,390,408,426,444,462,480,498,516,534,552,570,588,606,624,642,660,678,696,714,732,750,], 
 			["damage max",10,13,16,18,22,24,28,30,37,43,48,54,60,66,72,78,88,98,108,118,129,139,155,171,187,203,219,235,257,279,301,323,345,367,389,411,433,455,477,499,521,543,565,587,609,631,653,675,697,719,741,763,785,807,829,851,873,895,917,939,], 
@@ -108,11 +80,10 @@ var character_any = {
 	
 	// Universal
 		if (skillName == "Ball Lightning" && elem < 2) {			result *= ((1 + 0.01*Math.floor((character.energy + character.all_attributes)*(1+character.max_energy/100)/3)) * (1+character.lDamage/100)) }
-		if (skillName == "CTC Ball Lightning Proc" && elem < 2) {			result *= ((1 + 0.01*Math.floor((character.energy + character.all_attributes)*(1+character.max_energy/100)/3)) * (1+character.lDamage/100)) }
-		if (skillName == "CTC Discharge Proc" && elem < 2) {	result *= ((1 + 0.01*Math.floor((character.energy + character.all_attributes)*(1+character.max_energy/100)/2)) * (1+character.lDamage/100)) }
-//		if (skillName == "Dangoon Discharge Proc" && elem < 2) {	result *= ((1 + 0.01*Math.floor((character.energy + character.all_attributes)*(1+character.max_energy/100)/2)) * (1+character.lDamage/100)) }
-//		if (skillName == "DangoonChain Proc"  && elem < 2) {		result *= lvl += character.skills_lightning_all }
-	// Barbarian
+		if (skillName == "CTC Ball Lightning Proc" && elem < 2) {	result *= ((1 + 0.01*Math.floor((character.energy + character.all_attributes)*(1+character.max_energy/100)/3)) * (1+character.lDamage/100)) }
+		if (skillName == "CTC Discharge Proc" && elem < 2) {		result *= ((1 + 0.01*Math.floor((character.energy + character.all_attributes)*(1+character.max_energy/100)/2)) * (1+character.lDamage/100)) }
+
+		// Barbarian
 		if (skillName == "Battle Command" && elem == 0) {			result = 1 }
 		if (skillName == "Whirling Axes" && elem == 2) {			result = skill.data.values[2][lvl] }
 
@@ -124,11 +95,6 @@ var character_any = {
 		if (skillName == "Werebear" && elem == 0) {					result = (15 + sk[12].data.values[1][lycan_lvl]) }
 		if (skillName == "Werebear" && elem == 1) {					result += (sk[12].data.values[0][lycan_lvl]) }
 		if (skillName == "Summon Dire Wolf" && elem == 3) {			result = ((1 + (skill.data.values[6][lvl] / 100)) * skill.data.values[elem][character.difficulty]) }
-//		if (skillName == "DestructionMBoulder Proc" && elem < 2) { 				result *= (1 + (0.20*skills[7].level)) }
-//		if (skillName == "DestructionMBoulder Proc" && elem > 1 && elem < 4) { 	result *= ((1 + (0.23*skills[0].level)) * (1+character.fDamage/100)) }
-//		if (skillName == "DestructionMBoulder Proc" && elem > 3 && elem < 6) { 	result *= ((1 + (0.17*skills[0].level)) * (1+character.fDamage/100)) }
-//		if (skillName == "DestructionVolcano Proc" && elem < 2) { 						result *= (1 + (0.20*skills[1].level)) }
-//		if (skillName == "DestructionVolcano Proc" && elem > 1 && elem < 4) { 			result *= ((1 + (0.14*skills[4].level + 0.14*skills[9].level)) * (1+character.fDamage/100)) }
 		if (skillName == "CTC MBoulder Proc" && elem < 2) { 				result *= (1 + (0.20*skills[7].level)) }
 		if (skillName == "CTC MBoulder Proc" && elem > 1 && elem < 4) { 	result *= ((1 + (0.23*skills[0].level)) * (1+character.fDamage/100)) }
 		if (skillName == "CTC MBoulder Proc" && elem > 3 && elem < 6) { 	result *= ((1 + (0.17*skills[0].level)) * (1+character.fDamage/100)) }
@@ -165,17 +131,11 @@ var character_any = {
 		if (skillName == "Meteor" && elem < 6 && elem > 3) { 		result *= (1+character.fDamage/100) }
 		if (skillName == "Hydra" && elem < 3 && elem > 0) { 		result *= (1+character.fDamage/100) }
 		if (skillName == "CTC Discharge Proc" && elem < 2) { 	result *= ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
-//		if (skillName == "Dangoon Discharge Proc" && elem < 2) { 	result *= ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
-//		if (skillName == "Dangoon Discharge Proc" && elem == 0) { 	result = ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
-//		if (skillName == "Dangoon Discharge Proc" && elem == 1) { 	result = ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
- 
-//		if (skillName == "Dangoon Chain Proc" && elem == 0) { 		result = ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
-//	if (skillName == "DangoonChain Proc" && elem < 2) { 		result *= ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
-	if (skillName == "CTC Chain Light Proc" && elem < 2) { 		result *= ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
-	if (skillName == "CTC Nova Proc" && elem < 2) { 		result *= ((1 + (0.03*skills_all["sorceress"][18].level)) * (1+character.lDamage/100)) }
-	if (skillName == "CTC Ball Lightning Proc" && elem < 2) { 		result *= ((1 + (0.03*skills_all["sorceress"][18].level)) * (1+character.lDamage/100)) }
-
-	if (skillName == "Discharge") {		attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,1); lDamage_max = character.getSkillData(skill,lvl,2); }
+		if (skillName == "CTC Chain Light Proc" && elem < 2) { 		result *= ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
+		if (skillName == "CTC Nova Proc" && elem < 2) { 		result *= ((1 + (0.03*skills_all["sorceress"][18].level)) * (1+character.lDamage/100)) }
+//		if (skillName == "CTC Ball Lightning Proc" && elem < 2) { 		result *= ((1 + (0.03*skills_all["sorceress"][18].level)) * (1+character.lDamage/100)) }
+	
+		if (skillName == "Discharge") {		attack = 0; spell = 1; lDamage_min = character.getSkillData(skill,lvl,1); lDamage_max = character.getSkillData(skill,lvl,2); }
 	
 	return result
 	},
@@ -260,13 +220,8 @@ var character_any = {
 		
 		if (skillName == "Ball Lightning") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC Ball Lightning Proc") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
-//		else if (skillName == "Dangoon Discharge Proc") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC Discharge Proc") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
-//		else if (skillName == "DangoonChain Proc") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC Chain Light Proc") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
-//		else if (skillName == "DestructionMBoulder Proc") { 		attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }
-//		else if (skillName == "DestructionVolcano Proc") { 			attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }		
-//		else if (skillName == "DestructionNova Proc") {			attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "CTC MBoulder Proc") { 		attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }
 		else if (skillName == "CTC Volcano Proc") { 			attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }		
 		else if (skillName == "CTC Nova Proc") {			attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }

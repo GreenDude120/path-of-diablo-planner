@@ -956,7 +956,12 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{synth:"true", name:"Synth Chaos' Bloodrise", req_level:15, all_skills:2, skills_fire:3, ias:10, e_damage:175, ar_bonus:50, owounds:25, skill_Sacrifice:3, skill_Teleport:3, defense:450, melee_defense:200, all_res:16, damage_to_mana:30, type:"mace", base:"Morning Star", img:"Bloodrise"},
 	{synth:"true", name:"Synth Kg's Fleshripper", req_level:68, all_skills:4, fcr:45, e_damage:276, cblow:25, owounds:50, oskill_Ball_Lightning:20, type:"dagger", base:"Fanged Knife", img:"The_Jade_Tan_Do"},
 	{synth:"true", name:"Synth Zardoz's Hexfire", req_level:33, ctc:[[25,19,"fissure","on striking"]], skills_fire_all:3, skills_elemental:7, explosive_attack:6, e_damage:467, itd:1, dexterity:38, energy:10, fres:25, type:"sword", base:"Shamshir", pod_changes:1, img:"Hexfire"},
-
+	{synth:"true", name:"Synth UNK Kinemil's Awl", req_level:65, skills_druid:3, ias:80, e_damage:199, max_damage_per_level:3.5, ar:106, fDamage_max:36, cDamage_min:32, cDamage_max:196, dstrike_per_level:1.5, freezes_target:3, dexterity:35, mana:20, twoHanded:1, type:"sword", base:"Balrog Blade", img:"Kinemil's_Awl"},
+	{synth:"true", name:"Synth UNK Hellslayer", req_level:66, ctc:[[10,20,"Fire Ball","on attack"]], frw:30, e_damage:100, e_max_damage_per_level:3, damage_min:10, damage_max:45, fDamage_min:150, fDamage_max:250, cDamage_min:15, cDamage_max:30, life_leech:7, skill_Rabies:5, missile_defense:50, strength:20, dexterity:20, pRes:45, twoHanded:1, type:"axe", base:"Decapitator", img:"Hellslayer"},
+	{synth:"true", only:"sorceress", name:"Synth UNK The Oculus", req_level:49, skills_fire_all:3, skills_sorceress:3, ias:35, fcr:30, owounds:33, vitality:20, fRes_max:10, fRes:50, mf:50, extraHydra:1, type:"orb", base:"Swirling Crystal"},
+	{synth:"true", name:"Synth Sorcskiis's Stormstrike", req_level:66, e_damage:89, all_skills:4, ar:28, oskill_Ball_Lightning:20, defense:451, strength:8, lRes:25, twoHanded:1, type:"bow", base:"Short Battle Bow", img:"Stormstrike"},
+	{synth:"true", name:"Synth UNK Fleshripper", req_level:73, ctc:[[50,6,"decrepify","on kill"]], ias:30, pierce:50, e_damage:508, target_defense:-33, ar:105, cblow:25, pmh:1, type:"dagger", base:"Fanged Knife", img:"The_Jade_Tan_Do"},
+	{synth:"true", name:"Synth In Zardoz's Dream Wizardspike", req_level:82, mana_per_level:2, fcr:125, max_mana:15, all_res:75, all_skills:13, energy:50, enemy_lRes:-15, enemy_cRes:-15, enemy_fRes:-15, type:"dagger", base:"Bone Knife"},
 		],
 
 		offhand: [

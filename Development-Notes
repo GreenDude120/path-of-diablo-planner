@@ -41,3 +41,7 @@ Added the CTC Ball light as a selectable skill for Stormspire so you can approxi
 Created ball light copycat skill in universal skills
 Added the new skill in item_metadata, items, and basic variables
 Added the new skill to stormspire in items
+
+12 Sep
+Added several synths by request in items.js
+Removed unused code in universal skills
