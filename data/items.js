@@ -948,9 +948,9 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Hellrack", req_level:76, oskill_Immolation_Arrow:18, e_damage:230, ar_bonus:150, fDamage_min:63, fDamage_max:324, cDamage_min:63, cDamage_max:324, lDamage_min:63, lDamage_max:324, ias:20, sockets:2, twoHanded:1, type:"crossbow", base:"Colossus Crossbow", img:"Hellcast"},
 	{name:"Gut Siphon", req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
 	// Non-Unique
-	{name:"Rare/Craft/Synth--------------------", img:"../../../portal"},
+	{name:"Magic/Rare/Craft/Synth--------------", img:"../../../portal"},
 	{rarity:"rare", name:"Heavenly Blade", req_level:54, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:450, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, req:-30, type:"sword", base:"Phase Blade"},
-	{only:"barbarian", rarity:"magic", name:"Echoing Blade", req_level:54, skill_War_Cry:3, type:"sword", twoHanded:1, base:"Colossus Blade"},
+	{only:"barbarian", rarity:"magic", name:"Echoing Blade", req_level:54, skill_War_Cry:3, type:"sword", twoHanded:1, base:"Colossus Sword"},
 	{rarity:"craft", name:"Cruel Master's Blood Axe", req_level:64, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, life_leech:4, life:20, req:-30, type:"axe", base:"Berserker Axe"},
 	{rarity:"craft", name:"Grandmaster's Hitpower Maul", req_level:65, ctc:[[5,4,"Frost Nova","when hit"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, damage_max:20, thorns:7, req:-30, twoHanded:1, type:"hammer", base:"Thunder Maul"},
 	// User found synth items
