@@ -950,7 +950,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	// Non-Unique
 	{name:"Magic/Rare/Craft/Synth--------------", img:"../../../portal"},
 	{rarity:"rare", name:"Heavenly Blade", req_level:54, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:450, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, req:-30, type:"sword", base:"Phase Blade"},
-	{only:"barbarian", rarity:"magic", name:"Echoing Blade", req_level:54, skill_War_Cry:3, type:"sword", twoHanded:1, base:"Colossus Sword"},
+	{only:"barbarian", rarity:"magic", name:"Echoing Blade", req_level:54, skills_warcries:3, type:"sword", twoHanded:1, base:"Colossus Sword"},
 	{rarity:"craft", name:"Cruel Master's Blood Axe", req_level:64, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, life_leech:4, life:20, req:-30, type:"axe", base:"Berserker Axe"},
 	{rarity:"craft", name:"Grandmaster's Hitpower Maul", req_level:65, ctc:[[5,4,"Frost Nova","when hit"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, damage_max:20, thorns:7, req:-30, twoHanded:1, type:"hammer", base:"Thunder Maul"},
 	// User found synth items
