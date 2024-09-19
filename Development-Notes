@@ -48,3 +48,5 @@ Removed unused code in universal skills
 
 18 Sep
 Added display lines for total all skills (functions.js) and # of projectiles (multiproj var added in items, all skills plus one in functions) fired by Doomslinger
+Added 30 life skiller gc's in items.js
+Added more possible levels to added fire min/max of corpse explosion in necromancer.js
