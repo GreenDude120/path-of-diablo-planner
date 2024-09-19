@@ -45,3 +45,6 @@ Added the new skill to stormspire in items
 12 Sep
 Added several synths by request in items.js
 Removed unused code in universal skills
+
+18 Sep
+Added display lines for total all skills (functions.js) and # of projectiles (multiproj var added in items, all skills plus one in functions) fired by Doomslinger

@@ -4490,7 +4490,9 @@ function updateTertiaryStats() {
 	if (c.experience > 0) { statlines += "+"+c.experience+"% Experience Gained<br>" }
 	if (c.ctc_temp1 > 0) { statlines += "10% chance to cast level 15 Nova on striking<br>" }
 	if (c.ctc_temp2 > 0) { statlines += "25% chance to cast level 5 Static Field when struck<br>" }
-//	if (c.all_skills > 5) { statlines += "+" + c.all_skills + " All skills<br>"}
+	if (c.all_skills > 0) { statlines += "Equpiment adds +" + c.all_skills + " all skills total<br>" }
+	if (c.oskill_Multiple_Shot > 0) { statlines += "Doomslinger will fire " + c.multiproj + " projectiles<br>" }
+
 	document.getElementById("statlines").innerHTML = statlines
 	updateCTC()
 	updateChargeSkills()
@@ -4820,6 +4822,9 @@ function checkSkill(skillName, num) {
 		var fcr_f = c.fcr_frames_alt;
 		for (let i = 1; i < c.fcr_bp_alt.length; i++) { if (fcrTotal >= c.fcr_bp_alt[i]) { fcr_f -= 1 } }
 		document.getElementById("ar_skill"+num).innerHTML = "Cast Rate: "+fcr_f+" frames"
+	}
+	if (skillName == "Multiple Shot") {
+		c.multiproj = c.all_skills + 1
 	}
 	 
 	updateSkills()
