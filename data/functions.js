@@ -1864,6 +1864,11 @@ function updateAllEffects() {
 		if (typeof(equipped[group].ctc) != 'undefined' && equipped[group].ctc != "") {
 			for (unit in equipped[group].ctc) {
 				if (ctcskill_level == equipped[group].ctc[unit][1] && ctcskill_name == equipped[group].ctc[unit][2]) { match = 1 }
+				if (ctcskill_name == "Discharge") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Chain Lightning") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Molten Boulder") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Volcano") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2259,6 +2264,22 @@ function getCTCSkillData(name, lvl, group) {
 	else if (name == "Venom") { result.pDamage_min = skill.data.values[1][lvl]; result.pDamage_max = skill.data.values[2][lvl]; result.pDamage_duration = 0.4; result.pDamage_duration_override = 0.4; result.duration = skill.data.values[0][lvl]; }
 	// Druid
 	else if (name == "Cyclone Armor") { result.absorb_elemental = skill.data.values[0][lvl]; }
+	else if (name == "Volcano") {
+		if (character.class_name == "Druid") {
+			result.damage_min = skill.data.values[0][lvl] * ((1 + 0.20*skills_all["druid"][1].level) * (1+character.physicalDamage/100)) ;
+			result.damage_max = skill.data.values[1][lvl] * ((1 + 0.20*skills_all["druid"][1].level) * (1+character.physicalDamage/100)) ;
+			result.fDamage_min = skill.data.values[2][lvl] * ((1 + 0.14*skills_all["druid"][4].level + 0.14*skills_all["druid"][9].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[3][lvl] * ((1 + 0.14*skills_all["druid"][4].level + 0.14*skills_all["druid"][9].level) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Druid") {
+			result.damage_min = skill.data.values[0][lvl] * (1+character.physicalDamage/100) ;
+			result.damage_max = skill.data.values[1][lvl] * (1+character.physicalDamage/100) ;
+			result.fDamage_min = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[3][lvl] * (1+character.fDamage/100) ;
+		}
+		volctext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
+	}
+
 	// Sorceress
 	else if (name == "Chilling Armor") {
 		if (effects[effect_id].info.enabled == 1) { for (id in effects) { if (id == "Shiver_Armor" || id == unit) { disableEffect(id) } } }
@@ -2273,20 +2294,39 @@ function getCTCSkillData(name, lvl, group) {
 		}
 	}
 	else if (name == "Discharge") {
-		//result.lDamage *= ((skill.data.values[2][lvl]) + (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2))); 
-		result.lDamage_min = skill.data.values[1][lvl]; 
-		result.lDamage_max = skill.data.values[2][lvl];
-		//result.lDamage_min *= ((1 + 0.03*sk[12].level + 0.03*sk[14].level + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100));
-		//result.lDamage_max *= ((skill.data.values[2][lvl]) + (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2))); 
-		//result.lDamage_max = skill.data.values[2][lvl] //+ (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2));
-		result.lDamage =	(0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+c.lDamage/100))
 		if (character.class_name == "Sorceress") {
-			//result.lDamage *= ((1 + 0.03*sk[12].level + 0.03*sk[14].level + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100));
-			result.lDamage_min = skill.data.values[1][lvl] + (1 + 0.03*sk[12].level + 0.03*sk[14].level); // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100))));
-			result.lDamage_max = skill.data.values[2][lvl] + (1 + 0.03*sk[12].level + 0.03*sk[14].level); // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100))));
-			}
+			result.lDamage_min = skill.data.values[1][lvl] * ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+character.lDamage/100)) ;
+			result.lDamage_max = skill.data.values[2][lvl] * ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+character.lDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.lDamage_min = skill.data.values[1][lvl] ;// + skill.data.values[1][21] * (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+character.lDamage/100)) );
+			result.lDamage_max = skill.data.values[2][lvl] ;// + skill.data.values[1][21] * (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+character.lDamage/100)) );
+		}
+		dischargetext = "(" + Math.round(result.lDamage_min) + "-" + Math.round(result.lDamage_max) + ")" + " {" +Math.round((result.lDamage_min+result.lDamage_max)/2) + "}";
 	}
-
+	else if (name == "Chain Lightning") {
+		if (character.class_name == "Sorceress") {
+			result.lDamage_min = skill.data.values[1][lvl] * ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level) * (1+character.lDamage/100)) ;
+			result.lDamage_max = skill.data.values[2][lvl] * ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level) * (1+character.lDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.lDamage_min = skill.data.values[1][lvl] * (1+character.lDamage/100) ;
+			result.lDamage_max = skill.data.values[2][lvl] * (1+character.lDamage/100) ;
+		}
+		cltext = "(" + Math.round(result.lDamage_min) + "-" + Math.round(result.lDamage_max) + ")" + " {" +Math.round((result.lDamage_min+result.lDamage_max)/2) + "}";
+	}
+	else if (name == "Nova") {
+		if (character.class_name == "Sorceress") {
+			result.lDamage_min = skill.data.values[0][lvl] * ((1 + 0.03*skills_all["sorceress"][18].level) * (1+character.lDamage/100)) ;
+			result.lDamage_max = skill.data.values[1][lvl] * ((1 + 0.03*skills_all["sorceress"][18].level) * (1+character.lDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.lDamage_min = skill.data.values[0][lvl] * (1+character.lDamage/100) ;
+			result.lDamage_max = skill.data.values[1][lvl] * (1+character.lDamage/100) ;
+		}
+		novatext = "(" + Math.round(result.lDamage_min) + "-" + Math.round(result.lDamage_max) + ")" + " {" +Math.round((result.lDamage_min+result.lDamage_max)/2) + "}";
+	}
+		
 	// Necromancer
 	else if (name == "Flesh Offering") { result.duration = skill.data.values[0][lvl]; result.radius = skill.data.values[1][lvl]; }	// TODO: implement for summons: result.fcr = skill.data.values[2][lvl]; result.ias_skill = skill.data.values[3][lvl]; result.velocity = skill.data.values[4][lvl]; 
 	return result;
@@ -4506,20 +4546,34 @@ function updateCTC() {
 		if (typeof(equipped[group].ctc) != 'undefined') {
 			if (equipped[group].ctc != "") {
 				for (let i = 0; i < equipped[group].ctc.length; i++) {
-//					var stat = equipped[group].ctc[i][0]+"% chance to taco cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3];
-//					if (equipped[group].ctc[i][2] == "Discharge") {	
-//						var stat = equipped[group].ctc[i][0]+"% chance "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;
-//						var dam = {getCTCSkillData}.result.lDamage_min ;
-//						var stat = "level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+ " Proc does "; // +getCTCSkillData("Discharge",21).result+" damage";
-//						stats += (stat + "<br>")
-//					}  
-//					else { var stat = equipped[group].ctc[i][0]+"% chance to taco cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3];
-					var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3];
+					if (equipped[group].ctc[i][2] == "Discharge") {
+//						getCTCSkillData(ctcname,ctclvl) ;
+						var danctcdmg = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+//						var danctcdmg = character.getCTCSkillData("Discharge",21) ;
+//						ctcdmg = "(" + danctcdmg.result.lDamage_min + "-" + danctcdmg.result.lDamage_max + ")" ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + dischargetext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Chain Lightning") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + cltext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Nova") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + novatext;
+					}
+					else if (equipped[group].ctc[i][2] == "Volcano") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + volctext;
+					}
+
+					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
+					}
+
+					//var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
 					stats += (stat + "<br>")					
-//				}
-//					var stat = equipped[group].ctc[i][0]+"% chance to taco cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3];
-//					stats += (stat + "<br>")
-				}
+				}				
 			}
 		}
 	}

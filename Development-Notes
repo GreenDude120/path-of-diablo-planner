@@ -50,3 +50,7 @@ Removed unused code in universal skills
 Added display lines for total all skills (functions.js) and # of projectiles (multiproj var added in items, all skills plus one in functions) fired by Doomslinger
 Added 30 life skiller gc's in items.js
 Added more possible levels to added fire min/max of corpse explosion in necromancer.js
+
+20 Sep
+Added more elegant way to display CTC damage; new skillname"text" variables in items, add skills to list of ctc skills in basic_variables, added code in functions to calculate and show damage and hide icon from top right
+
