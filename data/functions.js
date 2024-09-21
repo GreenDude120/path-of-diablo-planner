@@ -4568,6 +4568,13 @@ function updateCTC() {
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + volctext;
 					}
 
+					else if (equipped[group].ctc[i][2] == "Ball Lightning") {
+						lDamage_min = character_all.any.getSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1],0) ;
+						lDamage_max = character_all.any.getSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1],1) ;
+						balltext = "(" + Math.round(lDamage_min) + "-" + Math.round(lDamage_max) + ")" + " {" +Math.round((lDamage_min+lDamage_max)/2) + "}";
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + balltext;
+					}
+
 					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
 					}
 

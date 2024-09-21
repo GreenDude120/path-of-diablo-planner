@@ -54,3 +54,5 @@ Added more possible levels to added fire min/max of corpse explosion in necroman
 20 Sep
 Added more elegant way to display CTC damage; new skillname"text" variables in items, add skills to list of ctc skills in basic_variables, added code in functions to calculate and show damage and hide icon from top right
 
+21 Sep
+Added CTC Ball Lightning damage as above. Used getSkillData instead of getCTCSkillData to display this, maybe that's the better way moving forward?
