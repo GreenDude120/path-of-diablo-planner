@@ -56,3 +56,4 @@ Added more elegant way to display CTC damage; new skillname"text" variables in i
 
 21 Sep
 Added CTC Ball Lightning damage as above. Used getSkillData instead of getCTCSkillData to display this, maybe that's the better way moving forward?
+Added Frozen Orb and poison nova ctc

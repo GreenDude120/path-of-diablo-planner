@@ -1866,9 +1866,12 @@ function updateAllEffects() {
 				if (ctcskill_level == equipped[group].ctc[unit][1] && ctcskill_name == equipped[group].ctc[unit][2]) { match = 1 }
 				if (ctcskill_name == "Discharge") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Chain Lightning") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Ball Lightning") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Molten Boulder") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Volcano") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Poison Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Frozen Orb") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2326,9 +2329,31 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		novatext = "(" + Math.round(result.lDamage_min) + "-" + Math.round(result.lDamage_max) + ")" + " {" +Math.round((result.lDamage_min+result.lDamage_max)/2) + "}";
 	}
+	else if (name == "Frozen Orb") {
+		if (character.class_name == "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * ((1 + 0.02*skills_all["sorceress"][0].level) * (1+character.cDamage/100)) ;
+			result.cDamage_max = skill.data.values[1][lvl] * ((1 + 0.02*skills_all["sorceress"][0].level) * (1+character.cDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
+		}
+		forbtext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + ")" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}";
+	}
 		
 	// Necromancer
 	else if (name == "Flesh Offering") { result.duration = skill.data.values[0][lvl]; result.radius = skill.data.values[1][lvl]; }	// TODO: implement for summons: result.fcr = skill.data.values[2][lvl]; result.ias_skill = skill.data.values[3][lvl]; result.velocity = skill.data.values[4][lvl]; 
+	else if (name == "Poison Nova") {
+		if (character.class_name == "Necromancer") {
+			result.pDamage_min = skill.data.values[0][lvl] * ((1 + 0.13*skills_all["necromancer"][11].level + 0.13*skills_all["necromancer"][15].level) * (1+character.pDamage/100)) ;
+			result.pDamage_max = skill.data.values[1][lvl] * ((1 + 0.13*skills_all["necromancer"][11].level + 0.13*skills_all["necromancer"][15].level) * (1+character.pDamage/100)) ;
+		} 
+		if (character.class_name != "Necromancer") {
+			result.pDamage_min = skill.data.values[0][lvl] * (1+character.pDamage/100) ;
+			result.pDamage_max = skill.data.values[1][lvl] * (1+character.pDamage/100) ;
+		}
+		pnovatext = "(" + Math.round(result.pDamage_min) + "-" + Math.round(result.pDamage_max) + ")" + " {" +Math.round((result.pDamage_min+result.pDamage_max)/2) + "}";
+	}
 	return result;
 }
 
@@ -4573,6 +4598,16 @@ function updateCTC() {
 						lDamage_max = character_all.any.getSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1],1) ;
 						balltext = "(" + Math.round(lDamage_min) + "-" + Math.round(lDamage_max) + ")" + " {" +Math.round((lDamage_min+lDamage_max)/2) + "}";
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + balltext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Poison Nova") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + pnovatext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Frozen Orb") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + forbtext;
 					}
 
 					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
