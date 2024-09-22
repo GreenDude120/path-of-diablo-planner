@@ -1872,6 +1872,7 @@ function updateAllEffects() {
 				if (ctcskill_name == "Volcano") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Poison Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Frozen Orb") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Hydra") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2339,6 +2340,17 @@ function getCTCSkillData(name, lvl, group) {
 			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
 		}
 		forbtext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + ")" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}";
+	}
+	else if (name == "Hydra") {
+		if (character.class_name == "Sorceress") {
+			result.fDamage_min = skill.data.values[1][lvl] * ((1 + 0.01*skills_all["sorceress"][23].level + 0.02*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[2][lvl] * ((1 + 0.01*skills_all["sorceress"][23].level + 0.02*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.fDamage_min = skill.data.values[1][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
+		}
+		hydratext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + ")" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}";
 	}
 		
 	// Necromancer
@@ -4362,6 +4374,10 @@ function updateSecondaryStats() {
 	
 	document.getElementById("fcr").innerHTML = fcrTotal; if (fcrTotal > 0) { document.getElementById("fcr").innerHTML += "%" }
 	document.getElementById("fhr").innerHTML = c.fhr; if (c.fhr > 0) { document.getElementById("fhr").innerHTML += "%" }
+	dae = character.dodge + "%/" + c.avoid + "%/" + c.evade + "%"
+	var TooltipElement = document.getElementById("dae");
+	TooltipElement.title = "Dodge-melee attack when attacking or standing still\nAvoid-missiles when attacking or standing still\nEvade-melee or missile attack when walking or running";
+	document.getElementById("dae").innerHTML = dae
 	document.getElementById("fbr").innerHTML = c.fbr; if (c.fbr > 0) { document.getElementById("fbr").innerHTML += "%" }
 	if (fcrTotal > 0 || equipped.weapon.name != "none" || equipped.offhand.name != "none") { document.getElementById("fcr").innerHTML += " ("+fcr_f+"f)" }
 	if (c.fhr > 0 || equipped.weapon.name != "none" || equipped.offhand.name != "none") { document.getElementById("fhr").innerHTML += " ("+fhr_f+"f)" }
@@ -4557,6 +4573,10 @@ function updateTertiaryStats() {
 	if (c.ctc_temp2 > 0) { statlines += "25% chance to cast level 5 Static Field when struck<br>" }
 	if (c.all_skills > 0) { statlines += "Equpiment adds +" + c.all_skills + " all skills total<br>" }
 	if (c.oskill_Multiple_Shot > 0) { statlines += "Doomslinger will fire " + c.multiproj + " projectiles<br>" }
+	if (c.ftick_min > 0) { statlines += "Holy Fire aura tick damage: " + c.ftick_min + "-" + c.ftick_max + "<br>"}
+	if (c.ctick_min > 0) { statlines += "Holy Freeze aura tick damage: " + c.ctick_min + "-" + c.ctick_max + "<br>"}
+	if (c.ltick_min > 0) { statlines += "Holy Shock aura tick damage: " + c.ltick_min + "-" + c.ltick_max + "<br>"}
+	if (c.mtick_min > 0) { statlines += "Sanctuary aura tick damage: " + c.mtick_min + "-" + c.mtick_max + "<br>"}
 
 	document.getElementById("statlines").innerHTML = statlines
 	updateCTC()
@@ -4608,6 +4628,11 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Frozen Orb") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + forbtext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Hydra") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + hydratext;
 					}
 
 					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;

@@ -780,6 +780,7 @@ fAbsorb_flat:{index:["fAbsorb_flat"], format:["+"," Fire Absorb"]},
 cAbsorb_flat:{index:["cAbsorb_flat"], format:["+"," Cold Absorb"]},
 lAbsorb_flat:{index:["lAbsorb_flat"], format:["+"," Lightning Absorb"]},
 mAbsorb_flat:{index:["mAbsorb_flat"], format:["+"," Magic Absorb"]},
+dae:{index:["dae"], format:["","/","","/",""]},
 
 all_skills:{index:["all_skills"], format:["+"," to All Skills"]},
 all_attributes:{index:["all_attributes"], format:["+"," to all Attributes"]},
