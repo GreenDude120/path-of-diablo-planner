@@ -2303,8 +2303,8 @@ function getCTCSkillData(name, lvl, group) {
 			result.lDamage_max = skill.data.values[2][lvl] * ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+character.lDamage/100)) ;
 		} 
 		if (character.class_name != "Sorceress") {
-			result.lDamage_min = skill.data.values[1][lvl] ;// + skill.data.values[1][21] * (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+character.lDamage/100)) );
-			result.lDamage_max = skill.data.values[2][lvl] ;// + skill.data.values[1][21] * (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+character.lDamage/100)) );
+			result.lDamage_min = skill.data.values[1][lvl] * (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+character.lDamage/100)) ;
+			result.lDamage_max = skill.data.values[2][lvl] * (0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2) * (1+character.lDamage/100)) ;
 		}
 		dischargetext = "(" + Math.round(result.lDamage_min) + "-" + Math.round(result.lDamage_max) + ")" + " {" +Math.round((result.lDamage_min+result.lDamage_max)/2) + "}";
 	}
