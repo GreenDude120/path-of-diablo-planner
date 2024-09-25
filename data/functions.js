@@ -3811,6 +3811,14 @@ function skillHover(skill) {
 			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.incomplete+"</font>"
 		}
 	} }
+	if (typeof(skill.damagetoohigh) != 'undefined') { if (skill.damagetoohigh != "") {
+		if (skill.syn_text != "") { document.getElementById("syn_text").innerHTML += "<br>" }
+		if (skill.damagetoohigh == 1) {
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>High end damage displayed here is much higher <br>than in game damage, more than 10%</font>"
+		} else {
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.damagetoohigh+"</font>"
+		}
+	} }
 	var levels = 0;
 	var next_display = "";
 	var current_display = "";

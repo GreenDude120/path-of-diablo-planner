@@ -34,7 +34,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	
 	/*   not used (yet?)	*///	energy_per_level:0, lAbsorb_flat_per_level:0, mAbsorb_flat_per_level:0, mAbsorb:0, pDamage_max_per_level:0, e_damage_per_level:0, stun_length:0, base:"", img:"", original_tier:0, 
 	/*   unorganized		*/	durability_extra:0, experience:0, skills_class:0, skills_tree1:0, skills_tree2:0, skills_tree3:0, weapon:"", armor:"", shield:"", item_defense:0, block_skillup:0, velocity_skillup:0, dodge:0, avoid:0, evade:0, edged_damage:0, edged_ar:0, edged_cstrike:0, pole_damage:0, pole_ar:0, pole_cstrike:0, blunt_damage:0, blunt_ar:0, blunt_cstrike:0, thrown_damage:0, thrown_ar:0, thrown_pierce:0, claw_damage:0, claw_ar:0, claw_cstrike:0, summon_damage:0, summon_defense:0, all_skills_per_level:0, reset_on_kill:0, explosive_attack:0, magic_attack:0, ctc_temp1:0, ctc_temp2:0, ar_vs_demons_per_level:0, lDamage_max_per_level:0, pod_changes:0, 
-								skills_lightning_all:0, skills_magic_all:0, synth_wep:0, eseff:0, esprcnt:0, 
+								skills_lightning_all:0, skills_magic_all:0, synth_wep:0, eseff:0, esprcnt:0, damagetoohigh:0,
 								owounds_duration:0, owounds_dps:0, owounds_dps_per_level:0, extra_mainhand_attack:0, mDamage_per_frenzy_charge:0, frenzy_duration:0, thrown_cstrike:0, counterattack:0, pulverize:0, charge_tiger:0, charge_cobra:0, charge_bonus_explosion:0, charge_bonus_meteor:0, charge_bonus_fork:0, charge_bonus_static:0, charge_bonus_icicles:0, charge_bonus_accuracy:0, charge_bonus_reduce:0, charge_bonus_leech:0, 
 	/*	Synth displays		*/	synthfrom1:0, synthfrom2:0, synthfrom3:0, synthfrom4:0, synthfrom5:0, synthfrom6:0, synthfrom7:0, synthfrom8:0, synthfrom9:0, synthfrom10:0, 
 
