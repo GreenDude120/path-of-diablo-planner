@@ -528,6 +528,7 @@ function loadParams() {
 		if (params.has('skills') == true) { param_skills = params.get('skills') }
 		var param_charms = [];
 		if (params.has('charm') == true) { param_charms = params.getAll('charm') }
+//		if (params.has('charm') == true) { param_charms = params.getAll('charm') }
 		
 		var param_effects = [];											// per effect: id,enabled,snapshot ...if snapshot=1: ,origin,index ...per affix: ,affix,value
 		if (params.has('effect') == true) { param_effects = params.getAll('effect') }
@@ -5063,6 +5064,7 @@ function updateURL() {
 	}
 	
 	params.delete('charm')
+//	for (charm in equipped.charms) { if (typeof(equipped.charms[charm].name) != 'undefined' && equipped.charms[charm].name != 'none') { params.append('charm', equipped.charms[charm].name) }}
 	for (charm in equipped.charms) { if (typeof(equipped.charms[charm].name) != 'undefined' && equipped.charms[charm].name != 'none') { params.append('charm', equipped.charms[charm].name) }}
 	
 	if (settings.parameters == 1) { window.history.replaceState({}, '', `${location.pathname}?${params}`) }

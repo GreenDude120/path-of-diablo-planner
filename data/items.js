@@ -1283,9 +1283,9 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Rainbow Facet (Poison)", type:"jewel", rarity:"unique", req_level:49, pDamage:5, enemy_pRes:-5, pDamage_all:37, pDamage_duration:2, img:"Jewel_green.gif", ctc:[[100,23,"Venom","when you level up"]]},	// ...or: 100% ctc level 51 Poison Nova when you die
 	{name:"Rainbow Facet (Physical)", type:"jewel", rarity:"unique", req_level:49, physicalDamage:5, enemy_physRes:-5, damage_min:5, damage_max:10, img:"Jewel_green.gif", ctc:[[100,31,"War Cry","when you level up"]]},	// ...or: 100% ctc level 31 war cry when you die
 	{name:"Rainbow Facet (Magic)", type:"jewel", rarity:"unique", req_level:49, mDamage:5, enemy_mRes:-5, mDamage_min:10, mDamage_max:15, img:"Jewel_green.gif", ctc:[[100,50,"Holy Bolt","when you level up"]]},	// ...or: 100% ctc level 31 war cry when you die
-	{name:"Ruby Jewel of Fervor", type:"jewel", rarity:"magic", req_level:50, e_damage:40, ias:15},
-	{name:"Scintillating Jewel of Fervor", type:"jewel", rarity:"magic", req_level:29, all_res:15, ias:15},
-	{name:"Brute's Jewel of Fervor", type:"jewel", rarity:"magic", req_level:29, ias:15, melee_splash:1},
+	{name:"Ruby Jewel of Fervor 15/40", type:"jewel", rarity:"magic", req_level:50, e_damage:40, ias:15},
+	{name:"Scintillating Jewel of Fervor IAS/AllRes", type:"jewel", rarity:"magic", req_level:29, all_res:15, ias:15},
+	{name:"Brute's Jewel of Fervor IAS/Splash", type:"jewel", rarity:"magic", req_level:29, ias:15, melee_splash:1},
 	{name:"Vermillion Jewel of Carnage", type:"jewel", rarity:"magic", req_level:44, damage_max:30},
 	{name:"Brawler's Jewel", type:"jewel", rarity:"rare", req_level:34, all_res:10, fhr:7, e_damage:30, melee_splash:1},
 	{name:"Mage's Jewel", type:"jewel", rarity:"rare", req_level:33, all_res:10, fhr:7, mana_per_kill:3, damage_to_mana:12},
