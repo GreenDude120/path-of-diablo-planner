@@ -52,7 +52,7 @@ Added 30 life skiller gc's in items.js
 Added more possible levels to added fire min/max of corpse explosion in necromancer.js
 
 20 Sep
-Added more elegant way to display CTC damage; new skillname"text" variables in items, add skills to list of ctc skills in basic_variables, added code in functions to calculate and show damage and hide icon from top right
+Added more elegant way to display CTC damage; new skillname "text" variables in items, add skills to list of ctc skills in basic_variables, added code in functions to calculate and show damage and hide icon from top right
 
 21 Sep
 Added CTC Ball Lightning damage as above. Used getSkillData instead of getCTCSkillData to display this, maybe that's the better way moving forward?
@@ -73,3 +73,5 @@ Renamed a few jewels to mmake it easier to see what they are
 29 Sep
 Changed "keyboard shortcuts" to "planner shortcuts" in nav bar, changed to just "shortcuts" and added a couple more
 Added damage taken after ES accounted for calculations
+Removed Destruction in crystal and dimensional sword since directions for upgrading/downgradig base can be found in shortcuts
+Added moulten boulder to new CTC display, removed those selectable CTC skills from desctruction runeword
