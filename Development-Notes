@@ -69,3 +69,7 @@ Fixed some incorrect barb skill prereqs
 27 Sep
 Added visibility for planner shortcuts
 Renamed a few jewels to mmake it easier to see what they are
+
+29 Sep
+Changed "keyboard shortcuts" to "planner shortcuts" in nav bar
+Added damage taken after ES accounted for calculations

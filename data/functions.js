@@ -4323,14 +4323,23 @@ function updateSecondaryStats() {
 
 	if (eseff > 0) {
 		document.getElementById("eseff_label").style.visibility = "visible"
-		document.getElementById("eseff").innerHTML = eseff
+		document.getElementById("eseff").innerHTML = eseff + "%"
 	} else {
 		document.getElementById("eseff_label").style.visibility = "hidden"
 		document.getElementById("eseff").innerHTML = ""
 	}	
 	if (esprcnt > 0) {
 		document.getElementById("esprcnt_label").style.visibility = "visible"
-		document.getElementById("esprcnt").innerHTML = esprcnt
+		document.getElementById("esprcnt").innerHTML = esprcnt + "%";
+//		getESDamageTaken - No extra function needed, this does the job
+		var esdamagetaken = "Per 500 damage taken,\nHP will lose:" ;
+		esdamagetaken += "\nPhys: " + Math.round((500-c.damage_reduced)*(1-(c.pdr/100))*(1-(c.block/100))*(1-(esprcnt/100))) ;
+		esdamagetaken += "\nFire: " + Math.round(500*(1-(c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup)/100)*(1-esprcnt/100)) ;
+		esdamagetaken += "\nCold: " + Math.round(500*(1-(c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup)/100)*(1-esprcnt/100)) ;
+		esdamagetaken += "\nLight: " + Math.round(500*(1-(c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup)/100)*(1-esprcnt/100)) ;
+
+		var TooltipElement = document.getElementById("esprcnt");
+		TooltipElement.title = esdamagetaken  ;	
 	} else {
 		document.getElementById("esprcnt_label").style.visibility = "hidden"
 		document.getElementById("esprcnt").innerHTML = ""
