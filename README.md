@@ -40,6 +40,8 @@ If your phone doesn't have a way to emulate ctrl+click or shift+click, you can s
 https://build.pathofdiablo.com/?v=2&class=sorceress&level=99&quests=1&strength=45&vitality=460
 
 ### Known Issues:
+*   Whirling axes damage displayed is much hgher than in game, if you've got actual in-game damage values to share please let Qord know
+*   Frenzy damage display is off, magic damage is added to instead of converted to 
 * ~~Some spells that deal magic damage (ex: FoH, Bone Spear) are not affected by magic facets or charms; attacks (like Dashing Strike) do display properly~~ This was fixed, please report if you see otherwise.
 * Displayed damage is incorrect for skills that care about on vs off weapon ED, added minus ED
 charms to compensate
@@ -61,11 +63,14 @@ charms to compensate
 * party tracking (i.e. buffs from party members)
     * Some party buff effects available via "charms" 
 * Add calculated damage values for CtC (chance to cast) skills in a consistent manner
-* Show damage breakdown instead of just the total damage 
+    * Work in progress, many skills have damage added in the CtC lines
+* Show damage breakdown instead of just the total damage; breakdown of attack damage by type
+    * Work in progress
 * mercenary stats
 * total calculated damage for minions
+    * Would like to include the pet calculator functionality
 * IAS breakpoint info (frames per attack) for skills which don't use normal breakpoints
-* breakdown of attack damage by type
+    * Worked in a direct link to mmmpld's AIS calc, clicking it passes class, weapon, and other info directly into the ias calc
 * skill effectiveness (dps, area affected, movement capability)
 * full GUI inventory/stash
 * custom item creation & affix editing
@@ -121,14 +126,14 @@ To add a new runeword:
 * Define the runeword and the runes that make it in item_metadata
 * Create the new runeword in items.js, using an existing similar runeword as a template or example is the easiest way
     * In the approriate section (ie, stay organized and don't add helmets in the middle of the weapons list) add the runeword by name, and add all of the properties it has with the appropriate values of those properties. If the property is a range, such as "10-15 fire resistance, the standard has been to add the highest value, so fres:15 for this example. (This assumes the property in question already exists, if that's not the case then the proprty will need to be defined in item_metadata before it can be assigned to an item. See Warlords Trust for an example. In this example "fres", or fire resistance, as a property is already defined in the item_metadata file.)
-* Runewords can be added using any appropriate base you'd like, base items are defined in item_metadata
+* Runewords can be added using any appropriate base you'd like, base items are defined in item_metadata. Best to create them in the best base possible since you can downgrade/upgrade item bases on the fly in the planner.
 
 Adding a few runewords: https://youtu.be/_WvS_m0Co2A 
 
 Adding Whirling Axes changes for Warlords Trust: https://youtu.be/f8X2HfnS6Lc 
 
 #### Sample Skill changes
-* If a skill is changed, fine the skill in the appropriate file (changes to freezing pulse would be made in the sorceress.js file for example) and make changes there. 
+* If a skill is changed, find the skill in the appropriate file (changes to freezing pulse would be made in the sorceress.js file for example) and make changes there. 
 
 ### Credits:
 
