@@ -4416,20 +4416,6 @@ function updateSecondaryStats() {
 	document.getElementById("fcr").innerHTML = fcrTotal; if (fcrTotal > 0) { document.getElementById("fcr").innerHTML += "%" }
 	document.getElementById("fhr").innerHTML = c.fhr; if (c.fhr > 0) { document.getElementById("fhr").innerHTML += "%" }
 
-	dae = character.dodge + "%/" + c.avoid + "%/" + c.evade + "%"
-	var TooltipElement = document.getElementById("dae");
-	TooltipElement.title = "Dodge-melee attack when attacking or standing still\nAvoid-missiles when attacking or standing still\nEvade-melee or missile attack when walking or running";
-	document.getElementById("dae").innerHTML = dae
-//	if (character.dodge > 0 || c.avoid > 0 || c.evade > 0) {
-//	document.getElementById("dae_label").style.visibility = "visible"
-//	dae = character.dodge + "%/" + c.avoid + "%/" + c.evade + "%"
-//	var TooltipElement = document.getElementById("dae");
-//	TooltipElement.title = "Dodge-melee attack when attacking or standing still\nAvoid-missiles when attacking or standing still\nEvade-melee or missile attack when walking or running";
-//	document.getElementById("dae").innerHTML = dae
-//	}	else {
-//		document.getElementById("dae_label").style.visibility = "hidden"
-//		document.getElementById("dae").innerHTML = ""
-//	}
 	document.getElementById("fbr").innerHTML = c.fbr; if (c.fbr > 0) { document.getElementById("fbr").innerHTML += "%" }
 	if (fcrTotal > 0 || equipped.weapon.name != "none" || equipped.offhand.name != "none") { document.getElementById("fcr").innerHTML += " ("+fcr_f+"f)" }
 	if (c.fhr > 0 || equipped.weapon.name != "none" || equipped.offhand.name != "none") { document.getElementById("fhr").innerHTML += " ("+fhr_f+"f)" }
@@ -4629,6 +4615,10 @@ function updateTertiaryStats() {
 	if (c.ctick_min > 0) { statlines += "Holy Freeze aura tick damage: " + c.ctick_min + "-" + c.ctick_max + "<br>"}
 	if (c.ltick_min > 0) { statlines += "Holy Shock aura tick damage: " + c.ltick_min + "-" + c.ltick_max + "<br>"}
 	if (c.mtick_min > 0) { statlines += "Sanctuary aura tick damage: " + c.mtick_min + "-" + c.mtick_max + "<br>"}
+
+	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
+	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}
+	if (c.evade > 0) { statlines += c.evade + "% Chance to <b>Evade</b> melee or missile attack when walking or running" + "<br>"}
 
 	document.getElementById("statlines").innerHTML = statlines
 	updateCTC()

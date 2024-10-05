@@ -85,3 +85,4 @@ Revised damage numbers for Whirling Axes
 4 Oct
 Fixed Lightning mastery having wrong icon in top-right
 Fixed deadly strike % calc not including deadly strike per level (ie, highlords)
+Move dodge/evade/avoid to bottom right, moved to updateTertiaryStats in functions, removed dodge/evade/avoid lines from function, removed dodge/evade/avoid line from index
