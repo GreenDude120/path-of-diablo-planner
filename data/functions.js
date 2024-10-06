@@ -1876,6 +1876,7 @@ function updateAllEffects() {
 				if (ctcskill_name == "Poison Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Frozen Orb") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Hydra") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Fissure") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2304,6 +2305,17 @@ function getCTCSkillData(name, lvl, group) {
 			result.fDamage_max2 = skill.data.values[5][lvl] * (1+character.fDamage/100) ;
 		}
 		mbouldertext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}," + " (" + Math.round(result.fDamage_min2) + "-" + Math.round(result.fDamage_max2) + " burn)" + " {" +Math.round((result.fDamage_min2+result.fDamage_max2)/2) + "}"; 
+	}
+	else if (name == "Fissure") {
+		if (character.class_name == "Druid") {
+			result.fDamage_min = skill.data.values[0][lvl] * ((1 + 0.15*skills_all["druid"][0].level + 0.15*skills_all["druid"][7].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[1][lvl] * ((1 + 0.15*skills_all["druid"][0].level + 0.15*skills_all["druid"][7].level) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Druid") {
+			result.fDamage_min = skill.data.values[0][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[1][lvl] * (1+character.fDamage/100) ;
+		}
+		fissuretext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
 
 	// Sorceress
@@ -4660,6 +4672,10 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Molten Boulder") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + mbouldertext;
+					}
+					else if (equipped[group].ctc[i][2] == "Fissure") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fissuretext;
 					}
 
 					else if (equipped[group].ctc[i][2] == "Ball Lightning") {
