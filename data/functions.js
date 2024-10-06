@@ -2317,6 +2317,32 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		fissuretext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
+	else if (name == "Hurricane") {
+		if (character.class_name == "Druid") {
+			result.cDamage_min = skill.data.values[1][lvl] * ((1 + 0.04*skills_all["druid"][3].level + 0.04*skills_all["druid"][6].level + 0.04*skills_all["druid"][8].level) * (1+character.cDamage/100)) ;
+			result.cDamage_max = skill.data.values[2][lvl] * ((1 + 0.04*skills_all["druid"][3].level + 0.04*skills_all["druid"][6].level + 0.04*skills_all["druid"][8].level) * (1+character.cDamage/100)) ;
+		} 
+		if (character.class_name != "Druid") {
+			result.cDamage_min = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[2][lvl] * (1+character.cDamage/100) ;
+		}
+		hurritext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + " fire)" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}"; 
+	}
+	else if (name == "Armageddon") {
+		if (character.class_name == "Druid") {
+			result.damage_min = skill.data.values[1][lvl] * ((1 + 0.12*skills_all["druid"][1].level) * (1+character.physicalDamage/100)) ;
+			result.damage_max = skill.data.values[2][lvl] * ((1 + 0.12*skills_all["druid"][1].level) * (1+character.physicalDamage/100)) ;
+			result.fDamage_min = skill.data.values[3][lvl] * ((1 + 0.12*skills_all["druid"][0].level + 0.12*skills_all["druid"][7].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[4][lvl] * ((1 + 0.12*skills_all["druid"][0].level + 0.12*skills_all["druid"][7].level) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Druid") {
+			result.damage_min = skill.data.values[1][lvl] * (1+character.physicalDamage/100) ;
+			result.damage_max = skill.data.values[2][lvl] * (1+character.physicalDamage/100) ;
+			result.fDamage_min = skill.data.values[3][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[4][lvl] * (1+character.fDamage/100) ;
+		}
+		armatext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
+	}
 
 	// Sorceress
 	else if (name == "Chilling Armor") {
@@ -4676,6 +4702,14 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Fissure") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fissuretext;
+					}
+					else if (equipped[group].ctc[i][2] == "Hurricane") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + hurritext;
+					}
+					else if (equipped[group].ctc[i][2] == "Armageddon") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + armatext;
 					}
 
 					else if (equipped[group].ctc[i][2] == "Ball Lightning") {
