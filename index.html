@@ -55,6 +55,9 @@
       <div class="nav-dropdown-content-item"><div class="nav-text">
         <label>&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="file" id="fileToLoad" onchange="loadFileAsText()"></input></label>
       </div></div>
+      <div class="nav-dropdown-content-item" onclick="window.location = url='https://build.pathofdiablo.com'"><div class="nav-text">
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Reload&nbsp;&nbsp;</label>
+      </div></div>
     </div>
   </div>
 <!--  
@@ -74,7 +77,7 @@
     <button class="nav-dropbtn">Preferences</button>
     <div class="nav-dropdown-content">
       <div class="nav-dropdown-content-item"><div class="nav-option">
-        <input id="parameters" type="checkbox" name="parameters" value="0" onclick="return toggleParameters(this);">
+        <input id="parameters" type="checkbox" name="parameters" value="1" onclick="return toggleParameters(this);" checked>
         <label for="parameters">&nbsp;&nbsp;&nbsp;&nbsp;Shareable URL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
       </div></div>
       <div class="nav-dropdown-content-item"><div class="nav-option">

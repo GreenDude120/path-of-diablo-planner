@@ -75,6 +75,7 @@ function startup(choice) {
 	document.getElementById("quests").checked = 0
 	document.getElementById("running").checked = 0
 	document.getElementById("difficulty3").checked = 1
+//	document.getElementById("parameters").checked = 1
 	skills = skills_all[choice]
 	for (stat in base_stats) { character[stat] = base_stats[stat] }
 	for (stat in unequipped) { character[stat] = unequipped[stat] }
@@ -84,6 +85,7 @@ function startup(choice) {
 	document.getElementById("skill_tree").src = character_setup.skill_layout
 	init()
 	updateStats()
+	toggleParameters(parameters)
 }
 
 // reset - Calls startup() with the specified class name
