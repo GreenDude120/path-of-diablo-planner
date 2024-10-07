@@ -1877,6 +1877,8 @@ function updateAllEffects() {
 				if (ctcskill_name == "Frozen Orb") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Hydra") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Fissure") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Armageddon") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Hurricane") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2326,7 +2328,7 @@ function getCTCSkillData(name, lvl, group) {
 			result.cDamage_min = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
 			result.cDamage_max = skill.data.values[2][lvl] * (1+character.cDamage/100) ;
 		}
-		hurritext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + " fire)" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}"; 
+		hurritext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + " cold)" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}"; 
 	}
 	else if (name == "Armageddon") {
 		if (character.class_name == "Druid") {

@@ -975,7 +975,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{synth:"true", name:"Tesla's Stormlash", req_level:82, e_damage:511, max_damage_per_level:2, lDamage_min:53, lDamage_max:1410, ias:60, enemy_lRes:-15, ctc:[[30,24,"Ball Lightning","on attack"],[15,26,"Ball Lightning","on striking"],[15,10,"Static Field","on striking"]], synthfrom5:1, type:"mace", base:"Scourge", img:"The_General's_Tan_Do_Li_Ga"},
 	{synth:"true", name:"Bow Sorc's Doomslinger", req_level:28, all_skills:5, e_damage:230, ias:40, pierce:35, enemy_cRes:-50, enemy_fRes:-15, oskill_Immolation_Arrow:18, oskill_Magic_Arrow:5, oskill_Multiple_Shot:1, synthfrom6:1, twoHanded:1, type:"crossbow", base:"Repeating Crossbow", pod_changes:1, img:"Doomslinger"},
 	{synth:"true", name:"Collector's Cranebeak", req_level:63, e_damage:511, ias:100, mf:230, gf_per_level:2.5, mf_per_level:1, reanimate:10, all_res:50, life_per_kill:14, synthfrom7:1, type:"axe", base:"War Spike", img:"Skull_Splitter"},
-	{rarity:"common", name:"Qord's Leg", type:"mace", special:2, damage_vs_undead:50, base_damage_min:2, base_damage_max:8, durability:0, max_sockets:3, sockets:3, ctc:[[20,20,"Volcano","on attack"],[20,20,"Molten Boulder","on striking"],[20,20,"Fissure","on striking"],[20,20,"Hurricane","on striking"],[20,20,"Armageddon","on striking"]], img:"Wirt's_Leg"},
+	{rarity:"common", name:"Qord's Leg", type:"mace", special:2, damage_vs_undead:50, base_damage_min:2, base_damage_max:8, durability:0, max_sockets:3, sockets:3, ctc:[[20,20,"Volcano","on attack"],[20,20,"Molten Boulder","on striking"],[20,20,"Fissure","on striking"],[20,20,"Hurricane","on striking"],[20,20,"Armageddon","on striking"]], twohanded:1, img:"Wirt's_Leg"},
 	
 		
 		
