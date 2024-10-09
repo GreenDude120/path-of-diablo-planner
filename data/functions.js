@@ -1879,6 +1879,8 @@ function updateAllEffects() {
 				if (ctcskill_name == "Fissure") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Armageddon") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Hurricane") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Meteor") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Blizzard") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2414,7 +2416,38 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		hydratext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + ")" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}";
 	}
-		
+	else if (name == "Blizzard") {
+		if (character.class_name == "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * ((1 + 0.09*skills_all["sorceress"][3].level + 0.09*skills_all["sorceress"][5].level) * (1+character.cDamage/100)) ;
+			result.cDamage_max = skill.data.values[1][lvl] * ((1 + 0.09*skills_all["sorceress"][3].level + 0.09*skills_all["sorceress"][5].level) * (1+character.cDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
+		}
+		blizztext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + ")" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}";
+	}	
+	else if (name == "Meteor") {
+		if (character.class_name == "Sorceress") {
+			result.damage_min = skill.data.values[0][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.physicalDamage/100)) ;
+			result.damage_max = skill.data.values[1][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.physicalDamage/100)) ;
+			result.fDamage_min = skill.data.values[2][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[3][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
+			result.fDamage_min2 = skill.data.values[4][lvl] * ((1 + 0.03*skills_all["sorceress"][24].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max2 = skill.data.values[5][lvl] * ((1 + 0.03*skills_all["sorceress"][24].level) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.damage_min = skill.data.values[0][lvl] * (1+character.physicalDamage/100) ;
+			result.damage_max = skill.data.values[1][lvl] * (1+character.physicalDamage/100) ;
+			result.fDamage_min = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[3][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_min2 = skill.data.values[4][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max2 = skill.data.values[5][lvl] * (1+character.fDamage/100) ;
+		}
+		meteotext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
+	}
+	
+	
 	// Necromancer
 	else if (name == "Flesh Offering") { result.duration = skill.data.values[0][lvl]; result.radius = skill.data.values[1][lvl]; }	// TODO: implement for summons: result.fcr = skill.data.values[2][lvl]; result.ias_skill = skill.data.values[3][lvl]; result.velocity = skill.data.values[4][lvl]; 
 	else if (name == "Poison Nova") {
@@ -4734,6 +4767,16 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Hydra") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + hydratext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Meteor") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + meteotext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Blizzard") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + blizztext;
 					}
 
 					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
