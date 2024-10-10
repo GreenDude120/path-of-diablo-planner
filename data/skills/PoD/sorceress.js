@@ -166,10 +166,13 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 		if (lDamage_min > 0) {skill2Breakdown += "\nLight Damage: " + Math.floor(lDamage_min) + "-" + Math.floor(lDamage_max)};
 		if (mDamage_min > 0) {skill2Breakdown += "\nMagic Damage: " + Math.floor(mDamage_min) + "-" + Math.floor(mDamage_max)};
 		if (pDamage_min > 0) {skill2Breakdown += "\nPoison Damage: " + Math.floor(pDamage_min) + "-" + Math.floor(pDamage_max)};
-		addmore = "no"
-//		if (attack == 1){
-//			addmore = "yes"
-//		}
+		if (attack != 0){
+			addmore = "yes"
+		}
+		if (attack == 0){
+			addmore = "no"
+		}		
+
 
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
 		return result

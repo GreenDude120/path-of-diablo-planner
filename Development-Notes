@@ -91,3 +91,7 @@ Move dodge/evade/avoid to bottom right, moved to updateTertiaryStats in function
 Added a drop down menu button for "reload", might not do what we want...
 Made shareable links on by default in index, added toggleParameters(parameters) to startup functions to force this to be enabled on page load
 Added more ctc skills in basic_variables, added functions for them, added Qord's leg to use them
+
+9 Oct
+Added Armageddon as oskill, Qords 3rd leg; added the oskill to all 3 legs at different levels
+Fixed spell damage display for barb and universal skills

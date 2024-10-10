@@ -1368,6 +1368,7 @@ oskill_Werewolf:{index:["oskill_Werewolf"], format:["+"," to Werewolf"]},
 oskill_Feral_Rage:{index:["oskill_Feral_Rage"], format:["+"," to Feral Rage"]},
 oskill_Flame_Dash:{index:["oskill_Flame_Dash"], format:["+"," to Flame Dash"]},
 oskill_Summon_Dire_Wolf:{index:["oskill_Summon_Dire_Wolf"], format:["+"," to Summon Dire Wolf"]},
+oskill_Armageddon:{index:["oskill_Armageddon"], format:["+"," to Armageddon"]},
 
 oskill_Desecrate:{index:["oskill_Desecrate"], format:["+"," to Desecrate"]},
 

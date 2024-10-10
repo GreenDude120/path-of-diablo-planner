@@ -96,6 +96,9 @@ var character_any = {
 		if (skillName == "Werebear" && elem == 0) {					result = (15 + sk[12].data.values[1][lycan_lvl]) }
 		if (skillName == "Werebear" && elem == 1) {					result += (sk[12].data.values[0][lycan_lvl]) }
 		if (skillName == "Summon Dire Wolf" && elem == 3) {			result = ((1 + (skill.data.values[6][lvl] / 100)) * skill.data.values[elem][character.difficulty]) }
+		if (skillName == "Armageddon" && elem == 0) { 					result += (2*skills[4].level) }
+		if (skillName == "Armageddon" && elem < 3 && elem > 0) { 		result *= (1 + (0.12*skills[1].level)) * (1+character.physicalDamage/100) }
+		if (skillName == "Armageddon" && elem < 5 && elem > 2) { 		result *= ((1 + (0.12*skills[0].level + 0.12*skills[7].level)) * (1+character.fDamage/100)) }
 		if (skillName == "CTC MBoulder Proc" && elem < 2) { 				result *= (1 + (0.20*skills[7].level)) }
 		if (skillName == "CTC MBoulder Proc" && elem > 1 && elem < 4) { 	result *= ((1 + (0.23*skills[0].level)) * (1+character.fDamage/100)) }
 		if (skillName == "CTC MBoulder Proc" && elem > 3 && elem < 6) { 	result *= ((1 + (0.17*skills[0].level)) * (1+character.fDamage/100)) }
@@ -169,6 +172,7 @@ var character_any = {
 			result.max_life = (15 + lycan_life); result.damage_bonus = skill.data.values[1][lvl] + lycan_damage; result.defense_bonus = skill.data.values[2][lvl]; result.duration = 1040;
 		}
 		if (skill.name == "Feral Rage") { result.velocity = skill.data.values[1][lvl]; result.life_leech = skill.data.values[3][lvl]; result.duration = 20; }
+		if (skill.name == "Armageddon") { result.duration = skill.data.values[0][lvl]; }
 		if (skill.name == "Frigerate") {
 			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100);
 			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100);
@@ -239,6 +243,7 @@ var character_any = {
 		else if (skillName == "Flame Dash") { 		attack = 0; spell = 1; lvl += character.skills_fire_all; fDamage_min = character_any.getSkillData(skillName,lvl,1); fDamage_max = character_any.getSkillData(skillName,lvl,2); }
 		else if (skillName == "Feral Rage") {		attack = 1; spell = 0; ar_bonus = character_any.getSkillData(skillName,lvl,5); damage_bonus = character_any.getSkillData(skillName,lvl,4); }
 		else if (skillName == "Summon Dire Wolf") {	attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,4); damage_max = character_any.getSkillData(skillName,lvl,5); ar_bonus = character_any.getSkillData(skillName,lvl,1); }
+		else if (skillName == "Armageddon") {		attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,1); damage_max = character_any.getSkillData(skillName,lvl,2); fDamage_min = character_any.getSkillData(skillName,lvl,3); fDamage_max = character_any.getSkillData(skillName,lvl,4); }
 		else if (skillName == "Desecrate") {		attack = 0; spell = 1; lvl += character.skills_poison_all; pDamage_min = character_any.getSkillData(skillName,lvl,1); pDamage_max = character_any.getSkillData(skillName,lvl,2); pDamage_duration = 2; }
 		else if (skillName == "Zeal") {				attack = 1; spell = 0; ar_bonus = character_any.getSkillData(skillName,lvl,0); damage_bonus = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "Vengeance") {		attack = 1; spell = 0; fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); cDamage_min = character_any.getSkillData(skillName,lvl,4); cDamage_max = character_any.getSkillData(skillName,lvl,5); lDamage_min = character_any.getSkillData(skillName,lvl,6); lDamage_max = character_any.getSkillData(skillName,lvl,7); ar_bonus = character_any.getSkillData(skillName,lvl,11); }
@@ -275,6 +280,9 @@ var character_any = {
 		if (lDamage_min > 0) {skill2Breakdown += "\nSkill Light Damage: " + Math.floor(lDamage_min) + "-" + Math.floor(lDamage_max)};
 		if (mDamage_min > 0) {skill2Breakdown += "\nSkill Magic Damage: " + Math.floor(mDamage_min) + "-" + Math.floor(mDamage_max)};
 		if (pDamage_min > 0) {skill2Breakdown += "\nSkill Poison Damage: " + Math.floor(pDamage_min) + "-" + Math.floor(pDamage_max)};
+		if (spell == 1){
+			addmore = "no"
+		}
 		if (attack != 0){
 			addmore = "yes"
 		}
