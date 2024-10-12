@@ -2130,7 +2130,7 @@ function getAuraData(aura, lvl, source) {
 	else if (aura == "Vigor") { result.velocity = auras[a].data.values[0][lvl]; result.max_stamina = auras[a].data.values[1][lvl]; result.heal_stam = auras[a].data.values[2][lvl]; result.radius = 21.3; }
 	else if (aura == "Meditation") { result.mana_regen = auras[a].data.values[1][lvl]; result.radius = 24; }
 	else if (aura == "Redemption") { result.redeem_chance = auras[a].data.values[0][lvl]; result.redeem_amount = auras[a].data.values[1][lvl]; result.radius = 16; }
-	else if (aura == "Salvation") { result.fDamage = auras[a].data.values[0][lvl]; result.cDamage = auras[a].data.values[0][lvl]; result.lDamage = auras[a].data.values[0][lvl]; result.all_res = auras[a].data.values[1][lvl]; result.radius = 28; }
+	else if (aura == "Salvation") { result.fDamage = auras[a].data.values[0][lvl]; result.cDamage = auras[a].data.values[0][lvl]; result.lDamage = auras[a].data.values[0][lvl]; result.all_res = auras[a].data.values[1][lvl]; result.radius = 28; salvdam = auras[a].data.values[0][lvl]; salvres = auras[a].data.values[1][lvl]; }
 	// Offensive Auras
 	else if (aura == "Might") { result.damage_bonus = auras[a].data.values[0][lvl]; result.radius = 16; }
 //	else if (aura == "Holy Fire") { result.fDamage_min = auras[a].data.values[0][lvl]; result.fDamage_max = auras[a].data.values[1][lvl]; result.radius = 12; }
@@ -4520,6 +4520,11 @@ function updateSecondaryStats() {
 	document.getElementById("mdamage").innerHTML = c.mDamage; if (c.mDamage > 0) { document.getElementById("mdamage").innerHTML += "%" }
 	document.getElementById("physicalDamage").innerHTML = c.physicalDamage; if (c.physicalDamage > 0) { document.getElementById("physicalDamage").innerHTML += "%" }
 
+//	document.getElementById("fpierce").innerHTML = c.fPierce; 
+//	if (c.multPierce > 0 && c.fPierce > 0) 
+//		{ document.getElementById("fpierce").innerHTML = Math.round(c.fPierce * c.multPierce); document.getElementById("fpierce").innerHTML += "%" }
+//	else{	document.getElementById("fpierce").innerHTML = c.fPierce; if (c.fPierce > 0) { document.getElementById("fpierce").innerHTML += "%" }}
+
 	document.getElementById("fpierce").innerHTML = c.fPierce; if (c.fPierce > 0) { document.getElementById("fpierce").innerHTML += "%" }
 	document.getElementById("cpierce").innerHTML = c.cPierce; if (c.cPierce > 0) { document.getElementById("cpierce").innerHTML += "%" }
 	document.getElementById("lpierce").innerHTML = c.lPierce; if (c.lPierce > 0) { document.getElementById("lpierce").innerHTML += "%" }
@@ -4690,6 +4695,8 @@ function updateTertiaryStats() {
 	if (c.ctick_min > 0) { statlines += "Holy Freeze aura tick damage: " + c.ctick_min + "-" + c.ctick_max + "<br>"}
 	if (c.ltick_min > 0) { statlines += "Holy Shock aura tick damage: " + c.ltick_min + "-" + c.ltick_max + "<br>"}
 	if (c.mtick_min > 0) { statlines += "Sanctuary aura tick damage: " + c.mtick_min + "-" + c.mtick_max + "<br>"}
+	if (c.issalvation > 0) { statlines += "Salvation damage bonus: " + "+" + salvdam + "%" + "<br>"}
+	if (c.issalvation > 0) { statlines += "Salvation resistance bonus: " + "+" + salvres + "%" + "<br>"}
 
 	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
 	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}

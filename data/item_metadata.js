@@ -955,6 +955,7 @@ upgrade:1,
 downgrade:1,
 aura:{index:["aura_lvl","aura"], format:["Level "," "," Aura when Equipped"]},
 aura_lvl:1,
+issalvation:0,
 special:1,
 pod_changes:1,
 sup:1,//{index:["sup"], format:["Superior +","%"]},
@@ -1468,6 +1469,7 @@ synthfrom7:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Sy
 synthfrom8:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
 synthfrom9:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
 synthfrom10:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
+multPierce:{index:["multPierce"], format:["Poison and Elemental Pierce multiplied by",""]},
 
 // debug:{index:[],format:['<span style="color:red; font-size:12px">'+"Item does not exist in game,<br>only exists here for ease of testing"+'</span>']},
 
