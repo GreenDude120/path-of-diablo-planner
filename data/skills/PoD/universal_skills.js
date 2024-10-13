@@ -134,6 +134,7 @@ var character_any = {
 		if (skillName == "Meteor" && elem < 4 && elem > 1) { 		result *= (1+character.fDamage/100) }
 		if (skillName == "Meteor" && elem < 6 && elem > 3) { 		result *= (1+character.fDamage/100) }
 		if (skillName == "Hydra" && elem < 3 && elem > 0) { 		result *= (1+character.fDamage/100) }
+		if (skillName == "Blizzard" && elem < 2) { 					result *= ((1 + (0.09*skills_all["sorceress"][3].level + 0.09*skills_all["sorceress"][5].level)) * (1+character.cDamage/100)) }
 		if (skillName == "CTC Discharge Proc" && elem < 2) { 	result *= ((1 + 0.03*skills_all["sorceress"][12].level + 0.03*skills_all["sorceress"][14].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
 		if (skillName == "CTC Chain Light Proc" && elem < 2) { 		result *= ((1 + 0.03*skills_all["sorceress"][11].level + 0.03*skills_all["sorceress"][15].level))} // + 0.01*Math.floor(((character.energy + character.all_attributes)*(1+character.max_energy/100))/2)) * (1+c.lDamage/100)) }
 		if (skillName == "CTC Nova Proc" && elem < 2) { 		result *= ((1 + (0.03*skills_all["sorceress"][18].level)) * (1+character.lDamage/100)) }
@@ -151,7 +152,7 @@ var character_any = {
 	getBuffData : function(skill) {
 		var id = skill.name.split(' ').join('_');
 		var lvl = character["oskill_"+skill.name.split(" ").join("_")] + character.all_skills + Math.ceil(character.all_skills_per_level*character.level);	// TODO: restrict level calculations to setEffectData()?
-		if (id == "Frigerate" || id == "Shiver_Armor" || id == "Cold_Mastery") { lvl += character.skills_cold_all }
+		if (id == "Frigerate" || id == "Shiver_Armor" || id == "Cold_Mastery" || id == "Blizzard") { lvl += character.skills_cold_all }
 		if (id == "Fire_Mastery") { lvl += character.skills_fire_all }
 		var result = {};
 		var lycan_lvl = ~~character["oskill_Lycanthropy"] + character.all_skills + Math.ceil(character.all_skills_per_level*character.level);
@@ -250,6 +251,7 @@ var character_any = {
 		else if (skillName == "Dashing Strike") {	attack = 1; spell = 1; mDamage_min = character_any.getSkillData(skillName,lvl,1); mDamage_max = character_any.getSkillData(skillName,lvl,2); }
 		else if (skillName == "Fire Ball") {		attack = 0; spell = 1; lvl += character.skills_fire_all; fDamage_min = character_any.getSkillData(skillName,lvl,0); fDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "Fire Wall") {		attack = 0; spell = 1; lvl += character.skills_fire_all; fDamage_min = character_any.getSkillData(skillName,lvl,0); fDamage_max = character_any.getSkillData(skillName,lvl,1); }
+		else if (skillName == "Blizzard") {			attack = 0; spell = 1; cDamage_min = character_any.getSkillData(skillName,lvl,0); cDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "Meteor") {			attack = 0; spell = 1; lvl += character.skills_fire_all; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); fDamage_min = character_any.getSkillData(skillName,lvl,2); fDamage_max = character_any.getSkillData(skillName,lvl,3); }
 		else if (skillName == "Hydra") {			attack = 0; spell = 1; lvl += character.skills_fire_all; fDamage_min = character_any.getSkillData(skillName,lvl,1); fDamage_max = character_any.getSkillData(skillName,lvl,2); }
 		else if (skillName == "Whirlwind") {		attack = 1; spell = 0; ar_bonus = character_any.getSkillData(skillName,lvl,1); damage_bonus = character_any.getSkillData(skillName,lvl,0); }

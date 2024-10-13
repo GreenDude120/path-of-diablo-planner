@@ -29,7 +29,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	/* oskills  druid		*/	oskill_Lycanthropy:0, oskill_Werebear:0, oskill_Werewolf:0, oskill_Feral_Rage:0, oskill_Flame_Dash:0, oskill_Summon_Dire_Wolf:0, oskill_Armageddon:0, 									// Frostwind, Wolfhowl, Beast, Flamebellow, Boneflesh
 	/* oskills  necromancer	*/	oskill_Desecrate:0, 																																				// Radament's Sphere
 	/* oskills  paladin		*/	oskill_Zeal:0, oskill_Vengeance:0, oskill_Dashing_Strike:0, oskill_Concentration:0,																														// Passion, Kingslayer
-	/* oskills  sorceress	*/	oskill_Frigerate:0, oskill_Shiver_Armor:0, oskill_Cold_Mastery:0, oskill_Hydra:0, oskill_Fire_Ball:0, oskill_Fire_Wall:0, oskill_Meteor:0, oskill_Fire_Mastery:0, 	// Frostwind, Medusa's Gaze, Bing Sz Wang, Dragonscale, Trang-Oul's Set
+	/* oskills  sorceress	*/	oskill_Frigerate:0, oskill_Shiver_Armor:0, oskill_Blizzard:0, oskill_Cold_Mastery:0, oskill_Hydra:0, oskill_Fire_Ball:0, oskill_Fire_Wall:0, oskill_Meteor:0, oskill_Fire_Mastery:0, 	// Frostwind, Medusa's Gaze, Bing Sz Wang, Dragonscale, Trang-Oul's Set
 								oskill_Berserk:0, oskill_Teleport:0, oskill_Heart_of_Wolverine:0,  
 	
 	/*   not used (yet?)	*///	energy_per_level:0, lAbsorb_flat_per_level:0, mAbsorb_flat_per_level:0, mAbsorb:0, pDamage_max_per_level:0, e_damage_per_level:0, stun_length:0, base:"", img:"", original_tier:0, 
@@ -977,7 +977,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{synth:"true", name:"Collector's Cranebeak", req_level:63, e_damage:511, ias:100, mf:230, gf_per_level:2.5, mf_per_level:1, reanimate:10, all_res:50, life_per_kill:14, synthfrom7:1, type:"axe", base:"War Spike", img:"Skull_Splitter"},
 	{rarity:"craft", name:"Qord's Obsession - Salvation Leg", req_level:69, all_skills:4, fcr:65, fhr:60, knockback:1, vitality:10, energy:10, max_life:25, mana_regen:30, aura:"Salvation", aura_lvl:7, issalvation:1, gf:75, mf:30, twoHanded:1, type:"staff", base:"Archon Staff", img:"Wirt's_Leg"},
 	{rarity:"craft", name:"Qord's Obsession - Just Obsession Leg", req_level:69, skill_Cold_Mastery:3, skill_Fire_Mastery:3, skill_Warmth:3, all_skills:4, fcr:65, fhr:60, knockback:1, vitality:10, energy:10, max_life:25, mana_regen:30, all_res:70, gf:75, mf:30, twoHanded:1, type:"staff", base:"Archon Staff", img:"Wirt's_Leg"},
-	{rarity:"craft", name:"Qord's Obsession - Sorc Leg", req_level:69, skill_Cold_Mastery:3, skill_Fire_Mastery:3, skill_Warmth:3, all_skills:4, fcr:65, fhr:60, knockback:1, vitality:10, energy:10, max_life:25, mana_regen:30, all_res:70, gf:75, mf:30, oskill_Armageddon:20, ctc:[[20,20,"Blizzard","on attack"],[20,20,"Meteor","on striking"],[20,20,"Hydra","on striking"],[20,30,"Blizzard","on attack"],[20,30,"Meteor","on striking"],[20,30,"Hydra","on striking"],[20,40,"Blizzard","on attack"],[20,40,"Meteor","on striking"],[20,40,"Hydra","on striking"]], twoHanded:1, type:"staff", base:"Archon Staff", img:"Wirt's_Leg"},
+	{rarity:"craft", name:"Qord's Obsession - Third Leg", req_level:69, skill_Cold_Mastery:3, skill_Fire_Mastery:3, skill_Warmth:3, all_skills:4, fcr:65, fhr:60, knockback:1, vitality:10, energy:10, max_life:25, mana_regen:30, all_res:70, gf:75, mf:30, oskill_Blizzard:20, ctc:[[20,20,"Armageddon","on attack"],[20,20,"Volcano","on striking"],[20,20,"Molten Boulder","on striking"],[20,30,"Armageddon","on attack"],[20,30,"Volcano","on striking"],[20,30,"Molten Boulder","on striking"]], twoHanded:1, type:"staff", base:"Archon Staff", img:"Wirt's_Leg"},
 
 		],
 

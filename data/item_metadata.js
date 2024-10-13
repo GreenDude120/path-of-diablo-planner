@@ -1387,6 +1387,7 @@ oskill_Fire_Ball:{index:["oskill_Fire_Ball"], format:["+"," to Fire Ball"]},
 oskill_Fire_Wall:{index:["oskill_Fire_Wall"], format:["+"," to Fire Wall"]},
 oskill_Meteor:{index:["oskill_Meteor"], format:["+"," to Meteor"]},
 oskill_Fire_Mastery:{index:["oskill_Fire_Mastery"], format:["+"," to Fire Mastery"]},
+oskill_Blizzard:{index:["oskill_Blizzard"], format:["+"," to Blizzard"]},
 
 skills_class:{index:["skills_class"], format:["+"," to Class Skills"]},		// unneeded once item customization gets implemented
 skills_tree1:{index:["skills_tree1"], format:["+"," to Tree #1 Skills"]},	// unused
