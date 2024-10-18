@@ -84,7 +84,7 @@ var effect_ctcskills = {Venom:{native_class:"assassin",i:18}, Fade:{native_class
 
 var non_items = [
 {name:"Miscellaneous"},
-{i:1, name:"Shrine: Skillu", all_skills:2, duration:96, recharge:240, effect:"Skill"},
+{i:1, name:"Shrine: Skill", all_skills:2, duration:96, recharge:240, effect:"Skill"},
 {i:2, name:"Shrine: Combat", damage_bonus:200, ar_shrine_bonus:200, duration:96, recharge:240, effect:"Combat"},	// AR bonus can stack with other Combat shrines (unimplemented)
 {i:3, name:"Shrine: Armor", defense_bonus:100, duration:96, recharge:240, effect:"Armor"},
 {i:4, name:"Shrine: Mana Regeneration", mana_regen:400, duration:96, recharge:240, effect:"Mana_Regeneration"},

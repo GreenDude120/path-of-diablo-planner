@@ -95,3 +95,13 @@ Added more ctc skills in basic_variables, added functions for them, added Qord's
 9 Oct
 Added Armageddon as oskill, Qords 3rd leg; added the oskill to all 3 legs at different levels
 Fixed spell damage display for barb and universal skills
+
+10-15 Oct
+Fixed forgotten phys damage values for meteor (was still at 25% instead of 35%)
+Added Blizzard oskill
+Added/changed Qords legs
+Added mana regen per second reporting
+Fixed skill shrine (was labeled "Skillu Shrine")
+
+18 Oct
+Fix typos
