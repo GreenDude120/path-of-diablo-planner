@@ -1880,6 +1880,7 @@ function updateAllEffects() {
 				if (ctcskill_name == "Armageddon") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Hurricane") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Meteor") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Fire Ball") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Blizzard") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 			}
 		}
@@ -2415,6 +2416,17 @@ function getCTCSkillData(name, lvl, group) {
 			result.fDamage_max = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
 		}
 		hydratext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + ")" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}";
+	}
+	else if (name == "Fire Ball") {
+		if (character.class_name == "Sorceress") {
+			result.fDamage_min = skill.data.values[0][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][29].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[1][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][29].level) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.fDamage_min = skill.data.values[0][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[1][lvl] * (1+character.fDamage/100) ;
+		}
+		fireballtext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + ")" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}";
 	}
 	else if (name == "Blizzard") {
 		if (character.class_name == "Sorceress") {
@@ -4775,6 +4787,11 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Hydra") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + hydratext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Fire Ball") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fireballtext;
 					}
 
 					else if (equipped[group].ctc[i][2] == "Meteor") {

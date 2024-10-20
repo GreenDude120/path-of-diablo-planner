@@ -105,3 +105,6 @@ Fixed skill shrine (was labeled "Skillu Shrine")
 
 18 Oct
 Fix typos
+
+19 Oct
+Added Fire Ball CtC damage; added skill to basic variables, defined bireballtext in items, added damage calcs and display line to functions
