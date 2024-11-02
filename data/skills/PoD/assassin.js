@@ -23,8 +23,8 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		if (skill.name == "Dragon Flight" && elem == 1) { 				result = Math.floor(1.5*character.kick_min) }
 		if (skill.name == "Dragon Flight" && elem == 2) { 				result = Math.max(0.4, (6 - 0.5*character.charge_ember - 0.5*character.charge_thunder - 0.5*character.charge_ice - 0.5*character.charge_tiger - 0.5*character.charge_cobra)) }
 		if (skill.name == "Fists of Fire" && elem < 6) { 				result *= ((1 + 0.05*(skills[2].level + skills[3].level + skills[4].level + skills[6].level)) * (1+character.fDamage/100)) }
-		if (skill.name == "Fists of Fire" && elem == 6) { 				result = (1+(character.fDamage_min * 0.35))}
-		if (skill.name == "Fists of Fire" && elem == 7) { 				result = (1+(character.fDamage_max * 0.35))}
+		if (skill.name == "Fists of Fire" && elem == 6) { 				result = (1+(character.fDamage_min * 0.25))}
+		if (skill.name == "Fists of Fire" && elem == 7) { 				result = (1+(character.fDamage_max * 0.25))}
 
 		if (skill.name == "Claws of Thunder" && elem < 4) { 			result *= ((1 + 0.04*(skills[1].level + skills[3].level + skills[4].level + skills[6].level)) * (1+character.lDamage/100)) }
 		if (skill.name == "Blades of Ice" && elem < 4) { 				result *= ((1 + 0.02*(skills[1].level + skills[2].level + skills[4].level + skills[6].level)) * (1+character.cDamage/100)) }
