@@ -23,6 +23,9 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		if (skill.name == "Dragon Flight" && elem == 1) { 				result = Math.floor(1.5*character.kick_min) }
 		if (skill.name == "Dragon Flight" && elem == 2) { 				result = Math.max(0.4, (6 - 0.5*character.charge_ember - 0.5*character.charge_thunder - 0.5*character.charge_ice - 0.5*character.charge_tiger - 0.5*character.charge_cobra)) }
 		if (skill.name == "Fists of Fire" && elem < 6) { 				result *= ((1 + 0.05*(skills[2].level + skills[3].level + skills[4].level + skills[6].level)) * (1+character.fDamage/100)) }
+		if (skill.name == "Fists of Fire" && elem == 6) { 				result = (1+(character.fDamage_min * 0.35))}
+		if (skill.name == "Fists of Fire" && elem == 7) { 				result = (1+(character.fDamage_max * 0.35))}
+
 		if (skill.name == "Claws of Thunder" && elem < 4) { 			result *= ((1 + 0.04*(skills[1].level + skills[3].level + skills[4].level + skills[6].level)) * (1+character.lDamage/100)) }
 		if (skill.name == "Blades of Ice" && elem < 4) { 				result *= ((1 + 0.02*(skills[1].level + skills[2].level + skills[4].level + skills[6].level)) * (1+character.cDamage/100)) }
 		
@@ -61,6 +64,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		
 		// TODO: update martial effects (charge_bonus variables are placeholders)
 		
+//		if (skill.name == "Fists of Fire") { result.charge_ember = charges; result.fDamage_min = character.getSkillData(skill,lvl,0); result.fDamage_max = character.getSkillData(skill,lvl,1); result.duration = 5; result.charge_bonus_explosion = 1; result.charge_bonus_meteor = 1; }
 		if (skill.name == "Fists of Fire") { result.charge_ember = charges; result.fDamage_min = character.getSkillData(skill,lvl,0); result.fDamage_max = character.getSkillData(skill,lvl,1); result.duration = 5; result.charge_bonus_explosion = 1; result.charge_bonus_meteor = 1; }
 		if (skill.name == "Claws of Thunder") { result.charge_thunder = charges; result.lDamage_min = character.getSkillData(skill,lvl,0); result.lDamage_max = character.getSkillData(skill,lvl,1); result.duration = 5; result.charge_bonus_fork = 1; result.charge_bonus_static = 1; }
 		if (skill.name == "Blades of Ice") { result.charge_ice = charges; result.cDamage_min = character.getSkillData(skill,lvl,0); result.cDamage_max = character.getSkillData(skill,lvl,1); result.duration = 5; result.charge_bonus_icicles = 1; result.charge_bonus_accuracy = 1; }
@@ -217,8 +221,10 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		["explosion max",10,15,20,25,30,35,40,45,56,67,78,89,100,111,122,133,155,177,199,221,243,265,298,331,364,397,430,463,507,551,595,639,683,727,771,815,859,903,947,991,1035,1079,1123,1167,1211,1255,1299,1343,1387,1431,1475,1519,1563,1607,1651,1695,1739,1783,1827,1871,], 
 		["meteor fire min",6,11,16,21,26,31,36,41,51,61,71,81,91,101,111,121,141,161,181,201,221,241,271,301,331,361,391,421,461,501,541,581,621,661,701,741,781,821,861,901,941,981,1021,1061,1101,1141,1181,1221,1261,1301,1341,1381,1421,1461,1501,1541,1581,1621,1661,1701,], 
 		["meteor fire max",10,15,20,25,30,35,40,45,56,67,78,89,100,111,122,133,155,177,199,221,243,265,298,331,364,397,430,463,507,551,595,639,683,727,771,815,859,903,947,991,1035,1079,1123,1167,1211,1255,1299,1343,1387,1431,1475,1519,1563,1607,1651,1695,1739,1783,1827,1871,], 
-		["meteor physical min",1,3,4,5,6,8,9,10,13,15,18,20,23,25,28,30,35,40,45,50,55,60,68,75,83,90,98,105,115,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345,355,365,375,385,395,405,415,425,], 
-		["meteor physical max",2,4,5,6,7,9,10,11,14,17,19,22,25,28,30,33,39,44,50,55,61,66,74,83,91,99,107,116,127,138,149,160,171,182,193,204,215,226,237,248,259,270,281,292,303,314,325,336,347,358,369,380,391,402,413,424,435,446,457,468,], 
+//		["meteor physical min",1,3,4,5,6,8,9,10,13,15,18,20,23,25,28,30,35,40,45,50,55,60,68,75,83,90,98,105,115,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345,355,365,375,385,395,405,415,425,], 
+//		["meteor physical max",2,4,5,6,7,9,10,11,14,17,19,22,25,28,30,33,39,44,50,55,61,66,74,83,91,99,107,116,127,138,149,160,171,182,193,204,215,226,237,248,259,270,281,292,303,314,325,336,347,358,369,380,391,402,413,424,435,446,457,468,], 
+		["meteor physical min",], 
+		["meteor physical max",], 
 		["attack",25,35,45,55,65,75,85,95,105,115,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345,355,365,375,385,395,405,415,425,435,445,455,465,475,485,495,505,515,525,535,545,555,565,575,585,595,605,615,], 
 ]};
 /*[ 2] Claws of Thunder	*/ var d143 = {values:[
