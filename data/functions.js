@@ -4709,7 +4709,7 @@ function updateTertiaryStats() {
 	if (c.mtick_min > 0) { statlines += "Sanctuary aura tick damage: " + c.mtick_min + "-" + c.mtick_max + "<br>"}
 	if (c.issalvation > 0) { statlines += "Salvation damage bonus: " + "+" + salvdam + "%" + "<br>"}
 	if (c.issalvation > 0) { statlines += "Salvation resistance bonus: " + "+" + salvres + "%" + "<br>"}
-	if (c.mana_regen > 0) {statlines += "Mana Regen: " + Math.ceil(c.mana/120*(1+c.mana_regen/100)) + " per second"}
+	if (c.mana_regen > 0) {statlines += "Mana Regen: " + Math.ceil(c.mana/120*(1+c.mana_regen/100)) + " per second" + "<br>"}
 
 	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
 	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}

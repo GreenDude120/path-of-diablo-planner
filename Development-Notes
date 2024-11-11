@@ -111,3 +111,9 @@ Added Fire Ball CtC damage; added skill to basic variables, defined bireballtext
 
 22 Oct
 Added another obesession leg
+
+2 Nov
+Rework fists of fire to use an actual % of meteor fire damage to calculate phys damage instead of relying on static table of damage values. 
+
+11 Nov
+Added missing line break in mana regen line
