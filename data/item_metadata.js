@@ -1099,7 +1099,7 @@ skills_sorceress:{index:["skills_sorceress"], format:["+"," to Sorceress Skill L
 skills_fire_all:{index:["skills_fire_all"], format:["+"," to Fire Skills"]},
 skills_cold_all:{index:["skills_cold_all"], format:["+"," to Cold Skills"]},
 skills_poison_all:{index:["skills_poison_all"], format:["+"," to Poison Skills"]},
-
+ 
 skills_ele_poison_all:{index:["skills_ele_poison_all"], format:["+"," to Elemental and Poison Skills"]},
 
 skill_Jab:{index:["skill_Jab"], format:["+"," to Jab (Amazon only)"]},
@@ -1487,6 +1487,23 @@ charge_bonus_icicles:{index:[], format:["Attacks release enemy-seeking icicles"]
 charge_bonus_accuracy:{index:[], format:["Attacks have increased accuracy"]},
 charge_bonus_reduce:{index:[], format:["Attacks reduce enemy defenses"]},
 charge_bonus_leech:{index:[], format:["Attacks regenerate life and mana"]},
+
+// Start adding Patch 22 content below
+plus_arrow_radius:{index:["plus_arrow_radius"], format:["+","% to "," Arrow Radius"]},
+oskill_Warmth:{index:["oskill_Warmth"], format:["+"," to Warmth"]},
+plus_exploding_arrow_radius:{index:["plus_exploding_arrow_radius"], format:["+","% to Exploding Arrow Radius"]},
+plus_freezing_arrow_radius:{index:["plus_freezing_arrow_radius"], format:["+","% to Freezing Arrow Radius"]},
+oskill_Deadly_Poison:{index:["oskill_Deadly_Poison"], format:["+"," to Deadly Poison"]},
+oskill_Charge:{index:["oskill_Charge"], format:["+"," to Charge"]},
+tigerstrike_boi:{index:[], format:["Tiger Strike also generates a Blades of Ice charge"]},
+extra_tk:{index:[], format:["Releases one additional Telekinesis burst"]},
+oskill_Telekinesis:{index:["oskill_Telekinesis"], format:["+"," to Telekinesis"]},
+oskill_Strafe:{index:["oskill_Strafe"], format:["+"," to Strafe"]},
+nova_bong:{index:[], format:["Casting Frost Nova also casts Nova"]},
+all_sorb:{index:["all_sorb"], format:["Damage Absorb: ","%"]},
+thunder_warp:{index:[], format:["Thunder storm strikes two additional enemies"]},
+jf_molten:{index:[], format:["Jab & Fend attacks cast molten strike"]},
+
 };
 
 var stats_alternate = {

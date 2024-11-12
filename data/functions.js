@@ -2255,6 +2255,9 @@ function getCSkillData(name, lvl, group) {
 			result.fDamage_max = skill.data.values[1][lvl] * (1 + (0.08*skills[23].level)) * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100);
 		}
 	}
+	else if (name == "Warmth") {
+		result.ar_bonus = skill.data.values[0][lvl]; result.mana_regen = skill.data.values[1][lvl]; 
+	}
 	return result;
 }
 
@@ -4710,6 +4713,7 @@ function updateTertiaryStats() {
 	if (c.issalvation > 0) { statlines += "Salvation damage bonus: " + "+" + salvdam + "%" + "<br>"}
 	if (c.issalvation > 0) { statlines += "Salvation resistance bonus: " + "+" + salvres + "%" + "<br>"}
 	if (c.mana_regen > 0) {statlines += "Mana Regen: " + Math.ceil(c.mana/120*(1+c.mana_regen/100)) + " per second" + "<br>"}
+//	if (c.jf_molten > 0) {statlines += "Molten Strike will do " + checkSkill("Molten Strike").output + "<br>"}
 
 	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
 	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}

@@ -29,7 +29,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	/* oskills  druid		*/	oskill_Lycanthropy:0, oskill_Werebear:0, oskill_Werewolf:0, oskill_Feral_Rage:0, oskill_Flame_Dash:0, oskill_Summon_Dire_Wolf:0, oskill_Armageddon:0, 									// Frostwind, Wolfhowl, Beast, Flamebellow, Boneflesh
 	/* oskills  necromancer	*/	oskill_Desecrate:0, 																																				// Radament's Sphere
 	/* oskills  paladin		*/	oskill_Zeal:0, oskill_Vengeance:0, oskill_Dashing_Strike:0, oskill_Concentration:0,																														// Passion, Kingslayer
-	/* oskills  sorceress	*/	oskill_Frigerate:0, oskill_Shiver_Armor:0, oskill_Blizzard:0, oskill_Cold_Mastery:0, oskill_Hydra:0, oskill_Fire_Ball:0, oskill_Fire_Wall:0, oskill_Meteor:0, oskill_Fire_Mastery:0, 	// Frostwind, Medusa's Gaze, Bing Sz Wang, Dragonscale, Trang-Oul's Set
+	/* oskills  sorceress	*/	oskill_Frigerate:0, oskill_Shiver_Armor:0, oskill_Blizzard:0, oskill_Cold_Mastery:0, oskill_Hydra:0, oskill_Fire_Ball:0, oskill_Fire_Wall:0, oskill_Meteor:0, oskill_Fire_Mastery:0, oskill_Warmth:0,	// Frostwind, Medusa's Gaze, Bing Sz Wang, Dragonscale, Trang-Oul's Set
 								oskill_Berserk:0, oskill_Teleport:0, oskill_Heart_of_Wolverine:0,  
 	
 	/*   not used (yet?)	*///	energy_per_level:0, lAbsorb_flat_per_level:0, mAbsorb_flat_per_level:0, mAbsorb:0, pDamage_max_per_level:0, e_damage_per_level:0, stun_length:0, base:"", img:"", original_tier:0, 
@@ -40,6 +40,9 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 
 	/* PoD skills			*/	skill_Lethal_Strike:0, skill_Phase_Run:0, skill_Molten_Strike:0, skill_Dual_Strike:0, skill_Fists_of_Ember:0, skill_Fists_of_Thunder:0, skill_Fists_of_Ice:0, skill_Static_Strike:0, skill_Emberstorm:0, skill_Blade_Throw:0, skill_Mind_Barrier:0, skill_Edged_Weapon_Mastery:0, skill_Pole_Weapon_Mastery:0, skill_Blunt_Weapon_Mastery:0, skill_Thrown_Weapon_Mastery:0, skill_Ethereal_Throw:0, skill_Power_Throw:0, skill_Cleave:0, skill_Flame_Dash:0, skill_Desecrate:0, skill_Deadly_Poison:0, skill_Summon_Mastery:0, skill_Convocation:0, skill_Raise_Skeleton_Warrior:0, skill_Flesh_Offering:0, skill_Bone_Offering:0, skill_Hemorrhage:0, skill_Precision:0, skill_Dashing_Strike:0, skill_Lightning_Surge:0, skill_Enflame:0, skill_Frigerate:0, skill_Immolate:0, skill_Discharge:0, skill_Freezing_Pulse:0, skill_One_Handed_Weapon_Mastery:0, skill_Two_Handed_Weapon_Mastery:0, skill_Puncture:0, skill_Counter_Attack:0, skill_Pulverize:0, skill_Whirling_Axes:0,
 	/* PD2 skills			*/	skill_Javelin_and_Spear_Mastery:0, skill_Slow_Movement:0, skill_Claw_and_Dagger_Mastery:0, skill_Chain_Lightning_Sentry:0, skill_General_Mastery:0, skill_Throwing_Mastery:0, skill_Polearm_and_Spear_Mastery:0, skill_Combat_Reflexes:0, skill_Gust:0, skill_Raise_Skeleton_Archer:0, skill_Blood_Warp:0, skill_Poison_Strike:0, skill_Curse_Mastery:0, skill_Dark_Pact:0, skill_Holy_Light:0, skill_Joust:0, skill_Holy_Nova:0, skill_Cold_Enchant:0, skill_Ice_Barrage:0, skill_Lesser_Hydra:0, skill_Enchant_Fire:0, skill_Combustion:0, skill_Deep_Wounds:0, skill_Holy_Sword:0,
+	
+	/*Adding P22 content here*/ plus_arrow_radius:"", plus_exploding_arrow_radius:0, plus_freezing_arrow_radius:0, oskill_Deadly_Poison:0, oskill_Charge:0, tigerstrike_boi:0, extra_tk:0, oskill_Telekinesis:0, oskill_Strafe:0, nova_bong:0, all_sorb:0, thunder_warp:"", jf_molten:0, 
+
 	};
 	
 	var equipment = {
@@ -106,6 +109,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{not:["barbarian","druid"], rarity:"rw", name:"Radiance ­ ­ - ­ ­ Death Mask", req_level:27, e_def:75, missile_defense:30, vitality:10, energy:10, mana:33, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Death Mask"},
 	{only:"barbarian", rarity:"rw", name:"Radiance ­ ­ - ­ ­ Rage Mask", req_level:27, e_def:75, skill_Battle_Orders:3, skill_Leap:1, skill_Shout:3, missile_defense:30, vitality:10, energy:10, mana:33, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Rage Mask", nonmetal:1},
 	{only:"druid", rarity:"rw", name:"Radiance ­ ­ - ­ ­ Sacred Feathers", req_level:27, skill_Cyclone_Armor:3, skill_Armageddon:3, skill_Hurricane:3, e_def:75, missile_defense:30, vitality:10, energy:10, mana:33, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Sacred Feathers"},
+	{name:"P22- Radiance ­ ­ - ­ ­ Circlet", req_level:27, aura:"Thorns", aura_lvl:11, missile_defense:30, vitality:10, energy:10, mana:33, all_sorb:5, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Circlet"},
 	{rarity:"rw", name:"Temper ­ ­ - ­ ­ Diadem", req_level:35, fhr:20, e_def:100, vitality:10, fDamage_min:91, fDamage_max:130, fRes:30, fAbsorb:15, life_per_hit:4, life_per_ranged_hit:3, base:"Diadem"},
 	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce:33, ar:25, mana_per_hit:8, e_def:30, energy:10, slower_stam_drain:15, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
 	// Iron Golem RW replacements
@@ -159,6 +163,9 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_TR:1, name:"Tal Rasha's Horadric Crest", req_level:66, defense:45, life_leech:10, mana_leech:10, all_res:15, mana:30, life:60, base:"Death Mask", rarity:"set", set_bonuses:["set_TR",{},{},{},{},{}]},
 	{set_Tancred:1, name:"Tancred's Skull", req_level:20, damage_bonus:10, ar:40, summon_damage:15, summon_defense:15, base:"Bone Helm", rarity:"set", set_bonuses:["set_Tancred",{},{all_res:10},{},{},{}], img:"Tancred's_Skull"},
 	{set_TO:1, name:"Trang-Oul's Guise", req_level:65, skills_ele_poison_all:1, defense:100, fhr:25, life_replenish:5, mana:150, thorns:20, base:"Bone Visage", rarity:"set", set_bonuses:["set_TO",{},{},{},{},{}], img:"Trang-Oul's_Guise"},
+
+
+
 		],
 		armor: [
 
@@ -226,6 +233,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Sparking Mail", req_level:17, e_def:85, lRes:30, thorns_lightning:14, lDamage_min:1, lDamage_max:20, base:"Chain Mail", img:"Sparking_Mail"},
 	{name:"Steel Carapace", req_level:66, ctc:[[8,6,"Iron Maiden","when struck"]], e_def:220, mana_regen:15, fhr:20, cRes:60, damage_reduced:14, autorepair:1, base:"Shadow Plate", img:"Steel_Carapace"},
 	{name:"Templar's Might", req_level:74, skills_offensive:2, e_def:220, missile_defense:300, strength:15, vitality:15, fhr:20, stamina:50, base:"Sacred Armor", img:"Templar's_Might"},
+	{name:"P22- Templar's Might", req_level:74, skills_offensive:2, fhr:20, oskill_Charge:3, e_def:193, missile_defense:254, strength:15, vitality:15, stamina:50, base:"Sacred Armor", img:"Templar's_Might"},
 	{name:"The Centurion", req_level:14, defense:30, life_replenish:5, ar:50, mana:15, stamina:15, life:15, slower_stam_drain:25, damage_reduced:2, base:"Hard Leather Armor", img:"The_Centurion"},
 	{name:"The Gladiator's Bane", req_level:85, defense:50, e_def:200, cbf:1, fhr:30, poison_length_reduced:50, thorns:20, damage_reduced:20, mDamage_reduced:20, durability_extra:103, base:"Wire Fleece", img:"The_Gladiator's_Bane"},
 	{name:"The Spirit Shroud", req_level:28, all_skills:1, e_def:150, cbf:1, life_replenish:10, mDamage_reduced:11, base:"Ghost Armor"},
@@ -284,6 +292,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"sorceress", name:"Ormus' Robes (Fire Wall)", req_level:75, skill_Fire_Wall:3, fcr:20, cDamage:15, lDamage:15, fDamage:15, defense:20, mana_regen:15, base:"Dusk Shroud", img:"Ormus'_Robes"},
 	{only:"sorceress", name:"Ormus' Robes (Enflame)", req_level:75, skill_Enflame:3, fcr:20, cDamage:15, lDamage:15, fDamage:15, defense:20, mana_regen:15, base:"Dusk Shroud", img:"Ormus'_Robes"},
 	{only:"sorceress", name:"Ormus' Robes (Meteor)", req_level:75, skill_Meteor:3, fcr:20, cDamage:15, lDamage:15, fDamage:15, defense:20, mana_regen:15, base:"Dusk Shroud", img:"Ormus'_Robes"},
+
 		],
 		gloves: [
 	{name:"Gloves"},
@@ -531,6 +540,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"assassin", name:"Bartuc's Cut-Throat", req_level:42, skills_assassin:2, skills_martial:1, e_damage:200, damage_min:25, damage_max:50, fhr:30, bonus_ar:20, life_leech:9, strength:20, dexterity:20, type:"claw", base:"Greater Talons"},
 	{only:"assassin", name:"Jade Talon", type:"claw", req_level:66, skills_martial:2, skills_shadow:2, e_damage:240, fhr:30, mana_leech:15, all_res:50, base:"Wrist Sword"},
 	{only:"assassin", name:"Shadow Killer", type:"claw", req_level:78, ctc:[[33,8,"Frost Nova","on striking"]], e_damage:220, target_defense:-25, freezes_target:2, mana_per_kill:15, cDamage_per_ice:16, indestructible:1, ethereal:1, base:"Battle Cestus", pod_changes:1, img:"Shadow_Killer"},
+	{only:"assassin", name:"P22- Shadow Killer", type:"claw", req_level:78, ctc:[[33,8,"Frost Nova","on striking"]], indestructible:1, e_damage:220, target_defense:-25, freezes_target:2, mana_per_kill:15, tigerstrike_boi:1, ethereal:1, base:"Battle Cestus", pod_changes:1, img:"Shadow_Killer"},
 	{only:"assassin", name:"Firelizard's Talons", type:"claw", req_level:67, skills_martial:2, skills_fire_all:2, skill_Fists_of_Ember:2, e_damage:270, fDamage_min:236, fDamage_max:480, ias:15, fRes:70, all_skills_ember:1, base:"Feral Claws", pod_changes:1},
 	{only:"assassin", set_Nat:1, name:"Natalya's Mark", type:"claw", req_level:79, e_damage:200, damage_vs_undead:200, damage_vs_demons:200, fDamage_min:12, fDamage_max:17, itd:1, ias:40, cDamage_min:50, cDamage_max:50, base:"Scissors Suwayyah", rarity:"set", set_bonuses:["set_Nat",{},{},{},{}], img:"Natalya's_Mark"},
 	{only:"assassin", rarity:"rw", name:"Plague ­ ­ - ­ ­ Suwayyah", req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, skill_Blade_Shield:3, skill_Venom:3, skill_Fade:3, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"claw", base:"Suwayyah", pod_changes:1},
@@ -600,6 +610,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 //	{only:"barbarian", rarity:"rw", name:"Breath of the Dying ­ ­ - ­ ­ Glorious Axe", req_level:69, twoHanded:1, ctc:[[50,20,"Poison Nova","when you Kill an Enemy"]], indestructible:1, ias:60, e_damage:400, target_defense:-25, ar:50, damage_vs_undead:200, ar_vs_undead:50, mana_leech:7, life_leech:15, pmh:1, all_attributes:30, light_radius:1, req:-20, ethereal:1, type:"axe", base:"Glorious Axe", nonmetal:1},
 	{rarity:"rw", name:"Beast ­ ­ - ­ ­ Berserker Axe", sup:15, req_level:63, aura:"Fanaticism", aura_lvl:9, oskill_Werebear:3, oskill_Lycanthropy:3, ias:40, e_damage:270, cblow:20, owounds:25, pmh:1, strength:40, energy:10, mana_per_kill:2, type:"axe", base:"Berserker Axe", cskill:[[13,"Summon Grizzly",5]]},
 	{rarity:"rw", name:"Call to Arms ­ ­ - ­ ­ Scourge", sup:15, req_level:57, all_skills:1, ias:40, e_damage:290, fDamage_min:5, fDamage_max:30, life_leech:7, oskill_Battle_Cry:4, oskill_Battle_Orders:6, oskill_Battle_Command:6, pmh:1, life_replenish:12, mf:30, half_Battle_Orders:1, type:"mace", base:"Scourge", pod_changes:1},
+	{name:"P22- Call to Arms ­ ­ - ­ ­ Scourge", sup:15, req_level:57, ctc:[[100,31,"War Cry","When you kill an enemy"]], all_skills:1, ias:40, e_damage:290, fDamage_min:5, fDamage_max:30, life_leech:7, oskill_Battle_Cry:4, oskill_Battle_Orders:6, oskill_Battle_Command:6, pmh:1, life_replenish:12, mf:30, half_Battle_Orders:1, type:"mace", base:"Scourge", pod_changes:1},
 	{rarity:"rw", name:"Crescent Moon ­ ­ - ­ ­ Thresher", sup:15, req_level:57, ctc:[[10,17,"Chain Lightning","on striking"],[7,13,"Static Field","on striking"]], e_damage:220, ias:20, enemy_lRes:-35, owounds:25, mAbsorb_flat:11, mana_per_kill:2, twoHanded:1, type:"polearm", base:"Thresher", cskill:[[18,"Summon Spirit Wolf",30]]},
 	{only:"paladin", rarity:"rw", name:"Crescent Moon ­ ­ - ­ ­ Phase Blade", sup:15, req_level:57, ctc:[[10,17,"Chain Lightning","on striking"],[7,13,"Static Field","on striking"]], e_damage:220, ias:20, enemy_lRes:-35, owounds:25, mAbsorb_flat:11, mana_per_kill:2, type:"sword", base:"Phase Blade", cskill:[[18,"Summon Spirit Wolf",30]]},
 //	{not:["amazon","assassin","druid","necromancer","paladin","sorceress"], rarity:"rw", name:"Death ­ ­ - ­ ­ Colossus Sword", req_level:68, ctc:[[100,44,"Chain Lightning","on death"],[25,18,"Glacial Spike","on attack"]], indestructible:1, ethereal:1, e_damage:385, ar_bonus:20, ar:50, lDamage_min:1, lDamage_max:50, mana_leech:7, cblow:50, dstrike_per_level:0.5, light_radius:1, req:-20, type:"sword", twoHanded:1, base:"Colossus Sword", cskill:[[22,"Blood Golem",15]]},
@@ -705,14 +716,18 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	// Staves
 	{name:"Staves------------------------------", type:"staff", img:"Mang_Song's_Lesson"},
 	{name:"Bane Ash", req_level:5, e_damage:60, ias:20, mana:30, fRes:50, fDamage_min:4, fDamage_max:6, skill_Fire_Bolt:5, skill_Warmth:2, twoHanded:1, type:"staff", base:"Short Staff", img:"Bane_Ash"},
+	{name:"P22- Bane Ash", req_level:5, ctc:[[100,5,"Firestorm","on attack"]], ias:20, e_damage:60, mana:30, fRes:50, fDamage_min:4, fDamage_max:6, skill_Warmth:2, twoHanded:1, type:"staff", base:"Short Staff", img:"Bane_Ash"},
 	{name:"Serpent Lord", req_level:9, e_damage:40, pDamage_all:12, pDamage_duration:3, mana_leech:100, target_defense:-50, mana:10, pRes:50, light_radius:-1, twoHanded:1, type:"staff", base:"Long Staff", img:"Serpent_Lord"},
 	{name:"Spire of Lazarus", req_level:18, skills_sorceress:1, lDamage_min:1, lDamage_max:28, skill_Lightning_Surge:2, skill_Chain_Lightning:1, skill_Static_Field:3, mana_regen:43, energy:15, damage_reduced:5, lRes:75, twoHanded:1, type:"staff", base:"Gnarled Staff", img:"Spire_of_Lazarus"},
+	{name:"P22- Spire of Lazarus", req_level:18, ctc:[[33,5,"Static Field","on kills"]], skills_lightning_all:1, lDamage_min:1, lDamage_max:28, enemy_lRes:-11, oskill_Telekinesis:1, mana_regen:43, energy:15, lRes:75, damage_reduced:5, extra_tk:1, twoHanded:1, type:"staff", base:"Gnarled Staff", img:"Spire_of_Lazarus"},
 	{name:"The Salamander", req_level:21, skills_fire_all:2, fDamage_min:15, fDamage_max:32, fRes:30, skill_Warmth:3, skill_Fire_Ball:2, skill_Fire_Wall:1, twoHanded:1, type:"staff", base:"Battle Staff", img:"The_Salamander"},
 	{name:"The Iron Jang Bong", req_level:28, skills_sorceress:2, fcr:20, e_damage:100, ar_bonus:50, skill_Frost_Nova:3, skill_Blaze:2, skill_Nova:2, defense:30, twoHanded:1, type:"staff", base:"War Staff", img:"The_Iron_Jang_Bong"},
+	{name:"P22- The Iron Jang Bong", req_level:28, skills_sorceress:2, fcr:20, e_damage:100, ar_bonus:50, skill_Frost_Nova:3, skill_Nova:2, defense:30, nova_bong:1, twoHanded:1, type:"staff", base:"War Staff", img:"The_Iron_Jang_Bong"},
 	{name:"Razorswitch", req_level:28, all_skills:1, fcr:30, life:80, mana:175, all_res:50, mDamage_reduced:15, thorns:15, twoHanded:1, type:"staff", base:"Jo Staff"},
 	{name:"Ribcracker", req_level:31, damage_min:30, damage_max:65, e_damage:300, cblow:50, ias:50, fhr:50, defense_bonus:100, defense:100, dexterity:15, durability_extra:100, twoHanded:1, type:"staff", base:"Quarterstaff", img:"Ribcracker"},
 	{name:"Chromatic Ire", req_level:35, skills_sorceress:3, fcr:20, max_life:25, all_res:40, thorns_lightning:20, skill_Cold_Mastery:1, skill_Lightning_Mastery:1, skill_Fire_Mastery:1, twoHanded:1, type:"staff", base:"Cedar Staff", img:"Spire_of_Lazarus"},
 	{name:"Warpspear", req_level:39, skills_sorceress:3, itd:1, missile_defense:250, skill_Energy_Shield:3, skill_Telekinesis:3, skill_Teleport:3, twoHanded:1, type:"staff", base:"Gothic Staff", img:"Warpspear"},
+	{name:"P22- Warpspear", req_level:39, thunder_warp:1, skills_sorceress:3, itd:1, skill_Energy_Shield:3, skill_Telekinesis:3, skill_Teleport:3, missile_defense:250, twoHanded:1, type:"staff", base:"Gothic Staff", img:"Warpspear"},
 	{name:"Skull Collector", req_level:41, all_skills:2, mana_per_kill:20, max_mana:20, mf_per_level:1, twoHanded:1, type:"staff", base:"Rune Staff", img:"Skull_Collector"},
 	{name:"Ondal's Wisdom", req_level:66, all_skills:4, fcr:45, defense:550, energy:50, mDamage_reduced:8, oskill_Ball_Lightning:20, type:"staff", twoHanded:1, base:"Elder Staff", pod_changes:1, img:"Spire_of_Lazarus"},
 	{name:"Mang Song's Lesson", req_level:82, all_skills:5, fcr:30, enemy_lRes:-15, enemy_cRes:-15, enemy_fRes:-15, mana_regen:10, twoHanded:1, type:"staff", base:"Archon Staff", img:"Mang_Song's_Lesson"},
@@ -766,6 +781,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Schaefer's Hammer", req_level:79, ctc:[[15,26,"Ball Lightning","on striking"]], e_damage:130, max_damage_per_level:2, lDamage_min:50, lDamage_max:200, ar_per_level:8, ias:20, lRes:75, life:50, light_radius:1, indestructible:1, ethereal:0, type:"hammer", base:"Legendary Mallet", pod_changes:1, img:"Ironstone"},
 	{name:"Windhammer", req_level:68, ctc:[[33,22,"Twister","on striking"]], e_damage:230, cblow:50, ias:60, type:"hammer", twoHanded:1, base:"Ogre Maul", img:"Windhammer"},
 	{name:"Earth Shifter", req_level:69, oskill_CTC_Fissure_Proc:19, ctc:[[25,19,"Fissure","on striking"]], skills_elemental:7, ias:10, e_damage:300, cblow:33, fcr:10, type:"hammer", twoHanded:1, base:"Thunder Maul", cskill:[[14,"Volcano",30]]},
+	{name:"P22- Earth Shifter", req_level:69, ctc:[[43,27,"Volcano","on kills"],[25,19,"Fissure","on striking"]], skills_elemental:7, ias:10, fcr:10, e_damage:300, cblow:33, type:"hammer", twoHanded:1, base:"Thunder Maul"},
 	{name:"The Cranium Basher", twoHanded:1, req_level:87, ctc:[[4,1,"Amplify Damage","on striking"]], e_damage:240, damage_min:20, damage_max:20, ias:20, cblow:75, all_res:25, strength:25, ethereal:0, indestructible:1, type:"hammer", base:"Thunder Maul"},
 	// Axes
 	{name:"Axes--------------------------------", type:"axe", img:"../War_Axe"},
@@ -873,6 +889,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Lance of Yaggai", req_level:22, lDamage_min:1, lDamage_max:60, all_res:15, ias:40, thorns:8, twoHanded:1, type:"spear", base:"Spetum", img:"Lance_of_Yaggai"},
 	{name:"The Tannr Gorerod", req_level:27, e_damage:100, fDamage_min:23, fDamage_max:54, ar:60, fRes:15, fRes_max:15, life:30, light_radius:3, twoHanded:1, type:"spear", base:"Pike", img:"The_Tannr_Gorerod"},
 	{name:"The Impaler", req_level:31, e_damage:170, owounds:40, ias:20, itd:1, ar:150, pmh:1, skill_Molten_Strike:5, skill_Power_Strike:3, twoHanded:1, type:"spear", base:"War Spear", img:"The_Impaler"},
+	{name:"P22- The Impaler", req_level:31, ias:20, e_damage:170, itd:1, ar:150, owounds:40, pmh:1, skill_Molten_Strike:5, skill_Power_Strike:3, jf_molten:1, twoHanded:1, type:"spear", base:"War Spear", img:"The_Impaler"},
 	{name:"Kelpie Snare", req_level:33, e_damage:180, damage_min:30, damage_max:50, slows_target:75, life_per_level:1.25, fRes:50, strength:10, twoHanded:1, type:"spear", base:"Fuscina", img:"Razortine"},
 	{name:"Soulfeast Tine", req_level:35, e_damage:190, ar:250, life_leech:7, mana_leech:7, slower_stam_drain:20, req:-20, durability_extra:15, twoHanded:1, type:"spear", base:"War Fork", img:"Soulfeast_Tine"},
 	{name:"Hone Sundan", req_level:37, e_damage:200, damage_min:20, damage_max:40, cblow:45, autorepair:1, sockets:3, twoHanded:1, type:"spear", base:"Yari", img:"Lance_of_Yaggai"},
@@ -947,6 +964,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Doomslinger", req_level:28, e_damage:100, pierce:35, life:15, oskill_Multiple_Shot:1, twoHanded:1, type:"crossbow", base:"Repeating Crossbow", pod_changes:1, img:"Doomslinger"},
 	{name:"Langer Briser", req_level:33, e_damage:200, damage_max:30, owounds:33, lDamage_min:1, lDamage_max:212, life:30, knockback:1, mf:60, twoHanded:1, type:"crossbow", base:"Arbalest", img:"Langer_Briser"},
 	{name:"Pus Spitter", req_level:36, ctc:[[9,6,"Terror","on striking"],[4,10,"Lower Resist","on striking"]], all_skills:1, ias:10, e_damage:220, pDamage_all:150, pDamage_duration:3, ar_per_level:5, req:-60, twoHanded:1, type:"crossbow", base:"Siege Crossbow", pod_changes:1, img:"Pus_Spitter"},
+	{name:"P22- Pus Spitter", req_level:36, ctc:[[4,10,"Lower Resist","on striking"]], skills_poison_all:2, ias:10, e_damage:151, pDamage_all:146, pDamage_duration:3, ar_per_level:5, oskill_Deadly_Poison:3, req:-60, twoHanded:1, type:"crossbow", base:"Siege Crossbow", pod_changes:1, img:"Pus_Spitter"},
 	{name:"Buriza-Do Kyanon", req_level:41, e_damage:200, max_damage_per_level:2.5, cDamage_min:32, cDamage_max:196, pierce:100, freezes_target:3, defense:150, dexterity:35, ias:80, twoHanded:1, type:"crossbow", base:"Ballista", img:"Hellcast"},
 	{name:"Demon Machine", req_level:49, e_damage:123, damage_max:66, ar:632, pierce:66, defense:321, mana:36, explosive_attack:6, twoHanded:1, type:"crossbow", base:"Chu-Ko-Nu", img:"Demon_Machine"},
 	{name:"Hellrack", req_level:76, oskill_Immolation_Arrow:18, e_damage:230, ar_bonus:150, fDamage_min:63, fDamage_max:324, cDamage_min:63, cDamage_max:324, lDamage_min:63, lDamage_max:324, ias:20, sockets:2, twoHanded:1, type:"crossbow", base:"Colossus Crossbow", img:"Hellcast"},
@@ -1072,6 +1090,11 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Moonfire", type:"quiver", req_level:21, ar_bonus:15, mDamage_reduced:4, extra_conversion_Magic_Arrow:10, extra_arrows_Magic_Arrow:2, pod_changes:1},
 //	{only:"barbarian", rarity:"rare", name:"Weapons++++++++++++++++", type:"mace", special:2, img:"portal"} ,
 	{only:"barbarian", rarity:"rare", name:"Weapons++++++++++++++++", img:"../../../portal"} ,
+	{name:"P22- Dragonbreath", type:"quiver", req_level:12, explosive_attack:1, oskill_Warmth:8, cRes:31, fRes:29, plus_exploding_arrow_radius:40, pod_changes:1, img:"Dragonbreath"},
+	{name:"P22- Moonfire", type:"quiver", req_level:21, mDamage_min:31, mDamage_max:44, enemy_mRes:-10, dexterity:49, all_res:12, extra_conversion_Magic_Arrow:7, extra_arrows_Magic_Arrow:4, pod_changes:1},
+	{name:"P22- Frostbite", type:"quiver", req_level:21, ctc:[[34,21,"Ice Arrow","When Struck"]], skills_cold_all:2, max_life:18, max_mana:17, plus_freezing_arrow_radius:40, pod_changes:1},
+	{name:"P22- Hailstorm", type:"quiver", req_level:12, ias:11, damage_min:12, damage_max:17, enemy_cRes:-20, damage_reduced:10, ctc:[[100,30,"Glacial Spike","During Strafe"]], pod_changes:1},
+	{name:"P22- Swiftheart", type:"quiver", req_level:12, frw:14, pierce:15, oskill_Strafe:6, life_replenish:12.2, mana_per_ranged_hit:4, pod_changes:1, base:"Bolts"},
 		],
 		charms: [
 	{name:"Charms"},
