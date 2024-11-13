@@ -111,6 +111,8 @@ var character_any = {
 		if (skillName == "CTC Bone Spear Proc" && elem < 2) { 		result *= ((1 + (0.07*skills[12].level + 0.07*skills[18].level)) * (1+character.mDamage/100)) }
 		if (skillName == "CTC Poison Nova Proc" && elem < 2) { 		result *= ((1 + (0.13*skills[11].level + 0.13*skills[15].level)) * (1+character.pDamage/100)) }
 		if (skillName == "Deadly Poison" && elem > 0 && elem < 3) { result *= ((1 + (0.10*skills[15].level + 0.10*skills[19].level)) * (1+character.pDamage/100)) }
+		if (skillName == "Revive" && elem == 0) {					result = (skill.data.values[elem][1] + Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[0][skills[0].level+skills[0].extra_levels]) }
+		if (skillName == "Revive" && elem == 1) {					result = (skill.data.values[elem][1] + Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[1][skills[0].level+skills[0].extra_levels]) }
 
 		// Paladin
 		var phys_min = 0;

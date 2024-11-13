@@ -1503,7 +1503,9 @@ nova_bong:{index:[], format:["Casting Frost Nova also casts Nova"]},
 all_sorb:{index:["all_sorb"], format:["Damage Absorb: ","%"]},
 thunder_warp:{index:[], format:["Thunder storm strikes two additional enemies"]},
 jf_molten:{index:[], format:["Jab & Fend attacks cast molten strike"]},
-
+hf_incrased_rate:{index:[], format:["+50% increased Holy Fire Area Damage rate"]},
+oskill_Revive:{index:["oskill_Revive"], format:["+"," to Revive"]},
+tigerstrike_fof:{index:[], format:["Tiger Strike also generates a Fists of Fire Charge"]},
 };
 
 var stats_alternate = {
