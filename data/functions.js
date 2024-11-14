@@ -2393,7 +2393,15 @@ function getCTCSkillData(name, lvl, group) {
 		armatext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
 	else if (name == "Firestorm") {
-		
+		if (character.class_name == "Druid") {
+			result.fDamage_min = skill.data.values[1][lvl] * ((1 + (0.30*skills[1].level + 0.30*skills[4].level)) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[2][lvl] * ((1 + (0.30*skills[1].level + 0.30*skills[4].level)) * (1+character.fDamage/100)) ;
+		} 
+		if (character.class_name != "Druid") {
+			result.fDamage_min = skill.data.values[1][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
+		}
+		firestormtext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}	
 	// Sorceress
 	else if (name == "Chilling Armor") {
@@ -2504,8 +2512,20 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		meteotext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
-	else if (name == "Glacial Spike") {}	
-	else if (name == "Static Field") {}		
+	else if (name == "Glacial Spike") {
+		if (character.class_name == "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * ((1 + (0.08*sk[0].level + 0.08*sk[3].level + 0.08*sk[7].level + 0.08*sk[9].level)) * (1+c.cDamage/100)) ;
+			result.cDamage_max = skill.data.values[1][lvl] * ((1 + (0.08*sk[0].level + 0.08*sk[3].level + 0.08*sk[7].level + 0.08*sk[9].level)) * (1+c.cDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
+		}
+		glacialtext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + ")" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}";
+	}	
+	else if (name == "Static Field") {
+		staticftext = ""
+	}		
 	
 	// Necromancer
 	else if (name == "Flesh Offering") { result.duration = skill.data.values[0][lvl]; result.radius = skill.data.values[1][lvl]; }	// TODO: implement for summons: result.fcr = skill.data.values[2][lvl]; result.ias_skill = skill.data.values[3][lvl]; result.velocity = skill.data.values[4][lvl]; 
