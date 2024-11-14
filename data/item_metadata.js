@@ -1506,6 +1506,9 @@ jf_molten:{index:[], format:["Jab & Fend attacks cast molten strike"]},
 hf_incrased_rate:{index:[], format:["+50% increased Holy Fire Area Damage rate"]},
 oskill_Revive:{index:["oskill_Revive"], format:["+"," to Revive"]},
 tigerstrike_fof:{index:[], format:["Tiger Strike also generates a Fists of Fire Charge"]},
+skill_Double_Throw:{index:["skill_Double_Throw"], format:["+"," to Double Throw (Barbarian only)"]},
+
+
 };
 
 var stats_alternate = {

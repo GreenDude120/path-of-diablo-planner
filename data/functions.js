@@ -1881,7 +1881,13 @@ function updateAllEffects() {
 				if (ctcskill_name == "Hurricane") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Meteor") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Fire Ball") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
-				if (ctcskill_name == "Blizzard") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Blizzard") { match = 0 } 
+				if (ctcskill_name == "Ice Arrow") { match = 0 } 
+				if (ctcskill_name == "Glacial Spike") { match = 0 } 
+				if (ctcskill_name == "Static Field") { match = 0 } 
+				if (ctcskill_name == "War Cry") { match = 0 } 
+				if (ctcskill_name == "Firestorm") { match = 0 } 
+				if (ctcskill_name == "Molten Strike") { match = 0 } 
 			}
 		}
 		if (match == 0) { removeEffect(id,null) }
@@ -2278,6 +2284,41 @@ function getCTCSkillData(name, lvl, group) {
 		result.curse_length_reduced = skill.data.values[0][lvl]; result.all_res = skill.data.values[1][lvl]; result.pdr = skill.data.values[2][lvl]; result.duration = skill.data.values[3][lvl];
 	}
 	else if (name == "Venom") { result.pDamage_min = skill.data.values[1][lvl]; result.pDamage_max = skill.data.values[2][lvl]; result.pDamage_duration = 0.4; result.pDamage_duration_override = 0.4; result.duration = skill.data.values[0][lvl]; }
+	// Amazon
+	else if (name == "Molten Strike") {
+		if (character.class_name == "Amazon") {
+			result.fDamage_min = skill.data.values[1][lvl] * ((1 + 0.10*skills[3].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[2][lvl] * ((1 + 0.10*skills[3].level) * (1+character.fDamage/100)) ;
+		}
+		if (character.class_name != "Amazon") {
+			result.fDamage_min = skill.data.values[1][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
+		}
+		moltenstext = "(" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " phys)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}" ; 
+	}
+	else if (name == "Ice Arrow") {
+		if (character.class_name == "Amazon") {
+			result.cDamage_min = skill.data.values[0][lvl] * (1 + (0.10*skills[20].level)) * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[1][lvl] * (1 + (0.10*skills[20].level)) * (1+character.cDamage/100) ;
+		}
+		if (character.class_name != "Amazon") {
+			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
+		}
+		icearrowtext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + " phys)" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}" ; 
+	}
+	// Barb
+	else if (name == "War Cry") {
+		if (character.class_name == "Barbarian") {
+			result.damage_min = skill.data.values[0][lvl] * (1 + 0.06*skills[0].level + 0.06*skills[2].level + 0.06*skills[5].level) ;
+			result.damage_max = skill.data.values[1][lvl] * (1 + 0.06*skills[0].level + 0.06*skills[2].level + 0.06*skills[5].level) ;
+		}
+		if (character.class_name != "Barbarian") {
+			result.damage_min = skill.data.values[0][lvl] ;
+			result.damage_max = skill.data.values[1][lvl] ;
+		}
+		warcrytext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}"; 
+	}	
 	// Druid
 	else if (name == "Cyclone Armor") { result.absorb_elemental = skill.data.values[0][lvl]; }
 	else if (name == "Volcano") {
@@ -2351,7 +2392,9 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		armatext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
-
+	else if (name == "Firestorm") {
+		
+	}	
 	// Sorceress
 	else if (name == "Chilling Armor") {
 		if (effects[effect_id].info.enabled == 1) { for (id in effects) { if (id == "Shiver_Armor" || id == unit) { disableEffect(id) } } }
@@ -2461,7 +2504,8 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		meteotext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
-	
+	else if (name == "Glacial Spike") {}	
+	else if (name == "Static Field") {}		
 	
 	// Necromancer
 	else if (name == "Flesh Offering") { result.duration = skill.data.values[0][lvl]; result.radius = skill.data.values[1][lvl]; }	// TODO: implement for summons: result.fcr = skill.data.values[2][lvl]; result.ias_skill = skill.data.values[3][lvl]; result.velocity = skill.data.values[4][lvl]; 
@@ -4806,6 +4850,36 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Blizzard") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + blizztext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Glacial Spike") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + glacialtext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Ice Arrow") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + icearrowtext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Static Field") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + staticftext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "War Cry") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + warcrytext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Firestorm") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + firestormtext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Molten Strike") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + moltenstext;
 					}
 
 					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;

@@ -34,7 +34,15 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		if (skill.name == "Stun" && elem == 2) { 			result += (5*skills[23].level) }
 		if (skill.name == "Bash" && elem == 2) { 			result += (5*skills[23].level) }
 		if (skill.name == "Bash" && elem == 3) { 			result += (10*skills[25].level) }
-//		if (skill.name == "Double Throw" && elem == 0) { 	result = 8*skills[21].level }
+// Build double throw
+//		if (skill.name == "Double Throw" && equipped.weapon.name != "none" && elem < 2) {
+//			phys_min = (character.base_damage_min * (1+character.e_damage/100) + character.damage_min + character.level*character.min_damage_per_level);
+//			phys_max = (character.base_damage_max * (1+character.e_damage/100) + character.damage_max + character.level*character.max_damage_per_level);
+//		}
+//		if (skill.name == "Double Throw" && elem == 0) {		result = phys_min * (1 + (0.08*skills[22].level)) }
+//		if (skill.name == "Double Throw" && elem == 1) {		result = phys_max * (1 + (0.08*skills[22].level)) }
+		if (skill.name == "Double Throw" && elem < 2 ) { 	result *= (1 + (0.08*skills[22].level)) }
+
 		if (skill.name == "Leap Attack" && elem == 0) { 	result += (20*skills[22].level) }
 		if (skill.name == "Ethereal Throw" && elem < 2) { 	result *= ((1 + (0.04*skills[27].level + 0.04*skills[28].level)) * (1+character.mDamage/100)) }
 //		if (skill.name == "Whirling Axes" && elem < 2) { 	result *= ((1 + (0.14*skills[8].level + 0.14*skills[21].level + 0.01*Math.floor(character.dexterity + character.all_attributes)))) }
@@ -56,7 +64,9 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		if (skill.name == "Shout") { result.defense_bonus = skill.data.values[0][lvl]; result.duration = skill.data.values[1][lvl]; }
 		if (skill.name == "Battle Orders") { result.max_stamina = skill.data.values[1][lvl]; result.max_life = skill.data.values[2][lvl]; result.max_mana = skill.data.values[3][lvl]; result.duration = skill.data.values[0][lvl]; }
 		if (skill.name == "Frenzy") { result.ias_skill = skill.data.values[4][lvl]; result.frw_skillup = skill.data.values[6][lvl]; result.duration = 7.5; }
-		if (skill.name == "Power Throw") { result.damage_bonus = skill.data.values[0][lvl]; result.duration = 2.2; }
+// Build double throw
+		if (skill.name == "Double Throw") { result.thrown_ar = skill.data.values[2][lvl]; }
+//		if (skill.name == "Power Throw") { result.damage_bonus = skill.data.values[0][lvl]; result.duration = 2.2; }
 		if (skill.name == "Edged Weapon Mastery") { result.edged_damage = skill.data.values[0][lvl]; result.edged_ar = skill.data.values[1][lvl]; result.edged_cstrike = skill.data.values[2][lvl]; }
 		if (skill.name == "Pole Weapon Mastery") { result.pole_damage = skill.data.values[0][lvl]; result.pole_ar = skill.data.values[1][lvl]; result.pole_cstrike = skill.data.values[2][lvl]; }
 		if (skill.name == "Blunt Weapon Mastery") { result.blunt_damage = skill.data.values[0][lvl]; result.blunt_ar = skill.data.values[1][lvl]; result.blunt_cstrike = skill.data.values[2][lvl]; }
@@ -107,7 +117,8 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		else if (skill.name == "Pulverize") { 		damage_min = character.getSkillData(skill,lvl,1); damage_max = character.getSkillData(skill,lvl,2); ar_bonus = character.getSkillData(skill,lvl,0); }
 		else if (skill.name == "Stun") { 			mDamage_min = character.getSkillData(skill,lvl,0); mDamage_max = character.getSkillData(skill,lvl,1); ar_bonus = character.getSkillData(skill,lvl,2); }
 //	Build double throw
-		else if (skill.name == "Power Throw") {		weapon_damage = 120; ar_bonus = character.getSkillData(skill,lvl,1); damage_min = character.getSkillData(skill,lvl,2); damage_max = character.getSkillData(skill,lvl,3); }	
+		else if (skill.name == "Double Throw") {	weapon_damage = 100; ar_bonus = character.getSkillData(skill,lvl,2);   }	
+//		else if (skill.name == "Power Throw") {		weapon_damage = 120; ar_bonus = character.getSkillData(skill,lvl,1); damage_min = character.getSkillData(skill,lvl,2); damage_max = character.getSkillData(skill,lvl,3); }	
 		else if (skill.name == "Bash") { 			weapon_damage = 110-(110/100*character.getSkillData(skill,lvl,0)); ar_bonus = character.getSkillData(skill,lvl,2); damage_bonus = character.getSkillData(skill,lvl,3); mDamage_min = phys_min*((110/100*character.getSkillData(skill,lvl,0))/100)*(phys_mult+damage_bonus/100) * (1+character.mDamage/100); mDamage_max = phys_max*((110/100*character.getSkillData(skill,lvl,0))/100)*(phys_mult+damage_bonus/100) * (1+character.mDamage/100); }
 		else if (skill.name == "Leap Attack") {		weapon_damage = 175; ar_bonus = character.getSkillData(skill,lvl,1); damage_bonus = character.getSkillData(skill,lvl,0); }
 		else if (skill.name == "Ethereal Throw") { 	weapon_damage = 60; mDamage_min = character.getSkillData(skill,lvl,0); mDamage_max = character.getSkillData(skill,lvl,1); }
@@ -117,7 +128,7 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		
 		if (typeof(skill.reqWeapon) != 'undefined') { var match = 0; for (let w = 0; w < skill.reqWeapon.length; w++) {
 			if (equipped.weapon.type == skill.reqWeapon[w]) {
-				if (skill.name == "Frenzy" || skill.name == "Double Swing") { for (let x = 0; x < skill.reqWeapon.length; x++) {
+				if (skill.name == "Frenzy" || skill.name == "Double Swing" || skill.name == "Double Throw") { for (let x = 0; x < skill.reqWeapon.length; x++) {
 					if (equipped.offhand.type == skill.reqWeapon[x]) { match = 1 }
 				} }
 				else { match = 1 }
@@ -308,17 +319,18 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		["damage",51,53,54,56,57,59,60,62,63,65,66,68,69,71,72,74,75,77,78,80,81,83,84,86,87,89,90,92,93,95,96,98,99,101,102,104,105,107,108,110,111,113,114,116,117,119,120,122,123,125,126,128,129,131,132,134,135,137,138,140,], 
 		["radius",12,12.6,14,14.6,15.3,15.3,16,16,16.6,16.6,16.6,17.3,17.3,17.3,17.3,18,18,18,18,18,18,18.6,18.6,18.6,18.6,18.6,18.6,18.6,18.6,18.6,18.6,18.6,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,19.3,20,], 
 ]};
-///*[26] Double Throw		*/ var d333 = {values:[
-//	["Damage %",], 
-//	["Attack %",20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500,510,520,530,540,550,560,570,580,590,600,610,], 
-//]};
-/*[27] Power Throw		*/ var d341 = {values:[
-		["damage bonus",15,25,35,45,55,65,75,85,95,105,115,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345,355,365,375,385,395,405,415,425,435,445,455,465,475,485,495,505,515,525,535,545,555,565,575,585,595,605,], 
+/*[27] Double Throw		*/ var d341 = {values:[
+		["damage min",],
+		["damage max",],	
 		["attack rating",20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500,510,520,530,540,550,560,570,580,590,600,610,], 
-		["damage min",1,2,3,4,5,6,7,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,], 
-		["damage max",2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,], 
-		["mana cost",1,2,2,3,3,4,4,4,5,5,6,6,7,7,8,8,9,9,9,10,10,11,11,12,12,13,13,14,14,14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,22,22,22,23,23,24,24,24,25,25,26,26,27,27,28,28,], 
-]}; 
+]};
+///*[27] Power Throw		*/ var d341 = {values:[
+//		["damage bonus",15,25,35,45,55,65,75,85,95,105,115,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345,355,365,375,385,395,405,415,425,435,445,455,465,475,485,495,505,515,525,535,545,555,565,575,585,595,605,], 
+//		["attack rating",20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500,510,520,530,540,550,560,570,580,590,600,610,], 
+//		["damage min",1,2,3,4,5,6,7,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,], 
+//		["damage max",2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,], 
+//		["mana cost",1,2,2,3,3,4,4,4,5,5,6,6,7,7,8,8,9,9,9,10,10,11,11,12,12,13,13,14,14,14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,22,22,22,23,23,24,24,24,25,25,26,26,27,27,28,28,], 
+//]}; 
 /*[28] Bash				*/ var d322 = {values:[
 		["magic conversion",46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,100,100,100,100,100,], 
 		["magic damage",46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,100,100,100,100,100,], 
@@ -371,8 +383,9 @@ var skills_barbarian = [
 {data:d323, key:"323", code:148, name:"Cleave", i:24, req:[21], reqlvl:6, reqWeapon:["axe","mace","club","hammer","sword","dagger","thrown","javelin","scepter","wand","staff","spear","polearm"], level:0, extra_levels:0, force_levels:0, bindable:2, damaging:{attack:1,spell:1}, description:"Attacks in an arc, dealing damage<br>to all enemies caught in the swing<br><br>Deals 60% of Weapon Damage", syn_title:"<br>Cleave Receives Bonuses From:<br>", syn_text:"Double Swing: +15% Damage per Level", graytext:"", index:[0,""], text:["Damage: ","-","<br>Mana Cost: ",""]},
 {data:d332, key:"332", code:149, name:"Stun", i:25, req:[28], reqlvl:12, reqWeapon:["axe","mace","club","hammer","sword","dagger","thrown","javelin","scepter","wand","staff","spear","polearm"], level:0, extra_levels:0, force_levels:0, bindable:2, damaging:{attack:1,spell:0}, description:"An attack that stuns your target<br>and deals magic damage around it<br><br>Deals 100% of Weapon Damage", syn_title:"<br>Stun Receives Bonuses From:<br>", syn_text:"Bash: +10% Magic Damage per Level<br>Concentrate: +5% Attack Rating per Level<br>War Cry +10% Magic Damage per Level", graytext:"", index:[0,""], text:["Magic Damage: ","-","<br>Attack Rating: +"," percent<br>Duration: "," seconds<br>Mana Cost: 2",""]},
 {data:d333, key:"333", code:150, name:"Leap", i:26, req:[21,24], reqlvl:12, reqWeapon:["axe","mace","club","hammer","sword","dagger","thrown","javelin","scepter","wand","staff","spear","polearm"], level:0, extra_levels:0, force_levels:0, bindable:2, damaging:{attack:1,spell:0}, description:"Leaps away from danger<br>or into the fray", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Deals ","% of Weapon Damage<br>Radius: "," yards",""]},
-//{data:d333, key:"333", code:151, name:"Double Throw", i:27, req:[21,20], reqlvl:12, reqWeapon:["thrown","javelin"], level:0, extra_levels:0, force_levels:0, effect:0, bindable:2, damaging:{attack:2,spell:0}, description:"Allows you to throw two different<br>throwing weapons at the same time", syn_title:"<br>Double Throw Receives Bonuses From:<br>", syn_text:"Double Swing: +8% Damage per Level", graytext:"", index:[1," percent"], text:["Damage: +","To Attack Rating: +"," percent<br>Mana Cost: 1"]},
-{data:d341, key:"341", code:151, name:"Power Throw", i:27, req:[22], reqlvl:18, reqWeapon:["thrown","javelin"], level:0, extra_levels:0, force_levels:0, effect:3, bindable:2, damaging:{attack:2,spell:0}, description:"Gathers momentum to unleash a powerful throw<br>that deals damage to the target and nearby enemies<br><br>Deals 120% of Weapon Damage<br><br>Increases Physical Damage for 2.2 seconds", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Damage: +"," percent<br>To Attack Rating: +"," percent<br>Damage: ","-","<br>Mana Cost: ",""]},
+{data:d341, key:"341", code:151, name:"Double Throw", i:27, req:[22], reqlvl:18, reqWeapon:["thrown","javelin"], level:0, extra_levels:0, force_levels:0, effect:0, bindable:2, damaging:{attack:2,spell:0}, description:"Allows you to throw two different throwing weapons<br>at the same time, or throw right-handed weapon twice", syn_title:"<br>Double Throw Receives Bonuses From:<br>", syn_text:"Frenzy: +8% Damage per Level", graytext:"", index:[0,""], text:["Damage: ","-","<br>To Attack Rating: +"," percent<br><br>Mana Cost: 1"]},
+																																																																																																					
+//{data:d341, key:"341", code:151, name:"Power Throw", i:27, req:[22], reqlvl:18, reqWeapon:["thrown","javelin"], level:0, extra_levels:0, force_levels:0, effect:3, bindable:2, damaging:{attack:2,spell:0}, description:"Gathers momentum to unleash a powerful throw<br>that deals damage to the target and nearby enemies<br><br>Deals 120% of Weapon Damage<br><br>Increases Physical Damage for 2.2 seconds", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Damage: +"," percent<br>To Attack Rating: +"," percent<br>Damage: ","-","<br>Mana Cost: ",""]},
 {data:d342, key:"342", code:147, name:"Concentrate", i:23, req:[28,25], reqlvl:18, reqWeapon:["axe","mace","club","hammer","sword","dagger","thrown","javelin","scepter","wand","staff","spear","polearm"], level:0, extra_levels:0, force_levels:0, bindable:2, damaging:{attack:1,spell:0}, description:"Attack that is not interruptible and<br>improves attack and defense rating<br><br>Deals 160% of Weapon Damage", syn_title:"<br>Concentrate Receives Bonuses From:<br>", syn_text:"Bash: +5% Damage per Level<br>Battle Orders: +10% Damage per Level<br>Taunt: +10% Damage per Level", graytext:"", index:[0,""], text:["Defense Bonus: +"," percent<br>Attack Rating: +"," percent<br>Damage: +"," percent<br>Mana Cost: 2",""]},
 //{data:d353, key:"353", code:153, name:"Leap Attack", i:25, req:[22,18,28], reqlvl:24, reqWeapon:["axe","mace","club","hammer","sword","dagger","thrown","javelin","scepter","wand","staff","spear","polearm"], level:0, extra_levels:0, force_levels:0, bindable:1, damaging:{attack:1,spell:0}, description:"Leaps to and attacks target enemy<br>in one swift assault<br><br>Deals 175% of Weapon Damage", syn_title:"<br>Leap Attack Receives Bonuses From:<br>", syn_text:"Leap: +20% Damage per Level", graytext:"", index:[0,""], text:["Damage: +"," percent<br>Attack Rating: +"," percent<br>Mana Cost: 4",""], incomplete:1}, 
 /*TODO: remove*///{data:d361, key:"361", code:153, name:"None", i:2, req:[], reqlvl:100, level:0, extra_levels:0, force_levels:0, bindable:0, description:"", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:[""]},
