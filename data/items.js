@@ -1119,7 +1119,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"barbarian", rarity:"rare", name:"Weapons++++++++++++++++", img:"../../../portal"} ,
 	{name:"P22- Dragonbreath", type:"quiver", req_level:12, explosive_attack:1, oskill_Warmth:8, cRes:31, fRes:29, plus_exploding_arrow_radius:40, pod_changes:1, img:"Dragonbreath"},
 	{name:"P22- Moonfire", type:"quiver", req_level:21, mDamage_min:31, mDamage_max:44, enemy_mRes:-10, dexterity:49, all_res:12, extra_conversion_Magic_Arrow:7, extra_arrows_Magic_Arrow:4, pod_changes:1},
-	{name:"P22- Frostbite", type:"quiver", req_level:21, ctc:[[34,21,"Ice Arrow","When Struck"]], skills_cold_all:2, max_life:18, max_mana:17, plus_freezing_arrow_radius:40, pod_changes:1},
+	{name:"P22- Frostbite", type:"quiver", req_level:21, ctc:[[34,5,"Ice Arrow","When Struck"]], skills_cold_all:2, max_life:18, max_mana:17, plus_freezing_arrow_radius:40, pod_changes:1},
 	{name:"P22- Hailstorm", type:"quiver", req_level:12, ias:11, damage_min:12, damage_max:17, enemy_cRes:-20, damage_reduced:10, ctc:[[100,30,"Glacial Spike","During Strafe"]], pod_changes:1},
 	{name:"P22- Swiftheart", type:"quiver", req_level:12, frw:14, pierce:15, oskill_Strafe:6, life_replenish:12.2, mana_per_ranged_hit:4, pod_changes:1, base:"Bolts"},
 		],
