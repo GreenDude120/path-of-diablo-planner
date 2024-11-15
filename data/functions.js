@@ -3993,6 +3993,14 @@ function skillHover(skill) {
 			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.damagetoohigh+"</font>"
 		}
 	} }
+	if (typeof(skill.notupdated) != 'undefined') { if (skill.notupdated != "") {
+		if (skill.syn_text != "") { document.getElementById("syn_text").innerHTML += "<br>" }
+		if (skill.notupdated == 1) {
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>Skill has not been updated to P22 Minium</font>"
+		} else {
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.notupdated+"</font>"
+		}
+	} }
 	var levels = 0;
 	var next_display = "";
 	var current_display = "";
