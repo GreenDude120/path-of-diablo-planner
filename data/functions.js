@@ -3996,7 +3996,7 @@ function skillHover(skill) {
 	if (typeof(skill.damagewrong) != 'undefined') { if (skill.damagewrong != "") {
 		if (skill.syn_text != "") { document.getElementById("syn_text").innerHTML += "<br>" }
 		if (skill.damagewrong == 1) {
-			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>Damage per-level displayed here has not been  <br>verified in game and may not be accurate</font>"
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>Per-level stats displayed here have not been  <br>verified in game and may not be accurate</font>"
 		} else {
 			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.damagewrong+"</font>"
 		}
