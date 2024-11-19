@@ -3988,7 +3988,7 @@ function skillHover(skill) {
 	if (typeof(skill.damagetoohigh) != 'undefined') { if (skill.damagetoohigh != "") {
 		if (skill.syn_text != "") { document.getElementById("syn_text").innerHTML += "<br>" }
 		if (skill.damagetoohigh == 1) {
-			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>High end damage displayed here is much higher <br>than in game damage, more than 10%</font>"
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>Damage displayed here is higher than <br>in game damage, need better data</font>"
 		} else {
 			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.damagetoohigh+"</font>"
 		}

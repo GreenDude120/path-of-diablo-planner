@@ -195,6 +195,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		if (s == 2 || s == 21 || s == 23 || s == 26 || s == 28) { skills[s].extra_levels += character.skills_lightning_all }
 		if (s == 18) { skills[s].extra_levels += character.skills_poison_all }
 		if (s == 10) { skills[s].extra_levels += character.skills_magic_all }
+		if (s == 16 || s == 19) { skills[s].extra_levels += character.skills_summon_all }
 		if (s == 1 || s == 20 || s == 24 || s == 27 || s == 3 || s == 2 || s == 21 || s == 23 || s == 26 || s == 28 || s == 18) { skills[s].extra_levels += character.skills_ele_poison_all }		
 		if (s < 9) {
 			skills[s].extra_levels += character.skills_martial

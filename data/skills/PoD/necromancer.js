@@ -46,8 +46,8 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 		if (skill.name == "Desecrate" && elem > 0 && elem < 3) { 		result *= ((1 + (0.16*skills[11].level + 0.16*skills[19].level)) * (1+character.pDamage/100)) }
 		if (skill.name == "Poison Nova" && elem < 2) { 					result *= ((1 + (0.13*skills[11].level + 0.13*skills[15].level)) * (1+character.pDamage/100)) }
 		
-		if (skill.name == "Hemorrhage" && elem < 1) { 				result *= (1 + (0.20*skills[23].level + 0.20*skills[24].level + 0.20*skills[27].level)) }
-		if (skill.name == "Hemorrhage" && elem == 3) { 					result = (7.3 + (0.7 * Math.floor(skills[21].level / 5)) + (0.7 * Math.floor(skills[22].level))) }
+		if (skill.name == "Hemorrhage" && elem < 1) { 				result *= (1 + (0.18*skills[23].level + 0.18*skills[24].level + 0.18*skills[27].level)) }
+//		if (skill.name == "Hemorrhage" && elem == 3) { 					result = (7.3 + (0.7 * Math.floor(skills[21].level / 5)) + (0.7 * Math.floor(skills[22].level))) }
 
 	return result
 	},
@@ -187,6 +187,7 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 		if (s < 11) {
 			skills[s].extra_levels += character.skills_summoning_necromancer
 			skills[s].extra_levels += character.skills_tree1
+			skills[s].extra_levels += character.skills_summon_all
 		} else if (s > 19) {
 			skills[s].extra_levels += character.skills_curses
 			skills[s].extra_levels += character.skills_tree3
@@ -347,7 +348,7 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 		["damage",2,5,8,11,15,18,21,24,31,37,43,49,55,62,68,74,84,93,102,112,121,131,146,162,177,193,209,224,248,271.5,295,318.5,342,365.5,389,412,435.5,459,482.5,506,529.5,553,576,599.5,623,647,671,695,719,743,767,791,815,839,863,887,911,935,959,983,], 
 		["duration",4,4.1,4.3,4.4,4.6,4.8,4.9,5.1,5.2,5.4,5.6,5.7,5.9,6,6.2,6.4,6.5,6.7,6.8,7,7.2,7.3,7.5,7.6,7.8,8,8.1,8.3,8.4,8.6,8.8,8.9,9.1,9.2,9.4,9.6,9.7,9.9,10,10.2,10.4,10.5,10.7,10.8,11,11.2,11.3,11.5,11.6,11.8,12,12.1,12.3,12.4,12.6,12.8,12.9,13.1,13.2,13.4,], 
 		["mana cost",6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,], 
-		["radius",], 
+//		["radius",], 
 	]};
 /*[23] Weaken			*/ var d323 = {values:[
 		["radius",4,4.6,5.3,6,6.6,7.3,8,8.6,9.3,10,10.6,11.3,12,12.6,13.3,14,14.6,15.3,16,16.6,17.3,18,18.6,19.3,20,20.6,21.3,22,22.6,23.3,24,24.6,25.3,26,26.6,27.3,28,28.6,29.3,30,30.6,31.3,32,32.6,33.3,34,34.6,35.3,36,36.6,37.3,38,38.6,39.3,40,40.6,41.3,42,42.6,43.3,], 
@@ -409,11 +410,11 @@ var skills_necromancer = [
 
 {data:d312, key:"312", code:86, name:"Amplify Damage", i:20, req:[], reqlvl:1, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies, increasing<br>the non-magic damage they receive<br><br>Damage Taken: +100 percent", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 4",""]},
 {data:d321, key:"321", code:87, name:"Dim Vision", i:21, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of monsters,<br>reducing their vision radius", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 9",""]},
-{data:d322, key:"322", code:88, name:"Hemorrhage", i:22, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies to cause<br>bleeding which drains their life away<br><br>Ignores curse overrides/immunities", syn_title:"<br>Hemorrhage Receives Bonuses From:<br>", syn_text:"Life Tap: +20% Life Damage per Level<br>Weaken: +20% Life Damage per Level<br>Iron Maiden: +20% Life Damage per Level<br>Dim Vision: Adds 0.7 radius per 5 levels", graytext:"", index:[0,""], text:["Life Damage: "," per second<br>Duration: "," seconds<br>Mana Cost: "," <br>Radius: ",""], notupdated:1},
+{data:d322, key:"322", code:88, name:"Hemorrhage", i:22, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies to cause<br>bleeding which drains their life away<br><br>Ignores curse overrides/immunities", syn_title:"<br>Hemorrhage Receives Bonuses From:<br>", syn_text:"Life Tap: +20% Life Damage per Level<br>Weaken: +20% Life Damage per Level<br>Iron Maiden: +20% Life Damage per Level", graytext:"", index:[0,""], text:["Radius: 7.3 yards<br>Life Damage: "," per second<br>Duration: "," seconds<br>Mana Cost: ",""], notupdated:0, damagetoohigh:1},
 {data:d323, key:"323", code:89, name:"Weaken", i:23, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies,<br>reducing the amount of damage they inflict<br><br>Target's Damage: -33 percent", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 4",""]},
 {data:d332, key:"332", code:90, name:"Iron Maiden", i:24, req:[], reqlvl:12, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies, causing them<br>to damage themselves when damaging others", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:[""," percent damage returned<br>Duration: "," seconds<br>Radius: "," yards<br>Mana Cost: 5",""]},
 {data:d333, key:"333", code:91, name:"Terror", i:25, req:[], reqlvl:12, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of monsters,<br>causing them to flee in terror", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 7",""]},
-{data:d341, key:"341", code:92, name:"Confuse", i:26, req:[], reqlvl:18, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a monster to force it to attack random targets", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 13",""], notupdated:1},
+{data:d341, key:"341", code:92, name:"Confuse", i:26, req:[], reqlvl:18, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a monster to force it to attack random targets<br><br>Chance Confused Enemy is Knocked Back When Hit", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 13",""], notupdated:0},
 {data:d342, key:"342", code:93, name:"Life Tap", i:27, req:[], reqlvl:18, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of monsters so that<br>damaging them gives the attacker life", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Heals: "," percent of attack damage<br>Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 9",""]},
 {data:d351, key:"351", code:94, name:"Attract", i:28, req:[], reqlvl:24, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a monster to become the<br>target of all nearby monsters<br>This curse may not be overridden by another curse<br><br>Radius: 5.3 yards", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Duration: "," seconds<br>Mana Cost: 17",""]},
 {data:d353, key:"353", code:95, name:"Decrepify", i:29, req:[], reqlvl:24, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies to make them<br>slow, weak and take amplified damage<br><br>Duration: 10 seconds", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Mana Cost: 11",""]},

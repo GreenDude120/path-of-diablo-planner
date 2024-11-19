@@ -169,6 +169,7 @@ var character_amazon = {class_name:"Amazon", strength:20, dexterity:25, vitality
 		if (s == 1 || s == 4 || s == 5 || s == 8 || s == 9) { skills[s].extra_levels += character.skills_lightning_all }
 		if (s == 2 || s == 6) { skills[s].extra_levels += character.skills_poison_all }
 		if (s == 21) { skills[s].extra_levels += character.skills_magic_all }
+		if (s == 18) { skills[s].extra_levels += character.skills_summon_all }
 		if (s == 7 || s == 23 || s == 26 || s == 28 || s == 20 || s == 24 || s == 29 || s == 1 || s == 4 || s == 5 || s == 8 || s == 9 || s == 2 || s == 6) { skills[s].extra_levels += character.skills_ele_poison_all }
 		if (s < 10) {
 			skills[s].extra_levels += character.skills_javelins

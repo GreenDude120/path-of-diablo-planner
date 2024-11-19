@@ -201,7 +201,8 @@ var bases = {	// Note: damage_vs_undead:50 is included for blunt weapons, but ot
 	Blade_Barrier:{group:"offhand", type:"shield", base_defense:163, def_low:147, def_high:163, req_level:51, req_strength:118, durability:83, max_sockets:3, downgrade:"Barbed Shield", velocity:0, block:50, smite_min:26, smite_max:40, tier:3, nonmetal:1},
 	Monarch:{group:"offhand", type:"shield", base_defense:148, def_low:133, def_high:148, req_level:54, req_strength:156, durability:86, max_sockets:4, downgrade:"Dragon Shield", velocity:0, block:52, smite_min:12, smite_max:34, tier:3},
 	Troll_Nest:{group:"offhand", type:"shield", base_defense:173, def_low:158, def_high:173, req_level:57, req_strength:106, durability:74, max_sockets:3, downgrade:"Grim Shield", velocity:0, block:50, smite_min:24, smite_max:38, tier:3, nonmetal:1},
-	Aegis:{group:"offhand", type:"shield", base_defense:161, def_low:145, def_high:161, req_level:59, req_strength:219, durability:92, max_sockets:4, downgrade:"Pavise", velocity:-10, block:54, smite_min:18, smite_max:28, tier:3},
+//	Aegis:{group:"offhand", type:"shield", base_defense:161, def_low:145, def_high:161, req_level:59, req_strength:219, durability:92, max_sockets:4, downgrade:"Pavise", velocity:-10, block:54, smite_min:18, smite_max:28, tier:3},
+	Aegis:{group:"offhand", type:"shield", base_defense:221, def_low:196, def_high:221, req_level:59, req_strength:200, durability:92, max_sockets:4, downgrade:"Pavise", velocity:-10, block:54, smite_min:18, smite_max:28, tier:3},
 	Ward:{group:"offhand", type:"shield", base_defense:170, def_low:153, def_high:170, req_level:63, req_strength:185, durability:100, max_sockets:4, downgrade:"Ancient Shield", velocity:-5, block:54, smite_min:11, smite_max:35, tier:3},
 	// gloves
 	Leather_Gloves:{group:"gloves", type:"gloves", base_defense:3, def_low:2, def_high:3, durability:12, upgrade:"Demonhide Gloves", tier:1, nonmetal:1},
@@ -1508,6 +1509,9 @@ hf_incrased_rate:{index:[], format:["+50% increased Holy Fire Area Damage rate"]
 oskill_Revive:{index:["oskill_Revive"], format:["+"," to Revive"]},
 tigerstrike_fof:{index:[], format:["Tiger Strike also generates a Fists of Fire Charge"]},
 skill_Double_Throw:{index:["skill_Double_Throw"], format:["+"," to Double Throw (Barbarian only)"]},
+summon_more_shadow:{index:[], format:["Can Summon an Additional Shadow Warrior/Master"]},
+lDamage_max_per_2_dex:{index:["lDamage_max_per_2_dex"], format:["+"," Lightning Damage per 2 Dexterity"]},
+skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summoning Skills"]},
 
 
 };
