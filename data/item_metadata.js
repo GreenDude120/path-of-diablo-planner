@@ -517,6 +517,7 @@ var bases = {	// Note: damage_vs_undead:50 is included for blunt weapons, but ot
 	Crusader_Bow:{group:"weapon", type:"bow", base_damage_min:15, base_damage_max:63, req_level:57, req_strength:97, req_dexterity:121, baseSpeed:10, max_sockets:6, downgrade:"Long Siege Bow", twoHands:1, tier:3, nonmetal:1, iasindex:62},
 	Ward_Bow:{group:"weapon", type:"bow", base_damage_min:20, base_damage_max:53, req_level:60, req_strength:72, req_dexterity:146, baseSpeed:0, max_sockets:5, downgrade:"Rune Bow", twoHands:1, tier:3, nonmetal:1, iasindex:281},
 	Hydra_Bow:{group:"weapon", type:"bow", base_damage_min:10, base_damage_max:68, req_level:63, req_strength:134, req_dexterity:167, baseSpeed:10, max_sockets:6, downgrade:"Gothic Bow", twoHands:1, tier:3, nonmetal:1, iasindex:143},
+	Qord_Bow:{group:"weapon", type:"bow", base_damage_min:100, base_damage_max:100, req_level:60, req_strength:72, req_dexterity:146, baseSpeed:0, max_sockets:6, twoHands:1, tier:3, nonmetal:1, iasindex:281},
 	// crossbow
 	Light_Crossbow:{group:"weapon", type:"crossbow", base_damage_min:6, base_damage_max:9, req_strength:21, req_dexterity:27, baseSpeed:-10, max_sockets:3, upgrade:"Arbalest", twoHands:1, tier:1, nonmetal:1, iasindex:161},
 	Crossbow:{group:"weapon", type:"crossbow", base_damage_min:9, base_damage_max:16, req_strength:40, req_dexterity:33, baseSpeed:0, max_sockets:4, upgrade:"Siege Crossbow", twoHands:1, tier:1, nonmetal:1, iasindex:60},
