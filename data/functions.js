@@ -2495,22 +2495,23 @@ function getCTCSkillData(name, lvl, group) {
 	}	
 	else if (name == "Meteor") {
 		if (character.class_name == "Sorceress") {
-			result.damage_min = skill.data.values[0][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.physicalDamage/100)) ;
-			result.damage_max = skill.data.values[1][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.physicalDamage/100)) ;
-			result.fDamage_min = skill.data.values[2][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
-			result.fDamage_max = skill.data.values[3][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
-			result.fDamage_min2 = skill.data.values[4][lvl] * ((1 + 0.03*skills_all["sorceress"][24].level) * (1+character.fDamage/100)) ;
-			result.fDamage_max2 = skill.data.values[5][lvl] * ((1 + 0.03*skills_all["sorceress"][24].level) * (1+character.fDamage/100)) ;
+//			result.damage_min = skill.data.values[0][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.physicalDamage/100)) ;
+//			result.damage_max = skill.data.values[1][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.physicalDamage/100)) ;
+			result.fDamage_min = skill.data.values[0][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max = skill.data.values[1][lvl] * ((1 + 0.06*skills_all["sorceress"][22].level + 0.06*skills_all["sorceress"][26].level) * (1+character.fDamage/100)) ;
+			result.fDamage_min2 = skill.data.values[2][lvl] * ((1 + 0.03*skills_all["sorceress"][24].level) * (1+character.fDamage/100)) ;
+			result.fDamage_max2 = skill.data.values[3][lvl] * ((1 + 0.03*skills_all["sorceress"][24].level) * (1+character.fDamage/100)) ;
 		} 
 		if (character.class_name != "Sorceress") {
-			result.damage_min = skill.data.values[0][lvl] * (1+character.physicalDamage/100) ;
-			result.damage_max = skill.data.values[1][lvl] * (1+character.physicalDamage/100) ;
-			result.fDamage_min = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
-			result.fDamage_max = skill.data.values[3][lvl] * (1+character.fDamage/100) ;
-			result.fDamage_min2 = skill.data.values[4][lvl] * (1+character.fDamage/100) ;
-			result.fDamage_max2 = skill.data.values[5][lvl] * (1+character.fDamage/100) ;
+//			result.damage_min = skill.data.values[0][lvl] * (1+character.physicalDamage/100) ;
+//			result.damage_max = skill.data.values[1][lvl] * (1+character.physicalDamage/100) ;
+			result.fDamage_min = skill.data.values[0][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max = skill.data.values[1][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_min2 = skill.data.values[2][lvl] * (1+character.fDamage/100) ;
+			result.fDamage_max2 = skill.data.values[3][lvl] * (1+character.fDamage/100) ;
 		}
-		meteotext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
+//		meteotext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
+		meteotext = "(" + Math.round(result.fDamage_min2) + "-" + Math.round(result.fDamage_max2) + " fire)" + " {" +Math.round((result.fDamage_min2+result.fDamage_max2)/2) + "}, "+ " (" + Math.round(result.fDamage_min) + "-" + Math.round(result.fDamage_max) + " fire over time)" + " {" +Math.round((result.fDamage_min+result.fDamage_max)/2) + "}"; 
 	}
 	else if (name == "Glacial Spike") {
 		if (character.class_name == "Sorceress") {
@@ -4208,9 +4209,10 @@ function getWeaponDamage(str, dex, group, thrown) {
 //	if (c.skillName == "Shock Wave") {var phys_mult = (1+statBonus+((c.damage_bonus-(1+e_damage/100)-(1+e_damage/100))+weapon_skillup)/100);}
 //	else {var phys_mult = (1+statBonus+(c.damage_bonus+weapon_skillup)/100)}
 	if (phys_max < phys_min) { phys_max = phys_min + 1 };
-	var values = [phys_min, phys_max, phys_mult];
-	
-	return values
+	var values = [phys_min, phys_max, phys_mult, base_min, statBonus, weapon_skillup, e_damage];
+//	var values2 = [statBonus, weapon_skillup, e_damage];
+	return values 
+//	return values2
 }
 
 // getNonPhysWeaponDamage - Calculates non-physical damage for an equipped weapon
@@ -4321,7 +4323,8 @@ function updatePrimaryStats() {
 	var basic_max = Math.floor(physDamage[1]*physDamage[2] + dmg.fMax + dmg.cMax + dmg.lMax + dmg.pMax + dmg.mMax);
 	if (basic_min > 0 || basic_max > 0) { document.getElementById("basic_attack").innerHTML = basic_min + "-" + basic_max + " {"+Math.ceil((basic_min+basic_max)/2)+"}";
 		var breakdown = "Damage Breakdown- "; // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_maz  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max
-		if (Math.floor(physDamage[0]*physDamage[2]) > 0) {breakdown += "\nPhys Damage: " + Math.floor(physDamage[0]*physDamage[2]) + "-" + Math.floor(physDamage[1]*physDamage[2])};
+//		if (Math.floor(physDamage[0]*physDamage[2]) > 0) {breakdown += "\nPhys Damage: " + Math.floor(physDamage[0]*physDamage[2]) + "-" + Math.floor(physDamage[1]*physDamage[2]) + "\nBase Weapon Damage: " + Math.floor(physDamage[3]) + "\nStat Bonus Damage: " + Math.floor(physDamage[4]*100) + "\nMastery Bonus Damage: " + Math.floor(physDamage[5]) + "\nOn Weapon ED: " + Math.floor(physDamage[3]*(1+physDamage[6]/100)) + "\nOff Weapon ED: " + physDamage[3]*(c.damage_bonus/100)}; //base_min, statBonus, weapon_skillup, e_damage , need damage_bonus
+		if (Math.floor(physDamage[0]*physDamage[2]) > 0) {breakdown += "\nPhys Damage: " + Math.floor(physDamage[0]*physDamage[2]) + "-" + Math.floor(physDamage[1]*physDamage[2])}
 		if (dmg.fMin > 0) {breakdown += "\nFire Damage: " + Math.floor(dmg.fMin) + "-" + Math.floor(dmg.fMax)};
 		if (dmg.cMin > 0) {breakdown += "\nCold Damage: " + Math.floor(dmg.cMin) + "-" + Math.floor(dmg.cMax)};
 		if (dmg.lMin > 0) {breakdown += "\nLight Damage: " + Math.floor(dmg.lMin) + "-" + Math.floor(dmg.lMax)};
