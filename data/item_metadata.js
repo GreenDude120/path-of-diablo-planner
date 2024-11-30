@@ -92,6 +92,7 @@ var runewords = {
 	Wisdom:["Pul","Ith","Eld"],
 	Unbending_Will:["Fal","Io","Ith","Eld","El","Hel"],
 	Obsession:["Zod","Ist","Lem","Lum","Io","Nef"],
+	Mosaic:["Mal","Gul","Amn"],
 };
 
 /* automods = 
@@ -1138,7 +1139,9 @@ skill_Freezing_Arrow:{index:["skill_Freezing_Arrow"], format:["+"," to Freezing 
 
 skill_Dual_Strike:{index:["skill_Dual_Strike"], format:["+"," to Dual Strike (Assassin only)"]},
 skill_Fists_of_Ember:{index:["skill_Fists_of_Ember"], format:["+"," to Fists of Ember (Assassin only)"]},
+skill_Fists_of_Fire:{index:["skill_Fists_of_Fire"], format:["+"," to Fists of Fire (Assassin only)"]},
 skill_Fists_of_Thunder:{index:["skill_Fists_of_Thunder"], format:["+"," to Fists of Thunder (Assassin only)"]},
+skill_Claws_of_Thunder:{index:["skill_Claws_of_Thunder"], format:["+"," to Claws of Thunder (Assassin only)"]},
 skill_Fists_of_Ice:{index:["skill_Fists_of_Ice"], format:["+"," to Fists of Ice (Assassin only)"]},
 skill_Static_Strike:{index:["skill_Static_Strike"], format:["+"," to Static Strike (Assassin only)"]},
 skill_Dragon_Talon:{index:["skill_Dragon_Talon"], format:["+"," to Dragon Talon (Assassin only)"]},
@@ -1513,7 +1516,7 @@ skill_Double_Throw:{index:["skill_Double_Throw"], format:["+"," to Double Throw 
 summon_more_shadow:{index:[], format:["Can Summon an Additional Shadow Warrior/Master"]},
 lDamage_max_per_2_dex:{index:["lDamage_max_per_2_dex"], format:["+"," Lightning Damage per 2 Dexterity"]},
 skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summoning Skills"]},
-
+mosaic_charge_dur:{index:["mosaic_charge_dur"], format:["+"," Seconds to All Martial Arts Charges Duration"]},
 
 };
 
