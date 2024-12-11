@@ -331,7 +331,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Death:1, name:"Death's Hand", req_level:6, poison_length_reduced:75, pRes:50, ar_per_level:3, base:"Leather Gloves", rarity:"set", set_bonuses:["set_Death",{},{ias:30},{}], img:"Death's_Hand"},
 	{set_Cleglaw:1, name:"Cleglaw's Pincers", req_level:4, slows_target:25, knockback:1, base:"Chain Gloves", rarity:"set", set_bonuses:["set_Cleglaw",{},{ar_per_level:10},{}], img:"Cleglaw's_Pincers"},
 	{set_Arctic:1, name:"Arctic Mitts", req_level:2, life:20, ias:10, base:"Light Gauntlets", rarity:"set", set_bonuses:["set_Arctic",{},{ar:50},{dexterity:10},{}], img:"Arctic_Mitts"},
-	{only:"amazon", rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
+	{rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
+//	{only:"amazon", rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
 	{only:"amazon", rarity:"craft", name:"Spearmaiden's Blood Gloves", req_level:47, skills_javelins:2, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, base:"Vampirebone Gloves"},
 	{only:"amazon", rarity:"craft", name:"Gymnast's Caster Mitts", req_level:42, skills_passives:2, mana_regen:10, mana:20, mana_per_kill:3, mana_leech:5, ias:20, mf:25, fRes:30, lRes:30, base:"Bramble Mitts"},
 	{only:"assassin", rarity:"craft", name:"Sensei's Blood Gloves", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_martial:2, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, base:"Vampirebone Gloves"},
@@ -368,6 +369,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rare", name:"Chromatic Boots", req_level:37, frw:30, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Boots"},
 	{rarity:"craft", name:"Blood Boots", req_level:25, frw:30,life_leech:3, life:20, life_replenish:10,  fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Battle Boots"},
 	{rarity:"craft", name:"Caster Boots", req_level:45, frw:30, mana_regen:10, mana:20, max_mana:5, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
+	{rarity:"craft", name:"Hitpower Boots", req_level:45, frw:30, thorns:7, ctc:[[5,4,"Frost Nova","when hit"]], melee_defense:50, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
 		],
 		belt: [
 	{name:"Belt"},
@@ -399,6 +401,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Arctic:1, name:"Arctic Binding", req_level:2, defense:30, cRes:40, base:"Light Belt", rarity:"set", set_bonuses:["set_Arctic",{},{mf:40},{cRes:10},{}], img:"Arctic_Binding"},
 	{rarity:"craft", name:"Blood Coil", req_level:56, life:80, life_leech:3, owounds:10, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Mithril Coil"},
 	{rarity:"craft", name:"Caster Belt", req_level:51, mana_regen:10, mana:20, fcr:10, life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
+	{rarity:"craft", name:"Hitpower Belt", req_level:51, damage_to_mana:10, thorns:7, ctc:[[5,4,"Frost Nova","when hit"]], life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
 		],
 		amulet: [
 	{name:"Amulet"},
@@ -470,6 +473,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rare", name:"Emperor's Ring", req_level:95, all_res:11, lRes:30, mana:90, life_leech:8, mana_leech:6, fcr:10},
 	{rarity:"craft", name:"Blood Ring", req_level:65, life_leech:11, life:20, strength:25, ar:120, all_res:11, fcr:10, mana_leech:5},
 	{rarity:"craft", name:"Caster Ring", req_level:65, mana_regen:10, mana:110, energy:20, all_res:11, fcr:10, strength:20, life:40},
+	{rarity:"craft", name:"Hitpower Ring", req_level:65, dex:5, ctc:[[5,4,"Frost Nova","when hit"]], thorns:6, all_res:11, fcr:10, strength:20, life:40},
 	{rarity:"magic", name:"Fortuitous Ring of Fortune", req_level:31, mf:40},
 		],
 		ring2: [],	// Automatically copied from ring1
