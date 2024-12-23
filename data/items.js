@@ -740,7 +740,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Khalim's Will", type:"mace", special:1, ias:50, ar:40, life_leech:6, mana_leech:6, damage_vs_undead:50, base_damage_min:1, base_damage_max:15, lDamage_min:1, lDamage_max:40, max_sockets:3, img:"Khalim's_Will", tier:0},
 	{name:"Hellforge Hammer", type:"hammer", special:1, defense:35, fRes:40, damage_vs_undead:50, base_damage_min:6, base_damage_max:15, durability:83, fDamage_min:5, fDamage_max:20, max_sockets:4, img:"Hellforge_Hammer", tier:0},
 	{rarity:"common", name:"Wirt's Leg", type:"mace", special:2, damage_vs_undead:50, base_damage_min:2, base_damage_max:8, durability:0, max_sockets:3, sockets:3, img:"Wirt's_Leg"},
-	{rarity:"rw", name:"Plague ­ ­ - ­ ­ Wirt's Leg", req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"mace", base:"Wirts Leg", img:"Wirt's_Leg", pod_changes:1},
+//	{rarity:"rw", name:"Plague ­ ­ - ­ ­ Wirt's Leg", req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"mace", base:"Wirts Leg", img:"Wirt's_Leg", pod_changes:1},
 	// Staves
 	{name:"Staves------------------------------", type:"staff", img:"Mang_Song's_Lesson"},
 //	{name:"Bane Ash", req_level:5, e_damage:60, ias:20, mana:30, fRes:50, fDamage_min:4, fDamage_max:6, skill_Fire_Bolt:5, skill_Warmth:2, twoHanded:1, type:"staff", base:"Short Staff", img:"Bane_Ash"},

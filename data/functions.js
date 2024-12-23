@@ -4533,6 +4533,8 @@ function updateSecondaryStats() {
 		esdamagetaken += "\nFire: " + Math.round(((500 * (1-esprcnt/100))  - c.mDamage_reduced) * (1-(c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup)/100) * (1-c.fAbsorb/100) - (c.fAbsorb_flat + (c.level*c.fAbsorb_flat_per_level))) ;
 		esdamagetaken += "\nCold: " + Math.round(((500 * (1-esprcnt/100))  - c.mDamage_reduced) * (1-(c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup)/100) * (1-c.cAbsorb/100) - (c.cAbsorb_flat + (c.level*c.cAbsorb_flat_per_level))) ;
 		esdamagetaken += "\nLight: " + Math.round(((500 * (1-esprcnt/100))  - c.mDamage_reduced) * (1-(c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup)/100) * (1-c.lAbsorb/100) - c.lAbsorb_flat) ;
+		esdamagetaken += "\nThese cannot be negative numbers, assume anything "
+		esdamagetaken += "\nbelow zero is actually 1"
 
 		var TooltipElement = document.getElementById("esprcnt");
 		TooltipElement.title = esdamagetaken  ;	

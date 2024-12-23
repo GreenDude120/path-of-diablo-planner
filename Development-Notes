@@ -146,3 +146,6 @@ Added new bow base in item_metadata to allow for creating 2 new bow debug items 
 30 Nov
 Mosaic, how did I miss that??? Added it to list of runewords in item-metadata, added new var for charge duration, added fists of fire and claws of thunder(again how???) to metadata, added the item itself in items
 
+23 Dec
+Removed Plague Wirt's Leg, oops. 
+Added clarity on ES damage taken values not being able to go below zero
