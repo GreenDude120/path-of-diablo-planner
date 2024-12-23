@@ -24,7 +24,12 @@
   -webkit-user-select: none;	/* for safari & chrome browsers */
   -moz-user-select: none;   	/* for mozilla browsers */
   -ms-user-select: none;    	/* for IE10+ */
-  background-color: black;
+/*  background-color: white; */
+  background:url('./images/background.png');
+  height: auto;
+  min-height:100%;
+  background-repeat: repeat;
+
 }
 .hover {
   position: absolute;
@@ -711,3 +716,103 @@ input[type="file"] {
   float: right;
   width: 195px;
 }
+
+/* 
+#############
+Added 23 Dec 
+#############
+*/
+
+.navbar.is-dark {
+  background-color: #3a3f44 !important;
+}
+
+.navbar.is-dark.hover {
+  background-color: #222 !important;
+}
+
+.navbar.is-fixed-top {
+  top: 0;
+}
+
+.navbar.is-fixed-bottom, .navbar.is-fixed-top {
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 30;
+}
+
+.navbar.is-dark {
+  background-color: #363636;
+  color: #f5f5f5;
+}
+
+@media screen and (min-width: 1024px) {
+  .navbar, .navbar-end, .navbar-menu, .navbar-start {
+    align-items: stretch;
+    display: flex;
+    color: #f5f5f5;
+  }
+}
+.navbar-item, .navbar-item-right{
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  color: #f5f5f5;
+}
+.navbar-item, .navbar-item-right{
+  border-right: 1px solid rgba(0,0,0,.2);
+  border-left: 1px solid hsla(0,0%,100%,.1);
+}
+@media screen and (min-width: 1024px) {
+  .navbar-item, .navbar-item-right{
+    align-items: center;
+    display: flex;
+  }
+}
+.navbar-item, .navbar-item-right{
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.navbar-item, .navbar-item-right{
+  line-height: 1.5;
+  padding: .5rem 1rem;
+  position: relative;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.navbar-item-right{
+  margin-left: 200%;
+  margin-right: 20px;
+
+}
+.navbar-item:hover, .navbar-item-right:hover {
+  background-color: #222;
+}
+
+.has-text-white {
+  color:#fff!important
+}
+
+@font-face {
+  font-family: D2Light;
+  src: url("../fonts/D2Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: D2Medium;
+  src: url("../fonts/D2Medium.ttf") format("truetype");
+}
+.d2-font {
+  font-family: D2Medium;
+  line-height: 1;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  text-rendering: optimizeLegibility;
+}
+

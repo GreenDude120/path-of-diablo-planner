@@ -149,3 +149,4 @@ Mosaic, how did I miss that??? Added it to list of runewords in item-metadata, a
 23 Dec
 Removed Plague Wirt's Leg, oops. 
 Added clarity on ES damage taken values not being able to go below zero
+Added top navigation bar and background to give the builder a look that's consistent with the rest of, AND allows simpler navigation back to, the PoD web pages
