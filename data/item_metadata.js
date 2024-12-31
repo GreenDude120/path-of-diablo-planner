@@ -1517,7 +1517,7 @@ summon_more_shadow:{index:[], format:["Can Summon an Additional Shadow Warrior/M
 lDamage_max_per_2_dex:{index:["lDamage_max_per_2_dex"], format:["+"," Lightning Damage per 2 Dexterity"]},
 skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summoning Skills"]},
 mosaic_charge_dur:{index:["mosaic_charge_dur"], format:["+"," Seconds to All Martial Arts Charges Duration"]},
-
+oskill_Taunt:{index:["oskill_Taunt"], format:["+"," to Taunt"]},
 };
 
 var stats_alternate = {
