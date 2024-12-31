@@ -5446,6 +5446,100 @@ function addSomemore() {
 	if (dmg.pMin > 0) {skill2Breakdown += "\nWPoison Damage: " + dmg.pMin + "-" + dmg.pMax};
 }
 
+async function importChar() {
+let characterName = "sorcsallsuck"
+//let characterData;
+let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
+//let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
+//let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
+let data; 
+
+if (characterName) {
+	console.log("Character Name:", characterName);
+	
+	// Fetch character data and process it
+	try {
+		const characterData = await fetchCharacterData(characterName);
+		processCharacterData(characterData);  // Process after retrieval
+	} catch (error) {
+		console.error("Error during API calls:", error);
+	}
+} else {
+	console.warn("Character Name is not set in the configuration.");
+}
+
+async function fetchCharacterData(characterName) {
+	console.log("Start function fetchCharacterData");
+//    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
+	const url = 'https://beta.pathofdiablo.com/api/characters/sorcsallsuck/summary'
+	//    console.log("API URL:", url);
+
+    try {
+        const response = await fetch(url);
+        console.log("fetch worked");
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Character Data fetched:", data);
+        return data;
+    } catch (error) {
+        console.error("Error fetching character data:", error);
+        return null;
+    }
+}
+
+// Function to process characterData after it's fetched
+async function processCharacterData(characterData) {
+	if (!characterData || typeof characterData !== 'object') {
+		console.error("Invalid characterData:", characterData);
+		return;
+	}
+	console.log("Character Data fetched 2:", characterData);
+	updatePODComponent(characterData);  // Process and update UI after retrieval
+  }
+
+function updatePODComponent(data) {
+	if (data && data.Stats) {
+		//add class
+		builderurl += "class=" + data["Class"] + "&"; 
+		console.log("Add to url: ", "class=" + data["Class"] + "&");
+		//add level
+		builderurl += "level=" + data["Stats"]["Level"] + "&";
+		console.log("Add to url: ", "level=" + data["Stats"]["Level"] + "&");
+		//add misc
+		builderurl += "difficulty=3&quests=1&running=0&"
+		//add stats
+		builderurl += "strength=" + data["Stats"]["Strength"] + "&";
+		builderurl += "dexterity=" + data["Stats"]["Dexterity"] + "&";
+		builderurl += "vitality=" + data["Stats"]["Vitality"] + "&";
+		builderurl += "energy=" + data["Stats"]["Energy"] + "&";
+		//add misc
+		builderurl += "coupling=1&synthwep=0&autocast=1&"
+		//add skills
+		builderurl += "skills=0000000000000000000000010120200101011420200000020000000000000000&"
+
+
+		//		var wornItems = findWornItems(data["Equipped"]);
+
+
+
+		console.log("Builder url = :", builderurl);
+
+
+
+
+
+			}      
+		console.log("Builder url = :", builderurl);
+	}
+
+	console.log("Builder url = :", builderurl);
+//	window.open(builderurl);
+//	window.location.href = builderurl ;
+
+}
 
 
 
