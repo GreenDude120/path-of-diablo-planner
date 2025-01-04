@@ -3377,7 +3377,11 @@ function inventoryLeftClick(event, group) {
 	var mod = 0;
 	if (event.shiftKey) { mod = 1 }
 	if (event.ctrlKey) { mod = 2 }
-	if (mod > 0) {
+	if (event.altKey) { mod = 3 }
+	if (mod = 3) {
+		changeBase(group, "ethereal")
+	}
+	if (mod != 0) {
 		changeBase(group, "upgrade")
 	} else {
 		// TODO: simulate click() on appropriate equipment dropdown menu?
