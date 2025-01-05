@@ -3374,33 +3374,28 @@ function getAffixLine(affix, loc, group, subgroup) {
 //	group: equipment group name
 // ---------------------------------
 function inventoryLeftClick(event, group) {
-	var mod = 0;
-	if (event.shiftKey) { mod = 1 }
-	if (event.ctrlKey) { mod = 2 }
-	if (event.altKey) { mod = 3 }
-	if (mod = 3) {
-		changeBase(group, "ethereal")
-	}
-	if (mod != 0) {
-		changeBase(group, "upgrade")
-	} else {
-		// TODO: simulate click() on appropriate equipment dropdown menu?
-	}
+    if (event.shiftKey) {
+        changeBase(group, "toggleEthereal");
+    } else if (event.ctrlKey) {
+        changeBase(group, "upgrade");
+    } else {
+        // Existing functionality
+    }
 }
 
 // inventoryRightClick - Handles equipment inventory right clicks
 //	group: equipment group name
 // ---------------------------------
 function inventoryRightClick(event, group) {
-	var mod = 0;
-	if (event.shiftKey) { mod = 1 }
-	if (event.ctrlKey) { mod = 2 }
-	if (mod > 0) {
-		changeBase(group, "downgrade")
-	} else {
+    if (event.shiftKey) {
+        changeBase(group, "toggleEthereal");
+    } else if (event.ctrlKey) {
+        changeBase(group, "downgrade");
+    } else {
 		equip(group, group)	// right click = unequip
-	}
+    }
 }
+
 
 // changeBase - Modifies the base for an equipped item (upgrading)
 //	group: equipment group to modify
@@ -3421,6 +3416,7 @@ function changeBase(group, change) {
 		var multED = 1;
 		var multReq = 1;
 		var reqEth = 0;
+
 		if (typeof(equipped[group]["ethereal"]) != 'undefined') { if (equipped[group]["ethereal"] == 1) { multEth = 1.5; reqEth = 10; } }
 		if (typeof(equipped[group]["e_def"]) != 'undefined') { multED += (equipped[group]["e_def"]/100) }
 		if (typeof(equipped[group]["req"]) != 'undefined') { multReq += (equipped[group]["req"]/100) }
@@ -3467,6 +3463,70 @@ function changeBase(group, change) {
 		if (base == "Special_0") { var name = equipped[group].name; equip(group,"none"); equip(group,name); }
 		if (base == "Special_1" || base == "Special_2" || base == "Special_3") { document.getElementById(group+"_image").src = "./images/items/weapon/axe/Hand_Axe.png" }
 	}
+
+	
+	if (change === "toggleEthereal") {
+		const item = equipped[group];
+//			let base = getBaseId(item.base); // Retrieve the base item
+//			let reqEth = 0;
+//			let multEth = 1;
+
+		if (item.ethereal) {
+			// Remove ethereal status
+			item.ethereal = false;
+			multEth = 1; // Reset multiplier
+			reqEth = 0;  // Reset requirement reduction
+			if (typeof item["req_strength"] !== "undefined") {
+				item["req_strength"] = Math.max(0, Math.ceil(bases[base]["req_strength"]));
+			}
+			if (typeof item["req_dexterity"] !== "undefined") {
+				item["req_dexterity"] = Math.max(0, Math.ceil(bases[base]["req_dexterity"]));
+			}
+			if (typeof item["base_defense"] !== "undefined") {
+				item["base_defense"] = Math.max(0, Math.ceil(bases[base]["base_defense"]));
+			}
+			if (typeof item["base_damage_min"] !== "undefined") {
+				item["base_damage_min"] = Math.max(0, Math.ceil(bases[base]["base_damage_min"]));
+			}
+			if (typeof item["base_damage_max"] !== "undefined") {
+				item["base_damage_max"] = Math.max(0, Math.ceil(bases[base]["base_damage_max"]));
+			}
+
+
+		} else {
+			// Apply ethereal status
+			item.ethereal = true;
+			equipped[group]["ethereal"] == 1 ;
+			multEth = 1.5; // Increase multiplier for ethereal
+			reqEth = 10;  // Reduce requirements by 10%
+			if (typeof item["req_strength"] !== "undefined") {
+				item["req_strength"] = Math.max(0, Math.ceil(bases[base]["req_strength"] * 0.9));
+			}
+			if (typeof item["req_dexterity"] !== "undefined") {
+				item["req_dexterity"] = Math.max(0, Math.ceil(bases[base]["req_dexterity"] * 0.9));
+			}
+			if (typeof item["base_defense"] !== "undefined") {
+				item["base_defense"] = Math.max(0, Math.ceil(bases[base]["base_defense"] * 1.5));
+			}
+			if (typeof item["base_damage_min"] !== "undefined") {
+				item["base_damage_min"] = Math.max(0, Math.ceil(bases[base]["base_damage_min"] * 1.5));
+			}
+			if (typeof item["base_damage_max"] !== "undefined") {
+				item["base_damage_max"] = Math.max(0, Math.ceil(bases[base]["base_damage_max"] * 1.5));
+			}
+
+		}
+
+		// Dynamically update affected attributes
+//			if (typeof item["req_strength"] !== "undefined") {
+//				item["req_strength"] = Math.max(0, Math.ceil(bases[base]["req_strength"] * 0.9));
+//			}
+//			if (typeof item["req_dexterity"] !== "undefined") {
+//				item["req_dexterity"] = Math.max(0, Math.ceil(bases[base]["req_dexterity"] * 0.9));
+//			}
+	}
+
+
 	if (corruptsEquipped[group].name == "+ Sockets") { adjustCorruptionSockets(group) }
 	updateSocketTotals()
 	equipmentOut()
