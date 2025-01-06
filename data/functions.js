@@ -5567,6 +5567,7 @@ async function processCharacterData(characterData) {
 function updatePODComponent(data) {
 	if (data && data.Stats) {
 		//add class
+		linkclass = data["Class"].toLowerCase();
 		builderurl += "class=" + data["Class"] + "&"; 
 		console.log("Add to url: ", "class=" + data["Class"] + "&");
 		//add level
@@ -5575,7 +5576,8 @@ function updatePODComponent(data) {
 		//add misc
 		builderurl += "difficulty=3&quests=1&running=0&"
 		//add stats
-		builderurl += "strength=" + data["Stats"]["Strength"] + "&";
+		console.log("Add to url: ", data["Stats"]["Strength"] + " and " + "character_"+linkclass + "&");
+		builderurl += "strength=" + (data["Stats"]["Strength"] - window["character_" + linkclass].strength) + "&";		
 		builderurl += "dexterity=" + data["Stats"]["Dexterity"] + "&";
 		builderurl += "vitality=" + data["Stats"]["Vitality"] + "&";
 		builderurl += "energy=" + data["Stats"]["Energy"] + "&";
@@ -5589,17 +5591,17 @@ function updatePODComponent(data) {
 
 
 
-		console.log("Builder url = :", builderurl);
+//		console.log("Builder url = :", builderurl);
 
 
 
 
 
 			}      
-		console.log("Builder url = :", builderurl);
+		console.log("inside if Builder url = :", builderurl);
 	}
 
-	console.log("Builder url = :", builderurl);
+	console.log("outside if Builder url = :", builderurl);
 //	window.open(builderurl);
 //	window.location.href = builderurl ;
 
