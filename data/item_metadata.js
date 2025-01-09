@@ -1197,6 +1197,7 @@ skill_Concentrate:{index:["skill_Concentrate"], format:["+"," to Concentrate (Ba
 skill_Cleave:{index:["skill_Cleave"], format:["+"," to Cleave (Barbarian only)"]},
 skill_Stun:{index:["skill_Stun"], format:["+"," to Stun (Barbarian only)"]},
 skill_Leap:{index:["skill_Leap"], format:["+"," to Leap (Barbarian only)"]},
+skill_Leap_Slam:{index:["skill_Leap_Slam"], format:["+"," to Leap Slam (Barbarian only)"]},
 skill_Power_Throw:{index:["skill_Power_Throw"], format:["+"," to Power Throw (Barbarian only)"]},
 skill_Bash:{index:["skill_Bash"], format:["+"," to Bash (Barbarian only)"]},
 skill_Leap_Attack:{index:["skill_Leap_Attack"], format:["+"," to Leap Attack (Barbarian only)"]},

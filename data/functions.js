@@ -5510,8 +5510,12 @@ function addSomemore() {
 	if (dmg.pMin > 0) {skill2Breakdown += "\nWPoison Damage: " + dmg.pMin + "-" + dmg.pMax};
 }
 
+TooltipElementimporttest = document.getElementById("importtest");
+TooltipElementimporttest.title = "Currently only pulls class, level, stats, skills"; 
+
 async function importChar() {
-let characterName = "sorcsallsuck"
+let characterName = document.getElementById('importname').value;
+//let characterName = "necrosallsuck"
 //let characterData;
 let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
 //let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
@@ -5535,7 +5539,7 @@ if (characterName) {
 async function fetchCharacterData(characterName) {
 	console.log("Start function fetchCharacterData");
 //    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
-	const url = 'https://beta.pathofdiablo.com/api/characters/sorcsallsuck/summary'
+	const url = 'https://beta.pathofdiablo.com/api/characters/'+characterName+'/summary'
 	//    console.log("API URL:", url);
 
     try {
@@ -5568,8 +5572,8 @@ function updatePODComponent(data) {
 	if (data && data.Stats) {
 		//add class
 		linkclass = data["Class"].toLowerCase();
-		builderurl += "class=" + data["Class"] + "&"; 
-		console.log("Add to url: ", "class=" + data["Class"] + "&");
+		builderurl += "class="+data["Class"]+"&"; 
+		console.log("Add to url: ", "class=" + data["Class"].toLowerCase() + "&");
 		//add level
 		builderurl += "level=" + data["Stats"]["Level"] + "&";
 		console.log("Add to url: ", "level=" + data["Stats"]["Level"] + "&");
@@ -5578,15 +5582,72 @@ function updatePODComponent(data) {
 		//add stats
 		console.log("Add to url: ", data["Stats"]["Strength"] + " and " + "character_"+linkclass + "&");
 		builderurl += "strength=" + (data["Stats"]["Strength"] - window["character_" + linkclass].strength) + "&";		
-		builderurl += "dexterity=" + data["Stats"]["Dexterity"] + "&";
-		builderurl += "vitality=" + data["Stats"]["Vitality"] + "&";
-		builderurl += "energy=" + data["Stats"]["Energy"] + "&";
+		builderurl += "dexterity=" + (data["Stats"]["Dexterity"] - window["character_" + linkclass].dexterity) + "&";		
+		builderurl += "vitality=" + (data["Stats"]["Vitality"] - window["character_" + linkclass].vitality) + "&";		
+		builderurl += "energy=" + (data["Stats"]["Energy"] - window["character_" + linkclass].energy) + "&";		
 		//add misc
 		builderurl += "coupling=1&synthwep=0&autocast=1&"
 		//add skills
-		builderurl += "skills=0000000000000000000000010120200101011420200000020000000000000000&"
+//		builderurl += "skills=0000000000000000000000010120200101011420200000020000000000000000&"
+//		whatimport = "character."+data["Class"].toLowerCase()+"_skills" ;
+//		whatimport = "skills_"+data["Class"].toLowerCase() ;
+//		whereimport = './'+data["Class"].toLowerCase()+'.js' ;
+//		import whatimport from whereimport ;
+//		console.log(whatimport, whereimport) ;
+
+		let skillsurl = ''; 
+
+		const skillsData = {
+			amazon: skills_amazon,
+			assassin: skills_assassin,
+			barbarian: skills_barbarian,
+			druid: skills_druid,
+			necromancer: skills_necromancer,
+			paladin: skills_paladin,
+			sorceress: skills_sorceress,
+		};
+		
+		function encodeSkillsForURL(data) {
+			const className = data.Class.toLowerCase();
+			const classSkills = skillsData[className]; // Access skills array dynamically
+		
+			if (!classSkills) {
+				console.error(`Skills data for class "${className}" is not available!`);
+				return '';
+			}
+		
+			const skillsArray = Array(classSkills.length).fill(0);
+			const skillIndices = {};
+		
+			classSkills.forEach((skill, index) => {
+				skillIndices[skill.name] = index;
+			});
+		
+			data.SkillTabs.forEach(tab => {
+				tab.Skills.forEach(skill => {
+					const skillName = skill.Name;
+					const skillLevel = skill.Level;
+					if (skillName in skillIndices) {
+						const index = skillIndices[skillName];
+						skillsArray[index] = skillLevel;
+					}
+				});
+			});
+		
+			const skillsString = skillsArray.map(level => String(level).padStart(2, '0')).join('');
+			return `skills=${skillsString}&`;
+		}
+		// Use the skills URL in the builder URL
+		builderurl += encodeSkillsForURL(data);
 
 
+//			builderurl += `skills=${skillsString}&`;
+		
+//		console.log(skillsurl) ;
+//		builderurl += skillsurl
+//		const encodedURL = encodeSkillsForURL(data);
+//		console.log(encodedURL); 
+		
 		//		var wornItems = findWornItems(data["Equipped"]);
 
 
@@ -5602,9 +5663,9 @@ function updatePODComponent(data) {
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
+	window.open(builderurl);
 //	window.location.href = builderurl ;
-
+document.getElementById('importname').value = ""
 }
 
 

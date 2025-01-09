@@ -150,3 +150,9 @@ Mosaic, how did I miss that??? Added it to list of runewords in item-metadata, a
 Removed Plague Wirt's Leg, oops. 
 Added clarity on ES damage taken values not being able to go below zero
 Added top navigation bar and background to give the builder a look that's consistent with the rest of, AND allows simpler navigation back to, the PoD web pages
+
+1st week of January
+Added runeword options
+Added hotkey (SHIFT + left-click) toggle to make items ethereal; no more need to maintain eth and non-eth item versions, but it does allow for more things that don't exist in game like slammed eth and bow and set eth. It's a worthwhile trade off imo
+More patch 22 updates
+Started working on character import, enter char name, click ok and it pulls in class, level, stats, and skills. Not sure I see a true way forward because we can't account for all items, even things like a spirit in a long sword would require an absurd ammount of extra coding. Will keep poking at it and see how far I can go before it gets too unweildy. Might be worth the time, might not.

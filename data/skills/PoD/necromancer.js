@@ -18,7 +18,7 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 		var diffResult = skill.data.values[elem][character.difficulty];
 		
 		if (skill.name == "Raise Skeleton Warrior" && elem < 2) {	result *= sum_damage }
-		if (skill.name == "Raise Skeleton Warrior" && elem == 2) {	result = (sum_life * (diffResult + (6 * skill.level))) }
+		if (skill.name == "Raise Skeleton Warrior" && elem == 2) {	result = (sum_life * (diffResult + (8 * skill.level))) }
 		if (skill.name == "Clay Golem" && elem < 2) {				result = (sum_damage * diffResult) }
 		if (skill.name == "Clay Golem" && elem == 2) {				result = (sum_life * diffResult) }
 		if (skill.name == "Raise Skeletal Mage" && elem < 7) {		result *= sum_damage }
