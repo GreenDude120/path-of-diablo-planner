@@ -5663,7 +5663,7 @@ function updatePODComponent(data) {
 		builderurl += `helm=${formattedName}%2C3%2Cnone%2C%2C%2C&`;
 
 // body armor
-		// Find the helmet in the equipped items
+		// Find the armor (property "body") in the equipped items
 		const armor = data.Equipped.find(item => item.Worn === "body");
 		if (!armor || !armor.Title) {
 			console.warn("body data is missing or no body equipped!");
@@ -5673,11 +5673,11 @@ function updatePODComponent(data) {
 		if (armor.QualityCode	 === "q_runeword" && armor.TextTag) {
 			armorname = `${armor.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${armor.TextTag}`; // Append Text if quality is q_runeword
 		}
-		// Format the helmet name
+		// Format the armor name
 		const armformattedName = armorname
         .replace(/\s+/g, '+')     // Replace spaces with "+"
         .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`armor=${armformattedName}%2C3%2Cnone%2C%2C%%2C&`);
+		console.log(`armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`);
 		builderurl += `armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`;
 
 
