@@ -5680,8 +5680,62 @@ function updatePODComponent(data) {
 		console.log(`armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`);
 		builderurl += `armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`;
 
+// gloves
+		// Find the armor (property "body") in the equipped items
+		const gloves = data.Equipped.find(item => item.Worn === "gloves");
+		if (!gloves || !gloves.Title) {
+			console.warn("gloves is missing or no body equipped!");
+			return 'gloves=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
+		}
+		let glovesname = gloves.Title; // Default to the Title
+		if (gloves.QualityCode	 === "q_runeword" && gloves.TextTag) {
+			glovesname = `${gloves.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${gloves.TextTag}`; // Append Text if quality is q_runeword
+		}
+		// Format the armor name
+		const glovesformattedName = glovesname
+        .replace(/\s+/g, '+')     // Replace spaces with "+"
+        .replace(/'/g, '%27');    // Replace single quotes with "%27"
+		console.log(`gloves=${glovesformattedName}%2C0%2Cnone&`);
+		builderurl += `gloves=${glovesformattedName}%2C0%2Cnone&`;
 
-builderurl += "gloves=none%2C0%2Cnone&boots=none%2C0%2Cnone&belt=none%2C0%2Cnone&amulet=none%2C0%2Cnone&ring1=none%2C0%2Cnone&ring2=none%2C0%2Cnone&weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&effect=Blood_Golem%2C0%2C0&effect=Iron_Golem%2C0%2C0&effect=Deadly_Poison%2C0%2C0&effect=Bone_Armor%2C0%2C0&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
+// boots
+		// Find the armor (property "body") in the equipped items
+		const boots = data.Equipped.find(item => item.Worn === "boots");
+		if (!boots || !boots.Title) {
+			console.warn("boots is missing or no body equipped!");
+			return 'boots=none%2C0%2Cnone&'; // Default if no helmet is equipped
+		}
+		let bootsname = boots.Title; // Default to the Title
+		if (boots.QualityCode	 === "q_runeword" && boots.TextTag) {
+			bootsname = `${boots.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${boots.TextTag}`; // Append Text if quality is q_runeword
+		}
+		// Format the armor name
+		const bootsformattedName = bootsname
+        .replace(/\s+/g, '+')     // Replace spaces with "+"
+        .replace(/'/g, '%27');    // Replace single quotes with "%27"
+		console.log(`boots=${bootsformattedName}%2C0%2Cnone&`);
+		builderurl += `boots=${bootsformattedName}%2C0%2Cnone&`;
+
+// belt
+		// Find the armor (property "body") in the equipped items
+		const belt = data.Equipped.find(item => item.Worn === "belt");
+		if (!belt || !belt.Title) {
+			console.warn("belt is missing or no body equipped!");
+			return 'belt=none%2C0%2Cnone&'; // Default if no helmet is equipped
+		}
+		let beltname = belt.Title; // Default to the Title
+		if (belt.QualityCode	 === "q_runeword" && belt.TextTag) {
+			beltname = `${belt.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${belt.TextTag}`; // Append Text if quality is q_runeword
+		}
+		// Format the armor name
+		const beltformattedName = beltname
+        .replace(/\s+/g, '+')     // Replace spaces with "+"
+        .replace(/'/g, '%27');    // Replace single quotes with "%27"
+		console.log(`belt=${beltformattedName}%2C0%2Cnone&`);
+		builderurl += `belt=${beltformattedName}%2C0%2Cnone&`;
+
+
+builderurl += "boots=none%2C0%2Cnone&belt=none%2C0%2Cnone&amulet=none%2C0%2Cnone&ring1=none%2C0%2Cnone&ring2=none%2C0%2Cnone&weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&effect=Blood_Golem%2C0%2C0&effect=Iron_Golem%2C0%2C0&effect=Deadly_Poison%2C0%2C0&effect=Bone_Armor%2C0%2C0&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 //			builderurl += `skills=${skillsString}&`;
 		
 //		console.log(skillsurl) ;
@@ -5704,7 +5758,7 @@ builderurl += "gloves=none%2C0%2Cnone&boots=none%2C0%2Cnone&belt=none%2C0%2Cnone
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-	window.open(builderurl);
+//	window.open(builderurl);
 //	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
