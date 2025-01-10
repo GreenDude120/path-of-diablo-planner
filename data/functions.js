@@ -5640,7 +5640,48 @@ function updatePODComponent(data) {
 		// Use the skills URL in the builder URL
 		builderurl += encodeSkillsForURL(data);
 
+// add misc
+		builderurl += "url=1&selected=+%C2%AD+%C2%AD+%C2%AD+%C2%AD+Skill+1%2C+%C2%AD+%C2%AD+%C2%AD+%C2%AD+Skill+2&"
+		console.log("after adding misc:",builderurl);
+// add equipmment
+// helmet
+		// Find the helmet in the equipped items
+		const helmet = data.Equipped.find(item => item.Worn === "helmet");
+		if (!helmet || !helmet.Title) {
+			console.warn("Helmet data is missing or no helmet equipped!");
+			return 'helm=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
+		}
+		let helmetname = helmet.Title; // Default to the Title
+		if (helmet.QualityCode	 === "q_runeword" && helmet.TextTag) {
+			helmetname = `${helmet.Title} ${helmet.TextTag}`; // Append Text if quality is q_runeword
+		}
+		// Format the helmet name
+		const formattedName = helmetname
+        .replace(/\s+/g, '+')     // Replace spaces with "+"
+        .replace(/'/g, '%27');    // Replace single quotes with "%27"
+		console.log(`helm=${formattedName}%2C3%2Cnone%2C%2C%2C&`);
+		builderurl += `helm=${formattedName}%2C3%2Cnone%2C%2C%2C&`;
 
+// body armor
+		// Find the helmet in the equipped items
+		const armor = data.Equipped.find(item => item.Worn === "body");
+		if (!armor || !armor.Title) {
+			console.warn("body data is missing or no body equipped!");
+			return 'armor=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
+		}
+		let armorname = armor.Title; // Default to the Title
+		if (armor.QualityCode	 === "q_runeword" && armor.TextTag) {
+			armorname = `${armor.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${armor.TextTag}`; // Append Text if quality is q_runeword
+		}
+		// Format the helmet name
+		const armformattedName = armorname
+        .replace(/\s+/g, '+')     // Replace spaces with "+"
+        .replace(/'/g, '%27');    // Replace single quotes with "%27"
+		console.log(`armor=${armformattedName}%2C3%2Cnone%2C%2C%%2C&`);
+		builderurl += `armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`;
+
+
+builderurl += "gloves=none%2C0%2Cnone&boots=none%2C0%2Cnone&belt=none%2C0%2Cnone&amulet=none%2C0%2Cnone&ring1=none%2C0%2Cnone&ring2=none%2C0%2Cnone&weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&effect=Blood_Golem%2C0%2C0&effect=Iron_Golem%2C0%2C0&effect=Deadly_Poison%2C0%2C0&effect=Bone_Armor%2C0%2C0&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 //			builderurl += `skills=${skillsString}&`;
 		
 //		console.log(skillsurl) ;
@@ -5664,7 +5705,7 @@ function updatePODComponent(data) {
 
 	console.log("outside if Builder url = :", builderurl);
 //	window.open(builderurl);
-	window.location.href = builderurl ;
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 
