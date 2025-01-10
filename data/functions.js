@@ -5704,7 +5704,7 @@ builderurl += "gloves=none%2C0%2Cnone&boots=none%2C0%2Cnone&belt=none%2C0%2Cnone
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
+	window.open(builderurl);
 //	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
