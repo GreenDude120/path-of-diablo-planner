@@ -156,3 +156,11 @@ Added runeword options
 Added hotkey (SHIFT + left-click) toggle to make items ethereal; no more need to maintain eth and non-eth item versions, but it does allow for more things that don't exist in game like slammed eth and bow and set eth. It's a worthwhile trade off imo
 More patch 22 updates
 Started working on character import, enter char name, click ok and it pulls in class, level, stats, and skills. Not sure I see a true way forward because we can't account for all items, even things like a spirit in a long sword would require an absurd ammount of extra coding. Will keep poking at it and see how far I can go before it gets too unweildy. Might be worth the time, might not.
+
+11 Jan
+Got items to import from the api to a limited extent. Requires name matching work, some planner items have been renamed to accomodate this. 
+Added short link support for the character import, url https://build.pathofdiablo.com/?import= plus a charactername
+Added better text placeholder on import textbox
+Added blood golem oskill, applied it to death runeword
+Blocked ethereal toggle on bows, crossbows, sets
+Updated Ice Arrow, still need new numbers
