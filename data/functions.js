@@ -5513,10 +5513,28 @@ function addSomemore() {
 TooltipElementimporttest = document.getElementById("importtest");
 TooltipElementimporttest.title = "Currently only pulls class, level, stats, skills"; 
 
-async function importChar() {
-let characterName = document.getElementById('importname').value;
+//async function importChar() {
+//let characterName = document.getElementById('importname').value
 //let characterName = "necrosallsuck"
 //let characterData;
+
+async function importChar() {
+    // Get the textbox input value
+    let characterName = document.getElementById('importname').value.trim();
+
+    // If no value is entered in the textbox, check the URL for the "import" parameter
+    if (!characterName) {
+        const url = window.location.href; // Get the current URL
+        const params = new URLSearchParams(url.split('?')[1]); // Parse query parameters
+        characterName = params.get('import'); // Get the "import" parameter value
+    }
+
+    // If still no value is found, handle the error or provide a default
+    if (!characterName) {
+        console.error("No character name provided or found in the URL!");
+        return;
+    }
+
 let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
 //let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
 //let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
@@ -5684,7 +5702,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const gloves = data.Equipped.find(item => item.Worn === "gloves");
 		if (!gloves || !gloves.Title) {
-			console.warn("gloves is missing or no body equipped!");
+			console.warn("gloves is missing or no gloves equipped!");
 			return 'gloves=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let glovesname = gloves.Title; // Default to the Title
@@ -5702,7 +5720,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const boots = data.Equipped.find(item => item.Worn === "boots");
 		if (!boots || !boots.Title) {
-			console.warn("boots is missing or no body equipped!");
+			console.warn("boots is missing or no boots equipped!");
 			return 'boots=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let bootsname = boots.Title; // Default to the Title
@@ -5720,7 +5738,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const belt = data.Equipped.find(item => item.Worn === "belt");
 		if (!belt || !belt.Title) {
-			console.warn("belt is missing or no body equipped!");
+			console.warn("belt is missing or no belt equipped!");
 			return 'belt=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let beltname = belt.Title; // Default to the Title
@@ -5738,7 +5756,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const amulet = data.Equipped.find(item => item.Worn === "amulet");
 		if (!amulet || !amulet.Title) {
-			console.warn("amulet is missing or no body equipped!");
+			console.warn("amulet is missing or no amulet equipped!");
 			return 'amulet=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let amuletname = amulet.Title; // Default to the Title
@@ -5756,7 +5774,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const ring1 = data.Equipped.find(item => item.Worn === "ring1");
 		if (!ring1 || !ring1.Title) {
-			console.warn("ring1 is missing or no body equipped!");
+			console.warn("ring1 is missing or no ring1 equipped!");
 			return 'ring1=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let ring1name = ring1.Title; // Default to the Title
@@ -5774,7 +5792,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const ring2 = data.Equipped.find(item => item.Worn === "ring2");
 		if (!ring2 || !ring2.Title) {
-			console.warn("ring2 is missing or no body equipped!");
+			console.warn("ring2 is missing or no ring2 equipped!");
 			return 'ring2=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let ring2name = ring2.Title; // Default to the Title
@@ -5792,7 +5810,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const weapon1 = data.Equipped.find(item => item.Worn === "weapon1");
 		if (!weapon1 || !weapon1.Title) {
-			console.warn("weapon1 is missing or no body equipped!");
+			console.warn("weapon1 is missing or no weapon1 equipped!");
 			return 'weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let weapon1name = weapon1.Title; // Default to the Title
@@ -5810,7 +5828,7 @@ function updatePODComponent(data) {
 		// Find the armor (property "body") in the equipped items
 		const offhand = data.Equipped.find(item => item.Worn === "weapon2");
 		if (!offhand || !offhand.Title) {
-			console.warn("offhand is missing or no body equipped!");
+			console.warn("offhand is missing or no offhand equipped!");
 			return 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let offhandname = offhand.Title; // Default to the Title
@@ -5848,8 +5866,8 @@ builderurl += "&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
-	window.location.href = builderurl ;
+	window.open(builderurl);
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 

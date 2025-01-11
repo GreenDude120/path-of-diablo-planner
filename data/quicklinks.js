@@ -1,4 +1,19 @@
 function checkShorturl() {
+    if (params.has('import') == true) { 
+        const url = window.location.href;
+        const query = url.split('?')[1]; // "import=sorcsallsuck"
+        // Split the query into key-value pairs
+        const queryParams = query.split('&'); // ["import=sorcsallsuck"]
+        // Find the "import" parameter and extract its value
+        let characterName = '';
+        queryParams.forEach(param => {
+            const [key, value] = param.split('='); // ["import", "sorcsallsuck"]
+                if (key === 'import') {
+                    characterName = value;
+                }
+        });
+        importChar(characterName) 
+    } ; 
     // Shortlink example: https://build.pathofdiablo.com/?qql3
     // Javazon
     if (params.has('qql1') == true) { window.location.href = "https://build.pathofdiablo.com/?v=2&class=amazon&level=91&difficulty=3&quests=1&running=0&strength=0&dexterity=30&vitality=425&energy=10&url=1&coupling=1&synthwep=0&autocast=1&skills=011101002020010020200101010101010100000100000000000000000000&selected=+%C2%AD+%C2%AD+%C2%AD+%C2%AD+Skill+1%2C+%C2%AD+%C2%AD+%C2%AD+%C2%AD+Skill+2&helm=Griffon%27s+Eye%2C3%2Cnone%2C%2C%2C&armor=Enigma+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+Archon+Plate%2C3%2Cnone%2C%2C%2C%2C&gloves=Lancer%27s+Mitts+of+Alacrity%2C3%2Cnone&boots=Silkweave%2C2%2Cnone&belt=Thundergod%27s+Vigor%2C2%2Cnone&amulet=Highlord%27s+Wrath%2C0%2Cnone&ring1=The+Stone+of+Jordan%2C0%2Cnone&ring2=Wisp+Projector%2C0%2Cnone&weapon=Titan%27s+Revenge%2C2%2Cnone%2C%2C%2C%2C%2C%2C&offhand=Phoenix+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+Monarch%2C3%2Cnone%2C%2C%2C%2C%2C%2C&effect=Inner_Sight%2C1%2C0&effect=Lethal_Strike%2C1%2C0&effect=Phase_Run%2C1%2C0&effect=Dodge%2C1%2C0&effect=Avoid%2C1%2C0&effect=Penetrate%2C1%2C0&effect=Evade%2C1%2C0&effect=Pierce%2C1%2C0&effect=Lifted_Spirit-ring2%2C1%2C0&effect=Heart_of_Wolverine-ring2%2C1%2C0&effect=Redemption-offhand%2C1%2C0&effect=Blaze-offhand%2C1%2C0&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone&charm=Annihilus&charm=Hellfire+Torch&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm&charm=%2B1+Harpoonist%27s+Grand+Charm"} ;
