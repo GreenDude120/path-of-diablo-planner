@@ -3374,7 +3374,7 @@ function getAffixLine(affix, loc, group, subgroup) {
 //	group: equipment group name
 // ---------------------------------
 function inventoryLeftClick(event, group) {
-    if (event.shiftKey) {
+    if (event.shiftKey && (equipped[group].rarity) != "set" && event.shiftKey && (equipped[group].type) != "bow" && event.shiftKey && (equipped[group].type) != "crossbow") {
         changeBase(group, "toggleEthereal");
     } else if (event.ctrlKey) {
         changeBase(group, "upgrade");
@@ -3387,7 +3387,7 @@ function inventoryLeftClick(event, group) {
 //	group: equipment group name
 // ---------------------------------
 function inventoryRightClick(event, group) {
-    if (event.shiftKey) {
+    if (event.shiftKey && (equipped[group].rarity) != "set" && event.shiftKey && (equipped[group].type) != "bow" && event.shiftKey && (equipped[group].type) != "crossbow") {
         changeBase(group, "toggleEthereal");
     } else if (event.ctrlKey) {
         changeBase(group, "downgrade");
