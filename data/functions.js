@@ -5790,7 +5790,7 @@ function updatePODComponent(data) {
 
 // weapon1
 		// Find the armor (property "body") in the equipped items
-		const weapon1 = data.Equipped.find(item => item.Worn === "sweapon1");
+		const weapon1 = data.Equipped.find(item => item.Worn === "weapon1");
 		if (!weapon1 || !weapon1.Title) {
 			console.warn("weapon1 is missing or no body equipped!");
 			return 'weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
@@ -5808,7 +5808,7 @@ function updatePODComponent(data) {
 
 // offhand
 		// Find the armor (property "body") in the equipped items
-		const offhand = data.Equipped.find(item => item.Worn === "sweapon2");
+		const offhand = data.Equipped.find(item => item.Worn === "weapon2");
 		if (!offhand || !offhand.Title) {
 			console.warn("offhand is missing or no body equipped!");
 			return 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
