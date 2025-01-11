@@ -1519,6 +1519,7 @@ lDamage_max_per_2_dex:{index:["lDamage_max_per_2_dex"], format:["+"," Lightning 
 skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summoning Skills"]},
 mosaic_charge_dur:{index:["mosaic_charge_dur"], format:["+"," Seconds to All Martial Arts Charges Duration"]},
 oskill_Taunt:{index:["oskill_Taunt"], format:["+"," to Taunt"]},
+oskill_Blood_Golem:{index:["oskill_Blood_Golem"], format:["+"," to Blood Golem"]},
 };
 
 var stats_alternate = {
