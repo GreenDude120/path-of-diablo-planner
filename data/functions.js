@@ -5721,7 +5721,12 @@ function updatePODComponent(data) {
             .replace(/\s+/g, '+')     // Replace spaces with "+"
             .replace(/'/g, '%27');    // Replace single quotes with "%27"
 
-        builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+        // Check for socket count and adjust URL
+        if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
+            builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C%2C%2C&`;
+        } else {
+            builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+        }
         console.log(`${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`);
     });
 
