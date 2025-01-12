@@ -168,7 +168,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Tancred:1, name:"Tancred's Skull", req_level:20, damage_bonus:10, ar:40, skills_summon_all:1, summon_defense:15, base:"Bone Helm", rarity:"set", set_bonuses:["set_Tancred",{},{all_res:10},{},{},{}], img:"Tancred's_Skull"},
 	{set_TO:1, name:"Trang-Oul's Guise", req_level:65, skills_ele_poison_all:1, defense:100, fhr:25, life_replenish:5, mana:150, thorns:20, base:"Bone Visage", rarity:"set", set_bonuses:["set_TO",{},{},{},{},{}], img:"Trang-Oul's_Guise"},
 
-	{rarity:"craft", name:"Unimportable Helm", req_level:64, placeholder:1, base:"Diadem"},
+	{rarity:"craft", name:"Unimportable Helm", req_level:8, placeholder:1, base:"Diadem"},
 
 
 		],

@@ -5668,11 +5668,12 @@ function updatePODComponent(data) {
 //		if (!helmet || !helmet.Title || helmet.QualityCode	== "q_magic" || helmet.QualityCode	== "q_rare" || helmet.QualityCode	== "q_crafted") {
 		if (!helmet || !helmet.Title) {
 			console.warn("Helmet data is missing or no helmet equipped!");
+			builderurl += `helm=none%2C3%2Cnone%2C%2C%2C&`;
 			return 'helm=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let helmetname = helmet.Title; // Default to the Title
 		if ((helmet.QualityCode	 === "q_magic"  || helmet.QualityCode === "q_rare" || helmet.QualityCode === "q_crafted") && helmet.TextTag) {
-			helmetname = "Unimportable Helm"; // Append Text if quality is q_runeword
+			helmetname = 'Unimportable Helm' ; // Append Text if quality is q_runeword
 		}
 		if (helmet.QualityCode	 === "q_runeword" && helmet.TextTag) {
 			helmetname = `${helmet.Title} ${helmet.TextTag}`; // Append Text if quality is q_runeword
@@ -5689,6 +5690,7 @@ function updatePODComponent(data) {
 		const armor = data.Equipped.find(item => item.Worn === "body");
 		if (!armor || !armor.Title) {
 			console.warn("body data is missing or no body equipped!");
+			builderurl += `armor=none%2C3%2Cnone%2C%2C%2C&`;
 			return 'armor=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let armorname = armor.Title; // Default to the Title
@@ -5710,6 +5712,7 @@ function updatePODComponent(data) {
 		const gloves = data.Equipped.find(item => item.Worn === "gloves");
 		if (!gloves || !gloves.Title) {
 			console.warn("gloves is missing or no gloves equipped!");
+			builderurl += `gloves=none%2C3%2Cnone%2C%2C%2C&`;
 			return 'gloves=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let glovesname = gloves.Title; // Default to the Title
@@ -5731,6 +5734,7 @@ function updatePODComponent(data) {
 		const boots = data.Equipped.find(item => item.Worn === "boots");
 		if (!boots || !boots.Title) {
 			console.warn("boots is missing or no boots equipped!");
+			builderurl += `boots=none%2C0%2Cnone&`;
 			return 'boots=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let bootsname = boots.Title; // Default to the Title
@@ -5752,6 +5756,7 @@ function updatePODComponent(data) {
 		const belt = data.Equipped.find(item => item.Worn === "belt");
 		if (!belt || !belt.Title) {
 			console.warn("belt is missing or no belt equipped!");
+			builderurl += `belt=none%2C0%2Cnone&`;
 			return 'belt=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let beltname = belt.Title; // Default to the Title
@@ -5773,6 +5778,7 @@ function updatePODComponent(data) {
 		const amulet = data.Equipped.find(item => item.Worn === "amulet");
 		if (!amulet || !amulet.Title) {
 			console.warn("amulet is missing or no amulet equipped!");
+			builderurl += `amulet=none%2C0%2Cnone&`;
 			return 'amulet=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let amuletname = amulet.Title; // Default to the Title
@@ -5794,6 +5800,7 @@ function updatePODComponent(data) {
 		const ring1 = data.Equipped.find(item => item.Worn === "ring1");
 		if (!ring1 || !ring1.Title) {
 			console.warn("ring1 is missing or no ring1 equipped!");
+			builderurl += `ring1=none%2C0%2Cnone&`;
 			return 'ring1=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let ring1name = ring1.Title; // Default to the Title
@@ -5815,6 +5822,7 @@ function updatePODComponent(data) {
 		const ring2 = data.Equipped.find(item => item.Worn === "ring2");
 		if (!ring2 || !ring2.Title) {
 			console.warn("ring2 is missing or no ring2 equipped!");
+			builderurl += `ring2=none%2C0%2Cnone&`;
 			return 'ring2=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let ring2name = ring2.Title; // Default to the Title
@@ -5836,6 +5844,7 @@ function updatePODComponent(data) {
 		const weapon1 = data.Equipped.find(item => item.Worn === "weapon1");
 		if (!weapon1 || !weapon1.Title) {
 			console.warn("weapon1 is missing or no weapon1 equipped!");
+			builderurl += `weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`;
 			return 'weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let weapon1name = weapon1.Title; // Default to the Title
@@ -5857,6 +5866,7 @@ function updatePODComponent(data) {
 		const offhand = data.Equipped.find(item => item.Worn === "weapon2");
 		if (!offhand || !offhand.Title) {
 			console.warn("offhand is missing or no offhand equipped!");
+			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
 			return 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let offhandname = offhand.Title; // Default to the Title
