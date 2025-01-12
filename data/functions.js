@@ -5672,7 +5672,8 @@ function updatePODComponent(data) {
 			return 'helm=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let helmetname = helmet.Title; // Default to the Title
-		if ((helmet.QualityCode	 === "q_magic"  || helmet.QualityCode === "q_rare" || helmet.QualityCode === "q_crafted") && helmet.TextTag) {
+//		if ((helmet.QualityCode	 === "q_magic"  || helmet.QualityCode === "q_rare" || helmet.QualityCode === "q_crafted") && helmet.TextTag) {
+		if ((helmet.QualityCode	 != "q_set"  && helmet.QualityCode != "q_unique" && helmet.QualityCode != "q_runeword") && helmet.TextTag) {
 			helmetname = 'Unimportable Helm' ; // Append Text if quality is q_runeword
 		}
 		if (helmet.QualityCode	 === "q_runeword" && helmet.TextTag) {
@@ -5694,7 +5695,8 @@ function updatePODComponent(data) {
 			return 'armor=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let armorname = armor.Title; // Default to the Title
-		if ((armor.QualityCode	 === "q_magic"  || armor.QualityCode === "q_rare" || armor.QualityCode === "q_crafted") && armor.TextTag) {
+//		if ((armor.QualityCode	 === "q_magic"  || armor.QualityCode === "q_rare" || armor.QualityCode === "q_crafted") && armor.TextTag) {
+		if ((armor.QualityCode	 != "q_ser"  && armor.QualityCode != "q_unique" && armor.QualityCode != "q_runeword") && armor.TextTag) {
 			armorname = "Unimportable Armor"; // Append Text if quality is q_runeword
 		}
 		if (armor.QualityCode	 === "q_runeword" && armor.TextTag) {
@@ -5716,7 +5718,8 @@ function updatePODComponent(data) {
 			return 'gloves=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let glovesname = gloves.Title; // Default to the Title
-		if ((gloves.QualityCode	 === "q_magic"  || gloves.QualityCode === "q_rare" || gloves.QualityCode === "q_crafted") && gloves.TextTag) {
+//		if ((gloves.QualityCode	 === "q_magic"  || gloves.QualityCode === "q_rare" || gloves.QualityCode === "q_crafted") && gloves.TextTag) {
+		if ((gloves.QualityCode	 != "q_set"  && gloves.QualityCode != "q_unique" && gloves.QualityCode != "q_runeword") && gloves.TextTag) {
 			glovesname = "Unimportable Gloves"; // Append Text if quality is q_runeword
 		}
 		if (gloves.QualityCode	 === "q_runeword" && gloves.TextTag) {
@@ -5738,7 +5741,8 @@ function updatePODComponent(data) {
 			return 'boots=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let bootsname = boots.Title; // Default to the Title
-		if ((boots.QualityCode	 === "q_magic"  || boots.QualityCode === "q_rare" || boots.QualityCode === "q_crafted") && boots.TextTag) {
+//		if ((boots.QualityCode	 === "q_magic"  || boots.QualityCode === "q_rare" || boots.QualityCode === "q_crafted") && boots.TextTag) {
+		if ((boots.QualityCode	 != "q_set"  && boots.QualityCode != "q_unique" && boots.QualityCode != "q_runeword") && boots.TextTag) {
 			bootsname = "Unimportable Boots"; // Append Text if quality is q_runeword
 		}
 		if (boots.QualityCode	 === "q_runeword" && boots.TextTag) {
@@ -5760,7 +5764,8 @@ function updatePODComponent(data) {
 			return 'belt=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let beltname = belt.Title; // Default to the Title
-		if ((belt.QualityCode	 === "q_magic"  || belt.QualityCode === "q_rare" || belt.QualityCode === "q_crafted") && belt.TextTag) {
+//		if ((belt.QualityCode	 === "q_magic"  || belt.QualityCode === "q_rare" || belt.QualityCode === "q_crafted") && belt.TextTag) {
+		if ((belt.QualityCode	 != "q_set"  && belt.QualityCode != "q_unique" && belt.QualityCode != "q_runeword") && belt.TextTag) {
 			beltname = "Unimportable Belt"; // Append Text if quality is q_runeword
 		}
 		if (belt.QualityCode	 === "q_runeword" && belt.TextTag) {
@@ -5782,7 +5787,8 @@ function updatePODComponent(data) {
 			return 'amulet=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let amuletname = amulet.Title; // Default to the Title
-		if ((amulet.QualityCode	 === "q_magic"  || amulet.QualityCode === "q_rare" || amulet.QualityCode === "q_crafted") && amulet.TextTag) {
+//		if ((amulet.QualityCode	 === "q_magic"  || amulet.QualityCode === "q_rare" || amulet.QualityCode === "q_crafted") && amulet.TextTag) {
+		if ((amulet.QualityCode	 != "q_set"  && amulet.QualityCode != "q_unique" && amulet.QualityCode != "q_runeword") && amulet.TextTag) {
 			amuletname = "Unimportable Amulet"; // Append Text if quality is q_runeword
 		}
 		if (amulet.QualityCode	 === "q_runeword" && belt.TextTag) {
@@ -5848,7 +5854,8 @@ function updatePODComponent(data) {
 			return 'weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let weapon1name = weapon1.Title; // Default to the Title
-		if ((weapon1.QualityCode	 === "q_magic"  || weapon1.QualityCode === "q_rare" || weapon1.QualityCode === "q_crafted") && weapon1.TextTag) {
+//		if ((weapon1.QualityCode	 === "q_magic"  || weapon1.QualityCode === "q_rare" || weapon1.QualityCode === "q_crafted") && weapon1.TextTag) {
+		if ((weapon1.QualityCode	 != "q_set"  && weapon1.QualityCode != "q_unique" && weapon1.QualityCode != "q_runeword") && weapon1.TextTag) {
 			weapon1name = "Unimportable Weapon"; // Append Text if quality is q_runeword
 		}
 		if (weapon1.QualityCode	 === "q_runeword" && weapon1.TextTag) {
@@ -5870,7 +5877,8 @@ function updatePODComponent(data) {
 			return 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let offhandname = offhand.Title; // Default to the Title
-		if ((offhand.QualityCode	 === "q_magic"  || offhand.QualityCode === "q_rare" || offhand.QualityCode === "q_crafted") && offhand.TextTag) {
+//		if ((offhand.QualityCode	 === "q_magic"  || offhand.QualityCode === "q_rare" || offhand.QualityCode === "q_crafted") && offhand.TextTag) {
+		if ((offhand.QualityCode	 != "q_set"  && offhand.QualityCode != "unique" && offhand.QualityCode != "q_runeword") && offhand.TextTag) {
 			if (offhand.Tag === "Arrows" || offhand.Tag === "Bolts"){
 				offhandname = "Unimportable Projectile"; 
 			}
@@ -5888,7 +5896,7 @@ function updatePODComponent(data) {
 		builderurl += `offhand=${offhandformattedName}%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`;
 
 
-builderurl += "&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
+builderurl += "mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 //			builderurl += `skills=${skillsString}&`;
 		
 //		console.log(skillsurl) ;
