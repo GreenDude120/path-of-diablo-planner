@@ -636,6 +636,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	
 	// Runewords
 	{rarity:"rw", name:"Black ­ ­ - ­ ­ Devil Star", sup:15, req_level:42, e_damage:120, ias:15, ar:200, cDamage_min:3, cDamage_max:14, cblow:40, knockback:1, vitality:10, mDamage_reduced:2, type:"mace", base:"Devil Star", cskill:[[4,"Corpse Explosion",12]]},
+	{rarity:"rw", name:"Black ­ ­ - ­ ­ Flail", sup:15, req_level:42, e_damage:120, ias:15, ar:200, cDamage_min:3, cDamage_max:14, cblow:40, knockback:1, vitality:10, mDamage_reduced:2, type:"mace", base:"Flail", cskill:[[4,"Corpse Explosion",12]]},
 	{only:"amazon", rarity:"rw", name:"Breath of the Dying ­ ­ - ­ ­ Matriarchal Pike", req_level:69, twoHanded:1, ctc:[[50,20,"Poison Nova","when you Kill an Enemy"]], oskill_CTC_Poison_Nova_Proc:20, skills_javelins:3, indestructible:1, ias:60, e_damage:400, target_defense:-25, ar:50, damage_vs_undead:200, ar_vs_undead:50, mana_leech:7, life_leech:15, pmh:1, all_attributes:30, light_radius:1, req:-20, ethereal:1, type:"spear", base:"Matriarchal Pike", nonmetal:1},
 //	{not:["amazon","assassin","necromancer","paladin","sorceress"], rarity:"rw", name:"Breath of the Dying ­ ­ - ­ ­ War Pike", req_level:69, twoHanded:1, ctc:[[50,20,"Poison Nova","when you Kill an Enemy"]], indestructible:1, ias:60, e_damage:400, target_defense:-25, ar:50, damage_vs_undead:200, ar_vs_undead:50, mana_leech:7, life_leech:15, pmh:1, all_attributes:30, light_radius:1, req:-20, ethereal:1, type:"spear", base:"War Pike"},
 //	{not:["amazon","assassin","druid","necromancer","paladin","sorceress"], rarity:"rw", name:"Breath of the Dying ­ ­ - ­ ­ Colossus Blade", req_level:69, twoHanded:1, ctc:[[50,20,"Poison Nova","when you Kill an Enemy"]], indestructible:1, ias:60, e_damage:400, target_defense:-25, ar:50, damage_vs_undead:200, ar_vs_undead:50, mana_leech:7, life_leech:15, pmh:1, all_attributes:30, light_radius:1, req:-20, ethereal:1, type:"sword", base:"Colossus Blade", nonmetal:1},
@@ -1162,7 +1163,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Frostbite", type:"quiver", req_level:21, ctc:[[34,5,"Ice Arrow","When Struck"]], skills_cold_all:2, max_life:18, max_mana:17, plus_freezing_arrow_radius:40, pod_changes:1},
 	{name:"Hailstorm", type:"quiver", req_level:12, ias:11, damage_min:12, damage_max:17, enemy_cRes:-20, damage_reduced:10, ctc:[[100,30,"Glacial Spike","During Strafe"]], pod_changes:1},
 	{name:"Swiftheart", type:"quiver", req_level:12, frw:14, pierce:15, oskill_Strafe:6, life_replenish:12.2, mana_per_ranged_hit:4, pod_changes:1, base:"Bolts"},
-	{only:"", rarity:"craft", name:"Unimportable Offhand", req_level:64, placeholder:1},
+	{only:"", rarity:"craft", name:"Unimportable Offhand", req_level:64, placeholder:1, type:"shield", base:"Grim Shield", img:"Lidless_Wall"},
 	{only:"", rarity:"craft", name:"Unimportable Arrow", req_level:64, placeholder:1, type:"quiver", },
 	{only:"", rarity:"craft", name:"Unimportable Bolt", req_level:64, placeholder:1, type:"quiver", base:"Bolts"},
 		],

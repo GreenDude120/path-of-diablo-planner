@@ -5891,10 +5891,13 @@ function updatePODComponent(data) {
 //				offhandname = "Unimportable Offhand"; 
 //			}
 			//offhandname = "Unimportable Offhand"; // Append Text if quality is q_runeword
-			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
+//			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
 		}
 		if (offhand.QualityCode	 === "q_runeword" && offhand.TextTag) {
 			offhandname = `${offhand.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${offhand.TextTag}`; // Append Text if quality is q_runeword
+		}
+		if (offhand.QualityCode	 === "q_unique" && offhand.TextTag) {
+			offhandname = `${offhand.Title}`; // Append Text if quality is q_runeword
 		}
 		// Format the armor name
 		const offhandformattedName = offhandname
