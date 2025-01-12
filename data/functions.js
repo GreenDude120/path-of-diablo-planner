@@ -5662,252 +5662,71 @@ function updatePODComponent(data) {
 		builderurl += "url=1&selected=+%C2%AD+%C2%AD+%C2%AD+%C2%AD+Skill+1%2C+%C2%AD+%C2%AD+%C2%AD+%C2%AD+Skill+2&"
 		console.log("after adding misc:",builderurl);
 // add equipmment
-// helmet
-		// Find the helmet in the equipped items
-		const helmet = data.Equipped.find(item => item.Worn === "helmet");
-//		if (!helmet || !helmet.Title || helmet.QualityCode	== "q_magic" || helmet.QualityCode	== "q_rare" || helmet.QualityCode	== "q_crafted") {
-		if (!helmet || !helmet.Title) {
-			console.warn("Helmet data is missing or no helmet equipped!");
-			builderurl += `helm=none%2C3%2Cnone%2C%2C%2C&`;
-			return 'helm=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
-		}
-		let helmetname = helmet.Title; // Default to the Title
-//		if ((helmet.QualityCode	 === "q_magic"  || helmet.QualityCode === "q_rare" || helmet.QualityCode === "q_crafted") && helmet.TextTag) {
-		if ((helmet.QualityCode	 != "q_set"  && helmet.QualityCode != "q_unique" && helmet.QualityCode != "q_runeword") && helmet.TextTag) {
-			helmetname = 'Unimportable Helm' ; // Append Text if quality is q_runeword
-		}
-		if (helmet.QualityCode	 === "q_runeword" && helmet.TextTag) {
-			helmetname = `${helmet.Title} ${helmet.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the helmet name
-		const formattedName = helmetname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`helm=${formattedName}%2C3%2Cnone%2C%2C%2C&`);
-		builderurl += `helm=${formattedName}%2C3%2Cnone%2C%2C%2C&`;
-// eh...just reuse the same code for everything else
-// body armor
-		// Find the armor (property "body") in the equipped items
-		const armor = data.Equipped.find(item => item.Worn === "body");
-		if (!armor || !armor.Title) {
-			console.warn("body data is missing or no body equipped!");
-			builderurl += `armor=none%2C3%2Cnone%2C%2C%2C&`;
-			return 'armor=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
-		}
-		let armorname = armor.Title; // Default to the Title
-//		if ((armor.QualityCode	 === "q_magic"  || armor.QualityCode === "q_rare" || armor.QualityCode === "q_crafted") && armor.TextTag) {
-		if ((armor.QualityCode	 != "q_set"  && armor.QualityCode != "q_unique" && armor.QualityCode != "q_runeword") && armor.TextTag) {
-			armorname = "Unimportable Armor"; // Append Text if quality is q_runeword
-		}
-		if (armor.QualityCode	 === "q_runeword" && armor.TextTag) {
-			armorname = `${armor.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${armor.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const armformattedName = armorname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`);
-		builderurl += `armor=${armformattedName}%2C3%2Cnone%2C%2C%2C%2C&`;
 
-// gloves
-		// Find the armor (property "body") in the equipped items
-		const gloves = data.Equipped.find(item => item.Worn === "gloves");
-		if (!gloves || !gloves.Title) {
-			console.warn("gloves is missing or no gloves equipped!");
-			builderurl += `gloves=none%2C3%2Cnone%2C%2C%2C&`;
-			return 'gloves=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
-		}
-		let glovesname = gloves.Title; // Default to the Title
-//		if ((gloves.QualityCode	 === "q_magic"  || gloves.QualityCode === "q_rare" || gloves.QualityCode === "q_crafted") && gloves.TextTag) {
-		if ((gloves.QualityCode	 != "q_set"  && gloves.QualityCode != "q_unique" && gloves.QualityCode != "q_runeword") && gloves.TextTag) {
-			glovesname = "Unimportable Gloves"; // Append Text if quality is q_runeword
-		}
-		if (gloves.QualityCode	 === "q_runeword" && gloves.TextTag) {
-			glovesname = `${gloves.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${gloves.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const glovesformattedName = glovesname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`gloves=${glovesformattedName}%2C0%2Cnone&`);
-		builderurl += `gloves=${glovesformattedName}%2C0%2Cnone&`;
+    // Define all equipment slots to process
+    const equipmentSlots = [
+        { key: "helmet", param: "helm", default: "none%2C3%2Cnone%2C%2C%2C&" },
+        { key: "body", param: "armor", default: "none%2C0%2Cnone%2C%2C%2C%2C&" },
+        { key: "gloves", param: "gloves", default: "none%2C3%2Cnone&" },
+        { key: "boots", param: "boots", default: "none%2C0%2Cnone&" },
+        { key: "belt", param: "belt", default: "none%2C0%2Cnone&" },
+        { key: "amulet", param: "amulet", default: "none%2C0%2Cnone&" },
+        { key: "ring1", param: "ring1", default: "none%2C0%2Cnone&" },
+        { key: "ring2", param: "ring2", default: "none%2C0%2Cnone&" },
+        { key: "weapon1", param: "weapon", default: "none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&" },
+        { key: "weapon2", param: "offhand", default: "none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&" }
+    ];
 
-// boots
-		// Find the armor (property "body") in the equipped items
-		const boots = data.Equipped.find(item => item.Worn === "boots");
-		if (!boots || !boots.Title) {
-			console.warn("boots is missing or no boots equipped!");
-			builderurl += `boots=none%2C0%2Cnone&`;
-			return 'boots=none%2C0%2Cnone&'; // Default if no helmet is equipped
-		}
-		let bootsname = boots.Title; // Default to the Title
-//		if ((boots.QualityCode	 === "q_magic"  || boots.QualityCode === "q_rare" || boots.QualityCode === "q_crafted") && boots.TextTag) {
-		if ((boots.QualityCode	 != "q_set"  && boots.QualityCode != "q_unique" && boots.QualityCode != "q_runeword") && boots.TextTag) {
-			bootsname = "Unimportable Boots"; // Append Text if quality is q_runeword
-		}
-		if (boots.QualityCode	 === "q_runeword" && boots.TextTag) {
-			bootsname = `${boots.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${boots.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const bootsformattedName = bootsname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`boots=${bootsformattedName}%2C0%2Cnone&`);
-		builderurl += `boots=${bootsformattedName}%2C0%2Cnone&`;
+    // Map slot keys to friendly names
+    const slotNameMapping = {
+        weapon1: "Weapon",
+        weapon2: "Offhand"
+    };
 
-// belt
-		// Find the armor (property "body") in the equipped items
-		const belt = data.Equipped.find(item => item.Worn === "belt");
-		if (!belt || !belt.Title) {
-			console.warn("belt is missing or no belt equipped!");
-			builderurl += `belt=none%2C0%2Cnone&`;
-			return 'belt=none%2C0%2Cnone&'; // Default if no helmet is equipped
-		}
-		let beltname = belt.Title; // Default to the Title
-//		if ((belt.QualityCode	 === "q_magic"  || belt.QualityCode === "q_rare" || belt.QualityCode === "q_crafted") && belt.TextTag) {
-		if ((belt.QualityCode	 != "q_set"  && belt.QualityCode != "q_unique" && belt.QualityCode != "q_runeword") && belt.TextTag) {
-			beltname = "Unimportable Belt"; // Append Text if quality is q_runeword
-		}
-		if (belt.QualityCode	 === "q_runeword" && belt.TextTag) {
-			beltname = `${belt.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${belt.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const beltformattedName = beltname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`belt=${beltformattedName}%2C0%2Cnone&`);
-		builderurl += `belt=${beltformattedName}%2C0%2Cnone&`;
+    // Process each equipment slot
+    equipmentSlots.forEach(slot => {
+        const item = data.Equipped.find(equippedItem => equippedItem.Worn === slot.key);
 
-// amulet
-		// Find the armor (property "body") in the equipped items
-		const amulet = data.Equipped.find(item => item.Worn === "amulet");
-		if (!amulet || !amulet.Title) {
-			console.warn("amulet is missing or no amulet equipped!");
-			builderurl += `amulet=none%2C0%2Cnone&`;
-			return 'amulet=none%2C0%2Cnone&'; // Default if no helmet is equipped
-		}
-		let amuletname = amulet.Title; // Default to the Title
-//		if ((amulet.QualityCode	 === "q_magic"  || amulet.QualityCode === "q_rare" || amulet.QualityCode === "q_crafted") && amulet.TextTag) {
-		if ((amulet.QualityCode	 != "q_set"  && amulet.QualityCode != "q_unique" && amulet.QualityCode != "q_runeword") && amulet.TextTag) {
-			amuletname = "Unimportable Amulet"; // Append Text if quality is q_runeword
-		}
-		if (amulet.QualityCode	 === "q_runeword" && belt.TextTag) {
-			bamuletname = `${amulet.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${amulet.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const amuletformattedName = amuletname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`amulet=${amuletformattedName}%2C0%2Cnone&`);
-		builderurl += `amulet=${amuletformattedName}%2C0%2Cnone&`;
+        if (!item || !item.Title) {
+            console.warn(`${slot.key} is missing or not equipped!`);
+            builderurl += `${slot.param}=${slot.default}`;
+            return;
+        }
 
-// ring1
-		// Find the armor (property "body") in the equipped items
-		const ring1 = data.Equipped.find(item => item.Worn === "ring1");
-		if (!ring1 || !ring1.Title) {
-			console.warn("ring1 is missing or no ring1 equipped!");
-//			ring1name = "none"
-			builderurl += `ring1=none%2C0%2Cnone&`;
-			return 'ring1=none%2C0%2Cnone&'; // Default if no helmet is equipped
-		}
-		let ring1name = ring1.Title; // Default to the Title
-		if ((ring1.QualityCode	 === "q_magic"  || ring1.QualityCode === "q_rare" || ring1.QualityCode === "q_crafted") && ring1.TextTag) {
-			ring1name = "Unimportable Ring"; // Append Text if quality is q_runeword
-		}
-		if (ring1.QualityCode	 === "q_runeword" && ring1.TextTag) {
-			ring1name = `${ring1.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${ring1.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const ring1formattedName = ring1name
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`ring1=${ring1formattedName}%2C0%2Cnone&`);
-		builderurl += `ring1=${ring1formattedName}%2C0%2Cnone&`;
+        let itemName = item.Title; // Default to the Title
 
-// ring2
-		// Find the armor (property "body") in the equipped items
-		const ring2 = data.Equipped.find(item => item.Worn === "ring2");
-		if (!ring2 || !ring2.Title) {
-			console.warn("ring2 is missing or no ring2 equipped!");
-			builderurl += `ring2=none%2C0%2Cnone&`;
-			return 'ring2=none%2C0%2Cnone&'; // Default if no helmet is equipped
-		}
-		let ring2name = ring2.Title; // Default to the Title
-		if ((ring2.QualityCode	 === "q_magic"  || ring2.QualityCode === "q_rare" || ring2.QualityCode === "q_crafted") && ring2.TextTag) {
-			ring2name = "Unimportable Ring"; // Append Text if quality is q_runeword
-		}
-		if (ring2.QualityCode	 === "q_runeword" && ring2.TextTag) {
-			ring2name = `${ring2.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${ring2.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const ring2formattedName = ring2name
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`ring2=${ring2formattedName}%2C0%2Cnone&`);
-		builderurl += `ring2=${ring2formattedName}%2C0%2Cnone&`;
+        // Handle special cases for quality codes
+        if ((item.QualityCode !== "q_set" && item.QualityCode !== "q_unique" && item.QualityCode !== "q_runeword") && item.TextTag) {
+            // Use mapped friendly name if available, otherwise capitalize the key
+            const friendlyName = slotNameMapping[slot.key] || slot.key.charAt(0).toUpperCase() + slot.key.slice(1);
+            itemName = `Unimportable ${friendlyName}`;
+        }
 
-// weapon1
-		// Find the armor (property "body") in the equipped items
-		const weapon1 = data.Equipped.find(item => item.Worn === "weapon1");
-		if (!weapon1 || !weapon1.Title) {
-			console.warn("weapon1 is missing or no weapon1 equipped!");
-			builderurl += `weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`;
-			return 'weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
-		}
-		let weapon1name = weapon1.Title; // Default to the Title
-//		if ((weapon1.QualityCode	 === "q_magic"  || weapon1.QualityCode === "q_rare" || weapon1.QualityCode === "q_crafted") && weapon1.TextTag) {
-		if ((weapon1.QualityCode	 != "q_set"  && weapon1.QualityCode != "q_unique" && weapon1.QualityCode != "q_runeword") && weapon1.TextTag) {
-			weapon1name = "Unimportable Weapon"; // Append Text if quality is q_runeword
-		}
-		if (weapon1.QualityCode	 === "q_runeword" && weapon1.TextTag) {
-			weapon1name = `${weapon1.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${weapon1.TextTag}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const weapon1formattedName = weapon1name
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`weapon=${weapon1formattedName}%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`);
-		builderurl += `weapon=${weapon1formattedName}%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`;
+        if (item.QualityCode === "q_runeword" && item.TextTag) {
+            itemName = `${item.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${item.TextTag}`;
+        }
 
-// offhand
-		// Find the armor (property "body") in the equipped items
-		const offhand = data.Equipped.find(item => item.Worn === "weapon2");
-		if (!offhand || !offhand.Title) {
-			console.warn("offhand is missing or no offhand equipped!");
-			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
-			return 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
-		}
-		let offhandname = offhand.Title; // Default to the Title
-//		if ((offhand.QualityCode	 === "q_magic"  || offhand.QualityCode === "q_rare" || offhand.QualityCode === "q_crafted") && offhand.TextTag) {
-		if ((offhand.QualityCode	 != "q_set"  && offhand.QualityCode != "unique" && offhand.QualityCode != "q_runeword") && offhand.TextTag) {
-			offhandname = "Unimportable Offhand"; 
-			if (offhand.Tag === "Arrows"){
-				offhandname = "Unimportable Arrow"; 
-			}
-			if (offhand.Tag === "Bolts"){
-				offhandname = "Unimportable Bolt"; 
-			}
-//			if (offhand.Tag != "Bolts" && offhand.Tag != "Arrows"){
-//				offhandname = "Unimportable Offhand"; 
-//			}
-			//offhandname = "Unimportable Offhand"; // Append Text if quality is q_runeword
-//			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
-		}
-		if (offhand.QualityCode	 === "q_runeword" && offhand.TextTag) {
-			offhandname = `${offhand.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${offhand.TextTag}`; // Append Text if quality is q_runeword
-		}
-		if (offhand.QualityCode	 === "q_unique" && offhand.TextTag) {
-			offhandname = `${offhand.Title}`; // Append Text if quality is q_runeword
-		}
-		// Format the armor name
-		const offhandformattedName = offhandname
-        .replace(/\s+/g, '+')     // Replace spaces with "+"
-        .replace(/'/g, '%27');    // Replace single quotes with "%27"
-		console.log(`offhand=${offhandformattedName}%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`);
-		builderurl += `offhand=${offhandformattedName}%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`;
+        if (item.QualityCode === "q_unique" && item.TextTag && slot.key === "weapon2") {
+            itemName = `${item.Title}`; // Handle unique offhand
+        }
 
+        if (item.Tag === "Arrows" && item.QualityCode != "q_unique") {
+            itemName = "Unimportable Arrow";
+        } else if (item.Tag === "Bolts" && item.QualityCode != "q_unique") {
+            itemName = "Unimportable Bolt";
+        }
 
-builderurl += "&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
+        // Format the item name
+        const formattedName = itemName
+            .replace(/\s+/g, '+')     // Replace spaces with "+"
+            .replace(/'/g, '%27');    // Replace single quotes with "%27"
+
+        builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+        console.log(`${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`);
+    });
+
+    console.log("Final Builder URL:", builderurl);
+    return builderurl;
 //			builderurl += `skills=${skillsString}&`;
 		
 //		console.log(skillsurl) ;
@@ -5930,8 +5749,8 @@ builderurl += "&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-	window.open(builderurl);
-//	window.location.href = builderurl ;
+//	window.open(builderurl);
+	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 
