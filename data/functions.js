@@ -5754,8 +5754,8 @@ function updatePODComponent(data) {
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
-	window.location.href = builderurl ;
+	window.open(builderurl);
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 
