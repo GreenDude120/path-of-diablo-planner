@@ -5665,11 +5665,15 @@ function updatePODComponent(data) {
 // helmet
 		// Find the helmet in the equipped items
 		const helmet = data.Equipped.find(item => item.Worn === "helmet");
+//		if (!helmet || !helmet.Title || helmet.QualityCode	== "q_magic" || helmet.QualityCode	== "q_rare" || helmet.QualityCode	== "q_crafted") {
 		if (!helmet || !helmet.Title) {
 			console.warn("Helmet data is missing or no helmet equipped!");
 			return 'helm=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let helmetname = helmet.Title; // Default to the Title
+		if ((helmet.QualityCode	 === "q_magic"  || helmet.QualityCode === "q_rare" || helmet.QualityCode === "q_crafted") && helmet.TextTag) {
+			helmetname = "Placeholder Helm"; // Append Text if quality is q_runeword
+		}
 		if (helmet.QualityCode	 === "q_runeword" && helmet.TextTag) {
 			helmetname = `${helmet.Title} ${helmet.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5688,6 +5692,9 @@ function updatePODComponent(data) {
 			return 'armor=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let armorname = armor.Title; // Default to the Title
+		if ((armor.QualityCode	 === "q_magic"  || armor.QualityCode === "q_rare" || armor.QualityCode === "q_crafted") && armor.TextTag) {
+			armorname = "Placeholder Armor"; // Append Text if quality is q_runeword
+		}
 		if (armor.QualityCode	 === "q_runeword" && armor.TextTag) {
 			armorname = `${armor.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${armor.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5706,6 +5713,9 @@ function updatePODComponent(data) {
 			return 'gloves=none%2C3%2Cnone%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let glovesname = gloves.Title; // Default to the Title
+		if ((gloves.QualityCode	 === "q_magic"  || gloves.QualityCode === "q_rare" || gloves.QualityCode === "q_crafted") && gloves.TextTag) {
+			glovesname = "Placeholder Gloves"; // Append Text if quality is q_runeword
+		}
 		if (gloves.QualityCode	 === "q_runeword" && gloves.TextTag) {
 			glovesname = `${gloves.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${gloves.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5724,6 +5734,9 @@ function updatePODComponent(data) {
 			return 'boots=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let bootsname = boots.Title; // Default to the Title
+		if ((boots.QualityCode	 === "q_magic"  || boots.QualityCode === "q_rare" || boots.QualityCode === "q_crafted") && boots.TextTag) {
+			bootsname = "Placeholder Boots"; // Append Text if quality is q_runeword
+		}
 		if (boots.QualityCode	 === "q_runeword" && boots.TextTag) {
 			bootsname = `${boots.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${boots.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5742,6 +5755,9 @@ function updatePODComponent(data) {
 			return 'belt=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let beltname = belt.Title; // Default to the Title
+		if ((belt.QualityCode	 === "q_magic"  || belt.QualityCode === "q_rare" || belt.QualityCode === "q_crafted") && belt.TextTag) {
+			beltname = "Placeholder Belt"; // Append Text if quality is q_runeword
+		}
 		if (belt.QualityCode	 === "q_runeword" && belt.TextTag) {
 			beltname = `${belt.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${belt.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5760,6 +5776,9 @@ function updatePODComponent(data) {
 			return 'amulet=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let amuletname = amulet.Title; // Default to the Title
+		if ((amulet.QualityCode	 === "q_magic"  || amulet.QualityCode === "q_rare" || amulet.QualityCode === "q_crafted") && amulet.TextTag) {
+			amuletname = "Placeholder Amulet"; // Append Text if quality is q_runeword
+		}
 		if (amulet.QualityCode	 === "q_runeword" && belt.TextTag) {
 			bamuletname = `${amulet.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${amulet.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5778,6 +5797,9 @@ function updatePODComponent(data) {
 			return 'ring1=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let ring1name = ring1.Title; // Default to the Title
+		if ((ring1.QualityCode	 === "q_magic"  || ring1.QualityCode === "q_rare" || ring1.QualityCode === "q_crafted") && ring1.TextTag) {
+			ring1name = "Placeholder Ring"; // Append Text if quality is q_runeword
+		}
 		if (ring1.QualityCode	 === "q_runeword" && ring1.TextTag) {
 			ring1name = `${ring1.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${ring1.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5796,6 +5818,9 @@ function updatePODComponent(data) {
 			return 'ring2=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
 		let ring2name = ring2.Title; // Default to the Title
+		if ((ring2.QualityCode	 === "q_magic"  || ring2.QualityCode === "q_rare" || ring2.QualityCode === "q_crafted") && ring2.TextTag) {
+			ring2name = "Placeholder Ring"; // Append Text if quality is q_runeword
+		}
 		if (ring2.QualityCode	 === "q_runeword" && ring2.TextTag) {
 			ring2name = `${ring2.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${ring2.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5814,6 +5839,9 @@ function updatePODComponent(data) {
 			return 'weapon=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let weapon1name = weapon1.Title; // Default to the Title
+		if ((weapon1.QualityCode	 === "q_magic"  || weapon1.QualityCode === "q_rare" || weapon1.QualityCode === "q_crafted") && weapon1.TextTag) {
+			weapon1name = "Placeholder Weapon"; // Append Text if quality is q_runeword
+		}
 		if (weapon1.QualityCode	 === "q_runeword" && weapon1.TextTag) {
 			weapon1name = `${weapon1.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${weapon1.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5832,6 +5860,9 @@ function updatePODComponent(data) {
 			return 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&'; // Default if no helmet is equipped
 		}
 		let offhandname = offhand.Title; // Default to the Title
+		if ((offhand.QualityCode	 === "q_magic"  || offhand.QualityCode === "q_rare" || offhand.QualityCode === "q_crafted") && offhand.TextTag) {
+			offhandname = "Placeholder Offhand"; // Append Text if quality is q_runeword
+		}
 		if (offhand.QualityCode	 === "q_runeword" && offhand.TextTag) {
 			offhandname = `${offhand.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${offhand.TextTag}`; // Append Text if quality is q_runeword
 		}
@@ -5866,8 +5897,8 @@ builderurl += "&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
-	window.location.href = builderurl ;
+	window.open(builderurl);
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 
