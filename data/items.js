@@ -1163,7 +1163,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Hailstorm", type:"quiver", req_level:12, ias:11, damage_min:12, damage_max:17, enemy_cRes:-20, damage_reduced:10, ctc:[[100,30,"Glacial Spike","During Strafe"]], pod_changes:1},
 	{name:"Swiftheart", type:"quiver", req_level:12, frw:14, pierce:15, oskill_Strafe:6, life_replenish:12.2, mana_per_ranged_hit:4, pod_changes:1, base:"Bolts"},
 	{only:"", rarity:"craft", name:"Unimportable Offhand", req_level:64, placeholder:1},
-	{only:"", rarity:"craft", name:"Unimportable Projectile", req_level:64, placeholder:1, img:"Dragonbreath"},
+	{only:"", rarity:"craft", name:"Unimportable Arrow", req_level:64, placeholder:1, type:"quiver", },
+	{only:"", rarity:"craft", name:"Unimportable Bolt", req_level:64, placeholder:1, type:"quiver", base:"Bolts"},
 		],
 		charms: [
 	{name:"Charms"},

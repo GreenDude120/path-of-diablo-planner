@@ -5806,6 +5806,7 @@ function updatePODComponent(data) {
 		const ring1 = data.Equipped.find(item => item.Worn === "ring1");
 		if (!ring1 || !ring1.Title) {
 			console.warn("ring1 is missing or no ring1 equipped!");
+//			ring1name = "none"
 			builderurl += `ring1=none%2C0%2Cnone&`;
 			return 'ring1=none%2C0%2Cnone&'; // Default if no helmet is equipped
 		}
@@ -5879,9 +5880,16 @@ function updatePODComponent(data) {
 		let offhandname = offhand.Title; // Default to the Title
 //		if ((offhand.QualityCode	 === "q_magic"  || offhand.QualityCode === "q_rare" || offhand.QualityCode === "q_crafted") && offhand.TextTag) {
 		if ((offhand.QualityCode	 != "q_set"  && offhand.QualityCode != "unique" && offhand.QualityCode != "q_runeword") && offhand.TextTag) {
-			if (offhand.Tag === "Arrows" || offhand.Tag === "Bolts"){
-				offhandname = "Unimportable Projectile"; 
+			offhandname = "Unimportable Offhand"; 
+			if (offhand.Tag === "Arrows"){
+				offhandname = "Unimportable Arrow"; 
 			}
+			if (offhand.Tag === "Bolts"){
+				offhandname = "Unimportable Bolt"; 
+			}
+//			if (offhand.Tag != "Bolts" && offhand.Tag != "Arrows"){
+//				offhandname = "Unimportable Offhand"; 
+//			}
 			//offhandname = "Unimportable Offhand"; // Append Text if quality is q_runeword
 			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
 		}
@@ -5896,7 +5904,7 @@ function updatePODComponent(data) {
 		builderurl += `offhand=${offhandformattedName}%2C0%2Cnone%2C%2C%2C%2C%2C%2C&`;
 
 
-builderurl += "mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
+builderurl += "&mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 //			builderurl += `skills=${skillsString}&`;
 		
 //		console.log(skillsurl) ;
@@ -5919,8 +5927,8 @@ builderurl += "mercenary=none%2Cnone%2Cnone%2Cnone%2Cnone"
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
-	window.location.href = builderurl ;
+	window.open(builderurl);
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 
