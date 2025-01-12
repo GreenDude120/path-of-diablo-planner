@@ -168,7 +168,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Tancred:1, name:"Tancred's Skull", req_level:20, damage_bonus:10, ar:40, skills_summon_all:1, summon_defense:15, base:"Bone Helm", rarity:"set", set_bonuses:["set_Tancred",{},{all_res:10},{},{},{}], img:"Tancred's_Skull"},
 	{set_TO:1, name:"Trang-Oul's Guise", req_level:65, skills_ele_poison_all:1, defense:100, fhr:25, life_replenish:5, mana:150, thorns:20, base:"Bone Visage", rarity:"set", set_bonuses:["set_TO",{},{},{},{},{}], img:"Trang-Oul's_Guise"},
 
-	{rarity:"craft", name:"Placeholder Helm", req_level:64, placeholder:1, base:"Diadem"},
+	{rarity:"craft", name:"Unimportable Helm", req_level:64, placeholder:1, base:"Diadem"},
 
 
 		],
@@ -302,7 +302,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"sorceress", name:"Ormus' Robes (Enflame)", req_level:75, skill_Enflame:3, fcr:20, cDamage:15, lDamage:15, fDamage:15, defense:20, mana_regen:15, base:"Dusk Shroud", img:"Ormus'_Robes"},
 	{only:"sorceress", name:"Ormus' Robes (Meteor)", req_level:75, skill_Meteor:3, fcr:20, cDamage:15, lDamage:15, fDamage:15, defense:20, mana_regen:15, base:"Dusk Shroud", img:"Ormus'_Robes"},
 
-	{rarity:"craft", name:"Placeholder Armoe", req_level:64, placeholder:1, base:"Dusk Shroud"},
+	{rarity:"craft", name:"Unimportable Armor", req_level:64, placeholder:1, base:"Dusk Shroud"},
 
 		],
 		gloves: [
@@ -343,7 +343,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{not:["assassin","amazon"], rarity:"craft", name:"Blood Gloves", req_level:47, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, lRes:30, base:"Vampirebone Gloves"},
 	{not:["amazon"], rarity:"craft", name:"Caster Mitts", req_level:42, mana_regen:10, mana:20, mana_per_kill:3, mana_leech:5, ias:20, mf:25, fRes:30, cRes:30, lRes:30, base:"Bramble Mitts"},
 
-	{rarity:"craft", name:"Placeholder Gloves", req_level:64, placeholder:1, base:"Leather Gloves"},
+	{rarity:"craft", name:"Unimportable Gloves", req_level:64, placeholder:1, base:"Leather Gloves"},
 ],
 		boots: [
 	{name:"Boots"},
@@ -377,7 +377,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"craft", name:"Caster Boots", req_level:45, frw:30, mana_regen:10, mana:20, max_mana:5, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
 	{rarity:"craft", name:"Hitpower Boots", req_level:45, frw:30, thorns:7, ctc:[[5,4,"Frost Nova","when hit"]], melee_defense:50, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
 
-	{rarity:"craft", name:"Placeholder Boots", req_level:64, placeholder:1, base:"Battle Boots"},
+	{rarity:"craft", name:"Unimportable Boots", req_level:64, placeholder:1, base:"Battle Boots"},
 		],
 		belt: [
 	{name:"Belt"},
@@ -411,7 +411,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"craft", name:"Caster Belt", req_level:51, mana_regen:10, mana:20, fcr:10, life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
 	{rarity:"craft", name:"Hitpower Belt", req_level:51, damage_to_mana:10, thorns:7, ctc:[[5,4,"Frost Nova","when hit"]], life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
 
-	{rarity:"craft", name:"Placeholder Belt", req_level:64, placeholder:1, base:"Sash"},
+	{rarity:"craft", name:"Unimportable Belt", req_level:64, placeholder:1, base:"Sash"},
 
 		],
 		amulet: [
@@ -467,7 +467,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"craft", name:"Blood Amulet", req_level:89, skills_class:2, frw:10, life_leech:4, mana_leech:5, life:20, strength:35, all_res:20},
 	{rarity:"craft", name:"Caster Amulet", req_level:89, skills_class:2, fcr:20, mana_regen:10, mana:20, strength:30, energy:5, all_res:20},
 	{rarity:"craft", name:"Hitpower Amulet", req_level:89, ctc:[[5,4,"Frost Nova","when hit"]], skills_class:2, fcr:10, all_res:20, strength:30, thorns:6, skills_summon_all:1},
-	{rarity:"craft", name:"Placeholder Amulet", req_level:64, placeholder:1},
+	{rarity:"craft", name:"Unimportable Amulet", req_level:64, placeholder:1},
 		],
 		ring1: [
 	{name:"Ring"},
@@ -487,7 +487,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"craft", name:"Caster Ring", req_level:65, mana_regen:10, mana:110, energy:20, all_res:11, fcr:10, strength:20, life:40},
 	{rarity:"craft", name:"Hitpower Ring", req_level:65, dex:5, ctc:[[5,4,"Frost Nova","when hit"]], thorns:6, all_res:11, fcr:10, strength:20, life:40},
 	{rarity:"magic", name:"Fortuitous Ring of Fortune", req_level:31, mf:40},
-	{rarity:"craft", name:"Placeholder Ring", req_level:64, placeholder:1},
+	{rarity:"craft", name:"Unimportable Ring", req_level:64, placeholder:1},
 		],
 		ring2: [],	// Automatically copied from ring1
 		weapon: [	// TODO: Add a "rank" parameter? It would allow weapons to be displayed in different orders per class, without needing to duplicate entries using "only" and "not"
@@ -1057,7 +1057,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"craft", name:"Qord's Obsession - A Josko Leg", req_level:69, skill_Cold_Mastery:3, skill_Fire_Mastery:3, skill_Warmth:3, all_skills:4, fcr:65, knockback:1, vitality:10, energy:10, mana_regen:30, gf:75, mf:30, mana_regen:200, discount:25, gf_per_level:5, mf_per_level:2.5, twoHanded:1, type:"staff", base:"Archon Staff", img:"Wirt's_Leg"},
 	{rarity:"craft", name:"Qordmaker", req_level:65, itd:1, sockets:5, ctc:[[18,24,"Volcano","on striking"],[5,27,"Molten Boulder","on striking"],[21,25,"Nova","on attack"],[100,45,"Meteor","when you die"]], twoHanded:1, type:"bow", base:"Qord Bow", pod_changes:1, img:"Widowmaker"},
 	{rarity:"craft", name:"Qord has Faith", req_level:65, aura:"Fanaticism", aura_lvl:15, all_skills:2, e_damage:330, itd:1, ar_bonus:300, damage_vs_undead:75, ar_vs_undead:50, fDamage_min:120, fDamage_max:120, all_res:15, gf:75, reanimate:4, twoHanded:1, type:"bow", base:"Qord Bow", pod_changes:1, img:"Widowmaker"},
-	{rarity:"craft", name:"Placeholder Weapon", req_level:64, placeholder:1, type:"mace", img:"Wirt's_Leg"},
+	{rarity:"craft", name:"Unimportable Weapon", req_level:64, placeholder:1, type:"mace", img:"Wirt's_Leg"},
 	
 		],
 
@@ -1157,7 +1157,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Frostbite", type:"quiver", req_level:21, ctc:[[34,5,"Ice Arrow","When Struck"]], skills_cold_all:2, max_life:18, max_mana:17, plus_freezing_arrow_radius:40, pod_changes:1},
 	{name:"Hailstorm", type:"quiver", req_level:12, ias:11, damage_min:12, damage_max:17, enemy_cRes:-20, damage_reduced:10, ctc:[[100,30,"Glacial Spike","During Strafe"]], pod_changes:1},
 	{name:"Swiftheart", type:"quiver", req_level:12, frw:14, pierce:15, oskill_Strafe:6, life_replenish:12.2, mana_per_ranged_hit:4, pod_changes:1, base:"Bolts"},
-	{rarity:"craft", name:"Placeholder Offhand", req_level:64, placeholder:1, type:"mace", img:"Wirt's_Leg"},
+	{rarity:"craft", name:"Unimportable Offhand", req_level:64, placeholder:1, type:"mace", img:"Wirt's_Leg"},
 		],
 		charms: [
 	{name:"Charms"},
