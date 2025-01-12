@@ -5871,7 +5871,11 @@ function updatePODComponent(data) {
 		}
 		let offhandname = offhand.Title; // Default to the Title
 		if ((offhand.QualityCode	 === "q_magic"  || offhand.QualityCode === "q_rare" || offhand.QualityCode === "q_crafted") && offhand.TextTag) {
-			offhandname = "Unimportable Offhand"; // Append Text if quality is q_runeword
+			if (offhand.Tag === "Arrows" || offhand.Tag === "Bolts"){
+				offhandname = "Unimportable Projectile"; 
+			}
+			//offhandname = "Unimportable Offhand"; // Append Text if quality is q_runeword
+			builderurl += 'offhand=none%2C0%2Cnone%2C%2C%2C%2C%2C%2C&';
 		}
 		if (offhand.QualityCode	 === "q_runeword" && offhand.TextTag) {
 			offhandname = `${offhand.Title}+%C2%AD+%C2%AD+-+%C2%AD+%C2%AD+${offhand.TextTag}`; // Append Text if quality is q_runeword
