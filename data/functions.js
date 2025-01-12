@@ -5696,7 +5696,7 @@ function updatePODComponent(data) {
 		}
 		let armorname = armor.Title; // Default to the Title
 //		if ((armor.QualityCode	 === "q_magic"  || armor.QualityCode === "q_rare" || armor.QualityCode === "q_crafted") && armor.TextTag) {
-		if ((armor.QualityCode	 != "q_ser"  && armor.QualityCode != "q_unique" && armor.QualityCode != "q_runeword") && armor.TextTag) {
+		if ((armor.QualityCode	 != "q_set"  && armor.QualityCode != "q_unique" && armor.QualityCode != "q_runeword") && armor.TextTag) {
 			armorname = "Unimportable Armor"; // Append Text if quality is q_runeword
 		}
 		if (armor.QualityCode	 === "q_runeword" && armor.TextTag) {

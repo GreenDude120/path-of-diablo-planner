@@ -1163,7 +1163,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Frostbite", type:"quiver", req_level:21, ctc:[[34,5,"Ice Arrow","When Struck"]], skills_cold_all:2, max_life:18, max_mana:17, plus_freezing_arrow_radius:40, pod_changes:1},
 	{name:"Hailstorm", type:"quiver", req_level:12, ias:11, damage_min:12, damage_max:17, enemy_cRes:-20, damage_reduced:10, ctc:[[100,30,"Glacial Spike","During Strafe"]], pod_changes:1},
 	{name:"Swiftheart", type:"quiver", req_level:12, frw:14, pierce:15, oskill_Strafe:6, life_replenish:12.2, mana_per_ranged_hit:4, pod_changes:1, base:"Bolts"},
-	{only:"", rarity:"craft", name:"Unimportable Offhand", req_level:64, placeholder:1, type:"shield", base:"Grim Shield", img:"Lidless_Wall"},
+	{only:"", rarity:"craft", name:"Unimportable Offhand", req_level:64, placeholder:1, type:"shield", img:"Lidless_Wall"},
 	{only:"", rarity:"craft", name:"Unimportable Arrow", req_level:64, placeholder:1, type:"quiver", },
 	{only:"", rarity:"craft", name:"Unimportable Bolt", req_level:64, placeholder:1, type:"quiver", base:"Bolts"},
 		],
