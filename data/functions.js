@@ -5699,7 +5699,16 @@ function updatePODComponent(data) {
         if ((item.QualityCode !== "q_set" && item.QualityCode !== "q_unique" && item.QualityCode !== "q_runeword") && item.TextTag) {
             // Use mapped friendly name if available, otherwise capitalize the key
             const friendlyName = slotNameMapping[slot.key] || slot.key.charAt(0).toUpperCase() + slot.key.slice(1);
-            itemName = `Unimportable ${friendlyName}`;
+            if (item.QualityCode === "q_magic"){
+				itemName = `Unimportable Magic ${friendlyName}`;
+			}
+            if (item.QualityCode === "q_rare"){
+				itemName = `Unimportable Rare ${friendlyName}`;
+			}
+            if (item.QualityCode === "q_crafted"){
+				itemName = `Unimportable Crafted ${friendlyName}`;
+			}
+//			itemName = `Unimportable ${friendlyName}`;
         }
 
         if (item.QualityCode === "q_runeword" && item.TextTag) {

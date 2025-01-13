@@ -1520,7 +1520,10 @@ skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summoning Skill
 mosaic_charge_dur:{index:["mosaic_charge_dur"], format:["+"," Seconds to All Martial Arts Charges Duration"]},
 oskill_Taunt:{index:["oskill_Taunt"], format:["+"," to Taunt"]},
 oskill_Blood_Golem:{index:["oskill_Blood_Golem"], format:["+"," to Blood Golem"]},
-placeholder:{index:[], format:["Magic, rare, and crafted item imports are not supported"]},
+placeholder:{index:[], format:["Magic item imports are not supported"]},
+mplaceholder:{index:[], format:["Rare item imports are not supported"]},
+cplaceholder:{index:[], format:["Crafted item imports are not supported"]},
+
 };
 
 var stats_alternate = {
