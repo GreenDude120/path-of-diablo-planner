@@ -5708,6 +5708,9 @@ function updatePODComponent(data) {
             if (item.QualityCode === "q_crafted"){
 				itemName = `Unimportable Crafted ${friendlyName}`;
 			}
+            if (item.QualityCode === "q_normal"){
+				itemName = item.TextTag ;
+			}
 //			itemName = `Unimportable ${friendlyName}`;
         }
 
