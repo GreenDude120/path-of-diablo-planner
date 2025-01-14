@@ -5754,6 +5754,7 @@ function updatePODComponent(data) {
 							prop.includes("Enemy Fire Resistance") ? "Fire" :
 							prop.includes("Enemy Magic Resistance") ? "Magic" :
 							prop.includes("Enemy Physical Resistance") ? "Physical" :
+							prop.includes("Enemy Poison Resistance") ? "Poison" :
 							null
 						);
 
