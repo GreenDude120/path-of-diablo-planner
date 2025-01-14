@@ -1521,7 +1521,7 @@ mosaic_charge_dur:{index:["mosaic_charge_dur"], format:["+"," Seconds to All Mar
 oskill_Taunt:{index:["oskill_Taunt"], format:["+"," to Taunt"]},
 oskill_Blood_Golem:{index:["oskill_Blood_Golem"], format:["+"," to Blood Golem"]},
 placeholder:{index:[], format:["Magic item imports are not supported"]},
-mplaceholder:{index:[], format:["Rare item imports are not supported"]},
+rplaceholder:{index:[], format:["Rare item imports are not supported"]},
 cplaceholder:{index:[], format:["Crafted item imports are not supported"]},
 
 };
