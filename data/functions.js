@@ -5759,8 +5759,7 @@ function updatePODComponent(data) {
 						);
 
 						if (resistanceType) {
-							socketName += `+%28${resistanceType}%29`; // Append "(Type)" to the name
-						}
+							socketName = `Rainbow+Facet+%28${resistanceType}%29`; // Format as "Rainbow Facet (Type)"						}
 					}
 
 					return socketName;
@@ -5803,8 +5802,8 @@ function updatePODComponent(data) {
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
-	window.location.href = builderurl ;
+	window.open(builderurl);
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 
