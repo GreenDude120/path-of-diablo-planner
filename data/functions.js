@@ -5739,41 +5739,42 @@ function updatePODComponent(data) {
 //        } else {
 //            builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
 //        }
-		if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
-			// Extract socketed items' names
-			const socketedItems = (item.Sockets || [])
-				.filter(socket => socket.Title && socket.Title !== "none") // Ensure the socket has a valid title
-				.map(socket => {
-					let socketName = socket.Title.replace(/\s+/g, '+').replace(/'/g, '%27'); // Format the title
+if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
+    // Extract socketed items' names
+    const socketedItems = (item.Sockets || [])
+        .filter(socket => socket.Title && socket.Title !== "none") // Ensure the socket has a valid title
+        .map(socket => {
+            let socketName = socket.Title.replace(/\s+/g, '+').replace(/'/g, '%27'); // Format the title
 
-					// Handle Rainbow Facet property
-					if (socket.TextTag === "Jewel" && socket.Title === "Rainbow Facet") {
-						// Extract resistance type from PropertyList
-						const resistanceType = socket.PropertyList.find(prop =>
-							prop.includes("Enemy Lightning Resistance") ? "Lightning" :
-							prop.includes("Enemy Cold Resistance") ? "Cold" :
-							prop.includes("Enemy Fire Resistance") ? "Fire" :
-							prop.includes("Enemy Magic Resistance") ? "Magic" :
-							prop.includes("Enemy Physical Resistance") ? "Physical" :
-							prop.includes("Enemy Poison Resistance") ? "Poison" :
-							null
-						);
+            // Handle Rainbow Facet property
+            if (socket.TextTag === "Jewel" && socket.Title === "Rainbow Facet") {
+                // Extract resistance type from PropertyList
+                const resistanceType = socket.PropertyList.find(prop => {
+                    if (prop.includes("Enemy Lightning Resistance")) return "Lightning";
+                    if (prop.includes("Enemy Cold Resistance")) return "Cold";
+                    if (prop.includes("Enemy Fire Resistance")) return "Fire";
+                    if (prop.includes("Enemy Magic Resistance")) return "Magic";
+                    if (prop.includes("Enemy Physical Resistance")) return "Physical";
+                    if (prop.includes("Enemy Poison Resistance")) return "Poison";
+                    return null;
+                });
 
-						if (resistanceType) {
-							socketName = `Rainbow+Facet+%28${resistanceType}%29`; // Format as "Rainbow Facet (Type)"
-						}
-					}
+                if (resistanceType) {
+                    socketName = `Rainbow+Facet+%28${resistanceType}%29`; // Format as "Rainbow Facet (Type)"
+                }
+            }
 
-					return socketName;
-				})
-				.join('%2C'); // Join with "%2C" for commas
+            return socketName;
+        })
+        .join('%2C'); // Join with "%2C" for commas
 
-			// Include socketed items in the URL
-			builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C${socketedItems}&`;
-		} else {
-			// Default behavior if no sockets or runeword
-			builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
-		}
+    // Include socketed items in the URL
+    builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C${socketedItems}&`;
+} else {
+    // Default behavior if no sockets or runeword
+    builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+}
+
 
         // Check for socket count and adjust URL, but can we do whatt's in those sockets?
 
