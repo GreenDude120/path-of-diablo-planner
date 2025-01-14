@@ -5734,11 +5734,27 @@ function updatePODComponent(data) {
             .replace(/'/g, '%27');    // Replace single quotes with "%27"
 
         // Check for socket count and adjust URL
-        if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
-            builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C%2C%2C&`;
-        } else {
-            builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
-        }
+//        if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
+//          builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C%2C%2C&`;
+//        } else {
+//            builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+//        }
+		if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
+	    // Extract socketed items' names
+		    const socketedItems = (item.Sockets || [])
+    	    .filter(socket => socket.Title && socket.Title !== "none") // Ensure the socket has a valid title
+    	    .map(socket => socket.Title.replace(/\s+/g, '+').replace(/'/g, '%27')) // Format socket titles
+    	    .join('%2C'); // Join with "%2C" for commas
+
+    		// Include socketed items in the URL
+    		builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C${socketedItems}&`;
+		} else {
+		    // Default behavior if no sockets or runeword
+		    builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+		}
+
+        // Check for socket count and adjust URL, but can we do whatt's in those sockets?
+
         console.log(`${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`);
     });
 
@@ -5766,8 +5782,8 @@ function updatePODComponent(data) {
 	}
 
 	console.log("outside if Builder url = :", builderurl);
-//	window.open(builderurl);
-	window.location.href = builderurl ;
+	window.open(builderurl);
+//	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
 }
 

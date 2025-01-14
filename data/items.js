@@ -1159,6 +1159,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Hsarus:1, name:"Hsarus' Iron Fist", req_level:3, damage_reduced:2, strength:10, type:"shield", base:"Buckler", rarity:"set", set_bonuses:["set_Hsarus",{},{defense_per_level:2.5},{}], img:"Hsarus'_Iron_Fist"},
 	{only:"paladin", rarity:"craft", name:"Priest's Safety Monarch", req_level:58, skills_paladin:2, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch", nonmetal:1},
 	{not:["paladin"], rarity:"craft", name:"Safety Monarch", req_level:43, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, defense_per_level:3, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch"},
+	{only:"", name:"Vortex Shield", req_level:68, type:"shield", base:"Vortex Shield", img:"Griswold's_Honor"},
+
 	// Quivers
 	{name:"Quivers---------------------------", type:"quiver", special:2, img:"../Arrows"},		
 	{not:["amazon"], rarity:"rare", name:"Bolts of Doom", type:"quiver", req_level:65, all_skills:1, pierce:25, mf_per_level:0.5, mf:35, life_per_ranged_hit:16, mana_per_ranged_hit:9, base:"Bolts"},
