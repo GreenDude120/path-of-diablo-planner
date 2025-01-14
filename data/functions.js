@@ -5759,7 +5759,8 @@ function updatePODComponent(data) {
 						);
 
 						if (resistanceType) {
-							socketName = `Rainbow+Facet+%28${resistanceType}%29`; // Format as "Rainbow Facet (Type)"						}
+							socketName = `Rainbow+Facet+%28${resistanceType}%29`; // Format as "Rainbow Facet (Type)"
+						}
 					}
 
 					return socketName;
