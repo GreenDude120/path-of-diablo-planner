@@ -5748,6 +5748,7 @@ function updatePODComponent(data) {
 
 					// Handle Rainbow Facet property
 					if (socket.TextTag === "Jewel" && socket.Title === "Rainbow Facet") {
+						// Extract resistance type from PropertyList
 						const resistanceType = socket.PropertyList.find(prop =>
 							prop.includes("Enemy Lightning Resistance") ? "Lightning" :
 							prop.includes("Enemy Cold Resistance") ? "Cold" :
