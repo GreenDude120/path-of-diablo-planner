@@ -5734,11 +5734,60 @@ function updatePODComponent(data) {
             .replace(/'/g, '%27');    // Replace single quotes with "%27"
 
         // Check for socket count and adjust URL
-        if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
-            builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C%2C%2C&`;
-        } else {
-            builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
-        }
+//        if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
+//          builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C%2C%2C&`;
+//        } else {
+//            builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+//        }
+		if (item.QualityCode !== "q_runeword" && item.SocketCount && item.SocketCount != 0) {
+			// Extract socketed items' names
+			const socketedItems = (item.Sockets || [])
+				.filter(socket => socket.Title && socket.Title !== "none") // Ensure the socket has a valid title
+				.map(socket => {
+					let socketName = socket.Title.replace(/\s+/g, '+').replace(/'/g, '%27'); // Format the title
+
+					// Handle Rainbow Facet property
+					if (socket.TextTag === "Jewel" && socket.Title === "Rainbow Facet") {
+						// Map known resistance properties to element names
+						const resistanceMapping = {
+							"Enemy Lightning Resistance": "Lightning",
+							"Enemy Cold Resistance": "Cold",
+							"Enemy Fire Resistance": "Fire",
+							"Enemy Magic Resistance": "Magic",
+							"Enemy Physical Resistance": "Physical",
+							"Enemy Poison Resistance": "Poison"
+						};
+
+						// Find the resistance type in PropertyList
+						const resistanceType = socket.PropertyList
+							.map(prop => {
+								// Check for matching substrings in resistanceMapping
+								return Object.keys(resistanceMapping).find(key => prop.includes(key));
+							})
+							.filter(Boolean) // Remove undefined results
+							.map(key => resistanceMapping[key]) // Map to resistance type
+							.join(', '); // Join if multiple resistances are found
+
+						if (resistanceType) {
+							socketName = `Rainbow+Facet+%28${resistanceType}%29`; // Format as "Rainbow Facet (Type)"
+						}
+					}
+
+					return socketName;
+				})
+				.join('%2C'); // Join with "%2C" for commas
+
+			// Include socketed items in the URL
+			builderurl += `${slot.param}=${formattedName}%2C3%2C%2B+Sockets%2C${socketedItems}&`;
+		} else {
+			// Default behavior if no sockets or runeword
+			builderurl += `${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`;
+		}
+
+
+
+        // Check for socket count and adjust URL, but can we do whatt's in those sockets?
+
         console.log(`${slot.param}=${formattedName}%2C0%2Cnone%2C%2C%2C&`);
     });
 
