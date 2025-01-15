@@ -80,6 +80,7 @@ var runewords = {
 	Steel:["Tir","El"],
 	Pattern:["Tal","Ort","Tir"],
 	Plague:["Cham","Fal","Um"],
+	Plague2:["Cham","Shael","Um"],
 	Bulwark:["Shael","Io","Sol"],
 	Cure:["Shael","Io","Tal"],
 	Flickering_Flame:["Nef","Pul","Vex"],
