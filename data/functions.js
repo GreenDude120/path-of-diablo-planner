@@ -4869,6 +4869,8 @@ function updateTertiaryStats() {
 	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}
 	if (c.evade > 0) { statlines += c.evade + "% Chance to <b>Evade</b> melee or missile attack when walking or running" + "<br>"}
 
+//	if (character.customStats != null) { statlines += c.addcraft }
+
 	document.getElementById("statlines").innerHTML = statlines
 	updateCTC()
 	updateChargeSkills()
@@ -4878,6 +4880,9 @@ function updateTertiaryStats() {
 // ---------------------------------
 function updateCTC() {
 	var stats = "";
+	
+	
+	
 	for (group in equipped) {
 		if (typeof(equipped[group].ctc) != 'undefined') {
 			if (equipped[group].ctc != "") {
@@ -4997,6 +5002,7 @@ function updateCTC() {
 			}
 		}
 	}
+	
 	// TODO: Add socketed ctc effects to socketed.totals so this can be simplified? Duplicate code in equipmentHover()
 	var ctc_possible = ["100% chance to cast level 29 Blaze when you level up","100% chance to cast level 43 Frost Nova when you level up","100% chance to cast level 41 Nova when you level up","100% chance to cast level 23 Venom when you level up"];
 	var ctc_included = [0,0,0,0];
@@ -5708,6 +5714,14 @@ function updatePODComponent(data) {
 			}
             if (item.QualityCode === "q_crafted"){
 				itemName = `Unimportable Crafted ${friendlyName}`;
+//				addcraft =  item.PropertyList ;
+//				console.log(addcraft)
+//				const addcraft = parseProperties(item);
+//				console.log(addcraft);
+
+//				const { parsedStats, statlines } = parseProperties(item);
+//				let addcrafttext = `Unimportable Crafted ${friendlyName}:` + item.PropertyList
+//				return addcrafttext
 			}
             if (item.QualityCode === "q_normal"){
 				itemName = item.TextTag ;
@@ -5819,6 +5833,43 @@ function updatePODComponent(data) {
 //	window.open(builderurl);
 	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
+}
+
+function parseProperties(item) {
+    const customStats = [];
+    
+    if (!item.PropertyList || !Array.isArray(item.PropertyList)) {
+        console.warn("Item has no valid PropertyList.");
+        return customStats; // Return an empty array if there's no PropertyList
+    }
+
+    item.PropertyList.forEach((property) => {
+        // Iterate through the `stats` object to find a match
+        for (const statKey in stats) {
+            const stat = stats[statKey];
+
+            // Handle cases where `index` or `format` are undefined or null
+            if (!stat.index || !stat.format) {
+                if (property.includes(statKey)) {
+                    // For boolean stats or simple matches
+                    customStats.push(`${statKey} is enabled`);
+                    break;
+                }
+                continue;
+            }
+
+            // Handle formatted stats
+            const [prefix, suffix] = stat.format;
+            if (property.startsWith(prefix) && property.endsWith(suffix)) {
+                // Extract the value between the prefix and suffix
+                const value = property.slice(prefix.length, property.length - suffix.length).trim();
+                customStats.push(`${item.Title} ${item.Worn} gives ${prefix}${value}${suffix}`);
+                break;
+            }
+        }
+    });
+
+    return customStats;
 }
 
 

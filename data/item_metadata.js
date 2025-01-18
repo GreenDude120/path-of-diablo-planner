@@ -1525,6 +1525,9 @@ placeholder:{index:[], format:["Magic item imports are not supported"]},
 rplaceholder:{index:[], format:["Rare item imports are not supported"]},
 cplaceholder:{index:[], format:["Crafted item imports are not supported"]},
 
+addcraft:{index:[], format:[""]},
+customStats:"",
+
 };
 
 var stats_alternate = {
