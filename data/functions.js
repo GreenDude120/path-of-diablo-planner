@@ -5546,9 +5546,9 @@ async function importChar() {
         return;
     }
 
-//let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
+let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
 //let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
-let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
+//let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
 let data; 
 
 if (characterName) {
