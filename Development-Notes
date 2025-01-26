@@ -164,3 +164,14 @@ Added better text placeholder on import textbox
 Added blood golem oskill, applied it to death runeword
 Blocked ethereal toggle on bows, crossbows, sets
 Updated Ice Arrow, still need new numbers
+
+
+26 Jan
+In the last week...
+Fixed some barb skill synergies
+Fixed Mosaic adding flar AR instsead of %
+Added skillers with frw and fhr
+Added chaos in a better claw base
+Work on custom item creation, which should allow for importing stats found on magic/rare/craft
+
+

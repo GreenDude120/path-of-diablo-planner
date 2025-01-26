@@ -5546,9 +5546,9 @@ async function importChar() {
         return;
     }
 
-let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
+//let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
 //let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
-//let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
+let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
 let data; 
 
 if (characterName) {
@@ -5731,7 +5731,7 @@ function updatePODComponent(data) {
 				const mappedProperties = {}; // Store results
 			
 				item.PropertyList.forEach(propertyText => {
-//					console.log(`Processing property: "${propertyText}"`);
+					console.log(`Processing property: "${propertyText}"`);
 					let matched = false;
 				
 					for (const statKey in allStats) {
@@ -5755,7 +5755,7 @@ function updatePODComponent(data) {
 						// Attempt match
 						const match = propertyText.match(regex);
 						if (match) {
-//							console.log(`Match found for ${statKey}:`, match);
+							console.log(`Match found for ${statKey}:`, match);
 				
 							// Extract value (or default to 1 for boolean-like stats)
 							const parsedValue = match[1] ? Number(match[1]) || match[1] : 1;
@@ -5938,7 +5938,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const option = document.createElement("option");
 		option.value = statKey;
 		option.textContent = displayText;
-		statSelect.appendChild(option);
+//		statSelect.appendChild(option);
 	});
 
 	// Handle button click
