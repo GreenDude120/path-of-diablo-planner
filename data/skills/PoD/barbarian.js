@@ -30,8 +30,8 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		if (skill.name == "Concentrate" && elem == 2) { 	result += (5*skills[28].level + 10*skills[2].level + 10*skills[6].level) }
 		if (skill.name == "Cleave" && elem < 2) { 			result *= (1 + (0.15*skills[26].level)) * (1+character.physicalDamage/100) }
 		//if (skill.name == "Pulverize" && elem < 2) { 			result *= (1 + (0.15*skills[31].level)) }
-		if (skill.name == "Stun" && elem < 2) { 			result *= ((1 + (0.10*skills[28].level + 0.10*skills[0].level)) * (1+character.mDamage/100)) }
-		if (skill.name == "Stun" && elem == 2) { 			result += (5*skills[23].level) }
+		if (skill.name == "Stun" && elem < 2) { 			result *= ((1 + (0.10*skills[23].level + 0.10*skills[0].level)) * (1+character.mDamage/100)) }
+		if (skill.name == "Stun" && elem == 2) { 			result += (5*skills[28].level) }
 		if (skill.name == "Bash" && elem == 2) { 			result += (5*skills[23].level) }
 		if (skill.name == "Bash" && elem == 3) { 			result += (10*skills[25].level) }
 // Build double throw

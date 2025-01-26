@@ -3115,6 +3115,10 @@ function equipmentHover(group) {
 	var socketed_affixes = "";
 	var set_affixes = "";
 	var set_group_affixes = "";
+//	if (equipped[group].name === "Custom Amulet") {
+//		equipped[group].affixes += "all_skills[15]";
+//	}
+
 	if (equipped[group].name != "none" && corruptsEquipped[group].name != "none") {
 		for (affix in corruptsEquipped[group]) {
 			if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
@@ -5714,6 +5718,7 @@ function updatePODComponent(data) {
 			}
             if (item.QualityCode === "q_crafted"){
 				itemName = `Unimportable Crafted ${friendlyName}`;
+				
 //				addcraft =  item.PropertyList ;
 //				console.log(addcraft)
 //				const addcraft = parseProperties(item);
@@ -5722,6 +5727,52 @@ function updatePODComponent(data) {
 //				const { parsedStats, statlines } = parseProperties(item);
 //				let addcrafttext = `Unimportable Crafted ${friendlyName}:` + item.PropertyList
 //				return addcrafttext
+				const allStats = { ...stats, ...stats_alternate }; // Combine stats and stats_alternate
+				const mappedProperties = {}; // Store results
+			
+				item.PropertyList.forEach(propertyText => {
+//					console.log(`Processing property: "${propertyText}"`);
+					let matched = false;
+				
+					for (const statKey in allStats) {
+						const stat = allStats[statKey];
+				
+						// Skip if no format is defined
+						if (!stat.format || !Array.isArray(stat.format)) continue;
+				
+						// Create regex dynamically from stat.format
+						const regexPattern = stat.format
+							.map(part => {
+								if (part === "+") return "\\+?\\d+"; // Match numbers with optional "+"
+								if (part === "%") return "\\d+%";   // Match percentages
+								return part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape static text
+							})
+							.join(".*?"); // Allow flexibility between parts
+				
+						const regex = new RegExp(`^${regexPattern}$`, "i");
+//						console.log(`Generated regex for ${statKey}: ${regex}`);
+				
+						// Attempt match
+						const match = propertyText.match(regex);
+						if (match) {
+//							console.log(`Match found for ${statKey}:`, match);
+				
+							// Extract value (or default to 1 for boolean-like stats)
+							const parsedValue = match[1] ? Number(match[1]) || match[1] : 1;
+							mappedProperties[statKey] = parsedValue;
+				
+							matched = true;
+							break; // Stop checking once matched
+						}
+					}
+				
+					if (!matched) {
+//						console.log(`No match found for property: "${propertyText}"`);
+					}
+				});
+			
+				console.log(mappedProperties)
+//				return mappedProperties;
 			}
             if (item.QualityCode === "q_normal"){
 				itemName = item.TextTag ;
@@ -5872,6 +5923,50 @@ function parseProperties(item) {
     return customStats;
 }
 
+
+document.addEventListener("DOMContentLoaded", () => {
+	const statSelect = document.getElementById("stat-select");
+	const numberInput = document.getElementById("value-select");
+	const generateButton = document.getElementById("generate-item");
+	const outputDiv = document.getElementById("item-output");
+    const placeSelect = document.getElementById("place-select");
+	
+	// Populate dropdown
+	Object.keys(custom_stats).forEach(statKey => {
+		const stat = custom_stats[statKey];
+		const displayText = stat.format.join("");
+		const option = document.createElement("option");
+		option.value = statKey;
+		option.textContent = displayText;
+		statSelect.appendChild(option);
+	});
+
+	// Handle button click
+	generateButton.addEventListener("click", () => {
+		const selectedStat = statSelect.value;
+		const selectedNumber = parseInt(numberInput.value, 10) || 0;
+        const selectedPlace = placeSelect.value;
+
+        if (!selectedStat || isNaN(selectedNumber) || !selectedPlace) {
+			outputDiv.textContent = "Please select a valid type, stat and value.";
+			return;
+		}
+
+        // Generate item name based on place
+        const itemName = `Custom ${selectedPlace}`;
+
+        // Create the item object
+        const customItem = {
+            name: itemName,
+            req_level: 100,
+            [selectedStat]: selectedNumber,
+        };
+
+		console.log("Generated Item:", customItem);
+		outputDiv.textContent = `Generated Item: ${JSON.stringify(customItem, null, 2)}`;
+	});
+
+});
 
 
 

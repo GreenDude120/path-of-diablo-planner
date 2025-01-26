@@ -486,6 +486,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Amulet", req_level:64, placeholder:1},
 	{only:"", rarity:"rare", name:"Unimportable Rare Amulet", req_level:64, rplaceholder:1},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Amulet", req_level:64, cplaceholder:1},
+	{rarity:"craft", name:"Custom Amulet"},
+	
 		],
 		ring1: [
 	{name:"Ring"},
@@ -701,7 +703,6 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"amazon", name:"Destruction ­ ­ - ­ ­ Matriarchal Pike", req_level:69, twoHanded:1, ctc:[[18,24,"Volcano","on striking"],[5,27,"Molten Boulder","on striking"],[100,45,"Meteor","when you die"],[21,25,"Nova","on attack"]], e_damage:350, itd:1, mDamage_min:100, mDamage_max:180, mana_leech:7, cblow:20, dstrike:20, pmh:1, dexterity:10, type:"spear", base:"Matriarchal Pike", nonmetal:1},
 
 	{rarity:"rw", name:"Doom ­ ­ - ­ ­ Cryptic Axe", sup:15, req_level:67, ctc:[[5,18,"Volcano","on striking"]], aura:"Holy Freeze", aura_lvl:12, all_skills:2, ias:45, e_damage:370, enemy_cRes:-60, dstrike:20, owounds:25, pmh:1, freezes_target:3, req:-20, twoHanded:1, type:"polearm", base:"Cryptic Axe"},
-//	{rarity:"rw", name:"Doom ­ ­ - ­ ­ Phase Blade", sup:15, req_level:67, ctc:[[5,18,"Volcano","on striking"]], aura:"Holy Freeze", aura_lvl:12, all_skills:2, ias:45, e_damage:370, enemy_cRes:-60, dstrike:20, owounds:25, pmh:1, freezes_target:3, req:-20, type:"sword", base:"Phase Blade"},
 	{rarity:"rw", name:"Doom ­ ­ - ­ ­ Berserker Axe", sup:15, req_level:67, ctc:[[5,18,"Volcano","on striking"]], aura:"Holy Freeze", aura_lvl:12, all_skills:2, ias:45, e_damage:370, enemy_cRes:-60, dstrike:20, owounds:25, pmh:1, freezes_target:3, req:-20, type:"axe", base:"Berserker Axe"},
 //	{not:["amazon","assassin","druid","necromancer","paladin","sorceress"], rarity:"rw", name:"Eternity ­ ­ - ­ ­ Colossus Sword", req_level:63, e_damage:310, indestructible:1, ethereal:1, damage_min:9, life_leech:7, cblow:20, blind_on_hit:1, slows_target:33, mana_regen:16, cbf:1, mf:30, twoHanded:1, type:"sword", base:"Colossus Sword", oskill_Revive:8},
 	{not:["amazon","assassin","necromancer","sorceress"], rarity:"rw", name:"Eternity ­ ­ - ­ ­ Colossus Sword", req_level:63, e_damage:310, indestructible:1, ethereal:1, damage_min:9, life_leech:7, cblow:20, blind_on_hit:1, slows_target:33, mana_regen:16, cbf:1, mf:30, twoHanded:1, type:"sword", base:"Colossus Sword", oskill_Revive:8},
