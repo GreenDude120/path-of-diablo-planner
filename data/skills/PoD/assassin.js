@@ -87,7 +87,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 			result.defense_bonus = skill.data.values[0][lvl]; result.enemy_defense = skill.data.values[1][lvl]; result.duration = 8;
 		}
 		if (skill.name == "Claw Mastery") { result.claw_damage = skill.data.values[0][lvl]; result.claw_ar = skill.data.values[1][lvl]; result.claw_cstrike = skill.data.values[2][lvl]; }
-		if (skill.name == "Weapon Block") { result.block_skillup = skill.data.values[0][lvl]; result.fbr = skill.data.values[1][skill.level]; }
+		if (skill.name == "Weapon Block") { result.block_skillup = skill.data.values[0][lvl]; hardpoints = (lvl - skill.extra_levels); result.fbr = skill.data.values[1][hardpoints] ; }
 //		if (skill.name == "Weapon Block") { result.block_skillup = skill.data.values[0][lvl]; result.fbr = skill.data.values[1][lvl]; }
 		// debuffs: Cloak of Shadows?
 		// No stat buffs:
