@@ -4088,7 +4088,19 @@ function skillHover(skill) {
 		next_display += skill.text[i]
 		if (skill.level == 0 && skill.force_levels == 0) {
 			next_value = character.getSkillData(skill, skill.level+1, i)
-		} else {
+		} 
+		if (skill.hardpoints && skill.name == "Weapon Block") {
+			if (i == 1)
+				{
+				levels = skill.level
+				next_value = character.getSkillData(skill, levels+1, i)
+				next_value = round(next_value)
+				}
+				else{
+					next_value = character.getSkillData(skill, (skill.level+skill.extra_levels+1), i)
+					next_value = round(next_value)
+		
+				}		} else {
 			next_value = character.getSkillData(skill, (skill.level+skill.extra_levels+1), i)
 		}
 		next_value = round(next_value)
@@ -4098,8 +4110,23 @@ function skillHover(skill) {
 		current_display += skill.text[i]
 		//if (skill.level+skill.extra_levels <= LIMIT) { levels = skill.level+skill.extra_levels } else { levels = LIMIT }
 		levels = skill.level+skill.extra_levels
+		if (skill.hardpoints && skill.name == "Weapon Block") {
+			if (i == 1)
+			{
+			levels = skill.level
+			current_value = character.getSkillData(skill, levels, i)
+			current_value = round(current_value)
+			}
+			else{
+				current_value = character.getSkillData(skill, levels, i)
+				current_value = round(current_value)
+	
+			}
+		}
+		if (!skill.hardpoints) {
 		current_value = character.getSkillData(skill, levels, i)
 		current_value = round(current_value)
+		}
 		if (current_value < 0 && current_display.endsWith("+")) { current_display = current_display.substr(0,current_display.length-1) }
 		current_display += current_value
 		
