@@ -1524,8 +1524,9 @@ oskill_Blood_Golem:{index:["oskill_Blood_Golem"], format:["+"," to Blood Golem"]
 placeholder:{index:[], format:["Magic item imports are not supported"]},
 rplaceholder:{index:[], format:["Rare item imports are not supported"]},
 cplaceholder:{index:[], format:["Crafted item imports are not supported"]},
+invisphys:{index:[], format:[""]},
 
-addcraft:{index:[], format:[""]},
+addcraft:{index:[], format:[]},
 customStats:"",
 
 };

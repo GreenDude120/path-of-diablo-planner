@@ -31,7 +31,8 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		
 		if (skill.name == "Psychic Hammer" && elem < 2) { 				result *= (1 + (0.25*skills[14].level + 0.25*skills[17].level))}
 		if (skill.name == "Psychic Hammer" && elem > 1 &&  elem < 4) { 	result *= ((1 + (0.25*skills[14].level + 0.25*skills[17].level)) * (1+character.mDamage/100))}
-		if (skill.name == "Mind Blast" && elem > 0 && elem < 3) { 		result *= (1 + (0.24*skills[10].level + 0.21*skills[14].level)) }
+//		if (skill.name == "Mind Blast" && elem > 0 && elem < 3) { 		result *= (1 + (0.24*skills[10].level + 0.21*skills[14].level)) }
+		if (skill.name == "Mind Blast" && elem > 0 && elem < 3) { 		result *= (1 + (0.24*skills[10].level + 0.21*skills[14].level)) * (1+character.invisphys/100)}
 		if (skill.name == "Mind Blast" && elem == 0) { 					result = (2.6 + (0.7 * Math.floor(skills[14].level / 5))) }
 		if (skill.name == "Venom" && elem > 0 && elem < 3) { 			result *= ((1+character.pDamage/100)) }
 		
