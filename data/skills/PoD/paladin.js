@@ -24,7 +24,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 		if (skill.name == "Cleansing" && elem == 0) {			result = Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[0][skills[0].level+skills[0].extra_levels] }
 		if (skill.name == "Cleansing" && elem == 1) {			result = Math.floor(skill.level/2); character.pRes_skillup = result; }
 		if (skill.name == "Meditation" && elem == 0) {			result = Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[0][skills[0].level+skills[0].extra_levels] }
-		if (skill.name == "Blessed Aim" && elem == 0) { 		result = (5*skill.level); character.ar_skillup = result; }
+//		if (skill.name == "Blessed Aim" && elem == 0) { 		result = (5*skill.level); character.ar_skillup = result; }
 		if (skill.name == "Holy Fire" && elem < 4) { 			result *= ((1+(0.08*skills[1].level + 0.08*skills[9].level)) * (1+character.fDamage/100)) }
 		if (skill.name == "Holy Freeze" && elem < 4) { 			result *= ((1+(0.04*skills[3].level + 0.06*skills[9].level)) * (1+character.cDamage/100)) }
 		if (skill.name == "Holy Shock" && elem < 4) { 			result *= ((1+(0.04*skills[5].level + 0.06*skills[9].level)) * (1+character.lDamage/100)) }
@@ -97,7 +97,8 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.radius = 12;
 		}
 		if (skill.name == "Precision") { result.pierce = skill.data.values[0][lvl]; result.cstrike = skill.data.values[2][lvl]; result.ar_bonus = skill.data.values[3][lvl]; result.radius = 16; }
-		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[2][lvl]; result.hammer_on_hit = skill.data.values[1][lvl]; result.radius = 16; }
+		if (skill.name == "Blessed Aim") { result.hammer_on_hit = skill.data.values[0][lvl]; result.radius = 16; }
+//		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[2][lvl]; result.hammer_on_hit = skill.data.values[1][lvl]; result.radius = 16; }
 //		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[1][lvl]; result.hammer_on_hit = skill.data.values[0][lvl]; result.radius = 16; }
 		if (skill.name == "Concentration") { result.ar = skill.data.values[0][lvl]; result.damage_bonus = skill.data.values[1][lvl]; result.hammer_bonus = skill.data.values[2][lvl]; result.radius = 16; }
 		if (skill.name == "Holy Freeze") {
@@ -292,7 +293,7 @@ function disableAuras(skill) {
 		["attack rating",50,70,90,110,130,150,170,190,210,230,250,270,290,310,330,350,370,390,410,430,450,470,490,510,530,550,570,590,610,630,650,670,690,710,730,750,770,790,810,830,850,870,890,910,930,950,970,990,1010,1030,1050,1070,1090,1110,1130,1150,1170,1190,1210,1230,], 
 ]};
 /*[13] Blessed Aim		*/ var d231 = {values:[
-		["passive attack rating",], 
+//		["passive attack rating",], 
 //		["hammer chance",1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63,65,67,69,71,73,75,77,79,81,83,85,87,89,91,93,95,97,99,101,103,105,107,109,111,113,115,117,119,], 
 		["hammer chance",12,14,16,18,20,22,24,26,28,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,], 
 		["attack rating",100,115,130,145,160,175,190,205,220,235,250,265,280,295,310,325,340,355,370,385,400,415,430,445,460,475,490,505,520,535,550,565,580,595,610,625,640,655,670,685,700,715,730,745,760,775,790,805,820,835,850,865,880,895,910,925,940,955,970,985,], 
@@ -414,7 +415,8 @@ var skills_paladin = [
 {data:d211, key:"211", code:107, name:"Might", i:10, req:[], reqlvl:1, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura increases the damage<br>done by you and your party<br><br>Radius: 16 yards", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Damage: +"," percent",""]},
 {data:d222, key:"222", code:108, name:"Holy Fire", i:11, req:[10], reqlvl:6, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura damages nearby enemies<br>with heavenly flames<br>Adds fire damage to your attack<br><br>Radius: 12 yards", syn_title:"<br>Holy Fire Receives Bonuses From:<br>", syn_text:"Resist Fire: +8% Fire Damage per Level<br>Salvation: +8% Fire Damage per Level", graytext:"", index:[0,""], text:["Fire Damage: ","-"," to your attack<br>Fire Damage: ","-",""]},
 {data:d223, key:"223", code:109, name:"Precision", i:12, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, increases your chance to<br>hit, pierce and deal double damage<br><br>Radius: 16 yards", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Your Piercing Attack: "," percent chance<br>Party Piercing Attack: "," percent chance<br>Critical Strike: "," percent chance<br>Attack Rating: +"," percent",""]},
-{data:d231, key:"231", code:110, name:"Blessed Aim", i:13, req:[10], reqlvl:12, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura increases the attack rating<br>for you and your party", syn_title:"", syn_text:"", graytext:"", index:[1,"% Attack Rating"], text:["Radius: 16 yards<br>Passive: +","Chance for you to cast Blessed Hammer on hit: ","%<br>Attack Rating: +"," percent",""], notupdated:0},
+{data:d231, key:"231", code:110, name:"Blessed Aim", i:13, req:[10], reqlvl:12, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura increases the attack rating<br>for you and your party", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: 16 yards<br><br>Chance for you to cast Blessed Hammer on hit: ","%<br>Attack Rating: +"," percent",""], notupdated:0},
+//{data:d231, key:"231", code:110, name:"Blessed Aim", i:13, req:[10], reqlvl:12, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura increases the attack rating<br>for you and your party", syn_title:"", syn_text:"", graytext:"", index:[1,"% Attack Rating"], text:["Radius: 16 yards<br>Passive: +","Chance for you to cast Blessed Hammer on hit: ","%<br>Attack Rating: +"," percent",""], notupdated:0},
 //{data:d231, key:"231", code:110, name:"Blessed Aim", i:13, req:[10], reqlvl:12, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura increases the attack rating<br>for you and your party<br><br>Radius: 16 yards", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["<br>Chance for you to cast Blessed Hammer on hit: ","%<br>Attack Rating: +"," percent"]},
 {data:d241, key:"241", code:111, name:"Concentration", i:14, req:[13,10], reqlvl:18, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura increases the damage and decreases the chance<br>that the attack will be interrupted for you and your party<br><br>Radius: 16 yards", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Attack Rating: +","<br>Chance uninterruptable: 20 percent<br>Damage: +"," percent<br>Blessed Hammer Magic Damage: +"," percent",""]},
 {data:d242, key:"242", code:112, name:"Holy Freeze", i:15, req:[11,10], reqlvl:18, level:0, extra_levels:0, force_levels:0, effect:3, bindable:1, description:"When active, aura freezes nearby monsters<br>Adds cold damage to your attack<br><br>Radius: 13.3 yards", syn_title:"<br>Holy Freeze Receives Bonuses From:<br>", syn_text:"Resist Cold: +4% Cold Damage per Level<br>Salvation: +6% Cold Damage per Level", graytext:"", index:[0,""], text:["Cold Damage: ","-"," to your attack<br>Cold Damage: ","-","<br>Enemies slowed "," percent",""]},
