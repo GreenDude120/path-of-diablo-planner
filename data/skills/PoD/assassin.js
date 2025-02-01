@@ -131,7 +131,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		else if (skill.name == "Dragon Talon") {		kick_damage_min = character.getSkillData(skill,lvl,0); kick_damage_max = character.getSkillData(skill,lvl,1); ar_bonus = character.getSkillData(skill,lvl,2); kick_bonus = 1.2*strTotal+character.getSkillData(skill,lvl,3); damage_bonus = character.getSkillData(skill,lvl,4); }
 		else if (skill.name == "Dragon Flight") { 		kick_damage_min = character.getSkillData(skill,lvl,0); kick_damage_max = character.getSkillData(skill,lvl,1); kick_bonus = 1.2*strTotal+character.getSkillData(skill,lvl,3); ar_bonus = character.getSkillData(skill,lvl,4); }
 		else if (skill.name == "Psychic Hammer") {		damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); mDamage_min = character.getSkillData(skill,lvl,2); mDamage_max = character.getSkillData(skill,lvl,3); }
-		else if (skill.name == "Mind Blast") {			damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); }
+		else if (skill.name == "Mind Blast") {			damage_min = character.getSkillData(skill,lvl,1); damage_max = character.getSkillData(skill,lvl,2); }
 	//	else if (skill.name == "Shadow Warrior") {}
 	//	else if (skill.name == "Shadow Master") {}
 		else if (skill.name == "Fire Blast") {			fDamage_min = character.getSkillData(skill,lvl,0); fDamage_max = character.getSkillData(skill,lvl,1); }
