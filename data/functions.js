@@ -5132,8 +5132,37 @@ function calculateSkillAmounts() {
 		skills[s].force_levels = character[skill_id]
 		var oskill_id = "o"+skill_id;
 		if (typeof(character[oskill_id]) != 'undefined') { skills[s].force_levels += Math.min(3,character[oskill_id]) }
+
+		const classSkills = {
+			"sorceress": character.sorceress_skills_all,
+			"druid": character.druid_skills_all,
+			"amazon": character.amazon_skills_all,
+		};
+		
+//		var natClass = oskill_id.info.natClass.class_name;
+//		if (character.class_name.toLowerCase() !== natClass) {
+//			const addnatclass = natClass + "_skills_all"; // String representation of the variable name
+//			
+//			// Use the mapping object to dynamically access the variable value
+//			if (classSkills[natClass]) {
+//				skills[s].extra_levels += classSkills[natClass];
+//			} else {
+//				console.error(`No skill variable found for class: ${natClass}`);
+//			}
+//		}
+
+//		var natClass = oskills_info.native_class;
+//		if (character.class_name.toLowerCase() != natClass) {
+//			addnatclass = natClass + "_skills_all"
+//			skills[s].extra_levels += addnatclass
+//		}
+
 		character.setSkillAmounts(s)	// adds to skills[s].extra_levels: points from class, tree, fire/cold/lightning/poison/magic
 		skills[s].extra_levels += skills[s].force_levels
+
+//		var natClass = oskills_info.native_class;
+//		skills[s].extra_levels += character[oskill_id].[character.class]_skills_all
+
 		display += skills[s].extra_levels
 		if (skills[s].level > 0 || skills[s].force_levels > 0) {
 			document.getElementById("p"+skills[s].key).innerHTML = display
