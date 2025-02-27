@@ -5979,7 +5979,7 @@ function parseProperties(item) {
     return customStats;
 }
 
-
+/*
 document.addEventListener("DOMContentLoaded", () => {
 	const statSelect = document.getElementById("stat-select");
 	const numberInput = document.getElementById("value-select");
@@ -6023,7 +6023,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 });
-
+*/
 
 
 

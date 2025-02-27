@@ -516,7 +516,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{name:"Weapon"},
 	// Mercenary Runewords
 //	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
-//	{rarity:"craft", name:"Qord's Leg of Testing", type:"mace", special:2, damage_vs_undead:50, base_damage_min:100, base_damage_max:100, durability:0, max_sockets:3, sockets:3, img:"Wirt's_Leg"},
+	{rarity:"craft", name:"Qord's Leg of Testing", type:"mace", special:2, damage_vs_undead:50, base_damage_min:100, base_damage_max:100, durability:0, max_sockets:3, sockets:3, img:"Wirt's_Leg"},
 	{only:"Rogue Scout",	rarity:"rw", name:"Plague ­ ­ - ­ ­ Hydra Bow", sup:15, twoHanded:1, req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"bow", base:"Hydra Bow", pod_changes:1},
 	{only:"Desert Guard",	rarity:"rw", name:"Plague ­ ­ - ­ ­ Giant Thresher", ethereal:1, twoHanded:1, req_level:68, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"polearm", base:"Giant Thresher", pod_changes:1},
 	{only:"Iron Wolf",		rarity:"rw", name:"Plague ­ ­ - ­ ­ Cryptic Sword", ethereal:1, req_level:67, ctc:[[15,17,"Poison Nova","on striking"],[20,12,"Lower Resist","when struck"]], aura:"Cleansing", aura_lvl:17, all_skills:2, damage_vs_demons:380, enemy_pRes:-23, dstrike_per_level:0.375, owounds:25, freezes_target:3, strength:10, type:"sword", base:"Cryptic Sword", pod_changes:1},
@@ -1316,6 +1316,19 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"magic", name:"+4% Conduit Large Charm", size:"large", req_level:42, lDamage:4, pd2:1},
 	{rarity:"magic", name:"+4% Infectious Large Charm", size:"large", req_level:42, pDamage:4, pd2:1},
 	{rarity:"magic", name:"+4% Scintillating Large Charm", size:"large", req_level:42, mDamage:4, pd2:1},
+	
+	{rarity:"magic", name:"Shimmering Small Charm of Balance", size:"small", req_level:29, res_all:5, fhr:5, pod:1},
+	{rarity:"magic", name:"Shimmering Small Charm", size:"small", req_level:25, all_res:5, pod:1},
+	{rarity:"magic", name:"Small Charm of Balance", size:"small", req_level:29, fhr:5, pod:1},
+	{rarity:"magic", name:"Small Charm of Vita", size:"small", req_level:39, life:20, pod:1},
+	{rarity:"magic", name:"Fine Small Charm", size:"small", req_level:21, damage_max:3, ar:20, pod:1},
+	{rarity:"magic", name:"Steel Small Charm of Balance", size:"small", req_level:49, ar:20, fhr:5, pod:1},
+	{rarity:"magic", name:"Steel Small Charm of Vita", size:"small", req_level:49, ar:20, life:20, pod:1},
+	{rarity:"magic", name:"Ruby Small Charm", size:"small", req_level:20, fRes:11, pod:1},
+	{rarity:"magic", name:"Emerald Small Charm", size:"small", req_level:20, pRes:11, pod:1},
+	{rarity:"magic", name:"Amber Small Charm", size:"small", req_level:20, lRes:11, pod:1},
+	{rarity:"magic", name:"Sapphire Small Charm", size:"small", req_level:20, cRes:11, pod:1},
+  
 	//{name:"Horadrim Sigil", size:"grand", req_level:80, all_attributes:3},
 		// Hodradrim Sigil is a legacy item (non-ladder only) that was available during Season 6 and 7. (July 13, 2018 - July 31, 2019)
 		// It was limited to 1 per character, but no longer has such limitations since being removed from the base game in Patch #17 (Tourmaline).

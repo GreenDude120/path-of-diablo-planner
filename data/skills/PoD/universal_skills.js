@@ -129,7 +129,7 @@ var character_any = {
 		if (skillName == "Vengeance" && elem == 5) {				result = Math.floor(phys_max * (skill.data.values[9][lvl]/100) * (1+character.cDamage/100)) }
 		if (skillName == "Vengeance" && elem == 6) {				result = Math.floor(phys_min * (skill.data.values[10][lvl]/100) * (1+character.lDamage/100)) }
 		if (skillName == "Vengeance" && elem == 7) {				result = Math.floor(phys_max * (skill.data.values[10][lvl]/100) * (1+character.lDamage/100)) }
-		if (skillName == "Charge" && elem == 0) { 					result += (26*skills[6].level + 26*skills[10].level) }	// TODO: are these synergies supposed to be multiplicative instead of additive?
+//		if (skillName == "Charge" && elem == 0) { 					result += (26*skills[6].level + 26*skills[10].level) }	// TODO: are these synergies supposed to be multiplicative instead of additive?
 
 		// Sorceress
 		if (skillName == "Fire Ball" && elem < 2) { 				result *= (1+character.fDamage/100) }
