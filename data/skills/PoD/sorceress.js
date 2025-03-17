@@ -187,7 +187,7 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 	//	s: index of skill
 	// ---------------------------------
 	setSkillAmounts : function(s) {
-//		skills[s].extra_levels += character.skills_sorceress
+		skills[s].extra_levels += character.skills_sorceress
 //			if (c.class_name != "Sorceress" ) {
 //				skills[s].extra_levels += character.skills_sorceress
 //			}		
