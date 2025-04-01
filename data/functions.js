@@ -5772,68 +5772,76 @@ function updatePODComponent(data) {
             if (item.QualityCode === "q_rare"){
 				itemName = `Unimportable Rare ${friendlyName}`;
 			}
-            if (item.QualityCode === "q_crafted"){
+			if (item.QualityCode === "q_crafted") {
 				itemName = `Unimportable Crafted ${friendlyName}`;
 				
-//				addcraft =  item.PropertyList ;
-//				console.log(addcraft)
-//				const addcraft = parseProperties(item);
-//				console.log(addcraft);
-
-//				const { parsedStats, statlines } = parseProperties(item);
-//				let addcrafttext = `Unimportable Crafted ${friendlyName}:` + item.PropertyList
-//				return addcrafttext
-				const allStats = { ...stats, ...stats_alternate }; // Combine stats and stats_alternate
-				const mappedProperties = {}; // Store results
+				// Ensure PropertyList exists and is an array
+				const addcraftList = Array.isArray(item.PropertyList) ? item.PropertyList : [];
+				console.log("Original Property List:", addcraftList);
 			
-				item.PropertyList.forEach(propertyText => {
+				const addcraft = parseProperties(item);
+				console.log("Parsed Craft Properties:", addcraft);
+			
+				const { parsedStats, statlines } = parseProperties(item);
+			
+				let addcrafttext = `Unimportable Crafted ${friendlyName}: ${addcraftList.join(", ")}`;
+				console.log("Craft Text:", addcrafttext);
+			
+				// Ensure `stats` and `stats_alternate` are defined
+				const stats = stats || {};
+				const stats_alternate = stats_alternate || {};
+				const allStats = { ...stats, ...stats_alternate };
+			
+				const mappedProperties = {};
+			
+				addcraftList.forEach(propertyText => {
 					console.log(`Processing property: "${propertyText}"`);
 					let matched = false;
-				
+			
 					for (const statKey in allStats) {
 						const stat = allStats[statKey];
-				
-						// Skip if no format is defined
+			
+						// Skip if no format defined
 						if (!stat.format || !Array.isArray(stat.format)) continue;
-				
-						// Create regex dynamically from stat.format
+			
+						// Dynamically create regex from stat format
 						const regexPattern = stat.format
 							.map(part => {
-								if (part === "+") return "\\+?\\d+"; // Match numbers with optional "+"
-								if (part === "%") return "\\d+%";   // Match percentages
+								if (part === "+") return "\\+?\\d+"; // Optional "+" for numbers
+								if (part === "%") return "\\d+%";    // Percentages
 								return part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape static text
 							})
-							.join(".*?"); // Allow flexibility between parts
-				
+							.join(".*?"); // Flexibility between parts
+			
 						const regex = new RegExp(`^${regexPattern}$`, "i");
-//						console.log(`Generated regex for ${statKey}: ${regex}`);
-				
-						// Attempt match
+						console.log(`Generated regex for ${statKey}: ${regex}`);
+			
 						const match = propertyText.match(regex);
 						if (match) {
 							console.log(`Match found for ${statKey}:`, match);
-				
-							// Extract value (or default to 1 for boolean-like stats)
-							const parsedValue = match[1] ? Number(match[1]) || match[1] : 1;
+			
+							// Capture value or set to 1 for boolean-like stats
+							const parsedValue = match[1] !== undefined ? Number(match[1]) || match[1] : 1;
 							mappedProperties[statKey] = parsedValue;
-				
 							matched = true;
-							break; // Stop checking once matched
+							break;
 						}
 					}
-				
+			
 					if (!matched) {
-//						console.log(`No match found for property: "${propertyText}"`);
+						console.log(`No match found for property: "${propertyText}"`);
 					}
 				});
 			
-				console.log(mappedProperties)
-//				return mappedProperties;
+				console.log("Mapped Properties:", mappedProperties);
+			
+				// Return mapped properties or the crafted text as needed
+				return mappedProperties;
 			}
-            if (item.QualityCode === "q_normal"){
+						if (item.QualityCode === "q_normal"){
 				itemName = item.TextTag ;
 			}
-//			itemName = `Unimportable ${friendlyName}`;
+			itemName = `Unimportable ${friendlyName}`;
         }
 
         if (item.QualityCode === "q_runeword" && item.TextTag) {
@@ -5979,7 +5987,7 @@ function parseProperties(item) {
     return customStats;
 }
 
-/*
+
 document.addEventListener("DOMContentLoaded", () => {
 	const statSelect = document.getElementById("stat-select");
 	const numberInput = document.getElementById("value-select");
@@ -6023,7 +6031,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 });
-*/
+
 
 
 

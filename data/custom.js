@@ -23,7 +23,7 @@ const custom_stats = {
     skills_cold:{index:["skills_cold"], format:["+"," to Cold Skills (Sorceress only)"]},
     skills_lightning:{index:["skills_lightning"], format:["+"," to Lightning Skills (Sorceress only)"]},
     skills_fire:{index:["skills_fire"], format:["+"," to Fire Skills (Sorceress only)"]},
-
+    skills_assassin:{index:["skills_assassin"], format:["+"," to Assassin Skill Levels"]}
 
 
 }
