@@ -1526,6 +1526,7 @@ rplaceholder:{index:[], format:["Rare item imports are not supported"]},
 cplaceholder:{index:[], format:["Crafted item imports are not supported"]},
 invisphys:{index:[], format:[""]},
 pAbsorb:{index:["pAbsorb"], format:["Physical Absorb ","%"]},
+easymathdmg:{index:[], format:["<font color='red'>100 Base Damage for ease of testing</font>"]},
 
 
 addcraft:{index:[], format:[]},
