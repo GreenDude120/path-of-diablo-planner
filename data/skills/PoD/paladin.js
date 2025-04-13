@@ -97,7 +97,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.radius = 12;
 		}
 		if (skill.name == "Precision") { result.pierce = skill.data.values[0][lvl]; result.cstrike = skill.data.values[2][lvl]; result.ar_bonus = skill.data.values[3][lvl]; result.radius = 16; }
-		if (skill.name == "Blessed Aim") { result.hammer_on_hit = skill.data.values[0][lvl]; result.radius = 16; }
+		if (skill.name == "Blessed Aim") { result.hammer_on_hit = skill.data.values[0][lvl]; result.ar_bonus = skill.data.values[1][lvl]; result.radius = 16; }
 //		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[2][lvl]; result.hammer_on_hit = skill.data.values[1][lvl]; result.radius = 16; }
 //		if (skill.name == "Blessed Aim") { result.ar_bonus = skill.data.values[1][lvl]; result.hammer_on_hit = skill.data.values[0][lvl]; result.radius = 16; }
 		if (skill.name == "Concentration") { result.ar = skill.data.values[0][lvl]; result.damage_bonus = skill.data.values[1][lvl]; result.hammer_bonus = skill.data.values[2][lvl]; result.radius = 16; }

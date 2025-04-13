@@ -416,6 +416,7 @@ input[type="file"] {
 #tooltip_effect {
   display: none;
   top: 100px;
+  z-index: 9999;
 }
 #effect_name {
   color: #00f000;

@@ -2152,7 +2152,7 @@ function getAuraData(aura, lvl, source) {
 		}
 	}
 	else if (aura == "Precision") { result.cstrike = auras[a].data.values[2][lvl]; result.ar_bonus = auras[a].data.values[3][lvl]; result.radius = 16; if (source == "mercenary" || source == "golem") { result.pierce = auras[a].data.values[1][lvl] } else { result.pierce = auras[a].data.values[0][lvl] }}
-	else if (aura == "Blessed Aim") { result.ar_bonus = auras[a].data.values[2][lvl]; result.hammer_on_hit = auras[a].data.values[1][lvl]; result.radius = 16; }
+	else if (aura == "Blessed Aim") { result.ar_bonus = auras[a].data.values[1][lvl]; result.hammer_on_hit = auras[a].data.values[0][lvl]; result.radius = 16; }
 	else if (aura == "Concentration") { result.ar = auras[a].data.values[0][lvl]; result.damage_bonus = auras[a].data.values[1][lvl]; result.hammer_bonus = auras[a].data.values[2][lvl]; result.radius = 16; }
 //	else if (aura == "Holy Freeze") { result.cDamage_min = auras[a].data.values[0][lvl]; result.cDamage_max = auras[a].data.values[1][lvl]; result.slow_enemies = auras[a].data.values[4][lvl]; result.radius = 13.3; }
 	else if (aura == "Holy Freeze") { result.cDamage_min = auras[a].data.values[0][lvl]; result.cDamage_max = auras[a].data.values[1][lvl]; result.slow_enemies = auras[a].data.values[4][lvl]; result.ctick_min = auras[a].data.values[2][lvl]; result.ctick_max = auras[a].data.values[3][lvl]; result.radius = 13.3; 
