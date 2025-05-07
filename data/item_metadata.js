@@ -966,6 +966,8 @@ sup:1,//{index:["sup"], format:["Superior +","%"]},
 req_level:{index:["req_level"], format:["Required Level: ",""]},
 req_strength:{index:["req_strength"], format:["Required Strength: ",""]},
 req_dexterity:{index:["req_dexterity"], format:["Required Dexterity: ",""]},
+quest:1,
+UNIQUE:0,
 
 set_IK:1,
 set_Mav:1,
