@@ -270,7 +270,7 @@ function toggleQuests(quests) {
 		updatePrimaryStats()
 		updateOther()
 	}
-	updateURL()
+	updateURLDebounced()
 	// Notes for adding per-quest options:
 	// document.getElementById("quests").indeterminate = true;
 	// Den of Evil, Radament's Lair, The Golden Bird, Lam Esen's Tome, The Fallen Angel, Prison of Ice
@@ -282,7 +282,7 @@ function toggleQuests(quests) {
 function toggleRunning(running) {
 	if (running.checked == true) { character.running = 1 } else { character.running = 0 }
 	updateStats()
-	updateURL()
+	updateURLDebounced()
 }
 
 // changeVersion - Changes the version of the game
@@ -390,7 +390,7 @@ function changeDifficulty(diff) {
 	updateStats()
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
-	updateURL()
+	updateURLDebounced()
 }
 
 // toggleCoupling - Changes whether adding/removing skill points can affect character level
@@ -398,7 +398,7 @@ function changeDifficulty(diff) {
 // ---------------------------------
 function toggleCoupling(coupling) {
 	if (coupling.checked) { settings.coupling = 1 } else { settings.coupling = 0 }
-	updateURL()
+	updateURLDebounced()
 }
 
 // toggleAutocast - Changes whether buffs and auras are automatically enabled when added
@@ -406,7 +406,7 @@ function toggleCoupling(coupling) {
 // ---------------------------------
 function toggleAutocast(autocast) {
 	if (autocast.checked) { settings.autocast = 1 } else { settings.autocast = 0 }
-	updateURL()
+	updateURLDebounced()
 }
 
 // togglesynthwep - Changes whether adding/removing skill points can affect character level
@@ -644,7 +644,8 @@ function loadParams() {
 			}
 			
 			// setup effects
-			if (param_effects != []) {
+//			if (param_effects != []) {
+			if (param_effects.length > 0) {
 				for (e in param_effects) { for (let i = 1; i < non_items.length; i++) {		// shrine effects
 					if (param_effects[e][0] == non_items[i].effect) { addEffect('misc',non_items[i].name,i,'') }
 				} }
@@ -688,10 +689,11 @@ function loadParams() {
 			//toggleAutocast(param_autocast)	// TODO: fix toggleAutocast parameter to take a boolean rather than the UI element
 			settings.autocast = param_autocast
 		}
+	console.log([...params.entries()]);
 	//}
 	updateSkills()
 	updateAllEffects()
-	updateURL()
+	updateURLDebounced()
 }
 
 
@@ -1536,7 +1538,7 @@ function setMercenary(merc) {
 	if (merc == "none" || merc == "­ ­ ­ ­ Mercenary") { document.getElementById("mercenary_spacing").style.display = "none" } else { document.getElementById("mercenary_spacing").style.display = "block" }
 	if (mercType == "Iron Wolf") { document.getElementById("mercenary_spacing2").style.display = "block" } else { document.getElementById("mercenary_spacing2").style.display = "none" }
 	if (merc == "none" || merc == "­ ­ ­ ­ Mercenary") { document.getElementById("merc_space").style.display = "block" } else { document.getElementById("merc_space").style.display = "none" }
-	if (loaded == 1) { updateURL() }
+	if (loaded == 1) { updateURLDebounced() }
 }
 
 // updateMercenary - updates mercenary base aura
@@ -3542,7 +3544,7 @@ function changeBase(group, change) {
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
 	// updateAllEffects()?
-	updateURL()
+	updateURLDebounced()
 }
 
 
@@ -3640,7 +3642,7 @@ function drop(ev,cell) {
 		if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 		if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
 		// updateAllEffects()?
-		updateURL()
+		updateURLDebounced()
 	}
 }
 
@@ -3772,7 +3774,7 @@ function socket(event, group, source) {
 		if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 		if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
 		// updateAllEffects()?
-		updateURL()
+		updateURLDebounced()
 	}
 	// inventory destination
 	for (let s = 1; s <= inv[0].in.length; s++) {
@@ -3875,7 +3877,7 @@ function trashSocketable(event, ident, override) {
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
 	// updateAllEffects()?
-	updateURL()
+	updateURLDebounced()
 	document.getElementById("tooltip_inventory").style.display = "none"
 }
 
@@ -4254,7 +4256,7 @@ function update() {
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
 	checkIronGolem()
-	if (loaded == 1) { updateURL() }
+	if (loaded == 1) { updateURLDebounced() }
 }
 
 // getWeaponDamage - Calculates physical min/max damage and multiplier for an equipped weapon
@@ -5406,8 +5408,19 @@ function updateSocketTotals() {
 	}
 }
 
+let updateURLDebounced = debounce(updateURL, 200); // Only allow 1 update per 200ms
+
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 // updateURL - Updates the character parameters in the browser URL
 // ---------------------------------
+let updateURLTimeout = null;
+
 function updateURL() {
 	var param_quests = ~~character.quests_completed; if (param_quests == -1) { param_quests = 0 };
 	var param_run = ~~character.running; if (param_run == -1) { param_run = 0 };
