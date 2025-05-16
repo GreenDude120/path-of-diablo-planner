@@ -984,6 +984,7 @@ function equip(group, val) {
 					}
 				} else {
 					if ((affix == "sup" || affix == "e_damage") && src_group == "weapon") {
+//						applyCustomED('weapon');
 						if (typeof(equipped[group]["e_damage"]) == 'undefined') { equipped[group]["e_damage"] = unequipped["e_damage"] }
 						if (affix == "sup") { equipped[group][affix] = equipment[src_group][item][affix] }
 						equipped[group]["e_damage"] += equipment[src_group][item][affix]
@@ -1103,6 +1104,8 @@ function equip(group, val) {
 			addEffect("ctcskill",ctcskillName[i],ctcskillLevel[i],group)
 		}
 	}
+//	applyCustomED('weapon');
+
 	update()
 	updateAllEffects()
 }
@@ -5420,7 +5423,6 @@ function debounce(func, wait) {
 // updateURL - Updates the character parameters in the browser URL
 // ---------------------------------
 let updateURLTimeout = null;
-
 function updateURL() {
 	var param_quests = ~~character.quests_completed; if (param_quests == -1) { param_quests = 0 };
 	var param_run = ~~character.running; if (param_run == -1) { param_run = 0 };
@@ -6046,7 +6048,42 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+function applyCustomED(slot) {
+	const customED = 350; // hardcoded test value
 
+	const item = equipped[slot];
+	if (!item) return;
+
+	// Initialize properties if they don't exist
+	if (typeof item.e_damage !== 'number') {
+		equipped.weapon.e_damage = 0;
+	}
+	if (typeof item.all_res !== 'number') {
+		equipped.weapon.all_res = 0;
+	}
+
+	const edProp = equipped.weapon.e_damage ;
+	if (edProp) {
+		equipped.weapon.e_damage += equipped.weapon.e_damage + customED;
+		character.e_damage += customED;
+		equipped.weapon.all_res += customED;
+	} else {
+		equipped.weapon.e_damage += equipped.weapon.e_damage + customED;
+		character.e_damage += customED;
+		equipped.weapon.all_res += customED
+	}
+	// Apply the customED value
+//	equipped[group]["e_damage"] += customED;
+//	equipped[group]["all_res"] += customED;
+
+//	item.e_damage += customED;
+//	item.all_res = customED;
+
+//	update(); // Uncomment if needed
+	// updateCharacterStats(); // Uncomment if needed
+}
+
+  
 
 
 // Notes for Organization Overhaul:

@@ -1478,7 +1478,7 @@ synthfrom4:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Sy
 synthfrom5:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Schaeffer's Hammer <br>Stormspire <br>Thunderstroke"+'</span>']},
 synthfrom6:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Wizendraw <br>Hellrack <br>Mang Song"+'</span>']},
 synthfrom7:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Gull <br>Tomb Reaver <br>Blade of Ali Baba"+'</span>']},
-synthfrom8:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
+synthfrom8:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Tomb Reaver <br>Demon Limb <br>Skystrike"+'</span>']},
 synthfrom9:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
 synthfrom10:{index:[], format:['<span style="color:#928068; font-size:12px">'+"Synthesized from: <br>Mang Song <br>Ondal's Wisdom <br>Arioc's Needle"+'</span>']},
 multPierce:{index:["multPierce"], format:["Poison and Elemental Pierce multiplied by",""]},
