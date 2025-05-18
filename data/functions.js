@@ -6168,28 +6168,66 @@ function populateStatDropdown() {
 
 
 function addCustomStat() {
-	const selectedSlot = document.getElementById("slotSelect").value;
-	const selectedStatKey = document.getElementById("statDropdown").value;
-	const statValue = parseInt(document.getElementById("statValue").value, 10);
 
-	if (isNaN(statValue)) return;
+		const statKey = document.getElementById('statDropdown').value;
+		const value = parseInt(document.getElementById('statValue').value, 10);
+		const selectedSlot = document.getElementById("slotSelect").value;
+		console.log("addCustomStat called");
+		console.log("equipped:", equipped);
+	console.log("selectedSlot:", selectedSlot);
+		
+		if (isNaN(value)) return;
+	
+		// Auto-equip a named custom item if slot is empty
+		if (!equipped[selectedSlot] || equipped[selectedSlot].name === "none") {
+			const customNames = {
+				weapon: "Custom Weapon",
+				helm: "Custom Helm",
+				armor: "Custom Armor",
+				offhand: "Custom Offhand",
+				gloves: "Custom Gloves",
+				boots: "Custom Boots",
+				belt: "Custom Belt",
+				ring1: "Custom Ring",
+				ring2: "Custom Ring",
+				amulet: "Custom Amulet"
+			};
+	
+			const itemName = customNames[selectedSlot];
+			const slotItems = equipment[selectedSlot];
+			console.log("Trying to equip from slot:", selectedSlot);
+			console.log("Looking for item named:", itemName);
+			console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));	
+			if (itemName && Array.isArray(slotItems)) {
+				console.log("Trying to equip from slot:", selectedSlot);
+				console.log("Looking for item named:", itemName);
+				console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));
+				const found = slotItems.find(item => item.name.trim().toLowerCase() === itemName.toLowerCase());
 
-	const item = equipped[selectedSlot];
-	if (!item) return;
-
-	if (typeof item[selectedStatKey] !== "number") {
-		item[selectedStatKey] = 0;
+				if (found) {
+					equipped[selectedSlot] = JSON.parse(JSON.stringify(found));
+					equip(selectedSlot,itemName);
+					updateSelectedItemSummary(selectedSlot);
+				} else {
+					alert(`Could not find "${itemName}" in equipment[${selectedSlot}]`);
+					return;
+				}
+			}
+		}
+	
+		const item = equipped[selectedSlot];
+		if (!item) return;
+	
+		if (!item[statKey]) item[statKey] = 0;
+		item[statKey] += value;
+	
+		if (!character[statKey]) character[statKey] = 0;
+		character[statKey] += value;
+	
+		update();
+		updateSelectedItemSummary(selectedSlot);
 	}
-	item[selectedStatKey] += statValue;
-
-	// Optional: update character stat too if it exists (and is a number)
-	if (typeof character[selectedStatKey] === 'number') {
-		character[selectedStatKey] += statValue;
-	}
-
-	updateSelectedItemSummary();
-	update?.(); // optional
-}
+	
 
 
 function updateSelectedItemSummary() {

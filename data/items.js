@@ -171,6 +171,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Helmet", req_level:8, placeholder:1, base:"Diadem"},
 	{only:"", rarity:"rare", name:"Unimportable Rare Helmet", req_level:8, rplaceholder:1, base:"Diadem"},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Helmet", req_level:8, cplaceholder:1, base:"Diadem"},
+	{only:"", name:"Custom Helm", rarity:"craft", base:"Circlet", img:"Kira's_Guardian"},
 
 
 		],
@@ -313,6 +314,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Armor", req_level:64, placeholder:1, base:"Dusk Shroud"},
 	{only:"", rarity:"rare", name:"Unimportable Rare Armor", req_level:64, mplaceholder:1, base:"Dusk Shroud"},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Armor", req_level:64, cplaceholder:1, base:"Dusk Shroud"},
+	{only:"", rarity:"craft", name:"Custom Armor", req_level:64, base:"Dusk Shroud"},
 
 		],
 		gloves: [
@@ -356,6 +358,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Gloves", req_level:64, placeholder:1, base:"Leather Gloves"},
 	{only:"", rarity:"rare", name:"Unimportable Rare Gloves", req_level:64, rplaceholder:1, base:"Leather Gloves"},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Gloves", req_level:64, cplaceholder:1, base:"Leather Gloves"},
+	{only:"", rarity:"craft", name:"Custom Gloves", req_level:64, base:"Leather Gloves"},
 ],
 		boots: [
 	{name:"Boots"},
@@ -392,6 +395,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Boots", req_level:64, placeholder:1, base:"Battle Boots"},
 	{only:"", rarity:"rare", name:"Unimportable Rare Boots", req_level:64, rplaceholder:1, base:"Battle Boots"},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Boots", req_level:64, cplaceholder:1, base:"Battle Boots"},
+	{only:"", rarity:"craft", name:"Custom Boots", req_level:64, base:"Battle Boots"},
 		],
 		belt: [
 	{name:"Belt"},
@@ -428,6 +432,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Belt", req_level:64, rplaceholder:1, base:"Sash"},
 	{only:"", rarity:"rare", name:"Unimportable Rare Belt", req_level:64, rplaceholder:1, base:"Sash"},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Belt", req_level:64, cplaceholder:1, base:"Sash"},
+	{only:"", rarity:"craft", name:"Custom Belt", req_level:64, base:"Sash"},
 
 		],
 		amulet: [
@@ -486,7 +491,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Amulet", req_level:64, placeholder:1},
 	{only:"", rarity:"rare", name:"Unimportable Rare Amulet", req_level:64, rplaceholder:1},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Amulet", req_level:64, cplaceholder:1},
-	{rarity:"craft", name:"Custom Amulet"},
+	{only:"", rarity:"craft", name:"Custom Amulet"},
 	
 		],
 		ring1: [
@@ -510,6 +515,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"magic", name:"Unimportable Magic Ring", req_level:64, placeholder:1},
 	{only:"", rarity:"rare", name:"Unimportable Rare Ring", req_level:64, mplaceholder:1},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Ring", req_level:64, cplaceholder:1},
+	{only:"", rarity:"craft", name:"Custom Ring", req_level:64},
 		],
 		ring2: [],	// Automatically copied from ring1
 		weapon: [	// TODO: Add a "rank" parameter? It would allow weapons to be displayed in different orders per class, without needing to duplicate entries using "only" and "not"
@@ -1090,6 +1096,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"", rarity:"Magic", name:"Unimportable Magic Weapon", req_level:64, placeholder:1, type:"mace", img:"Wirt's_Leg"},
 	{only:"", rarity:"Rare", name:"Unimportable Rare Weapon", req_level:64, rplaceholder:1, type:"mace", img:"Wirt's_Leg"},
 	{only:"", rarity:"craft", name:"Unimportable Crafted Weapon", req_level:64, cplaceholder:1, type:"mace", img:"Wirt's_Leg"},
+	{only:"", rarity:"craft", name:"Custom Weapon", req_level:64, type:"mace", img:"Wirt's_Leg"},
 	
 		],
 
@@ -1170,6 +1177,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"paladin", rarity:"craft", name:"Priest's Safety Monarch", req_level:58, skills_paladin:2, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch", nonmetal:1},
 	{not:["paladin"], rarity:"craft", name:"Safety Monarch", req_level:43, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, defense_per_level:3, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch"},
 	{only:"", name:"Vortex Shield", req_level:68, all_res:45, type:"shield", base:"Vortex Shield", img:"Griswold's_Honor"},
+	{only:"", name:"Custom Offhand", req_level:75, type:"shield", base:"Troll Nest", img:"Wall_of_the_Eyeless"},
 
 	// Quivers
 	{name:"Quivers---------------------------", type:"quiver", special:2, img:"../Arrows"},		
