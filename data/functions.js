@@ -849,6 +849,7 @@ function equip(group, val) {
 	var found = 0;
 	if (group == "offhand") { for (item in equipment[group]) { if (equipment[group][item].name == val) { found = 1 } } }
 	if (found == 0 && group == "offhand") { src_group = "weapon" }
+	if (group == "weapon") {applyCustomED('weapon')}
 	var itemType = "";
 	var twoHanded = 0;
 	for (item in equipment[src_group]) { if (equipment[src_group][item].name == val) { twoHanded = ~~equipment[src_group][item].twoHanded; if (typeof(equipment[src_group][item].type) != 'undefined') { itemType = equipment[src_group][item].type } } }
@@ -913,11 +914,13 @@ function equip(group, val) {
 	}
 	// reset item object, to preserve normal affix order
 	equipped[group] = {name:"none",tier:0}
-	if (group == "weapon" || group == "offhand") { equipped[group].type = "" }
-	if (group == "weapon") { equipped[group].twoHanded = 0 }	// this line may be unnecessary
+//	if (group == "weapon" || group == "offhand") { equipped[group].type = ""}
+//	if (group == "weapon") { equipped[group].twoHanded = 0 ;applyCustomED('weapon');}	// this line may be unnecessary
+	if (group == "weapon") { equipped[group].twoHanded = 0 ;}	// this line may be unnecessary
 	// add affixes to character
 	for (item in equipment[src_group]) {
 		if (equipment[src_group][item].name == val) {
+		
 			// add affixes from base item
 			if (typeof(equipment[src_group][item]["base"]) != 'undefined') {
 				var base = getBaseId(equipment[src_group][item].base);
@@ -985,10 +988,12 @@ function equip(group, val) {
 				} else {
 					if ((affix == "sup" || affix == "e_damage") && src_group == "weapon") {
 //						applyCustomED('weapon');
-						if (typeof(equipped[group]["e_damage"]) == 'undefined') { equipped[group]["e_damage"] = unequipped["e_damage"] }
+						if (typeof(equipped[group]["e_damage"]) == 'undefined') { equipped[group]["e_damage"] = unequipped["e_damage"]; character.e_damage = unequipped["e_damage"];}
 						if (affix == "sup") { equipped[group][affix] = equipment[src_group][item][affix] }
+//						applyCustomED('weapon');
 						equipped[group]["e_damage"] += equipment[src_group][item][affix]
 						character["e_damage"] += equipment[src_group][item][affix]
+//						applyCustomED('weapon');
 					} else {
 						// TODO: implement "sup" for e_defense
 						equipped[group][affix] = equipment[src_group][item][affix]
@@ -1074,6 +1079,7 @@ function equip(group, val) {
 		if (equipped[group].type == "shield") { offhandType = "shield" } else if (equipped[group].name == "none") { offhandType = "none" }
 	}
 	else if (group == "weapon") {
+//		applyCustomED('weapon');
 		if (equipped.offhand.type != "quiver" && twoHanded == 1 && (itemType != "sword" || character.class_name != "Barbarian") && corruptsEquipped.offhand.name != "none") { reloadOffhandCorruptions("shield"); }
 	}
 	if (val == group || val == "none") { document.getElementById(("dropdown_"+group)).selectedIndex = 0; }
@@ -1105,7 +1111,7 @@ function equip(group, val) {
 		}
 	}
 //	applyCustomED('weapon');
-
+//	if (equipped.weapon.name == "none") {equip(group, "none");}
 	update()
 	updateAllEffects()
 }
@@ -5306,8 +5312,27 @@ function checkSkill(skillName, num) {
 	var strTotal = (c.strength + c.all_attributes + c.level*c.strength_per_level);
 	var dexTotal = (c.dexterity + c.all_attributes + c.level*c.dexterity_per_level);
 	var energyTotal = Math.floor((c.energy + c.all_attributes)*(1+c.max_energy/100));
-	var ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
+//	var ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
+//	var ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const + (c.ar_per_socketed*socketed.offhand.socketsFilled)) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
+	// Base AR before % bonuses
+	const baseAR =
+	((dexTotal - 7) * 5) +
+	c.ar +
+	(c.level * c.ar_per_level) +
+	c.ar_const;
 
+	// Additive % bonuses (excluding shrine, which is applied separately)
+	const arBonusPercent =
+	c.ar_skillup +
+	c.ar_skillup2 +
+	c.ar_bonus +
+	(c.level * c.ar_bonus_per_level);
+
+	// Total AR after % increases
+	const ar = baseAR * (1 + arBonusPercent / 100) * (1 + c.ar_shrine_bonus / 100);
+//	const ar = baseAR 
+
+	var artest =  "(1+("+c.ar_skillup +"+"+ c.ar_skillup2+ "+" + c.ar_bonus + "+" + c.level + "*" + c.ar_bonus_per_level+ ")/100) * (1+" + c.ar_shrine_bonus + "/100) * 100";
 	var physDamage = [0,0,1];
 	if (skillName == "Poison Javelin" || skillName == "Lightning Bolt" || skillName == "Plague Javelin" || skillName == "Lightning Fury" || skillName == "Power Throw" || skillName == "Ethereal Throw") {
 		physDamage = getWeaponDamage(strTotal,dexTotal,"weapon",1);
@@ -5321,6 +5346,7 @@ function checkSkill(skillName, num) {
 		var outcome = {min:0,max:0,ar:0};
 		if (native_skill == 0) { outcome = character_all.any.getSkillDamage(skillName, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
 		else { outcome = c.getSkillDamage(skill, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
+//		ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level - outcome.ar *c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
 		
 		//var enemy_lvl = ~~MonStats[monsterID][4+c.difficulty];
 		var enemy_lvl = Math.min(~~c.level,89);	// temp, sets 'area level' at the character's level (or as close as possible if the area level isn't available in the selected difficulty)
@@ -5334,6 +5360,7 @@ function checkSkill(skillName, num) {
 		var output = ": " + outcome.min + "-" + outcome.max + " {"+Math.ceil((outcome.min+outcome.max)/2)+"}";
 		if (~~outcome.min != 0 && ~~outcome.max != 0) { document.getElementById("skill"+num+"_info").innerHTML = output } else { document.getElementById("skill"+num+"_info").innerHTML = ":" }
 		if (outcome.ar != 0) { document.getElementById("ar_skill"+num).innerHTML = "AR: " + outcome.ar + " ("+hit_chance+"%)" } else { document.getElementById("ar_skill"+num).innerHTML = "" }
+//		if (outcome.ar != 0) { document.getElementById("ar_skill"+num).innerHTML = "AR: " + outcome.ar + " ("+hit_chance+"%) Bonus: " + c.ar_bonus +"%" } else { document.getElementById("ar_skill"+num).innerHTML = "" }
 
 //		if (addmore == "yes" && skill.name != "War Cry") {
 		if (addmore == "yes") {
@@ -6049,43 +6076,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function applyCustomED(slot) {
-	const customED = 350; // hardcoded test value
+	const input = document.getElementById('ed_' + slot);
+	const customDelta = parseInt(input.value, 10); // Can be positive or negative
 
 	const item = equipped[slot];
-	if (!item) return;
-
-	// Initialize properties if they don't exist
-	if (typeof item.e_damage !== 'number') {
-		equipped.weapon.e_damage = 0;
-	}
-	if (typeof item.all_res !== 'number') {
-		equipped.weapon.all_res = 0;
+	if (!item) {
+		character.e_damage = 0;
+		return;
 	}
 
-	const edProp = equipped.weapon.e_damage ;
-	if (edProp) {
-		equipped.weapon.e_damage += equipped.weapon.e_damage + customED;
-		character.e_damage += customED;
-		equipped.weapon.all_res += customED;
+	// If there's no original e_damage, default it to 0
+	if (typeof item.baseED !== 'number') {
+		item.baseED = typeof item.e_damage === 'number' ? item.e_damage : 0;
+	}
+
+	// Always reset to baseED before applying adjustment
+	item.e_damage = item.baseED;
+
+	if (!isNaN(customDelta)) {
+		item.e_damage = customDelta;
+		character.e_damage = customDelta;
 	} else {
-		equipped.weapon.e_damage += equipped.weapon.e_damage + customED;
-		character.e_damage += customED;
-		equipped.weapon.all_res += customED
+		character.e_damage = 0;
+		item.e_damage = item.baseED; // Keep original
 	}
-	// Apply the customED value
-//	equipped[group]["e_damage"] += customED;
-//	equipped[group]["all_res"] += customED;
 
-//	item.e_damage += customED;
-//	item.all_res = customED;
-
-//	update(); // Uncomment if needed
-	// updateCharacterStats(); // Uncomment if needed
+//	updateCharacterStats?.();
+	update?.();
 }
 
+
   
-
-
 // Notes for Organization Overhaul:
 //   TODO...
 //   variable names for item classification 
