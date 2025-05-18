@@ -67,8 +67,9 @@
 	<br><br>
 
 	</div></div></nav>
-<body class="background" onload="initial_load()">
-	<body style="
+<!--	<body class="background" onload="initial_load(); populateWeaponDropdown(); populateStatDropdown();"> -->
+	<body class="background" onload="initial_load(); populateStatDropdown();">
+		<body style="
 	background:url('./images/background.png');
 	  background-color: #272b30;
 	height: auto;
@@ -789,6 +790,39 @@
 <div id="version_spacing" style="display:none; height:370px; width:869px; color:gray;"></div>
 
 </div>	<!-- /interface -->
+<div class="stat-text-wrapper stat-7" id="stats_column_7" >
+	<br>
+	<p>Give item custom stats - Beta</p>
+	<br>
+	<label for="slotSelect">Choose Slot:</label>
+	<select id="slotSelect" onchange="updateSelectedItemSummary()">
+	<option value="weapon">Weapon</option>
+	<option value="helm">Helm</option>
+	<option value="armor">Armor</option>
+	<option value="offhand">Offhand</option>
+	<option value="gloves">Gloves</option>
+	<option value="boots">Boots</option>
+	<option value="belt">Belt</option>
+	<option value="ring1">Ring1</option>
+	<option value="ring2">Ring2</option>
+	<option value="amulet">Amulet</option>
+	</select>
+
+<!--	<select id="weaponSelector" onchange="selectWeapon()">
+		<option value="">-- Choose a Weapon --</option>
+	</select> -->
+	<br>
+	<select id="statDropdown" style="width: 350px;"></select>
+	<input type="number" id="statValue" placeholder="Value">
+	<button onclick="addCustomStat()">Add Stat</button>
+	<br>
+	<div id="itemSummary" style="margin-top: 10px; padding: 10px; border: 1px solid #999; background: #222; color: #eee; width: 350px;">
+		<strong>Item Summary:</strong>
+		<pre id="itemSummaryContent">(nothing selected)</pre>
+	  </div>
+<!--	  <button onclick="resetAllStatsOnItem()">Reset All Stats</button> -->
+
+	  
 </div>	<!-- /full_interface -->
 </div>	<!-- /main -->
 </body>

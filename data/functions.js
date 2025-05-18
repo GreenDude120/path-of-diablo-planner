@@ -1112,6 +1112,9 @@ function equip(group, val) {
 	}
 //	applyCustomED('weapon');
 //	if (equipped.weapon.name == "none") {equip(group, "none");}
+	document.getElementById("slotSelect").value = group;
+	updateSelectedItemSummary(group)
+
 	update()
 	updateAllEffects()
 }
@@ -6103,6 +6106,143 @@ function applyCustomED(slot) {
 
 //	updateCharacterStats?.();
 	update?.();
+}
+
+function populateWeaponDropdown() {
+	const selector = document.getElementById('weaponSelector');
+	for (const [key, item] of Object.entries(bases)) {
+		if (item.group === "weapon") {
+			const option = document.createElement("option");
+			option.value = key;
+			option.textContent = key.replace(/_/g, ' '); // Optional: prettier name
+			selector.appendChild(option);
+		}
+	}
+}
+
+function selectWeapon() {
+	const selected = document.getElementById('weaponSelector').value;
+	if (!selected || !bases[selected]) return;
+
+	const base = bases[selected];
+
+	// Create a basic equipped weapon item from the base definition
+	const newWeapon = {
+		name: selected,
+		e_damage: 0,
+		baseED: 0,
+		base_damage_min: base.base_damage_min || 0,
+		base_damage_max: base.base_damage_max || 0,
+		baseSpeed: base.baseSpeed || 0,
+		range: base.range || 1,
+		// You can copy over more fields if needed
+	};
+
+	equipped.weapon = newWeapon;
+
+//	updateCharacterStats?.();
+	update?.();
+}
+
+function populateStatDropdown() {
+	const dropdown = document.getElementById('statDropdown');
+	dropdown.innerHTML = ''; // Clear existing options
+
+	for (const [key, value] of Object.entries(stats)) {
+		if (value && Array.isArray(value.format)) {
+			const option = document.createElement('option');
+			option.value = key;
+			option.textContent = value.format.join(' ');
+			dropdown.appendChild(option);
+		}
+	}
+}
+
+function addCustomStat() {
+	const selectedSlot = document.getElementById("slotSelect").value;
+	const selectedStatKey = document.getElementById("statDropdown").value;
+	const statValue = parseInt(document.getElementById("statValue").value, 10);
+
+	if (isNaN(statValue)) return;
+
+	const item = equipped[selectedSlot];
+	if (!item) return;
+
+	if (typeof item[selectedStatKey] !== "number") {
+		item[selectedStatKey] = 0;
+	}
+	item[selectedStatKey] += statValue;
+
+	// Optional: update character stat too if it exists (and is a number)
+	if (typeof character[selectedStatKey] === 'number') {
+		character[selectedStatKey] += statValue;
+	}
+
+	updateSelectedItemSummary();
+	update?.(); // optional
+}
+
+
+function updateSelectedItemSummary() {
+	const selectedSlot = document.getElementById("slotSelect").value;
+	const item = equipped[selectedSlot];
+	const container = document.getElementById("itemSummaryContent");
+
+	if (!item) {
+		container.textContent = "(no item equipped)";
+		return;
+	}
+
+	container.innerHTML = ''; // Clear existing content
+
+	for (const key in item) {
+		if (item.hasOwnProperty(key) && typeof item[key] !== 'object') {
+			const line = document.createElement('div');
+			line.style.display = 'flex';
+			line.style.justifyContent = 'space-between';
+			line.style.alignItems = 'center';
+
+			const text = document.createElement('span');
+			text.textContent = `${key}: ${item[key]}`;
+
+			const removeButton = document.createElement('button');
+			removeButton.textContent = '✖';
+			removeButton.style.marginLeft = '10px';
+			removeButton.style.background = 'transparent';
+			removeButton.style.color = '#f66';
+			removeButton.style.border = 'none';
+			removeButton.style.cursor = 'pointer';
+			removeButton.title = `Remove ${key}`;
+			removeButton.onclick = function () {
+				character[key] -= item[key];
+				delete item[key];
+				updateSelectedItemSummary();
+				update?.(); // Optional: update character stats
+			};
+
+			line.appendChild(text);
+			line.appendChild(removeButton);
+			container.appendChild(line);
+		}
+	}
+}
+
+
+function resetAllStatsOnItem() {
+	const selectedSlot = document.getElementById('slotSelect').value;
+	const item = equipped[selectedSlot];
+	if (!item) return;
+
+	// Remove all numeric properties that aren't standard item properties
+	for (const key in item) {
+		if (item.hasOwnProperty(key)) {
+				delete item[key];
+			
+		}
+	}
+
+	updateSelectedItemSummary();
+	update(); // Optional: trigger stat recalculation
 }
 
 

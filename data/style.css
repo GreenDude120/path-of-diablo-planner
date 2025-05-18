@@ -673,7 +673,8 @@ input[type="file"] {
   left: 460px;
 }
 .stat-7 {
-  left: 510px;
+  left: 1250px;
+  top:130px;
 }
 #stats_positioning_alignment {
   width: 869px;
@@ -717,7 +718,9 @@ input[type="file"] {
   float: right;
   width: 195px;
 }
-
+#stats_column_7 {
+  color: white;
+}
 /* 
 #############
 Added 23 Dec 

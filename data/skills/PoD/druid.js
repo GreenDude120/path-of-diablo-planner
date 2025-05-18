@@ -189,8 +189,8 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_min * (1+(damage_bonus+damage_enhanced)/100)));
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
-//		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
-		if (spell == 0) { skillAr = Math.floor(ar * (ar_bonus/100)); }
+		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
+//		if (spell == 0) { skillAr = Math.floor(ar * (ar_bonus/100)); }
 
 	// Get breakdown of sources of skill damage
 		skill2Breakdown = "Skill damage Breakdown-" ;  // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_max  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max ;
