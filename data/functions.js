@@ -6148,15 +6148,24 @@ function populateStatDropdown() {
 	const dropdown = document.getElementById('statDropdown');
 	dropdown.innerHTML = ''; // Clear existing options
 
-	for (const [key, value] of Object.entries(stats)) {
-		if (value && Array.isArray(value.format)) {
-			const option = document.createElement('option');
-			option.value = key;
-			option.textContent = value.format.join(' ');
-			dropdown.appendChild(option);
-		}
+	// Collect entries that have a format array
+	const formattedStats = Object.entries(stats)
+//		.filter(([_, value]) => value && Array.isArray(value.format))
+		.filter(([_, value]) => value && Array.isArray(value.format) && value.editable === 1)
+		.map(([key, value]) => ({ key, text: value.format.join(' ') }));
+
+	// Sort alphabetically by the display text
+	formattedStats.sort((a, b) => a.text.localeCompare(b.text));
+
+	// Add options to the dropdown
+	for (const stat of formattedStats) {
+		const option = document.createElement('option');
+		option.value = stat.key;
+		option.textContent = stat.text;
+		dropdown.appendChild(option);
 	}
 }
+
 
 function addCustomStat() {
 	const selectedSlot = document.getElementById("slotSelect").value;
