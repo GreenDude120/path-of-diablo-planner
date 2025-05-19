@@ -6359,7 +6359,10 @@ function importFromCSV(csvText) {
 		for (const prop in item) {
 			if (!["name", "base", "rarity", "img"].includes(prop)) {
 //				console.log(item[prop])
+				character[prop] -= item[prop]
 				delete item[prop];
+				update?.(); // Optional: update character stats
+
 			}
 		}
 
