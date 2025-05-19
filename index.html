@@ -95,6 +95,15 @@
       <div class="nav-dropdown-content-item" onclick="window.location = url='https://build.pathofdiablo.com'"><div class="nav-text">
         <label>&nbsp;&nbsp;&nbsp;&nbsp;Reload&nbsp;&nbsp;</label>
       </div></div>
+      <div class="nav-dropdown-content-item" onclick="exportEquippedToCSV()"><div class="nav-text">
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;Export CSV&nbsp;&nbsp;</label>
+      </div></div>
+	  <div class="nav-dropdown-content-item">
+		<div class="nav-text">
+		  <label for="importCSV" style="cursor: pointer;">&nbsp;&nbsp;&nbsp;&nbsp;Import CSV&nbsp;&nbsp;</label>
+		  <input type="file" id="importCSV" accept=".csv" style="display: none;">
+		</div>
+	  </div>
     </div>
   </div>
 <!--  
@@ -820,6 +829,16 @@
 		<strong>Item Summary:</strong>
 		<pre id="itemSummaryContent">(nothing selected)</pre>
 	  </div>
+	<br>
+	<!-- Export button -->
+<!--
+	<button style="margin-top: 10px; padding: 10px; border: 1px solid #999; background: #222; color: #eee; width: 350px;" onclick="exportEquippedToCSV()">Export Equipped Items</button>
+	<br><br><br>
+	<label for="importCSV" style="margin-top: 10px; padding: 10px; border: 1px solid #999; background: #222; color: #eee; width: 350px; display: inline-block; cursor: pointer;">
+		Import Equipped Items
+	</label>
+	<input type="file" id="importCSV" accept=".csv" style="display: none;">
+-->		
 <!--	  <button onclick="resetAllStatsOnItem()">Reset All Stats</button> -->
 
 	  

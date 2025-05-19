@@ -6292,6 +6292,104 @@ function resetAllStatsOnItem() {
 	update(); // Optional: trigger stat recalculation
 }
 
+function exportEquippedToCSV() {
+	let rows = [["slot", "name", "base", "stat", "value"]];
+
+	for (const [slot, item] of Object.entries(equipped)) {
+		if (!item || item.name === "none") continue;
+
+		for (const [key, value] of Object.entries(item)) {
+			if (["name", "base"].includes(key)) continue;
+			if (typeof value !== "number" && typeof value !== "string") continue;
+
+			rows.push([slot, item.name || "", item.base || "", key, value]);
+		}
+
+		// Ensure we still write the item itself even if it has no stats
+		if (!Object.keys(item).some(k => typeof item[k] === "number" || typeof item[k] === "string")) {
+			rows.push([slot, item.name || "", item.base || "", "", ""]);
+		}
+	}
+
+	const csvContent = rows.map(r => r.join(",")).join("\n");
+	const blob = new Blob([csvContent], { type: "text/csv" });
+	const url = URL.createObjectURL(blob);
+
+	const link = document.createElement("a");
+	link.href = url;
+	link.download = "equipped_items.csv";
+	link.click();
+}
+
+
+function importFromCSV(csvText) {
+	const lines = csvText.trim().split('\n');
+	if (lines.length < 2) return;
+
+	const header = lines[0].split(',').map(h => h.trim());
+	const rows = lines.slice(1).map(line => {
+		const values = line.split(',').map(v => v.trim());
+		const row = {};
+		header.forEach((h, i) => row[h] = values[i]);
+		return row;
+	});
+
+	// Group rows by slot+name for batching
+	const grouped = {};
+	for (const row of rows) {
+		const key = `${row.slot}|${row.name}`;
+		if (!grouped[key]) grouped[key] = { slot: row.slot, name: row.name, stats: [] };
+		grouped[key].stats.push({ stat: row.stat, value: row.value });
+	}
+
+	for (const key in grouped) {
+		const { slot, name, stats } = grouped[key];
+
+		// Try to equip the item
+		const success = equip(slot, name);
+		if (!success) {
+			console.warn(`Could not equip "${name}" in slot "${slot}"`);
+//			continue;
+		}
+
+		const item = equipped[slot];
+		if (!item) continue;
+
+		// Strip all properties except core identifiers
+		for (const prop in item) {
+			if (!["name", "base", "rarity", "img"].includes(prop)) {
+//				console.log(item[prop])
+				delete item[prop];
+			}
+		}
+
+		// Re-add stats from CSV
+		for (const { stat, value } of stats) {
+			const parsed = parseFloat(value);
+			item[stat] = isNaN(parsed) ? value : parsed;
+		}
+	}
+
+	update(); // Refresh character view
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+	document.getElementById('importCSV').addEventListener('change', function (e) {
+		const file = e.target.files[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+		reader.onload = function (event) {
+			const csvText = event.target.result;
+			importFromCSV(csvText);
+		};
+		reader.readAsText(file);
+	});
+});
+
+
+
 
   
 // Notes for Organization Overhaul:
