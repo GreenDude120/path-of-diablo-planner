@@ -6363,11 +6363,17 @@ function importFromCSV(csvText) {
 			}
 		}
 
-		// Re-add stats from CSV
 		for (const { stat, value } of stats) {
 			const parsed = parseFloat(value);
 			item[stat] = isNaN(parsed) ? value : parsed;
+		
+			// Also apply numeric stat to character totals (like addCustomStat does)
+			if (!isNaN(parsed)) {
+				if (!character[stat]) character[stat] = 0;
+				character[stat] += parsed;
+			}
 		}
+		
 	}
 
 	update(); // Refresh character view
