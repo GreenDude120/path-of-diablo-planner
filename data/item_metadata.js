@@ -1534,6 +1534,7 @@ obsessiontheory:{index:[], format:["<font color='red'>Theorycrafting Obsession i
 
 addcraft:{index:[], format:[]},
 customStats:"",
+emptysynth:{index:[], format:["<font color='red'>Synth items imported with no stats<br>Add stats on right</font>"]},
 
 };
 

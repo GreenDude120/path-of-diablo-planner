@@ -239,9 +239,9 @@
 	</div></div>
 
   <div class="nav-dropdown">
-	<button class="nav-dropbtn" style="cursor:pointer;" id="importtest" title="Currently in testing, &#013there will be bugs">Import Test Beta</a></button>
+	<button class="nav-dropbtn" style="cursor:pointer;" id="importtest" title="Import does not support magic, rare, or crafted items, &#013Synthesized items will spawn with no properties, you can add them on the right ">Character Import</a></button>
 	<div class="nav-dropdown-content">
-		<div class="nav-dropdown-content-item" id="nav_difficulty"><div class="nav-difficulty">&nbsp;&nbsp;&nbsp;Enter Character Name and click OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> &nbsp;&nbsp;<input type="text" name="importname" class="nav-dropdown-content-item" placeholder="Character name" id="importname"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="OK" onClick="importChar()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;
+		<div class="nav-dropdown-content-item" id="nav_difficulty"><div class="nav-difficulty">&nbsp;&nbsp;&nbsp;Enter Character Name and click OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> &nbsp;&nbsp;<input type="text" name="importname" class="nav-dropdown-content-item" value="sorcsallsuck" id="importname"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="OK" onClick="importChar()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;
   
 </div></div></div></div>
 	<img src="./images/portal.ico" class="portal-logo" style="position: absolute; right:6%;" title="PoD Build Planer originally&#10;created by BetweenWalls"> 
@@ -821,6 +821,7 @@
 		<option value="">-- Choose a Weapon --</option>
 	</select> -->
 	<br>
+	<input type="text" id="statSearch" placeholder="Search stats..." oninput="filterStatDropdown()">
 	<select id="statDropdown" style="width: 350px;"></select>
 	<input type="number" id="statValue" placeholder="Value">
 	<button onclick="addCustomStat()">Add Stat</button>
@@ -829,7 +830,31 @@
 		<strong>Item Summary:</strong>
 		<pre id="itemSummaryContent">(nothing selected)</pre>
 	  </div>
-	<br>
+	<br><br>
+	<!--
+	<div id="synth-maker">
+		<h2>Synth Maker</h2>
+	  
+		<label for="baseItem">Base Item:</label>
+		<select id="baseItem"></select>
+		<br>
+		<label for="donor1">Synthesized From 1:</label>
+		<select id="donor1"></select>
+		<br>
+		<label for="donor2">Synthesized From 2:</label>
+		<select id="donor2"></select>
+		<br>
+		<label for="donor3">Synthesized From 3:</label>
+		<select id="donor3"></select>
+		<br>
+		<label for="donor4">Synthesized From 4:</label>
+		<select id="donor4"></select>
+		<br>
+		<button onclick="synthesize()">Synthesize!</button>
+	  
+		<pre id="synthResult"></pre>
+	  </div>
+	-->
 	<!-- Export button -->
 <!--
 	<button style="margin-top: 10px; padding: 10px; border: 1px solid #999; background: #222; color: #eee; width: 350px;" onclick="exportEquippedToCSV()">Export Equipped Items</button>
