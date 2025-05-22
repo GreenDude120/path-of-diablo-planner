@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-characterName = "SCplebsHail"
+//characterName = "SCplebsHail"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
