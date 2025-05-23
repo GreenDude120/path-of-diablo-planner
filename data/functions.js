@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-//characterName = "SCplebsHail"
+//characterName = "Save_Etc"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
@@ -5906,12 +5906,15 @@ function applyMatchedProperties(item) {
 function synthesizeFromAPI(baseItem, apiData) {
     if (!baseItem.SynthesisedFrom) return baseItem;
 
-    console.log(`Synthesizing ${baseItem.Title} from donors:`, baseItem.SynthesisedFrom);
+//	const newtitle = normalizeText(baseItem.Title)
 
-    // Equip the base item first
+	console.log(`Synthesizing ${baseItem.Title} from donors:`, baseItem.SynthesisedFrom);
+  
+	// Equip the base item first
     const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
-    equip(slot, baseItem.Title);
-
+//    equip(slot, baseItem.Title);
+	equipItemDirectly(baseItem)
+	console.log("Equipped ", baseItem.Title)
     const equippedItem = equipped[slot]; // Retrieve the equipped item reference
     if (!equippedItem) {
         console.warn(`Failed to equip synthesized item "${baseItem.Title}"`);
@@ -5929,7 +5932,7 @@ function synthesizeFromAPI(baseItem, apiData) {
     });
     // ✅ Remove all properties after merging
 	for (const key in equippedItem) {
-		if (key === "name" || key.startsWith("base") || key.startsWith("req")) continue; // Skip these properties
+		if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue; // Skip these properties
 	
 		character[key] -= equippedItem[key];
 		delete equippedItem[key];
