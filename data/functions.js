@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-//characterName = "Save_Etc"
+//characterName = "gos"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
@@ -5760,13 +5760,31 @@ function formatSlotName(slot) {
     return slot.charAt(0).toUpperCase() + slot.slice(1);
 }
 
+
 function equipItemDirectly(item) {
-    if (!item || !item.Worn) {
-        console.warn(`Skipping unequipped item: ${item?.Title || "Unknown item"}`);
-        return;
-    }
+    let equipName = item.Title;
+//	console.log("DEBUG: Item BEFORE storing in equipped:", JSON.stringify(item, null, 2));
+
+	if (!equipped[item.Worn]) {
+		console.warn(`❌ No equipped item found—assigning full item details`);
+		equipped[item.Worn] = structuredClone({
+			Title: equipName, 
+			QualityCode: item.QualityCode, 
+			PropertyList: item.PropertyList ? [...item.PropertyList] : [], 
+			Worn: item.Worn
+		});
+			} else {
+		console.log(`✅ Equipped item already set, preserving data`);
+	}
+
+	
+//	console.log("DEBUG: Equipped item AFTER assignment:", JSON.stringify(equipped[item.Worn], null, 2));
+
+//	console.log(`DEBUG: equipName set to "${equipName}" for ${item.Worn}`);
+//	console.log(`DEBUG: Before storing equipped item → equipped[${item.Worn}]:`, equipped[item.Worn]);
+
     // Define how to equip items based on QualityCode
-    let equipName = null;
+
     switch (item.QualityCode) {
         case "q_unique":
             equipName = item.Title; // Use the item's Title
@@ -5792,16 +5810,15 @@ function equipItemDirectly(item) {
 //			equipName = item.Tag.match(runewordRegex) ? `${item.Title}-${item.TextTag}` : item.Title;
 //			equipName = `${item.Title}   -   ${item.Tag}`
  
-				break;
 			case "q_magic":
 				equipName = `Unimportable Magic ${formatSlotName(item.Worn)}`;
 				break;
 			case "q_rare":
 				equipName = `Unimportable Rare ${formatSlotName(item.Worn)}`;
-				break;
+//				break;
 			case "q_crafted":
 				equipName = `Unimportable Crafted ${formatSlotName(item.Worn)}`;
-				break;
+//				break;
 //            console.warn(`Ignoring ${item.Title} (Quality: ${item.QualityCode})`);
 //            return; // Skip equipping these items
     }
@@ -5826,19 +5843,84 @@ function equipItemDirectly(item) {
 	} else {
 		console.warn(`Dropdown not found for slot: ${correctedSlot}`);
 	}
-	const equippedItem = equipped[item.Worn]; // Ensure we use the equipped version
-	console.log("Before applying properties, equipped item:", item);
-	if (!equipped[item.Worn]) {
-		console.warn(`❌ No equipped item found—assigning now: ${item.Title}`);
-		equipped[item.Worn] = item;
+//	const equippedItem = equipped[item.Worn]; // Ensure we use the equipped version
+//	console.log("Before applying properties, equipped item:", item);
+	if (equipped[item.Worn] === item) {
+		console.warn(`❌ equipped[${item.Worn}] is still the API object—replacing with a fully independent instance.`);
+		equipped[item.Worn] = structuredClone(item); // ✅ Guarantees an independent copy
 	}
-	console.log(`Before applying properties → Equipped Item Name: ${equipped[item.Worn]?.Title}`);
-	applyMatchedProperties(equipped[item.Worn]);
-	console.log(`After applying properties → Equipped Item Name: ${equipped[item.Worn]?.Title}`);
-	updateSelectedItemSummary(correctedSlot);
-    update();
+
+
+
+	// ✅ Ensure we apply properties to the actual equipped item reference
+//	console.log(`DEBUG: equipped[${item.Worn}] RIGHT BEFORE applyMatchedProperties →`, JSON.stringify(equipped[item.Worn], null, 2));
+	// ✅ Validate equipped[item.Worn] before passing it to applyMatchedProperties
+	if (equipped[item.Worn] && equipped[item.Worn].PropertyList) {
+//		console.log(`🔍 equipped[${item.Worn}] RIGHT before applyMatchedProperties →`, JSON.stringify(equipped[item.Worn], null, 2));
+		// ✅ Ensure `equipped[item.Worn]` holds a completely separate object from the API response
+//		equipped[item.Worn] = structuredClone(equipped[item.Worn]);
+
+		applyMatchedProperties(item.Worn);  // ✅ Pass only the slot name
+//		console.log(`🔍 equipped[${item.Worn}] RIGHT after applyMatchedProperties →`, JSON.stringify(equipped[item.Worn], null, 2));
+
+	} else {
+		console.warn(`❌ equipped[${item.Worn}] is missing PropertyList or key fields—cannot apply properties.`);
+//		console.log(`DEBUG: Current equipped[${item.Worn}] →`, JSON.stringify(equipped[item.Worn], null, 2));
+	}
+//	console.log(`🔍 equipped[${item.Worn}] RIGHT BEFORE UI update →`, JSON.stringify(equipped[item.Worn], null, 2));
+	updateSelectedItemSummary(equipped[item.Worn]); // ✅ Use the correct slot reference
+	update();
+
 
 }
+
+function applyMatchedProperties(slot) {
+    // ✅ Ensure equipped[slot] is referencing the correct equipped item, NOT the API response
+    if (!equipped[slot]) {
+        console.warn(`❌ No equipped item found in slot: ${slot}`);
+        return;
+    }
+
+    const equippedItem = equipped[slot]; // ✅ Work exclusively with the stored equipped item
+
+//    console.log(`DEBUG: Entering applyMatchedProperties for → ${equippedItem.Title}`);
+
+    // ✅ Adjust equipped name based on QualityCode
+    if (["q_magic", "q_rare", "q_crafted"].includes(equippedItem.QualityCode)) {
+        const qualityName = equippedItem.QualityCode.split("_")[1]; 
+        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1); 
+        const formattedSlot = formatSlotName(slot);
+        equippedItem.Title = `Unimportable ${formattedQuality} ${formattedSlot}`;
+        console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
+    }
+
+//    console.log(`DEBUG: equipped[${slot}] reference before applying properties →`, JSON.stringify(equippedItem, null, 2));
+
+    // ✅ Apply matched properties to equipped item, ensuring modifications persist
+    equippedItem.PropertyList.forEach(propText => {
+        const match = findMatchingStat(propText, stats);
+        if (!match) {
+            console.warn(`Skipping unmatched property: "${propText}"`);
+            return;
+        }
+
+        const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
+        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedItem.Title}"`);
+
+        // ✅ Apply properties directly to the stored equipped item reference
+        equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
+
+        console.log(`✅ Applied ${match.statKey}: ${numericValue} to "${equippedItem.Title}"`);
+    });
+
+//    console.log(`🔍 Final equipped[${slot}] after applyMatchedProperties →`, JSON.stringify(equippedItem, null, 2));
+
+    // ✅ Ensure UI updates reflect modified equipped item
+    updateSelectedItemSummary(equippedItem);
+    update();
+    console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
+}
+
 
 function findMatchingStat(propertyText, stats) {
     console.log(`Checking property: "${propertyText}" against stats`);
@@ -5861,96 +5943,80 @@ function findMatchingStat(propertyText, stats) {
 }
 
 
-function applyMatchedProperties(item) {
-    if (!item) {
-        console.warn(`❌ Cannot apply properties, item is undefined`);
-        return;
-    }
-
-    // ✅ Filter to process ONLY magic, rare, and crafted items
-    if (!["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
-        console.log(`Skipping property application for non-magical item: ${item.Title}`);
-        return;
-    }
-
-    console.log(`Applying properties to "${item.Title}":`, item.PropertyList);
-
-    item.PropertyList.forEach(propText => {
-        const match = findMatchingStat(propText, stats);
-        if (!match) {
-            console.warn(`Skipping unmatched property: "${propText}"`);
-            return;
-        }
-
-        const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
-        console.log(`Processing ${match.statKey}: ${numericValue}`);
-
-        if (!item[match.statKey]) item[match.statKey] = 0;
-        item[match.statKey] += numericValue;
-
-        console.log(`✅ Applied ${match.statKey}: ${numericValue} to "${item.Title}"`);
-    });
-
-    // ✅ Force UI update to reflect the modified item
-    updateSelectedItemSummary(item.Worn);
-    update();
-
-    console.log(`🔄 UI refreshed for item: ${item.Title}`);
-}
 
 
 
 
 
 // recreate synths found in api response
-function synthesizeFromAPI(baseItem, apiData) {
+function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
     if (!baseItem.SynthesisedFrom) return baseItem;
 
-//	const newtitle = normalizeText(baseItem.Title)
-
-	console.log(`Synthesizing ${baseItem.Title} from donors:`, baseItem.SynthesisedFrom);
-  
-	// Equip the base item first
     const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
-//    equip(slot, baseItem.Title);
-	equipItemDirectly(baseItem)
-	console.log("Equipped ", baseItem.Title)
-    const equippedItem = equipped[slot]; // Retrieve the equipped item reference
+    window.currentSynthSlot = slot;
+
+    equipItemDirectly(baseItem);
+    const equippedItem = equipped[slot];
+
     if (!equippedItem) {
         console.warn(`Failed to equip synthesized item "${baseItem.Title}"`);
         return baseItem;
     }
 
-    // Merge properties **after the item is equipped**
-    baseItem.SynthesisedFrom.forEach(donorName => {
-        const donor = findDonorItem(donorName, apiData);
-        if (!donor) {
-            console.warn(`Donor item "${donorName}" not found.`);
-            return;
+    // Collect donor items
+    const donorItems = baseItem.SynthesisedFrom
+        .map(name => findDonorItem(name, apiData))
+        .filter(Boolean);
+
+    // Include base (equipped) item in synth properties
+    const synthProperties = gatherSynthPropertiesFromMultiple([equippedItem, ...donorItems]);
+
+    if (!applyAll) {
+        // Strip all non-base, non-req_ properties from the equipped item
+        for (const key in equippedItem) {
+            if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue;
+            character[key] -= equippedItem[key];
+            delete equippedItem[key];
         }
-        mergeItemProperties(equippedItem, donor); // Modify the equipped item directly
-    });
-    // ✅ Remove all properties after merging
-	for (const key in equippedItem) {
-		if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue; // Skip these properties
-	
-		character[key] -= equippedItem[key];
-		delete equippedItem[key];
-	}
-	equippedItem.emptysynth = 1 ;
+        equippedItem.emptysynth = 1;
 
-	updateSelectedItemSummary();
-	update?.(); // Optional: update character stats
-	
-
-    console.log("Final Equipped Synthesized Item:", JSON.stringify(equippedItem, null, 2));
-
-    // Update UI to reflect changes
-    updateSelectedItemSummary(slot);
-    update();
+        // Pass properties to UI
+        generateSynthPropertyUI(synthProperties, slot);
+    } else {
+        donorItems.forEach(donor => mergeItemProperties(equippedItem, donor));
+        updateSelectedItemSummary(slot);
+        update();
+    }
 
     return equippedItem;
 }
+
+
+function gatherSynthPropertiesFromMultiple(items) {
+    const result = [];
+
+    items.forEach(item => {
+        const source = item.Title || item.name || "Unknown";
+
+        // ✅ If PropertyList doesn't exist, build it from raw properties
+        let propList = item.PropertyList;
+        if (!propList || propList.length === 0) {
+            propList = Object.entries(item)
+                .filter(([key]) =>
+                    !["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill", "Worn", "SynthesisedFrom", "Title", "PropertyList", "tier", "max_sockets", "baseSpeed", "light_radius", "base_damage_min", "base_damage_max", "original_tier", "pod_changes", "req_strength", "req_dexterity", "iasindex"].includes(key)
+                )
+                .map(([key, value]) => `${key}: ${value}`);
+        }
+
+        propList.forEach(propString => {
+            const [key, value] = propString.split(":").map(s => s.trim());
+            result.push({ key, value, source });
+        });
+    });
+
+    return result;
+}
+
 
 
 
@@ -5973,7 +6039,6 @@ function mergeItemProperties(baseItem, donor) {
 
     if (!baseItem.PropertyList) baseItem.PropertyList = [];
 
-    // If donor PropertyList is missing, generate it dynamically
     if (!donor.PropertyList) {
         console.warn(`Donor item "${donor.name}" has no PropertyList—building dynamically.`);
         donor.PropertyList = Object.entries(donor)
@@ -5981,37 +6046,149 @@ function mergeItemProperties(baseItem, donor) {
             .map(([key, value]) => `${key}: ${value}`);
     }
 
-    // Correctly add individual properties without "PropertyList: ..." duplication
     donor.PropertyList.forEach(propString => {
         const [key, value] = propString.split(": ").map(str => str.trim());
+        const numericValue = parseFloat(value);
 
-        if (!baseItem[key]) {
-            baseItem[key] = isNaN(value) ? value : parseFloat(value);
-        } else if (!isNaN(value)) {
-            baseItem[key] += parseFloat(value);
+        // Apply to baseItem
+        if (!baseItem[key]) baseItem[key] = 0;
+        if (!isNaN(numericValue)) {
+            baseItem[key] += numericValue;
+        } else {
+            baseItem[key] = value;
         }
-//		if (!item[statKey]) item[statKey] = 0;
-//		item[statKey] += value;
-	
-		if (!character[key]) character[key] = isNaN(value) ? value : parseFloat(value);
-		character[key] += parseFloat(value);
 
-        // Ensure PropertyList does not contain full lists as entries
+        // Apply to character (if relevant)
+        if (!character[key]) character[key] = 0;
+        if (!isNaN(numericValue)) {
+            character[key] += numericValue;
+        }
+
+        // Avoid duplicates in PropertyList
         if (!baseItem.PropertyList.includes(propString) && !key.includes("PropertyList")) {
             baseItem.PropertyList.push(propString);
             console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
         }
-		
-//		update();
     });
 
     console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
-	updateSelectedItemSummary(baseItem.Worn);
-	update();
-	updateSelectedItemSummary(baseItem.Worn);
-	update();
-
+    updateSelectedItemSummary(baseItem.Worn);
+    update();
 }
+
+////////////////////////////////////////////////////////
+// start listing potential properties for synth items
+
+const validEquipmentProperties = new Set();
+
+// ✅ Extract valid properties from all items inside nested lists (`weapon`, `armor`, etc.)
+Object.entries(equipment).forEach(([category, itemList]) => {
+    itemList.forEach(item => {
+        Object.keys(item).forEach(prop => validEquipmentProperties.add(prop));
+    });
+});
+
+function gatherSynthProperties(baseItem, donorItems) {
+    const properties = []; // ✅ Store all occurrences (including duplicates)
+
+    const addProperties = (item, source) => {
+        Object.entries(item).forEach(([key, value]) => {
+            properties.push({ key, value, source }); // ✅ Keep ALL properties, ensuring they remain in the equipped item
+        });
+    };
+
+    addProperties(baseItem, "Base Item");
+    donorItems.forEach(donor => addProperties(donor, `Donor: ${donor.name}`));
+
+    return properties; // ✅ This ensures properties exist for merging and deletion later
+}
+
+function filterPropertiesForUI(properties) {
+    const equipmentItems = Object.values(equipment).flat(); // ✅ Flatten all categories
+    const equipmentProperties = new Set(equipmentItems.flatMap(item => Object.keys(item))); // ✅ Extract valid names
+
+    const excludedPrefixes = ["img", "base", "twoHanded", "name", "req_", "type"];
+
+    return properties.filter(prop => {
+        return equipmentProperties.has(prop.key) && !excludedPrefixes.some(prefix => prop.key.startsWith(prefix));
+    });
+}
+
+
+function shouldIncludeProperty(key) {
+    const excludedKeys = ["name", "type", "base", "img", "req_level"];
+    return !excludedKeys.includes(key);
+}
+
+function generateSynthPropertyUI(properties, slot = "weapon") {
+    const container = document.getElementById("synthPropertyContainer");
+
+    if (!properties || properties.length === 0) {
+        container.style.display = "none";
+        return;
+    }
+
+    container.style.display = "block";
+//    container.innerHTML = ""; // Clear previous UI
+	container.innerHTML = `
+		<strong>Potential Synth Properties:</strong>
+	`;
+
+
+    const equippedItem = equipped[slot];
+
+    properties.forEach(({ key, value, source }) => {
+        const checkboxId = `${key}-${source.replace(/\s+/g, '_')}`;
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <label>
+                <input type="checkbox" id="${checkboxId}" data-key="${key}" data-value="${value}">
+                ${key}: ${value} <small>(${source})</small>
+            </label>
+        `;
+
+        const checkbox = div.querySelector("input");
+        checkbox.addEventListener("change", (e) => {
+            const statKey = e.target.dataset.key;
+            const rawValue = e.target.dataset.value;
+            const value = isNaN(rawValue) ? rawValue : parseFloat(rawValue);
+
+            if (e.target.checked) {
+                equippedItem[statKey] = value;
+                character[statKey] = (character[statKey] || 0) + (isNaN(value) ? 0 : value);
+            } else {
+                if (!isNaN(value)) {
+                    character[statKey] -= value;
+                }
+                delete equippedItem[statKey];
+            }
+
+            // Update PropertyList without duplication
+            equippedItem.PropertyList = equippedItem.PropertyList || [];
+            const propString = `${statKey}: ${value}`;
+            if (e.target.checked) {
+                if (!equippedItem.PropertyList.includes(propString)) {
+                    equippedItem.PropertyList.push(propString);
+                }
+            } else {
+                equippedItem.PropertyList = equippedItem.PropertyList.filter(p => p !== propString);
+            }
+
+            updateSelectedItemSummary(equippedItem.Worn);
+            update();
+        });
+
+        container.appendChild(div);
+    });
+}
+
+
+
+
+
+
+
 
 
 
