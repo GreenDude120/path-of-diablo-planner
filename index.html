@@ -804,7 +804,7 @@
 	<p>Give items custom stats - Beta</p>
 	<br>
 	<label for="slotSelect">Choose Slot:</label>
-	<select id="slotSelect" onchange="updateSelectedItemSummary()">
+	<select class="dropdown" id="slotSelect" onchange="updateSelectedItemSummary()">
 	<option value="weapon">Weapon</option>
 	<option value="helm">Helm</option>
 	<option value="armor">Armor</option>
@@ -821,8 +821,8 @@
 		<option value="">-- Choose a Weapon --</option>
 	</select> -->
 	<br>
-	<input type="text" id="statSearch" placeholder="Search stats..." oninput="filterStatDropdown()">
-	<select id="statDropdown" style="width: 350px;"></select>
+	<input class="dropdown" type="text" id="statSearch" placeholder="Search stats..." oninput="filterStatDropdown()">
+	<select class="dropdown" id="statDropdown" style="width: 350px;"></select>
 	<input type="number" id="statValue" placeholder="Value">
 	<button onclick="addCustomStat()">Add Stat</button>
 	<br>

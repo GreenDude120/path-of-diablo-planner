@@ -1,7 +1,10 @@
 ## Planner for Character Builds in Path of Diablo
 
 ### Features:
-* up to date with current patch 21 Shungite
+* added ability to add custom properties to items, allowing for magic/rare/crafted emulation
+* enhanced character importing, includes some synth support
+    * url character importing via https://build.pathofdiablo.com/?import=charactername
+* up to date with current patch 22 Shungite
 * all skill info up to level 60 & synergy calculations
 * charm inventory, includes theory-crafting charms to emulate functions like high level BO, support sorc with enflame, +/- damage from various sources, etc.
   
