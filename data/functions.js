@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-//characterName = "gos"
+//characterName = "sorcsallsuck"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
@@ -5760,119 +5760,74 @@ function formatSlotName(slot) {
     return slot.charAt(0).toUpperCase() + slot.slice(1);
 }
 
+const pendingPropertyLists = {};
 
 function equipItemDirectly(item) {
-    let equipName = item.Title;
-//	console.log("DEBUG: Item BEFORE storing in equipped:", JSON.stringify(item, null, 2));
+	const pendingPropertyLists = {};
 
-	if (!equipped[item.Worn]) {
-		console.warn(`❌ No equipped item found—assigning full item details`);
-		equipped[item.Worn] = structuredClone({
-			Title: equipName, 
-			QualityCode: item.QualityCode, 
-			PropertyList: item.PropertyList ? [...item.PropertyList] : [], 
-			Worn: item.Worn
-		});
-			} else {
-		console.log(`✅ Equipped item already set, preserving data`);
+	const slotMapping = {
+		body: "armor",
+		weapon1: "weapon",
+		weapon2: "offhand",
+		helmet: "helm"
+	};
+
+	const rawSlot = item.Worn;
+	const slot = slotMapping[rawSlot] || rawSlot;
+
+	let equipName = item.Title;
+
+	switch (item.QualityCode) {
+		case "q_unique":
+		case "q_set":
+			equipName = item.Title;
+			break;
+		case "q_runeword":
+			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
+			break;
+		case "q_magic":
+		case "q_rare":
+		case "q_crafted":
+			equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+			break;
 	}
 
-	
-//	console.log("DEBUG: Equipped item AFTER assignment:", JSON.stringify(equipped[item.Worn], null, 2));
+	// Save the real properties for use *after* placeholder is equipped
+	if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
+		pendingPropertyLists[slot] = item.PropertyList;
+		console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
+	}
 
-//	console.log(`DEBUG: equipName set to "${equipName}" for ${item.Worn}`);
-//	console.log(`DEBUG: Before storing equipped item → equipped[${item.Worn}]:`, equipped[item.Worn]);
-
-    // Define how to equip items based on QualityCode
-
-    switch (item.QualityCode) {
-        case "q_unique":
-            equipName = item.Title; // Use the item's Title
-            break;
-        case "q_set":
-            equipName = item.Title; // Use the item's Title
-            break;
-        case "q_runeword":
-			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`; // Format Title with Tag
-			break;
-		
-//			const normalizedItemName = normalizeText(item.Title);
-//			const normalizedStoredName = normalizeText(item.name);
-//
-//			if (normalizedItemName === normalizedStoredName) {
-//				equip(item.Worn, `${item.Title} - ${item.Tag}`);
-//			} else {
-//				console.warn(`Item name mismatch: "${item.Title}" vs "${item.name}"`);
-//			}
-
-//            equipName = "Chains of Honor-Dusk Shroud"; // Format Title with Tag
-//			const runewordRegex = new RegExp(`^${item.Title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*`);
-//			equipName = item.Tag.match(runewordRegex) ? `${item.Title}-${item.TextTag}` : item.Title;
-//			equipName = `${item.Title}   -   ${item.Tag}`
- 
-			case "q_magic":
-				equipName = `Unimportable Magic ${formatSlotName(item.Worn)}`;
-				break;
-			case "q_rare":
-				equipName = `Unimportable Rare ${formatSlotName(item.Worn)}`;
-//				break;
-			case "q_crafted":
-				equipName = `Unimportable Crafted ${formatSlotName(item.Worn)}`;
-//				break;
-//            console.warn(`Ignoring ${item.Title} (Quality: ${item.QualityCode})`);
-//            return; // Skip equipping these items
-    }
-
-    console.log(`Setting dropdown value for ${item.Worn}: ${item.Title}`);
-
-    const slotMapping = {
-        body: "armor",
-        weapon1: "weapon",
-        weapon2: "offhand",
-		helmet: "helm"
-    };
-
-    const correctedSlot = slotMapping[item.Worn] || item.Worn;
-    const dropdownId = `dropdown_${correctedSlot}`;
-    const dropdown = document.getElementById(dropdownId);
-
+	// Equip the placeholder item via dropdown
+	const dropdownId = `dropdown_${slot}`;
+	const dropdown = document.getElementById(dropdownId);
 	if (dropdown) {
-		dropdown.value = equipName; // Set the dropdown value
-		dropdown.dispatchEvent(new Event("change")); // Trigger the onChange event
+		dropdown.value = equipName;
+		dropdown.dispatchEvent(new Event("change"));
 		console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
 	} else {
-		console.warn(`Dropdown not found for slot: ${correctedSlot}`);
-	}
-//	const equippedItem = equipped[item.Worn]; // Ensure we use the equipped version
-//	console.log("Before applying properties, equipped item:", item);
-	if (equipped[item.Worn] === item) {
-		console.warn(`❌ equipped[${item.Worn}] is still the API object—replacing with a fully independent instance.`);
-		equipped[item.Worn] = structuredClone(item); // ✅ Guarantees an independent copy
+		console.warn(`Dropdown not found for slot: ${slot}`);
 	}
 
+	// After a short delay, apply the stored properties to the equipped item
+	setTimeout(() => {
+		if (pendingPropertyLists[slot]) {
+			if (!equipped[slot]) {
+				console.warn(`❌ No item equipped in slot: ${slot} to apply properties`);
+				return;
+			}
 
+			// Inject PropertyList temporarily into the equipped item
+			equipped[slot].PropertyList = pendingPropertyLists[slot];
+			console.log(`✅ Injecting PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
 
-	// ✅ Ensure we apply properties to the actual equipped item reference
-//	console.log(`DEBUG: equipped[${item.Worn}] RIGHT BEFORE applyMatchedProperties →`, JSON.stringify(equipped[item.Worn], null, 2));
-	// ✅ Validate equipped[item.Worn] before passing it to applyMatchedProperties
-	if (equipped[item.Worn] && equipped[item.Worn].PropertyList) {
-//		console.log(`🔍 equipped[${item.Worn}] RIGHT before applyMatchedProperties →`, JSON.stringify(equipped[item.Worn], null, 2));
-		// ✅ Ensure `equipped[item.Worn]` holds a completely separate object from the API response
-//		equipped[item.Worn] = structuredClone(equipped[item.Worn]);
-
-		applyMatchedProperties(item.Worn);  // ✅ Pass only the slot name
-//		console.log(`🔍 equipped[${item.Worn}] RIGHT after applyMatchedProperties →`, JSON.stringify(equipped[item.Worn], null, 2));
-
-	} else {
-		console.warn(`❌ equipped[${item.Worn}] is missing PropertyList or key fields—cannot apply properties.`);
-//		console.log(`DEBUG: Current equipped[${item.Worn}] →`, JSON.stringify(equipped[item.Worn], null, 2));
-	}
-//	console.log(`🔍 equipped[${item.Worn}] RIGHT BEFORE UI update →`, JSON.stringify(equipped[item.Worn], null, 2));
-	updateSelectedItemSummary(equipped[item.Worn]); // ✅ Use the correct slot reference
-	update();
-
-
+			applyMatchedProperties(slot);
+			delete pendingPropertyLists[slot]; // Clean up
+		}
+	}, 0);
 }
+
+
 
 function applyMatchedProperties(slot) {
     // ✅ Ensure equipped[slot] is referencing the correct equipped item, NOT the API response
@@ -5880,6 +5835,7 @@ function applyMatchedProperties(slot) {
         console.warn(`❌ No equipped item found in slot: ${slot}`);
         return;
     }
+	console.log("equipped:", equipped);
 
     const equippedItem = equipped[slot]; // ✅ Work exclusively with the stored equipped item
 
@@ -5890,7 +5846,7 @@ function applyMatchedProperties(slot) {
         const qualityName = equippedItem.QualityCode.split("_")[1]; 
         const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1); 
         const formattedSlot = formatSlotName(slot);
-        equippedItem.Title = `Unimportable ${formattedQuality} ${formattedSlot}`;
+        equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
         console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
     }
 
@@ -5898,19 +5854,24 @@ function applyMatchedProperties(slot) {
 
     // ✅ Apply matched properties to equipped item, ensuring modifications persist
     equippedItem.PropertyList.forEach(propText => {
-        const match = findMatchingStat(propText, stats);
-        if (!match) {
-            console.warn(`Skipping unmatched property: "${propText}"`);
-            return;
-        }
+		const match = findMatchingStat(propText, stats);
+		if (!match) {
+			console.warn(`❌ No match for: "${propText}"`);
+			return;
+		}
+		console.log(`✅ Match found: ${match.statKey}`);
 
         const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
-        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedItem.Title}"`);
-
+        console.log(`Processing ${match.statKey}: ${numericValue} in "${slot}"`);
+//        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedment.Item.Title}"`);
+		console.log("Character has ", equippedItem);
         // ✅ Apply properties directly to the stored equipped item reference
-        equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
+		
+		equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
+		if (!character[match.statKey]) character[match.statKey] = 0;
+		character[match.statKey] += numericValue;
 
-        console.log(`✅ Applied ${match.statKey}: ${numericValue} to "${equippedItem.Title}"`);
+		console.log(`✅ Applied ${match.statKey}:`, equippedItem[match.statKey]);
     });
 
 //    console.log(`🔍 Final equipped[${slot}] after applyMatchedProperties →`, JSON.stringify(equippedItem, null, 2));
@@ -6517,7 +6478,9 @@ function updateSelectedItemSummary() {
 			line.appendChild(text);
 			line.appendChild(removeButton);
 			container.appendChild(line);
+//		console.log("Item passed into summary:", JSON.stringify(item, null, 2));
 		}
+
 	}
 }
 
