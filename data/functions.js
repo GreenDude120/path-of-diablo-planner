@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-//characterName = "sorcsallsuck"
+//characterName = "Zardragon"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
@@ -5776,7 +5776,7 @@ function equipItemDirectly(item) {
 	const slot = slotMapping[rawSlot] || rawSlot;
 
 	let equipName = item.Title;
-
+	let offhandtag = item.Tag
 	switch (item.QualityCode) {
 		case "q_unique":
 		case "q_set":
@@ -5788,9 +5788,16 @@ function equipItemDirectly(item) {
 		case "q_magic":
 		case "q_rare":
 		case "q_crafted":
-			equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+			// Check if Tag is Bolts or Arrows
+			if (item.Tag === "Bolts" || item.Tag === "Arrows") {
+				console.log("Offhand equipped: ", offhandtag)
+				equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
+			} else {
+				equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+			}
 			break;
 	}
+
 
 	// Save the real properties for use *after* placeholder is equipped
 	if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
@@ -5864,7 +5871,7 @@ function applyMatchedProperties(slot) {
         const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
         console.log(`Processing ${match.statKey}: ${numericValue} in "${slot}"`);
 //        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedment.Item.Title}"`);
-		console.log("Character has ", equippedItem);
+//		console.log("Character has ", equippedItem);
         // ✅ Apply properties directly to the stored equipped item reference
 		
 		equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
@@ -5913,7 +5920,8 @@ function findMatchingStat(propertyText, stats) {
 function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
     if (!baseItem.SynthesisedFrom) return baseItem;
 
-    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
+//    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
+    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn === "weapon2" ? "offhand" : baseItem.Worn;
     window.currentSynthSlot = slot;
 
     equipItemDirectly(baseItem);
@@ -5931,18 +5939,22 @@ function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
 
     // Include base (equipped) item in synth properties
     const synthProperties = gatherSynthPropertiesFromMultiple([equippedItem, ...donorItems]);
+//	applyMatchedProperties(slot)
+if (!applyAll) {
+	for (const key in equippedItem) {
+		if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue;
+		character[key] -= equippedItem[key];
+		delete equippedItem[key];
+	}
+	equippedItem.emptysynth = 1;
 
-    if (!applyAll) {
-        // Strip all non-base, non-req_ properties from the equipped item
-        for (const key in equippedItem) {
-            if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue;
-            character[key] -= equippedItem[key];
-            delete equippedItem[key];
-        }
-        equippedItem.emptysynth = 1;
+	// Generate synth property UI
+	generateSynthPropertyUI(synthProperties, slot);
 
-        // Pass properties to UI
-        generateSynthPropertyUI(synthProperties, slot);
+	setTimeout(() => {
+		matchSynthStatsFromAPIStrings(baseItem.PropertyList || [], synthProperties, stats);
+	}, 0);
+
     } else {
         donorItems.forEach(donor => mergeItemProperties(equippedItem, donor));
         updateSelectedItemSummary(slot);
@@ -5952,6 +5964,88 @@ function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
     return equippedItem;
 }
 
+function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
+	if (!Array.isArray(apiStatStrings) || !Array.isArray(synthProperties)) return;
+
+	apiStatStrings.forEach(apiText => {
+		apiText = apiText.trim();
+		console.log(`🔍 Matching API stat: "${apiText}"`);
+
+		let matchedKey = null;
+		let matchedValue = null;
+
+		// Loop through all editable stats
+		for (const [statKey, statData] of Object.entries(stats)) {
+			if (statData.editable !== 1) continue;
+
+			// Build regex pattern from the stat's format, e.g. ["+", "% Enhanced Damage"]
+			const patternStr = statData.format
+				.map(piece => piece.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // escape regex chars
+				.join(".*?"); // allow anything (like numbers) in between
+			const pattern = new RegExp(`^${patternStr}$`, "i");
+
+			if (pattern.test(apiText)) {
+				// Try to extract the number value from the string
+				const numMatch = apiText.match(/[-+]?\d+(\.\d+)?/);
+				const value = numMatch ? parseFloat(numMatch[0]) : null;
+				if (value !== null) {
+					matchedKey = statKey;
+					matchedValue = value;
+					break;
+				}
+			}
+		}
+
+		if (!matchedKey) {
+			console.warn(`❌ No matching stat key for "${apiText}"`);
+			return;
+		}
+console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
+console.table(synthProperties);
+
+		// Now match with synthProperties using resolved key and value
+		const match = synthProperties.find(
+			p => p.key === matchedKey && Number(p.value) === Number(matchedValue)
+		);
+		if (match) {
+			const checkbox = document.querySelector(
+				`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
+			);
+			if (checkbox && !checkbox.checked) {
+				checkbox.checked = true;
+				checkbox.dispatchEvent(new Event("change"));
+				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+			}
+		} else {
+			console.warn(`❌ No synth property matched for resolved stat "${matchedKey}: ${matchedValue}"`);
+		}
+	});
+}
+
+function matchSynthStatsFromAPI(apiPropertyList, synthProperties) {
+	if (!Array.isArray(apiPropertyList) || !Array.isArray(synthProperties)) return;
+
+	apiPropertyList.forEach(apiProp => {
+		const match = synthProperties.find(({ key, value }) => {
+			const [apiKey, apiRawValue] = apiProp.split(":").map(s => s.trim());
+			const apiValue = isNaN(apiRawValue) ? apiRawValue : parseFloat(apiRawValue);
+			return apiKey === key && apiValue === value;
+		});
+
+		if (match) {
+			const checkbox = document.querySelector(
+				`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
+			);
+			if (checkbox && !checkbox.checked) {
+				checkbox.checked = true;
+				checkbox.dispatchEvent(new Event("change"));
+				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+			}
+		} else {
+			console.warn(`❌ No matching synth checkbox found for: "${apiProp}"`);
+		}
+	});
+}
 
 function gatherSynthPropertiesFromMultiple(items) {
     const result = [];
@@ -6082,24 +6176,21 @@ function shouldIncludeProperty(key) {
 }
 
 function generateSynthPropertyUI(properties, slot = "weapon") {
-    const container = document.getElementById("synthPropertyContainer");
+    const containerId = slot === "offhand" ? "offhandsynthPropertyContainer" : "synthPropertyContainer";
+    const container = document.getElementById(containerId);
 
-    if (!properties || properties.length === 0) {
-        container.style.display = "none";
+    if (!container || !properties || properties.length === 0) {
+        if (container) container.style.display = "none";
         return;
     }
 
     container.style.display = "block";
-//    container.innerHTML = ""; // Clear previous UI
-	container.innerHTML = `
-		<strong>Potential Synth Properties:</strong>
-	`;
-
+    container.innerHTML = `<strong>Potential Synth Properties (${slot}):</strong>`;
 
     const equippedItem = equipped[slot];
 
     properties.forEach(({ key, value, source }) => {
-        const checkboxId = `${key}-${source.replace(/\s+/g, '_')}`;
+        const checkboxId = `${slot}-${key}-${source.replace(/\s+/g, '_')}`;
         const div = document.createElement("div");
 
         div.innerHTML = `
@@ -6144,6 +6235,53 @@ function generateSynthPropertyUI(properties, slot = "weapon") {
     });
 }
 
+function parseAddsDamageStat(text) {
+    const regex = /Adds\s+(\d+)\s*(?:–|to|-)\s*(\d+)\s*(Cold|Fire|Lightning|Magic|Poison)?\s*Damage/i;
+    const match = text.match(regex);
+    if (!match) return null;
+
+    const min = parseInt(match[1], 10);
+    const max = parseInt(match[2], 10);
+    const element = match[3] ? match[3].toLowerCase() : null;
+
+    let keyPrefix;
+    switch (element) {
+        case "cold": keyPrefix = "cDamage"; break;
+        case "fire": keyPrefix = "fDamage"; break;
+        case "lightning": keyPrefix = "lDamage"; break;
+        case "magic": keyPrefix = "mDamage"; break;
+        case "poison": keyPrefix = "pDamage"; break;
+        default: keyPrefix = "damage"; // physical
+    }
+
+    return {
+        keys: [`${keyPrefix}_min`, `${keyPrefix}_max`],
+        values: [min, max],
+        label: `${element ? element.charAt(0).toUpperCase() + element.slice(1) + " " : ""}Damage`,
+    };
+}
+
+const parsed = parseAddsDamageStat(propertyText);
+if (parsed) {
+    parsed.keys.forEach((key, idx) => {
+        const value = parsed.values[idx];
+
+        const match = synthProperties.find(
+            prop => prop.key === key && Number(prop.value) === value
+        );
+
+        if (match) {
+            console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
+            const checkbox = document.querySelector(`input[type="checkbox"][data-key="${key}"][data-value="${value}"]`);
+            if (checkbox && !checkbox.checked) {
+                checkbox.checked = true;
+                checkbox.dispatchEvent(new Event("change"));
+            }
+        } else {
+            console.warn(`❌ No synth match found for "${key}: ${value}"`);
+        }
+    });
+}
 
 
 

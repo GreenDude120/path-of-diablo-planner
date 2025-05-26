@@ -873,7 +873,7 @@ mana_per_kill:{index:["mana_per_kill"], format:["+"," Mana after each Kill"], ed
 life_replenish:{index:["life_replenish"], format:["Replenish "," Life per Second"], editable:1},
 life_regen:{index:["life_regen"], format:["Regenerate Life ","%"], editable:1},
 mana_regen:{index:["mana_regen"], format:["Regenerate Mana ","%"], editable:1},
-damage_to_mana:{index:["damage_to_mana"], format:["","% Damage Taken goes to Mana"], editable:1},
+damage_to_mana:{index:["damage_to_mana"], format:["","% Damage Taken Gained as Mana when Hit"], editable:1},
 missile_defense:{index:["missile_defense"], format:["+"," Defense vs Missile"], editable:1},
 melee_defense:{index:["melee_defense"], format:["+"," Defense vs Melee"], editable:1},
 damage_vs_demons:{index:["damage_vs_demons"], format:["+","% Damage to Demons"], editable:1},
@@ -1092,7 +1092,7 @@ skills_offensive:{index:["skills_offensive"], format:["+"," to Offensive Auras (
 skills_defensive:{index:["skills_defensive"], format:["+"," to Defensive Auras (Paladin only)"], editable:1},
 skills_combat_paladin:{index:["skills_combat_paladin"], format:["+"," to Combat Skills (Paladin only)"], editable:1},
 skills_cold:{index:["skills_cold"], format:["+"," to Cold Skills (Sorceress only)"], editable:1},
-skills_lightning:{index:["skills_lightning"], format:["+"," to Lightning Skills (Sorceress only)"], editable:1},
+skills_lightning:{index:["skills_lightning"], format:["+"," to Lightning Skills (Sorceress Only)"], editable:1},
 skills_fire:{index:["skills_fire"], format:["+"," to Fire Skills (Sorceress only)"], editable:1},
 
 skills_amazon:{index:["skills_amazon"], format:["+"," to Amazon Skill Levels"], editable:1},
@@ -1534,7 +1534,7 @@ obsessiontheory:{index:[], format:["<font color='red'>Theorycrafting Obsession i
 
 addcraft:{index:[], format:[]},
 customStats:"",
-emptysynth:{index:[], format:["<font color='red'>Synth items imported with no stats<br>Add stats on right</font>"]},
+emptysynth:{index:[], format:["<font color='red'>Synth items might be imported missing stats<br>Add missing stats on right</font>"]},
 
 };
 
