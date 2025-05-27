@@ -5910,12 +5910,6 @@ function findMatchingStat(propertyText, stats) {
     return null;
 }
 
-
-
-
-
-
-
 // recreate synths found in api response
 function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
     if (!baseItem.SynthesisedFrom) return baseItem;
@@ -6002,6 +5996,652 @@ function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
 		}
 console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
 console.table(synthProperties);
+
+		// Now match with synthProperties using resolved key and value
+		const match = synthProperties.find(
+			p => p.key === matchedKey && Number(p.value) === Number(matchedValue)
+		);
+		if (match) {
+			const checkbox = document.querySelector(
+				`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
+			);
+			if (checkbox && !checkbox.checked) {
+				checkbox.checked = true;
+				checkbox.dispatchEvent(new Event("change"));
+				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+			}
+		} else {
+			console.warn(`❌ No synth property matched for resolved stat "${matchedKey}: ${matchedValue}"`);
+		}
+	});
+}
+
+function matchSynthStatsFromAPI(apiPropertyList, synthProperties) {
+	if (!Array.isArray(apiPropertyList) || !Array.isArray(synthProperties)) return;
+
+	apiPropertyList.forEach(apiProp => {
+		const match = synthProperties.find(({ key, value }) => {
+			const [apiKey, apiRawValue] = apiProp.split(":").map(s => s.trim());
+			const apiValue = isNaN(apiRawValue) ? apiRawValue : parseFloat(apiRawValue);
+			return apiKey === key && apiValue === value;
+		});
+
+		if (match) {
+			const checkbox = document.querySelector(
+				`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
+			);
+			if (checkbox && !checkbox.checked) {
+				checkbox.checked = true;
+				checkbox.dispatchEvent(new Event("change"));
+				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+			}
+		} else {
+			console.warn(`❌ No matching synth checkbox found for: "${apiProp}"`);
+		}
+	});
+}
+
+function gatherSynthPropertiesFromMultiple(items) {
+    const result = [];
+
+    items.forEach(item => {
+        const source = item.Title || item.name || "Unknown";
+
+        // ✅ If PropertyList doesn't exist, build it from raw properties
+        let propList = item.PropertyList;
+        if (!propList || propList.length === 0) {
+            propList = Object.entries(item)
+                .filter(([key]) =>
+                    !["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill", "Worn", "SynthesisedFrom", "Title", "PropertyList", "tier", "max_sockets", "baseSpeed", "light_radius", "base_damage_min", "base_damage_max", "original_tier", "pod_changes", "req_strength", "req_dexterity", "iasindex"].includes(key)
+                )
+                .map(([key, value]) => `${key}: ${value}`);
+        }
+
+        propList.forEach(propString => {
+            const [key, value] = propString.split(":").map(s => s.trim());
+            result.push({ key, value, source });
+        });
+    });
+
+    return result;
+}
+
+
+
+
+function findDonorItem(name) {
+    for (const slot in equipment) {
+        const item = equipment[slot].find(i => i.name === name);
+        if (item) return item;
+    }
+    return null; // Return `null` if the donor item isn't found
+}
+
+
+
+
+function mergeItemProperties(baseItem, donor) {
+    if (!donor) {
+        console.warn(`Donor item is missing or undefined.`);
+        return;
+    }
+
+    if (!baseItem.PropertyList) baseItem.PropertyList = [];
+
+    if (!donor.PropertyList) {
+        console.warn(`Donor item "${donor.name}" has no PropertyList—building dynamically.`);
+        donor.PropertyList = Object.entries(donor)
+            .filter(([key]) => !["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill"].includes(key))
+            .map(([key, value]) => `${key}: ${value}`);
+    }
+
+    donor.PropertyList.forEach(propString => {
+        const [key, value] = propString.split(": ").map(str => str.trim());
+        const numericValue = parseFloat(value);
+
+        // Apply to baseItem
+        if (!baseItem[key]) baseItem[key] = 0;
+        if (!isNaN(numericValue)) {
+            baseItem[key] += numericValue;
+        } else {
+            baseItem[key] = value;
+        }
+
+        // Apply to character (if relevant)
+        if (!character[key]) character[key] = 0;
+        if (!isNaN(numericValue)) {
+            character[key] += numericValue;
+        }
+
+        // Avoid duplicates in PropertyList
+        if (!baseItem.PropertyList.includes(propString) && !key.includes("PropertyList")) {
+            baseItem.PropertyList.push(propString);
+            console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
+        }
+    });
+
+    console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
+    updateSelectedItemSummary(baseItem.Worn);
+    update();
+}
+
+////////////////////////////////////////////////////////
+// start listing potential properties for synth items
+
+const validEquipmentProperties = new Set();
+
+// ✅ Extract valid properties from all items inside nested lists (`weapon`, `armor`, etc.)
+Object.entries(equipment).forEach(([category, itemList]) => {
+    itemList.forEach(item => {
+        Object.keys(item).forEach(prop => validEquipmentProperties.add(prop));
+    });
+});
+
+function gatherSynthProperties(baseItem, donorItems) {
+    const properties = []; // ✅ Store all occurrences (including duplicates)
+
+    const addProperties = (item, source) => {
+        Object.entries(item).forEach(([key, value]) => {
+            properties.push({ key, value, source }); // ✅ Keep ALL properties, ensuring they remain in the equipped item
+        });
+    };
+
+    addProperties(baseItem, "Base Item");
+    donorItems.forEach(donor => addProperties(donor, `Donor: ${donor.name}`));
+
+    return properties; // ✅ This ensures properties exist for merging and deletion later
+}
+
+function filterPropertiesForUI(properties) {
+    const equipmentItems = Object.values(equipment).flat(); // ✅ Flatten all categories
+    const equipmentProperties = new Set(equipmentItems.flatMap(item => Object.keys(item))); // ✅ Extract valid names
+
+    const excludedPrefixes = ["img", "base", "twoHanded", "name", "req_", "type"];
+
+    return properties.filter(prop => {
+        return equipmentProperties.has(prop.key) && !excludedPrefixes.some(prefix => prop.key.startsWith(prefix));
+    });
+}
+
+
+function shouldIncludeProperty(key) {
+    const excludedKeys = ["name", "type", "base", "img", "req_level"];
+    return !excludedKeys.includes(key);
+}
+
+function generateSynthPropertyUI(properties, slot = "weapon") {
+    const containerId = slot === "offhand" ? "offhandsynthPropertyContainer" : "synthPropertyContainer";
+    const container = document.getElementById(containerId);
+
+    if (!container || !properties || properties.length === 0) {
+        if (container) container.style.display = "none";
+        return;
+    }
+
+    container.style.display = "block";
+    container.innerHTML = `<strong>Potential Synth Properties (${slot}):</strong>`;
+
+    const equippedItem = equipped[slot];
+
+    properties.forEach(({ key, value, source }) => {
+        const checkboxId = `${slot}-${key}-${source.replace(/\s+/g, '_')}`;
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <label>
+                <input type="checkbox" id="${checkboxId}" data-key="${key}" data-value="${value}">
+                ${key}: ${value} <small>(${source})</small>
+            </label>
+        `;
+
+        const checkbox = div.querySelector("input");
+        checkbox.addEventListener("change", (e) => {
+            const statKey = e.target.dataset.key;
+            const rawValue = e.target.dataset.value;
+            const value = isNaN(rawValue) ? rawValue : parseFloat(rawValue);
+
+            if (e.target.checked) {
+                equippedItem[statKey] = value;
+                character[statKey] = (character[statKey] || 0) + (isNaN(value) ? 0 : value);
+            } else {
+                if (!isNaN(value)) {
+                    character[statKey] -= value;
+                }
+                delete equippedItem[statKey];
+            }
+
+            // Update PropertyList without duplication
+            equippedItem.PropertyList = equippedItem.PropertyList || [];
+            const propString = `${statKey}: ${value}`;
+            if (e.target.checked) {
+                if (!equippedItem.PropertyList.includes(propString)) {
+                    equippedItem.PropertyList.push(propString);
+                }
+            } else {
+                equippedItem.PropertyList = equippedItem.PropertyList.filter(p => p !== propString);
+            }
+
+            updateSelectedItemSummary(equippedItem.Worn);
+            update();
+        });
+
+        container.appendChild(div);
+    });
+}
+
+function parseAddsDamageStat(text) {
+    const regex = /Adds\s+(\d+)\s*(?:–|to|-)\s*(\d+)\s*(Cold|Fire|Lightning|Magic|Poison)?\s*Damage/i;
+    const match = text.match(regex);
+    if (!match) return null;
+
+    const min = parseInt(match[1], 10);
+    const max = parseInt(match[2], 10);
+    const element = match[3] ? match[3].toLowerCase() : null;
+
+    let keyPrefix;
+    switch (element) {
+        case "cold": keyPrefix = "cDamage"; break;
+        case "fire": keyPrefix = "fDamage"; break;
+        case "lightning": keyPrefix = "lDamage"; break;
+        case "magic": keyPrefix = "mDamage"; break;
+        case "poison": keyPrefix = "pDamage"; break;
+        default: keyPrefix = "damage"; // physical
+    }
+
+    return {
+        keys: [`${keyPrefix}_min`, `${keyPrefix}_max`],
+        values: [min, max],
+        label: `${element ? element.charAt(0).toUpperCase() + element.slice(1) + " " : ""}Damage`,
+    };
+}
+
+const parsed = parseAddsDamageStat(propertyText);
+if (parsed) {
+    parsed.keys.forEach((key, idx) => {
+        const value = parsed.values[idx];
+
+        const match = synthProperties.find(
+            prop => prop.key === key && Number(prop.value) === value
+        );
+
+        if (match) {
+            console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
+            const checkbox = document.querySelector(`input[type="checkbox"][data-key="${key}"][data-value="${value}"]`);
+            if (checkbox && !checkbox.checked) {
+                checkbox.checked = true;
+                checkbox.dispatchEvent(new Event("change"));
+            }
+        } else {
+            console.warn(`❌ No synth match found for "${key}: ${value}"`);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function applyItemStatToCharacter(property) {
+    console.log(`Applying property: ${property}`);
+    
+    // Check if the property is numerical
+    const numericMatch = property.match(/(\d+)/);
+    if (numericMatch) {
+        const value = parseInt(numericMatch[1], 10);
+
+        // Determine property type (Strength, Energy, Resistances, etc.)
+        const propertyKey = determinePropertyKey(property);
+        
+        if (!character[propertyKey]) {
+            character[propertyKey] = 0; // Initialize if missing
+        }
+        character[propertyKey] += value;
+    }
+}
+
+function determinePropertyKey(property) {
+    if (property.includes("Strength")) return "strength";
+    if (property.includes("Dexterity")) return "dexterity";
+    if (property.includes("Vitality")) return "vitality";
+    if (property.includes("Energy")) return "energy";
+    if (property.includes("Resist")) return "resistances";
+    
+    return "misc"; // Catch-all for unknown properties
+}
+
+
+
+
+//	window.open(builderurl);
+//	window.location.href = builderurl ;
+document.getElementById('importname').value = ""
+}
+
+async function justthesynth() {
+    // Get the textbox input value
+    let characterName = document.getElementById('importname').value.trim();
+
+    // If no value is entered in the textbox, check the URL for the "import" parameter
+    if (!characterName) {
+        const url = window.location.href; // Get the current URL
+        const params = new URLSearchParams(url.split('?')[1]); // Parse query parameters
+        characterName = params.get('import'); // Get the "import" parameter value
+    }
+
+    // If still no value is found, handle the error or provide a default
+    if (!characterName) {
+        console.error("No character name provided or found in the URL!");
+//        return;
+    }
+// API call to get character
+//characterName = "Zardragon"
+if (characterName) {
+	console.log("Character Name:", characterName);
+	
+	// Fetch character data and process it
+	try {
+		const characterData = await fetchCharacterData(characterName);
+		processCharacterData(characterData);  // Process after retrieval
+	} catch (error) {
+		console.error("Error during API calls:", error);
+	}
+} else {
+	console.warn("Character Name is not set in the configuration.");
+}
+
+async function fetchCharacterData(characterName) {
+	console.log("Start function fetchCharacterData");
+//    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
+	const url = 'https://beta.pathofdiablo.com/api/characters/'+characterName+'/summary'
+	//    console.log("API URL:", url);
+
+    try {
+        const response = await fetch(url);
+        console.log("fetch worked");
+
+        if (!response.ok) {
+            throw new Error(`API call failed with status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Character Data fetched:", data);
+        return data;
+    } catch (error) {
+        console.error("Error fetching character data:", error);
+        return null;
+    }
+}
+
+// Set character stats & skills from api response
+// Function to process characterData after it's fetched
+function processCharacterData(characterData) {
+    if (!characterData || !characterData.Equipped) {
+        console.warn("No character data found.");
+        return;
+    }
+
+    console.log("Processing character data for direct item equipping...");
+    
+    // Loop through equipped items and equip them directly
+    characterData.Equipped.forEach(item => {
+        if (item.SynthesisedFrom && item.SynthesisedFrom.length > 0) {
+            console.log(`Synthesized item detected: ${item.Title}`);
+            item = synthesizeFromAPI(item, characterData); // Merge donor properties
+		    equipItemDirectly(item);
+		}
+    });
+
+    update(); // Update interface dynamically
+}
+
+// Equip items from api response
+function formatSlotName(slot) {
+    if (slot === "ring1" || slot === "ring2") return "Ring"; // Special case for ring1
+    return slot.charAt(0).toUpperCase() + slot.slice(1);
+}
+
+const pendingPropertyLists = {};
+
+function equipItemDirectly(item) {
+	const pendingPropertyLists = {};
+
+	const slotMapping = {
+		body: "armor",
+		weapon1: "weapon",
+		weapon2: "offhand",
+		helmet: "helm"
+	};
+
+	const rawSlot = item.Worn;
+	const slot = slotMapping[rawSlot] || rawSlot;
+
+	let equipName = item.Title;
+	let offhandtag = item.Tag
+	switch (item.QualityCode) {
+		case "q_unique":
+		case "q_set":
+			equipName = item.Title;
+			break;
+		case "q_runeword":
+			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
+			break;
+		case "q_magic":
+		case "q_rare":
+		case "q_crafted":
+			// Check if Tag is Bolts or Arrows
+			if (item.Tag === "Bolts" || item.Tag === "Arrows") {
+				console.log("Offhand equipped: ", offhandtag)
+				equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
+			} else {
+				equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+			}
+			break;
+	}
+
+
+	// Save the real properties for use *after* placeholder is equipped
+	if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
+		pendingPropertyLists[slot] = item.PropertyList;
+		console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
+	}
+
+	// Equip the placeholder item via dropdown
+	const dropdownId = `dropdown_${slot}`;
+	const dropdown = document.getElementById(dropdownId);
+	if (dropdown) {
+		dropdown.value = equipName;
+		dropdown.dispatchEvent(new Event("change"));
+		console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
+	} else {
+		console.warn(`Dropdown not found for slot: ${slot}`);
+	}
+
+	// After a short delay, apply the stored properties to the equipped item
+	setTimeout(() => {
+		if (pendingPropertyLists[slot]) {
+			if (!equipped[slot]) {
+				console.warn(`❌ No item equipped in slot: ${slot} to apply properties`);
+				return;
+			}
+
+			// Inject PropertyList temporarily into the equipped item
+			equipped[slot].PropertyList = pendingPropertyLists[slot];
+			console.log(`✅ Injecting PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
+
+			applyMatchedProperties(slot);
+			delete pendingPropertyLists[slot]; // Clean up
+		}
+	}, 0);
+}
+
+
+
+function applyMatchedProperties(slot) {
+    // ✅ Ensure equipped[slot] is referencing the correct equipped item, NOT the API response
+    if (!equipped[slot]) {
+        console.warn(`❌ No equipped item found in slot: ${slot}`);
+        return;
+    }
+	console.log("equipped:", equipped);
+
+    const equippedItem = equipped[slot]; // ✅ Work exclusively with the stored equipped item
+
+//    console.log(`DEBUG: Entering applyMatchedProperties for → ${equippedItem.Title}`);
+
+    // ✅ Adjust equipped name based on QualityCode
+    if (["q_magic", "q_rare", "q_crafted"].includes(equippedItem.QualityCode)) {
+        const qualityName = equippedItem.QualityCode.split("_")[1]; 
+        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1); 
+        const formattedSlot = formatSlotName(slot);
+        equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
+        console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
+    }
+
+//    console.log(`DEBUG: equipped[${slot}] reference before applying properties →`, JSON.stringify(equippedItem, null, 2));
+
+    // ✅ Apply matched properties to equipped item, ensuring modifications persist
+    equippedItem.PropertyList.forEach(propText => {
+		const match = findMatchingStat(propText, stats);
+		if (!match) {
+			console.warn(`❌ No match for: "${propText}"`);
+			return;
+		}
+//		console.log(`✅ Match found: ${match.statKey}`);
+
+        const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
+        console.log(`Processing ${match.statKey}: ${numericValue} in "${slot}"`);
+//        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedment.Item.Title}"`);
+//		console.log("Character has ", equippedItem);
+        // ✅ Apply properties directly to the stored equipped item reference
+		
+		equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
+		if (!character[match.statKey]) character[match.statKey] = 0;
+		character[match.statKey] += numericValue;
+
+		console.log(`✅ Applied ${match.statKey}:`, equippedItem[match.statKey]);
+    });
+
+//    console.log(`🔍 Final equipped[${slot}] after applyMatchedProperties →`, JSON.stringify(equippedItem, null, 2));
+
+    // ✅ Ensure UI updates reflect modified equipped item
+    updateSelectedItemSummary(equippedItem);
+    update();
+    console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
+}
+
+
+function findMatchingStat(propertyText, stats) {
+    console.log(`Checking property: "${propertyText}" against stats`);
+
+    for (const [statKey, statData] of Object.entries(stats)) {
+        if (statData.editable !== 1) continue; // Ignore non-editable stats
+
+        const formatPattern = new RegExp(
+            statData.format.map(f => f.replace("+", "\\+").replace("%", "\\%")).join(".*"),
+            "i"
+        );
+
+        if (formatPattern.test(propertyText)) {
+            console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
+            return { statKey, statData };
+        }
+    }
+    console.warn(`❌ No match found for "${propertyText}"`);
+    return null;
+}
+
+// recreate synths found in api response
+function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
+    if (!baseItem.SynthesisedFrom) return baseItem;
+
+//    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
+    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn === "weapon2" ? "offhand" : baseItem.Worn;
+    window.currentSynthSlot = slot;
+
+    equipItemDirectly(baseItem);
+    const equippedItem = equipped[slot];
+
+    if (!equippedItem) {
+        console.warn(`Failed to equip synthesized item "${baseItem.Title}"`);
+        return baseItem;
+    }
+
+    // Collect donor items
+    const donorItems = baseItem.SynthesisedFrom
+        .map(name => findDonorItem(name, apiData))
+        .filter(Boolean);
+
+    // Include base (equipped) item in synth properties
+    const synthProperties = gatherSynthPropertiesFromMultiple([equippedItem, ...donorItems]);
+//	applyMatchedProperties(slot)
+if (!applyAll) {
+	for (const key in equippedItem) {
+		if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue;
+		character[key] -= equippedItem[key];
+		delete equippedItem[key];
+	}
+	equippedItem.emptysynth = 1;
+
+	// Generate synth property UI
+	generateSynthPropertyUI(synthProperties, slot);
+
+	setTimeout(() => {
+		matchSynthStatsFromAPIStrings(baseItem.PropertyList || [], synthProperties, stats);
+	}, 0);
+
+    } else {
+        donorItems.forEach(donor => mergeItemProperties(equippedItem, donor));
+        updateSelectedItemSummary(slot);
+        update();
+    }
+
+    return equippedItem;
+}
+
+function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
+	if (!Array.isArray(apiStatStrings) || !Array.isArray(synthProperties)) return;
+
+	apiStatStrings.forEach(apiText => {
+		apiText = apiText.trim();
+//		console.log(`🔍 Matching API stat: "${apiText}"`);
+
+		let matchedKey = null;
+		let matchedValue = null;
+
+		// Loop through all editable stats
+		for (const [statKey, statData] of Object.entries(stats)) {
+			if (statData.editable !== 1) continue;
+
+			// Build regex pattern from the stat's format, e.g. ["+", "% Enhanced Damage"]
+			const patternStr = statData.format
+				.map(piece => piece.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // escape regex chars
+				.join(".*?"); // allow anything (like numbers) in between
+			const pattern = new RegExp(`^${patternStr}$`, "i");
+
+			if (pattern.test(apiText)) {
+				// Try to extract the number value from the string
+				const numMatch = apiText.match(/[-+]?\d+(\.\d+)?/);
+				const value = numMatch ? parseFloat(numMatch[0]) : null;
+				if (value !== null) {
+					matchedKey = statKey;
+					matchedValue = value;
+					break;
+				}
+			}
+		}
+
+		if (!matchedKey) {
+			console.warn(`❌ No matching stat key for "${apiText}"`);
+			return;
+		}
+		console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
+		//console.table(synthProperties);
 
 		// Now match with synthProperties using resolved key and value
 		const match = synthProperties.find(
