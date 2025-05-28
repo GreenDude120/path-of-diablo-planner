@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-characterName = "PIG_ASN"
+//characterName = "PIG_ASN"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
