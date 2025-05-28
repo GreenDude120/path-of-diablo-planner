@@ -5662,7 +5662,7 @@ function normalizeText(text) {
 }
 
 // API call to get character
-//characterName = "Zardragon"
+characterName = "PIG_ASN"
 if (characterName) {
 	console.log("Character Name:", characterName);
 	
@@ -5837,78 +5837,136 @@ function equipItemDirectly(item) {
 
 
 function applyMatchedProperties(slot) {
-    // ✅ Ensure equipped[slot] is referencing the correct equipped item, NOT the API response
     if (!equipped[slot]) {
         console.warn(`❌ No equipped item found in slot: ${slot}`);
         return;
     }
-	console.log("equipped:", equipped);
+    const equippedItem = equipped[slot];
 
-    const equippedItem = equipped[slot]; // ✅ Work exclusively with the stored equipped item
-
-//    console.log(`DEBUG: Entering applyMatchedProperties for → ${equippedItem.Title}`);
-
-    // ✅ Adjust equipped name based on QualityCode
+    // Rename generic items if needed
     if (["q_magic", "q_rare", "q_crafted"].includes(equippedItem.QualityCode)) {
-        const qualityName = equippedItem.QualityCode.split("_")[1]; 
-        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1); 
+        const qualityName = equippedItem.QualityCode.split("_")[1];
+        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1);
         const formattedSlot = formatSlotName(slot);
         equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
         console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
     }
 
-//    console.log(`DEBUG: equipped[${slot}] reference before applying properties →`, JSON.stringify(equippedItem, null, 2));
-
-    // ✅ Apply matched properties to equipped item, ensuring modifications persist
     equippedItem.PropertyList.forEach(propText => {
-		const match = findMatchingStat(propText, stats);
-		if (!match) {
-			console.warn(`❌ No match for: "${propText}"`);
-			return;
-		}
-		console.log(`✅ Match found: ${match.statKey}`);
+        const matches = findMatchingStat(propText, stats);
+        if (!matches || matches.length === 0) {
+            console.warn(`❌ No match for: "${propText}"`);
+            return;
+        }
 
+        // If we can extract a number from the propertyText, do it once here
         const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
-        console.log(`Processing ${match.statKey}: ${numericValue} in "${slot}"`);
-//        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedment.Item.Title}"`);
-//		console.log("Character has ", equippedItem);
-        // ✅ Apply properties directly to the stored equipped item reference
-		
-		equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
-		if (!character[match.statKey]) character[match.statKey] = 0;
-		character[match.statKey] += numericValue;
 
-		console.log(`✅ Applied ${match.statKey}:`, equippedItem[match.statKey]);
+	matches.forEach(({ statKey, value }) => {
+		if (statKey === "ctc") {
+			if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
+			equippedItem.ctc.push(value);
+			console.log(`✅ Added CTC:`, value);
+		} else if (statKey === "cskill") {
+			if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
+			equippedItem.cskill.push(value);
+			console.log(`✅ Added Charged Skill:`, value);
+		} else {
+			const valueToApply = typeof value === "number" ? value : numericValue;
+			equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
+			character[statKey] = (character[statKey] || 0) + valueToApply;
+		}
+	});
+
     });
 
-//    console.log(`🔍 Final equipped[${slot}] after applyMatchedProperties →`, JSON.stringify(equippedItem, null, 2));
-
-    // ✅ Ensure UI updates reflect modified equipped item
     updateSelectedItemSummary(equippedItem);
     update();
     console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
 }
 
 
+
 function findMatchingStat(propertyText, stats) {
     console.log(`Checking property: "${propertyText}" against stats`);
+    const ctcParsed = parseChanceToCast(propertyText);
+    if (ctcParsed) {
+        console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+        return [ctcParsed];  // Return in array form for compatibility
+    }
+    const cskillParsed = parseChargedSkill(propertyText);
+    if (cskillParsed) {
+        console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+        return [cskillParsed];
+    }	
+    // Try to match "Adds #–# [Element] Damage"
+    const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
+    if (damageMatch) {
+        const [, min, max, elementRaw] = damageMatch;
+        const element = elementRaw.toLowerCase();
+        let prefix = "damage"; // default is physical
 
+        switch (element) {
+            case "fire": prefix = "fDamage"; break;
+            case "cold": prefix = "cDamage"; break;
+            case "lightning": prefix = "lDamage"; break;
+            case "poison": prefix = "pDamage"; break;
+            // fall through: unknown/empty means physical
+        }
+
+        console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+        return [
+            { statKey: `${prefix}_min`, value: parseInt(min, 10) },
+            { statKey: `${prefix}_max`, value: parseInt(max, 10) }
+        ];
+    }
+
+    // Fallback to format-based matching
     for (const [statKey, statData] of Object.entries(stats)) {
-        if (statData.editable !== 1) continue; // Ignore non-editable stats
+        if (statData.editable !== 1) continue;
 
         const formatPattern = new RegExp(
-            statData.format.map(f => f.replace("+", "\\+").replace("%", "\\%")).join(".*"),
+            statData.format.map(f =>
+                f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            ).join(".*"),
             "i"
         );
 
         if (formatPattern.test(propertyText)) {
             console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
-            return { statKey, statData };
+            return [{ statKey }];
         }
     }
+
     console.warn(`❌ No match found for "${propertyText}"`);
-    return null;
+    return [];
 }
+
+// Inside findMatchingStat or as a helper function
+function parseChanceToCast(line) {
+    const ctcRegex = /(\d+)% Chance to cast level (\d+)\s+(.+?)\s+(when [\w\s]+)$/i;
+    const match = line.match(ctcRegex);
+    if (!match) return null;
+
+    const [, percent, level, skillName, trigger] = match;
+    return {
+        statKey: "ctc",
+        value: [parseInt(percent), parseInt(level), skillName.trim(), trigger.trim()]
+    };
+}
+
+function parseChargedSkill(line) {
+    const chargedRegex = /Level (\d+)\s+(.+?)\s+\((\d+)\/\d+ Charges\)/i;
+    const match = line.match(chargedRegex);
+    if (!match) return null;
+
+    const [, level, skillName, charges] = match;
+    return {
+        statKey: "cskill",
+        value: [parseInt(level), skillName.trim(), parseInt(charges)]
+    };
+}
+
 
 // recreate synths found in api response
 function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
@@ -5995,7 +6053,7 @@ function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
 			return;
 		}
 console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
-console.table(synthProperties);
+//console.table(synthProperties);
 
 		// Now match with synthProperties using resolved key and value
 		const match = synthProperties.find(
@@ -6483,78 +6541,136 @@ function equipItemDirectly(item) {
 
 
 function applyMatchedProperties(slot) {
-    // ✅ Ensure equipped[slot] is referencing the correct equipped item, NOT the API response
     if (!equipped[slot]) {
         console.warn(`❌ No equipped item found in slot: ${slot}`);
         return;
     }
-	console.log("equipped:", equipped);
+    const equippedItem = equipped[slot];
 
-    const equippedItem = equipped[slot]; // ✅ Work exclusively with the stored equipped item
-
-//    console.log(`DEBUG: Entering applyMatchedProperties for → ${equippedItem.Title}`);
-
-    // ✅ Adjust equipped name based on QualityCode
+    // Rename generic items if needed
     if (["q_magic", "q_rare", "q_crafted"].includes(equippedItem.QualityCode)) {
-        const qualityName = equippedItem.QualityCode.split("_")[1]; 
-        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1); 
+        const qualityName = equippedItem.QualityCode.split("_")[1];
+        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1);
         const formattedSlot = formatSlotName(slot);
         equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
         console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
     }
 
-//    console.log(`DEBUG: equipped[${slot}] reference before applying properties →`, JSON.stringify(equippedItem, null, 2));
-
-    // ✅ Apply matched properties to equipped item, ensuring modifications persist
     equippedItem.PropertyList.forEach(propText => {
-		const match = findMatchingStat(propText, stats);
-		if (!match) {
-			console.warn(`❌ No match for: "${propText}"`);
-			return;
-		}
-//		console.log(`✅ Match found: ${match.statKey}`);
+        const matches = findMatchingStat(propText, stats);
+        if (!matches || matches.length === 0) {
+            console.warn(`❌ No match for: "${propText}"`);
+            return;
+        }
 
+        // If we can extract a number from the propertyText, do it once here
         const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
-        console.log(`Processing ${match.statKey}: ${numericValue} in "${slot}"`);
-//        console.log(`Processing ${match.statKey}: ${numericValue} in "${equippedment.Item.Title}"`);
-//		console.log("Character has ", equippedItem);
-        // ✅ Apply properties directly to the stored equipped item reference
-		
-		equippedItem[match.statKey] = (equippedItem[match.statKey] || 0) + numericValue;
-		if (!character[match.statKey]) character[match.statKey] = 0;
-		character[match.statKey] += numericValue;
 
-		console.log(`✅ Applied ${match.statKey}:`, equippedItem[match.statKey]);
+		matches.forEach(({ statKey, value }) => {
+			if (statKey === "ctc") {
+				if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
+				equippedItem.ctc.push(value);
+				console.log(`✅ Added CTC:`, value);
+			} else if (statKey === "cskill") {
+				if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
+				equippedItem.cskill.push(value);
+				console.log(`✅ Added Charged Skill:`, value);
+			} else {
+				const valueToApply = typeof value === "number" ? value : numericValue;
+				equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
+				character[statKey] = (character[statKey] || 0) + valueToApply;
+			}
+		});
     });
 
-//    console.log(`🔍 Final equipped[${slot}] after applyMatchedProperties →`, JSON.stringify(equippedItem, null, 2));
-
-    // ✅ Ensure UI updates reflect modified equipped item
     updateSelectedItemSummary(equippedItem);
     update();
     console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
 }
 
 
+
 function findMatchingStat(propertyText, stats) {
+	const ctcParsed = parseChanceToCast(propertyText);
+    if (ctcParsed) {
+        console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+        return [ctcParsed];  // Return in array form for compatibility
+    }
+    const cskillParsed = parseChargedSkill(propertyText);
+    if (cskillParsed) {
+        console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+        return [cskillParsed];
+    }	
     console.log(`Checking property: "${propertyText}" against stats`);
 
+    // Try to match "Adds #–# [Element] Damage"
+    const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
+    if (damageMatch) {
+        const [, min, max, elementRaw] = damageMatch;
+        const element = elementRaw.toLowerCase();
+        let prefix = "damage"; // default is physical
+
+        switch (element) {
+            case "fire": prefix = "fDamage"; break;
+            case "cold": prefix = "cDamage"; break;
+            case "lightning": prefix = "lDamage"; break;
+            case "poison": prefix = "pDamage"; break;
+            // fall through: unknown/empty means physical
+        }
+
+        console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+        return [
+            { statKey: `${prefix}_min`, value: parseInt(min, 10) },
+            { statKey: `${prefix}_max`, value: parseInt(max, 10) }
+        ];
+    }
+
+    // Fallback to format-based matching
     for (const [statKey, statData] of Object.entries(stats)) {
-        if (statData.editable !== 1) continue; // Ignore non-editable stats
+        if (statData.editable !== 1) continue;
 
         const formatPattern = new RegExp(
-            statData.format.map(f => f.replace("+", "\\+").replace("%", "\\%")).join(".*"),
+            statData.format.map(f =>
+                f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            ).join(".*"),
             "i"
         );
 
         if (formatPattern.test(propertyText)) {
             console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
-            return { statKey, statData };
+            return [{ statKey }];
         }
     }
+
     console.warn(`❌ No match found for "${propertyText}"`);
-    return null;
+    return [];
 }
+
+// Inside findMatchingStat or as a helper function
+function parseChanceToCast(line) {
+    const ctcRegex = /(\d+)% Chance to cast level (\d+)\s+(.+?)\s+(when [\w\s]+)$/i;
+    const match = line.match(ctcRegex);
+    if (!match) return null;
+
+    const [, percent, level, skillName, trigger] = match;
+    return {
+        statKey: "ctc",
+        value: [parseInt(percent), parseInt(level), skillName.trim(), trigger.trim()]
+    };
+}
+
+function parseChargedSkill(line) {
+    const chargedRegex = /Level (\d+)\s+(.+?)\s+\((\d+)\/\d+ Charges\)/i;
+    const match = line.match(chargedRegex);
+    if (!match) return null;
+
+    const [, level, skillName, charges] = match;
+    return {
+        statKey: "cskill",
+        value: [parseInt(level), skillName.trim(), parseInt(charges)]
+    };
+}
+
 
 // recreate synths found in api response
 function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
