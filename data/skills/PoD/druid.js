@@ -21,6 +21,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 	// result: value of the skill element at the specified level
 	// ---------------------------------
 	getSkillData : function(skill, lvl, elem) {
+//		console.log("Character AR beginning getskilldata", character.ar_bonus)
 		var result = skill.data.values[elem][lvl];
 		
 		if (skill.name == "Firestorm" && elem > 0 && elem < 3) { 		result *= ((1 + (0.30*skills[1].level + 0.30*skills[4].level)) * (1+character.fDamage/100)) }
@@ -69,6 +70,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		if (skill.name == "Poison Creeper" && elem > 0 && elem < 3) { 	result *= (1+character.summon_damage/100) }
 		if ((skill.name == "Poison Creeper" || skill.name == "Heart of Wolverine" || skill.name == "Carrion Vine" || skill.name == "Oak Sage" || skill.name == "Solar Creeper" || skill.name == "Spirit of Barbs") && elem == 0) { result = skill.data.values[elem][character.difficulty][lvl] }
 		
+//		console.log("Character AR end getskilldata", character.ar_bonus)
 	return result
 	},
 	
@@ -77,6 +79,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 	// result: indexed array including stats affected and their values
 	// ---------------------------------
 	getBuffData : function(skill) {
+//		console.log("Character AR being getbuffdata", character.ar_bonus)
 		var id = skill.name.split(' ').join('_');
 		var lvl = skill.level + skill.extra_levels;
 		var result = {};
@@ -119,6 +122,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		if (skill.name == "Summon Spirit Wolf") { result.amountSummoned = skill.data.values[0][lvl]; }
 		if (skill.name == "Summon Dire Wolf") { result.amountSummoned = skill.data.values[0][lvl]; result.mDamage_min = (.24 * character.getSkillData(skill,lvl,4)); result.mDamage_max = (.24 * character.getSkillData(skill,lvl,4)) ;}
 		if (skill.name == "Summon Grizzly") { result.amountSummoned = 1+character.extraGrizzly; }
+//		console.log("Character AR being getbuffdata", character.ar_bonus)
 		
 	return result
 	},
@@ -128,7 +132,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 	//	ar: base attack rating
 	//	min/max parameters: base damage of different types
 	// ---------------------------------
-	getSkillDamage : function(skill, ar, phys_min, phys_max, phys_mult, nonPhys_min, nonPhys_max) {
+	getSkillDamage : function(skill, baseAR, phys_min, phys_max, phys_mult, nonPhys_min, nonPhys_max) {
 		var lvl = skill.level+skill.extra_levels;
 		var ar_bonus = 0; var damage_bonus = 0; var weapon_damage = 100;
 		var damage_min = 0; var damage_max = 0;
@@ -152,14 +156,14 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		else if (skill.name == "Tornado") { 			attack = 0; spell = 1; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Armageddon") {			attack = 0; spell = 1; damage_min = character.getSkillData(skill,lvl,1); damage_max = character.getSkillData(skill,lvl,2); fDamage_min = character.getSkillData(skill,lvl,3); fDamage_max = character.getSkillData(skill,lvl,4); }
 		else if (skill.name == "Hurricane") {			attack = 0; spell = 1; cDamage_min = character.getSkillData(skill,lvl,1); cDamage_max = character.getSkillData(skill,lvl,2); }
-		else if (skill.name == "Feral Rage") {			attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,5); damage_bonus = character.getSkillData(skill,lvl,4); }
+		else if (skill.name == "Feral Rage") {			attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,5); damage_bonus = character.getSkillData(skill,lvl,4); console.log("Character getSkillDamage AR: ", ar, ar_bonus);}
 		else if (skill.name == "Maul") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,3); damage_bonus = character.getSkillData(skill,lvl,2); }
 		else if (skill.name == "Rabies") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,0); pDamage_min = character.getSkillData(skill,lvl,1); pDamage_max = character.getSkillData(skill,lvl,2); pDamage_duration = 4; }
 		else if (skill.name == "Fire Claws") {			attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,2); fDamage_min = character.getSkillData(skill,lvl,0); fDamage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Hunger") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,2); damage_bonus = -75; }
 //		else if (skill.name == "Shock Wave") {			attack = 1; spell = 0; weapon_damage = 25; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); e_damage = -75;}
 		else if (skill.name == "Shock Wave") {			attack = 1; spell = 0; weapon_damage = 30; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1);}
-		else if (skill.name == "Fury") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,1); damage_bonus = character.getSkillData(skill,lvl,2); }
+		else if (skill.name == "Fury") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,1); damage_bonus = character.getSkillData(skill,lvl,2); console.log("Character getSkillDamage AR: ", ar, ar_bonus); }
 		else if (skill.name == "Raven") { 				attack = 0; spell = 1; damage_min = character.getSkillData(skill,lvl,1); damage_max = character.getSkillData(skill,lvl,2); cDamage_min = character.getSkillData(skill,lvl,3); cDamage_max = character.getSkillData(skill,lvl,4); }
 		else if (skill.name == "Poison Creeper") { 		attack = 0; spell = 1; pDamage_min = character.getSkillData(skill,lvl,1); pDamage_max = character.getSkillData(skill,lvl,2); pDamage_duration = 5; }
 		else if (skill.name == "Summon Spirit Wolf") {	attack = 0; spell = 1; damage_min = character.getSkillData(skill,lvl,2); damage_max = character.getSkillData(skill,lvl,3); ar_bonus = character.getSkillData(skill,lvl,4); }
@@ -189,7 +193,9 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_min * (1+(damage_bonus+damage_enhanced)/100)));
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
-		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
+//		if (spell == 0) { skillAr = Math.floor(ar*((1+ar_bonus)/100)); }
+		if (spell == 0) { skillAr = Math.floor(character.baseAR*((1+ar_bonus+character.arBonusPercent)/100)); }
+		console.log("getskilldamage mid AR, skillar = character.baseAR * ar_bonus: ", skillAr, character.baseAR, ar_bonus, character.arBonusPercent)
 //		if (spell == 0) { skillAr = Math.floor(ar * (ar_bonus/100)); }
 
 	// Get breakdown of sources of skill damage
@@ -209,6 +215,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		}		
 
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
+		console.log("getskilldamage final AR: ", result.ar, skillAr)
 		return result
 	},
 	

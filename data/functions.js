@@ -5319,22 +5319,36 @@ function checkSkill(skillName, num) {
 //	var ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
 //	var ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const + (c.ar_per_socketed*socketed.offhand.socketsFilled)) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
 	// Base AR before % bonuses
-	const baseAR =
+	let baseAR =
 	((dexTotal - 7) * 5) +
 	c.ar +
 	(c.level * c.ar_per_level) +
 	c.ar_const;
-
+	console.log("Character base AR: ", baseAR)
 	// Additive % bonuses (excluding shrine, which is applied separately)
-	const arBonusPercent =
+	let arBonusPercent =
 	c.ar_skillup +
 	c.ar_skillup2 +
 	c.ar_bonus +
 	(c.level * c.ar_bonus_per_level);
+	console.log("Character bonus AR: ", arBonusPercent)
+
+	character.baseAR = 
+		((dexTotal - 7) * 5) +
+		c.ar +
+		(c.level * c.ar_per_level) +
+		c.ar_const;
+
+	character.arBonusPercent = 
+		c.ar_skillup +
+		c.ar_skillup2 +
+		c.ar_bonus +
+		(c.level * c.ar_bonus_per_level);
 
 	// Total AR after % increases
-	const ar = baseAR * (1 + arBonusPercent / 100) * (1 + c.ar_shrine_bonus / 100);
+	let ar = baseAR * (1 + arBonusPercent / 100) * (1 + c.ar_shrine_bonus / 100);
 //	const ar = baseAR 
+	console.log("Character AR: ", ar)
 
 	var artest =  "(1+("+c.ar_skillup +"+"+ c.ar_skillup2+ "+" + c.ar_bonus + "+" + c.level + "*" + c.ar_bonus_per_level+ ")/100) * (1+" + c.ar_shrine_bonus + "/100) * 100";
 	var physDamage = [0,0,1];
@@ -5350,7 +5364,8 @@ function checkSkill(skillName, num) {
 		var outcome = {min:0,max:0,ar:0};
 		if (native_skill == 0) { outcome = character_all.any.getSkillDamage(skillName, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
 		else { outcome = c.getSkillDamage(skill, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
-//		ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level - outcome.ar *c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
+//		console.log("Skill AR right after getskilldamage: ", character.ar_skillup, outcome.ar)
+		//		ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level - outcome.ar *c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
 		
 		//var enemy_lvl = ~~MonStats[monsterID][4+c.difficulty];
 		var enemy_lvl = Math.min(~~c.level,89);	// temp, sets 'area level' at the character's level (or as close as possible if the area level isn't available in the selected difficulty)
@@ -5889,6 +5904,11 @@ function applyMatchedProperties(slot) {
 
 function findMatchingStat(propertyText, stats) {
     console.log(`Checking property: "${propertyText}" against stats`);
+	const afterKillStat = parseAfterKillStat(propertyText);
+	if (afterKillStat) {
+		return [afterKillStat];
+	}
+
     const ctcParsed = parseChanceToCast(propertyText);
     if (ctcParsed) {
         console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
@@ -5966,6 +5986,20 @@ function parseChargedSkill(line) {
         value: [parseInt(level), skillName.trim(), parseInt(charges)]
     };
 }
+
+function parseAfterKillStat(line) {
+    const match = line.match(/\+(\d+)\s+(?:to\s+)?(Mana|Life)\s+after\s+each\s+Kill/i);
+    if (!match) return null;
+
+    const [, value, type] = match;
+    const statKey = type.toLowerCase() + "_after_kill";  // e.g., "mana_after_kill"
+
+    return {
+        statKey,
+        value: parseInt(value, 10)
+    };
+}
+
 
 
 // recreate synths found in api response
@@ -6591,6 +6625,11 @@ function applyMatchedProperties(slot) {
 
 
 function findMatchingStat(propertyText, stats) {
+	const afterKillStat = parseAfterKillStat(propertyText);
+	if (afterKillStat) {
+		return [afterKillStat];
+	}
+
 	const ctcParsed = parseChanceToCast(propertyText);
     if (ctcParsed) {
         console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
@@ -6671,6 +6710,32 @@ function parseChargedSkill(line) {
     };
 }
 
+function parseAfterKillStat(line) {
+    const match = line.match(/\+(\d+)\s+(?:to\s+)?(Mana|Life)\s+after\s+each\s+Kill/i);
+    if (!match) return null;
+
+    const [, value, type] = match;
+    const statKey = type.toLowerCase() + "_after_kill";  // e.g., "mana_after_kill"
+
+    return {
+        statKey,
+        value: parseInt(value, 10)
+    };
+}
+
+
+function parseSingleDamageStat(line) {
+    const match = line.match(/\+(\d+)\s+to\s+(Maximum|Minimum)\s+Damage/i);
+    if (!match) return null;
+
+    const [, val, type] = match;
+    const statKey = type === "Maximum" ? "damage_max" : "damage_min";
+
+    return {
+        statKey,
+        value: parseInt(val)
+    };
+}
 
 // recreate synths found in api response
 function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
