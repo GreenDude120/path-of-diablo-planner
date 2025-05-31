@@ -7340,7 +7340,8 @@ populateStatDropdown();
 function addCustomStat() {
 
 		const statKey = document.getElementById('statDropdown').value;
-		const value = parseInt(document.getElementById('statValue').value, 10);
+//		const value = parseInt(document.getElementById('statValue').value, 10);
+		const value = parseFloat(document.getElementById('statValue').value);
 		const selectedSlot = document.getElementById("slotSelect").value;
 		console.log("addCustomStat called");
 		console.log("equipped:", equipped);
