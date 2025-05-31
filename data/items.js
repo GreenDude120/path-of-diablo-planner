@@ -111,7 +111,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"druid", rarity:"rw", name:"Radiance ­ ­ - ­ ­ Sacred Feathers", req_level:27, skill_Cyclone_Armor:3, skill_Armageddon:3, skill_Hurricane:3, e_def:75, aura:"Thorns", aura_lvl:11, missile_defense:30, vitality:10, energy:10, mana:33, all_sorb:5, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Sacred Feathers"},
 	{name:"Radiance ­ ­ - ­ ­ Circlet", req_level:27, aura:"Thorns", aura_lvl:11, missile_defense:30, vitality:10, energy:10, mana:33, all_sorb:5, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Circlet"},
 	{rarity:"rw", name:"Temper ­ ­ - ­ ­ Diadem", req_level:35, fhr:20, e_def:100, vitality:10, fDamage_min:91, fDamage_max:130, fRes:30, fAbsorb:15, life_per_hit:4, life_per_ranged_hit:3, base:"Diadem"},
-	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce:33, ar:25, mana_per_hit:8, e_def:30, energy:10, slower_stam_drain:15, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
+	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce:33, ar:25, mana_per_hit:8, e_def:30, energy:10, thorns_lightning:10, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
 	// Iron Golem RW replacements
 		{only:"none", rarity:"rw", name:"Lore ­ ­ - ­ ­ Coronet", req_level:27, all_skills:1, energy:10, lRes:30, damage_reduced:7, mana_per_kill:2, light_radius:2, base:"Coronet"},
 		{only:"none", rarity:"rw", name:"Nadir ­ ­ - ­ ­ Circlet", req_level:13, e_def:50, defense:10, missile_defense:30, strength:5, mana_per_kill:2, gf:-33, light_radius:-3, base:"Circlet", cskill:[[13,"Cloak of Shadows",9]]},
@@ -202,8 +202,8 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rw", name:"Lionheart ­ ­ - ­ ­ Dusk Shroud", req_level:41, damage_bonus:20, strength:25, dexterity:15, vitality:20, energy:10, life:50, all_res:30, req:-15, base:"Dusk Shroud"},
 	{rarity:"rw", name:"Myth ­ ­ - ­ ­ Mage Plate", req_level:25, ctc:[[3,1,"Howl","when struck"],[10,1,"Taunt","on striking"]], skills_barbarian:2, missile_defense:30, life_replenish:10, thorns:14, req:-15, base:"Mage Plate"},
 	{rarity:"rw", name:"Peace ­ ­ - ­ ­ Mage Plate", req_level:29, skills_amazon:2, oskill_Lethal_Strike:2, fhr:20, cRes:30, thorns:14, extraValkyrie:1, base:"Mage Plate", pod_changes:1},
-//	{rarity:"rw", name:"Principle ­ ­ - ­ ­ Wyrmhide", req_level:55, ctc:[[100,5,"Holy Bolt","on striking"]], skills_paladin:2, damage_vs_undead:50, life:150, slower_stam_drain:15, pRes_max:5, fRes:30, base:"Wyrmhide"},
-	{name:"Principle ­ ­ - ­ ­ Wyrmhide", req_level:55, ctc:[[50,11,"Holy Bolt","on striking"]], skills_paladin:2, damage_vs_undead:50, life:150, slower_stam_drain:15, pRes_max:5, fRes:30, base:"Wyrmhide"},
+//	{rarity:"rw", name:"Principle ­ ­ - ­ ­ Wyrmhide", req_level:55, ctc:[[100,5,"Holy Bolt","on striking"]], skills_paladin:2, damage_vs_undead:50, life:150, thorns_lightning:10, pRes_max:5, fRes:30, base:"Wyrmhide"},
+	{name:"Principle ­ ­ - ­ ­ Wyrmhide", req_level:55, ctc:[[50,11,"Holy Bolt","on striking"]], skills_paladin:2, damage_vs_undead:50, life:150, thorns_lightning:10, pRes_max:5, fRes:30, base:"Wyrmhide"},
 	{rarity:"rw", name:"Prudence ­ ­ - ­ ­ Dusk Shroud", req_level:49, fhr:25, e_def:170, all_res:35, damage_reduced:3, mDamage_reduced:17, mana_per_kill:2, light_radius:1, autorepair:1, base:"Dusk Shroud"},
 	{rarity:"rw", name:"Rain ­ ­ - ­ ­ Wyrmhide", req_level:63, ctc:[[5,15,"Cyclone Armor","when struck"]], skills_druid:2, mana:150, lRes:30, mDamage_reduced:7, damage_to_mana:15, extraGrizzly:1, curseGrizzly:1, base:"Wyrmhide", pod_changes:1},
 	{rarity:"rw", name:"Smoke ­ ­ - ­ ­ Dusk Shroud", req_level:37, fhr:20, e_defense:75, missile_defense:280, energy:10, all_res:50, light_radius:-1, base:"Dusk Shroud", cskill:[[6,"Weaken",18]]},
@@ -213,7 +213,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rw", name:"Wealth ­ ­ - ­ ­ Dusk Shroud", req_level:43, dexterity:10, mana_per_kill:2, gf:300, mf:100, base:"Dusk Shroud"},
 	// Iron Golem RW replacements
 		{only:"none", rarity:"rw", name:"Rain ­ ­ - ­ ­ Archon Plate", req_level:63, ctc:[[5,15,"Cyclone Armor","when struck"]], skills_druid:2, mana:150, lRes:30, mDamage_reduced:7, damage_to_mana:15, extraGrizzly:1, base:"Archon Plate", pod_changes:1},
-		{only:"none", rarity:"rw", name:"Principle ­ ­ - ­ ­ Archon Plate", req_level:55, ctc:[[50,11,"Holy Bolt","on striking"]], skills_paladin:2, damage_vs_undead:50, life:150, slower_stam_drain:15, pRes_max:5, fRes:30, base:"Archon Plate"},
+		{only:"none", rarity:"rw", name:"Principle ­ ­ - ­ ­ Archon Plate", req_level:55, ctc:[[50,11,"Holy Bolt","on striking"]], skills_paladin:2, damage_vs_undead:50, life:150, thorns_lightning:10, pRes_max:5, fRes:30, base:"Archon Plate"},
 		{only:"none", rarity:"rw", name:"Prudence ­ ­ - ­ ­ Archon Plate", req_level:49, fhr:25, e_def:170, all_res:35, damage_reduced:3, mDamage_reduced:17, mana_per_kill:2, light_radius:1, autorepair:1, base:"Archon Plate"},
 		{only:"none", rarity:"rw", name:"Bone ­ ­ - ­ ­ Archon Plate", req_level:47, ctc:[[15,3,"Terror","when struck"]], skills_necromancer:2, mana:150, all_res:30, damage_reduced:7, extraFireGolem:1, base:"Archon Plate", pod_changes:1},
 		{only:"none", rarity:"rw", name:"Gloom ­ ­ - ­ ­ Archon Plate", req_level:47, ctc:[[15,3,"Dim Vision","when struck"]], fhr:10, e_def:260, strength:10, all_res:45, half_freeze:1, damage_to_mana:5, light_radius:-3, base:"Archon Plate"},
@@ -1526,7 +1526,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	*/
 	
 	{name:"El Rune", type:"rune", rarity:"craft", req_level:11, weapon:{ar:50,light_radius:1}, armor:{defense:15,light_radius:1}},
-	{name:"Eld Rune", type:"rune", rarity:"craft", req_level:11, weapon:{damage_vs_undead:75,ar_vs_undead:50}, armor:{slower_stam_drain:15}, shield:{block:7}},
+	{name:"Eld Rune", type:"rune", rarity:"craft", req_level:11, weapon:{damage_vs_undead:75,ar_vs_undead:50}, armor:{thorns_lightning:10}, shield:{block:7}},
 	{name:"Tir Rune", type:"rune", rarity:"craft", req_level:13, weapon:{mana_per_kill:2}, armor:{mana_per_kill:2}},	// same
 	{name:"Nef Rune", type:"rune", rarity:"craft", req_level:13, weapon:{knockback:1}, armor:{missile_defense:30}},
 	{name:"Eth Rune", type:"rune", rarity:"craft", req_level:15, weapon:{target_defense:-25}, armor:{mana_regen:15}},
