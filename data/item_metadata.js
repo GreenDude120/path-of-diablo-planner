@@ -1372,7 +1372,7 @@ oskill_Battle_Orders:{index:["oskill_Battle_Orders"], format:["+"," to Battle Or
 oskill_Battle_Cry:{index:["oskill_Battle_Cry"], format:["+"," to Battle Cry"], friendly:["Battle Cry oskill"], editable:1},
 oskill_Bash:{index:["oskill_Bash"], format:["+"," to Bash"], friendly:["Bash oskill"], editable:1},
 oskill_Edged_Weapon_Mastery:{index:["oskill_Edged_Weapon_Mastery"], format:["+"," to Edged Weapon Mastery"], friendly:["Edged Weapon Mastery oskill"], editable:1},
-oskill_Whirling_Axes:{index:["oskill_Whirling_Axes"], format:["+"," to Whirling Axes"], friendly:["Warp oskill"], editable:1},
+oskill_Whirling_Axes:{index:["oskill_Whirling_Axes"], format:["+"," to Whirling Axes"], friendly:["Whirling Axes oskill"], editable:1},
 
 oskill_Lycanthropy:{index:["oskill_Lycanthropy"], format:["+"," to Lycanthropy"], friendly:["Lycanthropy oskill"], editable:1},
 oskill_Werebear:{index:["oskill_Werebear"], format:["+"," to Werebear"], friendly:["Werebear oskill"], editable:1},
