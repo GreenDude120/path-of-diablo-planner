@@ -7306,11 +7306,13 @@ function populateStatDropdown(searchTerm = '') {
     const dropdown = document.getElementById('statDropdown');
     dropdown.innerHTML = ''; // Clear existing options
 
-    // Filter stats based on search input
     const formattedStats = Object.entries(stats)
         .filter(([_, value]) => value && Array.isArray(value.format) && value.editable === 1)
-        .map(([key, value]) => ({ key, text: value.format.join(' ') }))
-        .filter(stat => stat.text.toLowerCase().includes(searchTerm.toLowerCase())); // Matches search term
+        .map(([key, value]) => {
+            const text = value.friendly?.[0] || value.format.join(' ');
+            return { key, text };
+        })
+        .filter(stat => stat.text.toLowerCase().includes(searchTerm.toLowerCase()));
 
     // Sort alphabetically
     formattedStats.sort((a, b) => a.text.localeCompare(b.text));
@@ -7323,6 +7325,7 @@ function populateStatDropdown(searchTerm = '') {
         dropdown.appendChild(option);
     }
 }
+
 
 // Search for properties
 function filterStatDropdown() {
