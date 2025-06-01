@@ -130,7 +130,7 @@
   z-index: 4;
 }
 .dropdown select, .dropdown-corruption select {
-  color: #ddd;
+  color: #ddd !important;
   background-color: black;
   padding-left: 7px;
   width: 200px;
@@ -147,6 +147,7 @@
 .dropdown-set, .dropdown-unique, .dropdown-magic, .dropdown-rare, .dropdown-craft, .dropdown-common, .dropdown-rw, .dropdown-debug, .dropdown:hover, .dropdown:focus {
   background-color: #222;
   z-index: 6;
+  color:white;
 }
 .dropdown-set {
   color: #00f000;
