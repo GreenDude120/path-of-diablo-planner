@@ -2529,8 +2529,8 @@ function getCTCSkillData(name, lvl, group) {
 	}
 	else if (name == "Glacial Spike") {
 		if (character.class_name == "Sorceress") {
-			result.cDamage_min = skill.data.values[0][lvl] * ((1 + (0.08*sk[0].level + 0.08*sk[3].level + 0.08*sk[7].level + 0.08*sk[9].level)) * (1+c.cDamage/100)) ;
-			result.cDamage_max = skill.data.values[1][lvl] * ((1 + (0.08*sk[0].level + 0.08*sk[3].level + 0.08*sk[7].level + 0.08*sk[9].level)) * (1+c.cDamage/100)) ;
+			result.cDamage_min = skill.data.values[0][lvl] * ((1 + (0.08*skills_all["sorceress"][0].level + 0.08*skills_all["sorceress"][3].level + 0.08*skills_all["sorceress"][7].level + 0.08*skills_all["sorceress"][9].level)) * (1+character.cDamage/100)) ;
+			result.cDamage_max = skill.data.values[1][lvl] * ((1 + (0.08*skills_all["sorceress"][0].level + 0.08*skills_all["sorceress"][3].level + 0.08*skills_all["sorceress"][7].level + 0.08*skills_all["sorceress"][9].level)) * (1+character.cDamage/100)) ;
 		} 
 		if (character.class_name != "Sorceress") {
 			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100) ;
