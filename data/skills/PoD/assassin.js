@@ -162,7 +162,8 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + ((damage_min + kick_min) * (1+(damage_bonus+damage_enhanced+kick_bonus)/100)));
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + ((damage_max + kick_max) * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level)+kick_bonus)/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
-		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
+//		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
+		if (spell == 0) { skillAr = Math.floor(character.baseAR*(1+(ar_bonus+character.arBonusPercent)/100)); }
 
 				// Get breakdown of sources of skill damage
 		// Get breakdown of sources of skill damage

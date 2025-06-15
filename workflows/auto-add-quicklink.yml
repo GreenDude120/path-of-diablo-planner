@@ -1,0 +1,61 @@
+name: Auto Add Quicklink
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  update-quicklink:
+    if: contains(github.event.issue.labels.*.name, 'shortlink')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Extract and update quicklinks.js
+        run: |
+          import re
+          from pathlib import Path
+
+          issue_body = """${{ github.event.issue.body }}"""
+
+          match = re.search(r'https?://[^\s]+', issue_body)
+          if not match:
+              raise Exception("❌ No URL found in issue body.")
+
+          long_url = match.group(0)
+          file_path = Path("data/quicklinks.js")  # Update this path if needed
+          lines = file_path.read_text().splitlines()
+
+          existing_qqls = [re.findall(r'qql(\d+)', line) for line in lines if 'qql' in line]
+          existing_qqls = [int(m[0]) for m in existing_qqls if m]
+          next_qql = max(existing_qqls, default=0) + 1
+          new_line = f'    if (params.has("qql{next_qql}")) {{ window.location.href = "{long_url}" }} ;'
+
+          for i in reversed(range(len(lines))):
+              if lines[i].strip() == "}":
+                  lines.insert(i, new_line)
+                  break
+
+          file_path.write_text("\n".join(lines))
+
+      - name: Commit and push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add data/quicklinks.js
+          git commit -m "🔗 Add quicklink qql from issue #${{ github.event.issue.number }}"
+          git push
+
+      - name: Comment and close issue
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ✅ Your quicklink was created and added to `quicklinks.js`.
+            You can now use: `https://build.pathofdiablo.com/?qql{{ next_qql }}`
+      - uses: peter-evans/close-issue@v3
