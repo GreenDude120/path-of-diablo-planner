@@ -86,6 +86,8 @@ function startup(choice) {
 	init()
 	updateStats()
 	toggleParameters(parameters)
+	document.getElementById("quests").checked = true; toggleQuests(document.getElementById("quests"))
+//	toggleQuests()
 }
 
 // reset - Calls startup() with the specified class name
@@ -101,6 +103,7 @@ function init() {
 		document.getElementById("s"+skills[s].key).onmouseover = function() {skillHover(skills[s])};
 		document.getElementById("s"+skills[s].key).onclick = function() {skillUp(event,skills[s],1)};
 		document.getElementById("s"+skills[s].key).oncontextmenu = function() {skillDown(event,skills[s])};
+//		toggleQuests()
 	}
 }
 
