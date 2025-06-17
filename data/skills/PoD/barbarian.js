@@ -113,7 +113,7 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		else if (skill.name == "Double Swing") { 	damage_bonus = character.getSkillData(skill,lvl,0); ar_bonus = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Frenzy") { 			weapon_damage = 100; mDamage_min = phys_min*character.getSkillData(skill,lvl,0)/100; mDamage_max = phys_max*character.getSkillData(skill,lvl,0)/100; damage_bonus = character.getSkillData(skill,lvl,1); ar_bonus = character.getSkillData(skill,lvl,2); }
 		else if (skill.name == "Concentrate") {		weapon_damage = 160; ar_bonus = character.getSkillData(skill,lvl,1); damage_bonus = character.getSkillData(skill,lvl,2); }
-		else if (skill.name == "Cleave") { 			weapon_damage = 60; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); }
+		else if (skill.name == "Cleave") { 			console.warn("Cleave found"); weapon_damage = 60; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Pulveroze") { 		weapon_damage = 60; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Pulverize") { 		damage_min = character.getSkillData(skill,lvl,1); damage_max = character.getSkillData(skill,lvl,2); ar_bonus = character.getSkillData(skill,lvl,0); }
 		else if (skill.name == "Stun") { 			mDamage_min = character.getSkillData(skill,lvl,0); mDamage_max = character.getSkillData(skill,lvl,1); ar_bonus = character.getSkillData(skill,lvl,2); }

@@ -2336,6 +2336,18 @@ function getCTCSkillData(name, lvl, group) {
 		}
 		warcrytext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}"; 
 	}	
+
+	else if (name == "Cleave") {
+//		if (character.class_name == "Barbarian") {
+//			result.damage_min = skill.data.values[0][lvl] * (1 + 0.06*skills[0].level + 0.06*skills[2].level + 0.06*skills[5].level) ;
+//			result.damage_max = skill.data.values[1][lvl] * (1 + 0.06*skills[0].level + 0.06*skills[2].level + 0.06*skills[5].level) ;
+//		}
+		if (character.class_name != "Barbarian") {
+			result.damage_min = skill.data.values[0][lvl] ;
+			result.damage_max = skill.data.values[1][lvl] ;
+		}
+		cleavetext = "(" + Math.round(result.damage_min) + "-" + Math.round(result.damage_max) + " phys)" + " {" +Math.round((result.damage_min+result.damage_max)/2) + "}"; 
+	}	
 	// Druid
 	else if (name == "Cyclone Armor") { result.absorb_elemental = skill.data.values[0][lvl]; }
 	else if (name == "Volcano") {
@@ -4917,7 +4929,42 @@ function updateTertiaryStats() {
 	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
 	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}
 	if (c.evade > 0) { statlines += c.evade + "% Chance to <b>Evade</b> melee or missile attack when walking or running" + "<br>"}
+	if (character.metamorphosis_bear1 > 0) { 
+//		character.oskill_Cleave = character.maul_charges
+		character.skill_Cleave = character.maul_charges
+//		var outcome = {min:0,max:0,ar:0};
+//		var physDamage = getWeaponDamage(character.strTotal,character.dexTotal,"weapon",0);
+//		var dmg = getNonPhysWeaponDamage("weapon");
+//		var basic_min = Math.floor(physDamage[0]*physDamage[2]);
+//		var basic_max = Math.floor(physDamage[1]*physDamage[2]);
 
+//		var nonPhys_min = Math.floor(dmg.fMin + dmg.cMin + dmg.lMin + dmg.pMin + dmg.mMin);
+//		var nonPhys_max = Math.floor(dmg.fMax + dmg.cMax + dmg.lMax + dmg.pMax + dmg.mMax);
+
+//		outcome = character_all.any.getSkillDamage("Cleave", ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max)
+//		var output = ": " + outcome.min + "-" + outcome.max + " {"+Math.ceil((outcome.min+outcome.max)/2)+"}";
+//		var outcome = {min:0,max:0,ar:0};
+//		outcome = c.getSkillDamage(skill, ar, physDamage_offhand[0], physDamage_offhand[1], physDamage_offhand[2], nonPhys_min_offhand, nonPhys_max_offhand);
+//		var output = outcome.min + "-" + outcome.max + " {"+Math.ceil((outcome.min+outcome.max)/2)+"}";
+
+//		cleave_dam_min = outcome.min
+//		cleave_dam_max = outcome.max
+//		getCTCSkillData("Cleave", character.maul_charges, "helm")
+		physDamage = getWeaponDamage(character.strTotal,character.dexTotal,"weapon",0)
+		cleave_dam_min = Math.floor((physDamage[0]*.6) * (1 + character.damage_bonus/100)) // * (1 + (60-100)/100) + (physDamage[0] * (1+(character.damage_bonus+character.damage_enhanced)/100)) )
+		cleave_dam_max = Math.floor((physDamage[1]*.6) * (1 + character.damage_bonus/100)) //* (1 + (60-100)/100) + (character.damage_min * (1+(character.damage_bonus+character.damage_enhanced)/100)) )
+//console.warn  (character.skill_Cleave, basic_min, basic_max, physDamage, dmg, outcome)
+		maul_min = Math.floor(character_all.any.getSkillData("Cleave",character.maul_charges,0) * (1 + character.damage_bonus/100))
+		maul_max = Math.floor(character_all.any.getSkillData("Cleave",character.maul_charges,1) * (1 + character.damage_bonus/100))
+		
+//		statlines += "Maul attacks gain cleave" + " (" + maul_min + ")" + " (" + maul_max + ")" + "<br>" + "Grizzly Maul attacks gain cleave" + "<br>"
+		statlines += "Maul attacks gain cleave" + "<br>" + "Grizzly Maul attacks gain cleave" + "<br>"
+//		statlines += "You have: " + character.maul_charges + " Maximum Maul Charges" + "<br>"
+//		statlines += "Grizzly Cleave damage: " + cleave_dam_min + "-" + cleave_dam_max + "<br>&nbsp;&nbsp;&nbsp;&nbsp;Plus " + maul_min + "-" + maul_max + ""
+		
+	}
+
+	
 //	if (character.customStats != null) { statlines += c.addcraft }
 
 	document.getElementById("statlines").innerHTML = statlines
@@ -5028,6 +5075,11 @@ function updateCTC() {
 					}
 
 					else if (equipped[group].ctc[i][2] == "War Cry") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + warcrytext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Cleave") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + warcrytext;
 					}

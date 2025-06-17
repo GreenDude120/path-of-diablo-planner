@@ -258,6 +258,7 @@ var character_any = {
 		else if (skillName == "Strafe") {			attack = 1; spell = 0; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); damage_bonus = character_any.getSkillData(skillName,lvl,3); }
 		else if (skillName == "Guided Arrow") {		attack = 1; spell = 1; weapon_damage = 150; damage_bonus = character_any.getSkillData(skillName,lvl,0); }
 		else if (skillName == "Bash") { 			attack = 1; spell = 0; weapon_damage = 110; ar_bonus = character_any.getSkillData(skillName,lvl,2); damage_bonus = character_any.getSkillData(skillName,lvl,3); }
+		else if (skillName == "Cleave") { 			attack = 1; spell = 2; console.warn("Cleave found"); weapon_damage = 60; damage_min = character_any.getSkillData(skillName,character.maul_charges,0); damage_max = character_any.getSkillData(skillName,character.maul_charges,1); }
 		else if (skillName == "Flame Dash") { 		attack = 0; spell = 1; lvl += character.skills_fire_all; fDamage_min = character_any.getSkillData(skillName,lvl,1); fDamage_max = character_any.getSkillData(skillName,lvl,2); }
 		else if (skillName == "Feral Rage") {		attack = 1; spell = 0; ar_bonus = character_any.getSkillData(skillName,lvl,5); damage_bonus = character_any.getSkillData(skillName,lvl,4); }
 		else if (skillName == "Summon Dire Wolf") {	attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,4); damage_max = character_any.getSkillData(skillName,lvl,5); ar_bonus = character_any.getSkillData(skillName,lvl,1); }
