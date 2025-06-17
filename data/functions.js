@@ -4954,13 +4954,13 @@ function updateTertiaryStats() {
 		cleave_dam_min = Math.floor((physDamage[0]*.6) * (1 + character.damage_bonus/100)) // * (1 + (60-100)/100) + (physDamage[0] * (1+(character.damage_bonus+character.damage_enhanced)/100)) )
 		cleave_dam_max = Math.floor((physDamage[1]*.6) * (1 + character.damage_bonus/100)) //* (1 + (60-100)/100) + (character.damage_min * (1+(character.damage_bonus+character.damage_enhanced)/100)) )
 //console.warn  (character.skill_Cleave, basic_min, basic_max, physDamage, dmg, outcome)
-		maul_min = Math.floor(character_all.any.getSkillData("Cleave",character.maul_charges,0) * (1 + character.damage_bonus/100))
-		maul_max = Math.floor(character_all.any.getSkillData("Cleave",character.maul_charges,1) * (1 + character.damage_bonus/100))
+		maul_min = Math.floor((character_all.any.getSkillData("Cleave",character.maul_charges,0) * (1 + (character.damage_bonus + character.e_damage)/100)))
+		maul_max = Math.floor((character_all.any.getSkillData("Cleave",character.maul_charges,1) * (1 + character.damage_bonus/100 + character.e_damage/100)))
 		
 //		statlines += "Maul attacks gain cleave" + " (" + maul_min + ")" + " (" + maul_max + ")" + "<br>" + "Grizzly Maul attacks gain cleave" + "<br>"
 		statlines += "Maul attacks gain cleave" + "<br>" + "Grizzly Maul attacks gain cleave" + "<br>"
 //		statlines += "You have: " + character.maul_charges + " Maximum Maul Charges" + "<br>"
-//		statlines += "Grizzly Cleave damage: " + cleave_dam_min + "-" + cleave_dam_max + "<br>&nbsp;&nbsp;&nbsp;&nbsp;Plus " + maul_min + "-" + maul_max + ""
+		statlines += "BETA - Grizzly Cleave damage: " + cleave_dam_min + "-" + cleave_dam_max + "<br>&nbsp;&nbsp;&nbsp;&nbsp;Plus " + maul_min + "-" + maul_max + ""
 		
 	}
 
