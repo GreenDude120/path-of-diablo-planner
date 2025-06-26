@@ -7745,6 +7745,77 @@ function equipSynthesizedItem(baseItem) {
 }
 
 
+document.getElementById('copyShortLink').addEventListener('click', () => {
+  const urlParams = window.location.search.substring(1); // e.g. "foo=1&bar=2"
+  // Compress
+  const compressed = pako.deflate(new TextEncoder().encode(urlParams));
+  // Encode to base64url
+  const encoded = base64UrlEncode(compressed);
+
+  const shortUrl = `${window.location.origin}${window.location.pathname}?s=${encoded}`;
+  
+  // Copy to clipboard and alert
+  navigator.clipboard.writeText(shortUrl).then(() => {
+    alert('Short URL copied to clipboard!');
+  }).catch(() => {
+    alert('Failed to copy short URL');
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const button = document.getElementById('createLink');
+  if (!button) {
+    console.warn('createLink button not found');
+    return;
+  }
+
+  button.addEventListener('click', async () => {
+    async function createShortLink(authToken = 'TacoToken') {
+      const currentUrl = window.location.href;
+
+      try {
+        const response = await fetch('https://sink.actuallyiamqord.workers.dev/api/link/create', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ url: currentUrl })
+        });
+
+        if (!response.ok) {
+          const err = await response.text();
+          throw new Error(`Server returned ${response.status}: ${err}`);
+        }
+
+        const data = await response.json();
+        const shortLink = data.shortLink;
+
+        await navigator.clipboard.writeText(shortLink);
+//        document.getElementById('output').textContent = `✅ Copied to clipboard: ${shortLink}`;
+		showPopup(`Shortlink copied to clipboard:\n${shortLink}`);
+      } catch (error) {
+		showPopup(`❌ Error: ${error.message}`);
+//        document.getElementById('output').textContent = `❌ Error: ${error.message}`;
+        console.error(error);
+      }
+    }
+
+    await createShortLink();
+  });
+});
+
+function showPopup(message, duration = 3000) {
+  const popup = document.getElementById('popup');
+  popup.textContent = message;
+  popup.style.display = 'block';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, duration);
+}
+
+
 
 
   

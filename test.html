@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sink API Link Creator</title>
+</head>
+<body>
+  <h1>Create a Link</h1>
+  <button id="createLink">Create Link</button>
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById('createLink').addEventListener('click', () => {
+      fetch('https://sink.actuallyiamqord.workers.dev/api/link/create', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer TacoToken',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          url: 'https://pathofdiablo.com/wiki/Main_Page'
+//          slug: 'issue14'
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById('output').textContent = 'Error: ' + error;
+      });
+    });
+  </script>
+</body>
+</html>
