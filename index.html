@@ -17,6 +17,8 @@
 <!--<link rel="stylesheet" type="text/css" href="./data/app.css"> -->
 <!--<link rel="shortcut icon" type="image/x-icon" href="./images/portal.ico"> -->
 <link rel="shortcut icon" type="image/x-icon" href="./images/pod.ico">
+<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
 <script type="text/javascript" src="./data/monsters.js"></script>
 <script type="text/javascript" src="./data/items.js"></script>
 <script type="text/javascript" src="./data/item_metadata.js"></script>
@@ -37,10 +39,10 @@
 <script type="text/javascript" src="./data/skills/vanilla/paladin.js"></script>
 <script type="text/javascript" src="./data/skills/vanilla/sorceress.js"></script>
 <script type="text/javascript" src="./data/skills/vanilla/universal_skills.js"></script>
-<script type="text/javascript" src="./data/functions.js"></script>
+<!--<script type="text/javascript" src="./data/functions.js"></script> -->
 <script type="text/javascript" src="./data/quicklinks.js"></script>
 <script type="text/javascript" src="./data/custom.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script> -->
 
 </head>
 
@@ -244,6 +246,23 @@
 		<div class="nav-dropdown-content-item" id="nav_difficulty"><div class="nav-difficulty">&nbsp;&nbsp;&nbsp;Enter Character Name and click the button &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;<input type="text" name="importname" class="nav-dropdown-content-item" id="importname"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;<input type="button" value="Import Whole Character" onClick="importChar()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="button" value="Just the Synth" onClick="justthesynth()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;
 
 </div><br><br></div></div></div>
+  <div class="nav-dropdown">
+	<button class="nav-dropbtn" style="cursor:pointer;" id="createLink" title="Get a short link ">Short Link</button> <!-- <pre id="output"></pre> -->
+  </div>
+<div id="popup" style="
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1a1a1a;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  z-index: 9999;
+"></div>
+
 	<img src="./images/portal.ico" class="portal-logo" style="position: absolute; right:6%;" title="PoD Build Planer originally&#10;created by BetweenWalls"> 
 </div>
 
@@ -883,6 +902,7 @@
 	  
 </div>	<!-- /full_interface -->
 </div>	<!-- /main -->
+<script type="text/javascript" src="./data/functions.js"></script>
 </body>
 </html>
 

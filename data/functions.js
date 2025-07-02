@@ -5399,6 +5399,7 @@ function checkSkill(skillName, num) {
 		c.ar_skillup2 +
 		c.ar_bonus +
 		(c.level * c.ar_bonus_per_level);
+	console.log("Base AR, Bonus AR: ", baseAR, arBonusPercent)
 
 	// Total AR after % increases
 	let ar = baseAR * (1 + arBonusPercent / 100) * (1 + c.ar_shrine_bonus / 100);
@@ -7745,6 +7746,44 @@ function equipSynthesizedItem(baseItem) {
 }
 
 
+function createQuicklink() {
+    const currentUrl = window.location.href;
+    const encodedUrl = encodeURIComponent(`Long URL: ${currentUrl}`);
+    const issueTitle = encodeURIComponent("Request quicklink for long URL");
+    const newIssueUrl = `https://github.com/qordwasalreadytaken/path-of-diablo-planner/issues/new?labels=shortlink&title=${issueTitle}&body=${encodedUrl}`;
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(currentUrl).then(() => {
+        console.log("Copied long URL to clipboard.");
+    }).catch(err => {
+        console.error("Failed to copy URL to clipboard:", err);
+    });
+
+    // Open GitHub issue form
+    window.open(newIssueUrl, "_blank");
+}
+
+function base64UrlEncode(buffer) {
+  return btoa(String.fromCharCode(...buffer))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+function base64UrlDecode(str) {
+  // Add padding
+  str = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (str.length % 4) str += '=';
+  const binary = atob(str);
+  const len = binary.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+}
+
+/*
 document.getElementById('copyShortLink').addEventListener('click', () => {
   const urlParams = window.location.search.substring(1); // e.g. "foo=1&bar=2"
   // Compress
@@ -7760,7 +7799,7 @@ document.getElementById('copyShortLink').addEventListener('click', () => {
   }).catch(() => {
     alert('Failed to copy short URL');
   });
-});
+}); */
 
 document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById('createLink');
@@ -7770,43 +7809,58 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   button.addEventListener('click', async () => {
-    async function createShortLink(authToken = 'TacoToken') {
-      const currentUrl = window.location.href;
+    const currentUrl = window.location.href;
+    const cacheKey = `short:${currentUrl}`;
+    const cachedShort = localStorage.getItem(cacheKey);
 
-      try {
-        const response = await fetch('https://sink.actuallyiamqord.workers.dev/api/link/create', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${authToken}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ url: currentUrl })
-        });
-
-        if (!response.ok) {
-          const err = await response.text();
-          throw new Error(`Server returned ${response.status}: ${err}`);
-        }
-
-        const data = await response.json();
-        const shortLink = data.shortLink;
-
-        await navigator.clipboard.writeText(shortLink);
-//        document.getElementById('output').textContent = `✅ Copied to clipboard: ${shortLink}`;
-		showPopup(`Shortlink copied to clipboard:\n${shortLink}`);
-      } catch (error) {
-		showPopup(`❌ Error: ${error.message}`);
-//        document.getElementById('output').textContent = `❌ Error: ${error.message}`;
-        console.error(error);
-      }
+    if (cachedShort) {
+      await navigator.clipboard.writeText(cachedShort);
+      showPopup(`✅ Reused shortlink:\n${cachedShort}`);
+      return;
     }
 
-    await createShortLink();
+    const now = Math.floor(Date.now() / 1000);
+    const expiration = now + 60 * 5; // 5 minutes (or 7 days)
+
+    try {
+      const res = await fetch('https://sink.actuallyiamqord.workers.dev/api/proxy-create-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: currentUrl, expiration }),
+      });
+
+    if (!res.ok) {
+      // Friendly fallback for Cloudflare quota exhaustion
+      if (res.status === 1105 || res.status === 503) {
+        showPopup(`⚠️ The shortener is currently offline due to rate limiting. Please try again later.`);
+      } else {
+        const errText = await res.text();
+        throw new Error(`Server returned ${res.status}: ${errText}`);
+      }
+      return;
+    }
+      const data = await res.json();
+      const shortLink = data.shortLink;
+
+      localStorage.setItem(cacheKey, shortLink);
+      await navigator.clipboard.writeText(shortLink);
+      showPopup(`✅ Shortlink copied:\n${shortLink}`);
+    } catch (error) {
+      showPopup(`❌ Error:\n${error.message}`);
+      console.error(error);
+    }
   });
 });
 
 function showPopup(message, duration = 3000) {
   const popup = document.getElementById('popup');
+  if (!popup) {
+    alert(message); // fallback
+    return;
+  }
+
   popup.textContent = message;
   popup.style.display = 'block';
 
@@ -7815,6 +7869,20 @@ function showPopup(message, duration = 3000) {
   }, duration);
 }
 
+function showPopup(message, duration = 3000) {
+  const popup = document.getElementById('popup');
+  if (!popup) {
+    alert(message); // fallback
+    return;
+  }
+
+  popup.textContent = message;
+  popup.style.display = 'block';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, duration);
+}
 
 
 

@@ -164,6 +164,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
 //		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
 		if (spell == 0) { skillAr = Math.floor(character.baseAR*(1+(ar_bonus+character.arBonusPercent)/100)); }
+		console.log("getskilldamage mid AR, skillar = character.baseAR * ar_bonus: ", skillAr, character.baseAR, ar_bonus, character.arBonusPercent)
 
 				// Get breakdown of sources of skill damage
 		// Get breakdown of sources of skill damage
