@@ -7820,7 +7820,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const now = Math.floor(Date.now() / 1000);
-    const expiration = now + 300; // 5 minutes (or 7 days)
+//    const expiration = now + 300; // 5 minutes for quick expiration testing
+//	const expiration = now + 604800; //one week
+//	const expiration = now + 1209600; // 2 weeks
+	const expiration = now + 2419200; // 4 weeks
+//	const expiration = now + 60 * 60 * 24 * 365; // 1 year
 
     try {
 //      const res = await fetch('https://sink.actuallyiamqord.workers.dev/api/proxy-create-link', {
