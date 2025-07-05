@@ -7820,10 +7820,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const now = Math.floor(Date.now() / 1000);
-    const expiration = now + 60 * 5; // 5 minutes (or 7 days)
+    const expiration = now + 300; // 5 minutes (or 7 days)
 
     try {
-      const res = await fetch('https://sink.actuallyiamqord.workers.dev/api/proxy-create-link', {
+//      const res = await fetch('https://sink.actuallyiamqord.workers.dev/api/proxy-create-link', {
+      const res = await fetch('https://b.pathofdiablo.com/api/proxy-create-link', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
