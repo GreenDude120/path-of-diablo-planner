@@ -3159,6 +3159,17 @@ function equipmentHover(group) {
 		}
 	}
 	for (affix in equipped[group]) {
+		if (character.class_name === "Paladin")
+		{	
+		if (equipped[group][affix] != unequipped[affix] && stats[affix] != unequipped[affix] && stats[affix] != 1 && affix != "velocity") {
+			var affix_info = getAffixLine(affix,"equipped",group,"");
+			if (affix_info[1] != 0) {
+				if (affix == "base_damage_min" || affix == "base_defense" || affix == "req_level" || affix == "req_strength" || affix == "req_dexterity" || affix == "durability" || affix == "baseSpeed" || affix == "range" || affix == "throw_min" || affix == "base_min_alternate" || affix == "block" || affix == "velocity" || affix == "smite_min") { main_affixes += affix_info[0]+"<br>" }
+				else { affixes += affix_info[0]+"<br>" }
+			}
+		}
+		}
+		else{
 		if (equipped[group][affix] != unequipped[affix] && stats[affix] != unequipped[affix] && stats[affix] != 1 && affix != "velocity" && affix != "smite_min") {
 			var affix_info = getAffixLine(affix,"equipped",group,"");
 			if (affix_info[1] != 0) {
@@ -3166,6 +3177,8 @@ function equipmentHover(group) {
 				else { affixes += affix_info[0]+"<br>" }
 			}
 		}
+		}
+
 	}
 	if (equipped[group].name != "none" && (group == "helm" || group == "armor" || group == "weapon" || group == "offhand")) {
 		updateSocketTotals()
