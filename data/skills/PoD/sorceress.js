@@ -191,6 +191,10 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 //			if (c.class_name != "Sorceress" ) {
 //				skills[s].extra_levels += character.skills_sorceress
 //			}		
+
+		if (s == 31) {
+			skills[s].extra_levels += character.skills_summon_all
+		}
 		if (s < 11) {
 			skills[s].extra_levels += character.skills_cold
 			skills[s].extra_levels += character.skills_tree1

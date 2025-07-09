@@ -1520,7 +1520,7 @@ tigerstrike_fof:{index:[], format:["Tiger Strike also generates a Fists of Fire 
 skill_Double_Throw:{index:["skill_Double_Throw"], format:["+"," to Double Throw (Barbarian only)"], editable:1},
 summon_more_shadow:{index:[], format:["Can Summon an Additional Shadow Warrior/Master"], editable:1},
 lDamage_max_per_2_dex:{index:["lDamage_max_per_2_dex"], format:["+"," Lightning Damage per 2 Dexterity"], editable:1},
-skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summoning Skills"], editable:1},
+skills_summon_all:{index:["skills_summon_all"], format:["+"," to Summon Skills"], editable:1},
 mosaic_charge_dur:{index:["mosaic_charge_dur"], format:["+"," Seconds to All Martial Arts Charges Duration"], editable:1},
 oskill_Taunt:{index:["oskill_Taunt"], format:["+"," to Taunt"], friendly:["Taunt oskill"], editable:1},
 oskill_Blood_Golem:{index:["oskill_Blood_Golem"], format:["+"," to Blood Golem"], friendly:["Blood Golem oskill"], editable:1},
