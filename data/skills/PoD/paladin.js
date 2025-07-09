@@ -205,7 +205,8 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 		if (s == 11) { skills[s].extra_levels += (character.skills_fire_all + character.skills_ele_poison_all)}
 		if (s == 15) { skills[s].extra_levels += (character.skills_cold_all + character.skills_ele_poison_all)}
 		if (s == 16 || s == 29) { skills[s].extra_levels += (character.skills_lightning_all + character.skills_ele_poison_all)}
-		if (s == 17 || s == 22 || s == 26 || s == 29 || s == 30) { skills[s].extra_levels += character.skills_magic_all }
+		if (s == 17 || s == 22 || s == 26 || s == 30) { skills[s].extra_levels += character.skills_magic_all }
+		if (s == 27) { skills[s].extra_levels += character.skills_summon_all}
 		if (s < 10) {
 			skills[s].extra_levels += character.skills_defensive
 			skills[s].extra_levels += character.skills_tree1

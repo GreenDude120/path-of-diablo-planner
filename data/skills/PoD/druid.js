@@ -227,6 +227,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		if (s == 0 || s == 1 || s == 2 || s == 4 || s == 7 || s == 9 || s == 17) { skills[s].extra_levels += (character.skills_fire_all + character.skills_ele_poison_all) }
 		if (s == 3 || s == 10 || s == 21) { skills[s].extra_levels += (character.skills_cold_all + character.skills_ele_poison_all)}
 		if (s == 16 || s == 22) { skills[s].extra_levels += (character.skills_poison_all + character.skills_ele_poison_all)}
+		// All summon tree skills should get summon_all, so that's added below
 		if (s < 11) {
 			skills[s].extra_levels += character.skills_elemental
 			skills[s].extra_levels += character.skills_tree1

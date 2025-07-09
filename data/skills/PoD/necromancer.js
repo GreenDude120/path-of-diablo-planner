@@ -180,14 +180,16 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 	// ---------------------------------
 	setSkillAmounts : function(s) {
 		skills[s].extra_levels += character.skills_necromancer
-		if (s == 9 || s == 14) { skills[s].extra_levels += (character.skills_fire_all + character.skills_ele_poison_all)}
+		if (s == 14) { skills[s].extra_levels += (character.skills_fire_all + character.skills_ele_poison_all)}
 		if (s == 11 || s == 15 || s == 19) { skills[s].extra_levels += (character.skills_poison_all + character.skills_ele_poison_all)}
 		if (s == 12 || s == 16 || s == 18) { skills[s].extra_levels += character.skills_magic_all }
+		if (s == 1 || s == 3 || s == 5 || s == 6 || s == 8 || s == 9 || s == 10) { skills[s].extra_levels += character.skills_summon_all }
+		
 //		if (s == 11 || s == 15 || s == 19) { skills[s].extra_levels += character.skills_ele_poison_all }
 		if (s < 11) {
 			skills[s].extra_levels += character.skills_summoning_necromancer
 			skills[s].extra_levels += character.skills_tree1
-			skills[s].extra_levels += character.skills_summon_all
+//			skills[s].extra_levels += character.skills_summon_all
 		} else if (s > 19) {
 			skills[s].extra_levels += character.skills_curses
 			skills[s].extra_levels += character.skills_tree3

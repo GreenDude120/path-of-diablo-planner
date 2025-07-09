@@ -192,6 +192,10 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 //				skills[s].extra_levels += character.skills_sorceress
 //			}		
 
+		if (s == 0 || s == 2 || s == 3 || s == 5 || s == 6 || s == 7 || s == 9) { skills[s].extra_levels += character.skills_ele_poison_all }
+		if (s == 22 || s == 24 || s == 25 || s == 26 || s == 27 || s == 29 || s == 31) { skills[s].extra_levels += character.skills_ele_poison_all }
+		if (s == 11 || s == 12 || s == 14 || s == 15 || s == 16 || s == 18 || s == 19) { skills[s].extra_levels += character.skills_ele_poison_all }
+
 		if (s == 31) {
 			skills[s].extra_levels += character.skills_summon_all
 		}
@@ -199,7 +203,7 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 			skills[s].extra_levels += character.skills_cold
 			skills[s].extra_levels += character.skills_tree1
 			skills[s].extra_levels += character.skills_cold_all
-			skills[s].extra_levels += character.skills_ele_poison_all
+//			skills[s].extra_levels += character.skills_ele_poison_all
 		} else if (s > 21) {
 //			if (character.class_name != "Sorceress" ) {
 //				skills[s].extra_levels += character.skills_sorceress
@@ -207,12 +211,12 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 			skills[s].extra_levels += character.skills_fire
 			skills[s].extra_levels += character.skills_tree3
 			skills[s].extra_levels += character.skills_fire_all
-			skills[s].extra_levels += character.skills_ele_poison_all
+//			skills[s].extra_levels += character.skills_ele_poison_all
 		} else {
 			skills[s].extra_levels += character.skills_lightning
 			skills[s].extra_levels += character.skills_tree2
-			skills[s].extra_levels += character.skills_lightning_all
-			skills[s].extra_levels += character.skills_ele_poison_all
+//			skills[s].extra_levels += character.skills_lightning_all
+//			skills[s].extra_levels += character.skills_ele_poison_all
 		}
 	}
 };

@@ -179,6 +179,7 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 	// ---------------------------------
 	setSkillAmounts : function(s) {
 		skills[s].extra_levels += character.skills_barbarian
+//		if (s == 22 || s == 24 || s == 28 || s == 29) { skills[s].extra_levels += character.skills_magic_all }
 		if (s < 10) {
 			skills[s].extra_levels += character.skills_warcries
 			skills[s].extra_levels += character.skills_tree1
