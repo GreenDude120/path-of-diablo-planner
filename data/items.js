@@ -494,7 +494,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"sorceress", rarity:"magic", name:"Volcanic Amulet", req_level:42, skills_fire:3},
 	{rarity:"craft", name:"Blood Amulet", req_level:89, skills_class:2, frw:10, life_leech:4, mana_leech:5, life:20, strength:35, all_res:20},
 	{rarity:"craft", name:"Caster Amulet", req_level:89, skills_class:2, fcr:20, mana_regen:10, mana:20, strength:30, energy:5, all_res:20},
-	{rarity:"craft", name:"Hitpower Amulet", req_level:89, ctc:[[5,4,"Frost Nova","when hit"]], skills_class:2, fcr:10, all_res:20, strength:30, thorns:6, skills_summon_all:1},
+	{rarity:"craft", name:"Hitpower Amulet", req_level:89, ctc:[[5,4,"Frost Nova","when hit"]], skills_class:2, fcr:10, all_res:20, strength:30, thorns:6, skills_summon_all:2},
 	{rarity:"magic", name:"Imported magic Amulet", req_level:64, cplaceholder:1},
 	{rarity:"rare", name:"Imported rare Amulet", req_level:64, cplaceholder:1},
 	{rarity:"craft", name:"Imported crafted Amulet", req_level:64, cplaceholder:1},
