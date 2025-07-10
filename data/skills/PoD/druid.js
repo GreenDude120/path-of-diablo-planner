@@ -161,8 +161,8 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		else if (skill.name == "Rabies") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,0); pDamage_min = character.getSkillData(skill,lvl,1); pDamage_max = character.getSkillData(skill,lvl,2); pDamage_duration = 4; }
 		else if (skill.name == "Fire Claws") {			attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,2); fDamage_min = character.getSkillData(skill,lvl,0); fDamage_max = character.getSkillData(skill,lvl,1); }
 		else if (skill.name == "Hunger") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,2); damage_bonus = -75; }
-//		else if (skill.name == "Shock Wave") {			attack = 1; spell = 0; weapon_damage = 25; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); e_damage = -75;}
-		else if (skill.name == "Shock Wave") {			attack = 1; spell = 0; weapon_damage = 30; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1);}
+		else if (skill.name == "Shock Wave") {			attack = 1; spell = 0; weapon_damage = 25; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1); e_damage = character.e_damage/4;}
+//		else if (skill.name == "Shock Wave") {			attack = 1; spell = 0; weapon_damage = 30; damage_min = character.getSkillData(skill,lvl,0); damage_max = character.getSkillData(skill,lvl,1);}
 		else if (skill.name == "Fury") { 				attack = 1; spell = 0; ar_bonus = character.getSkillData(skill,lvl,1); damage_bonus = character.getSkillData(skill,lvl,2); console.log("Character getSkillDamage AR: ", ar, ar_bonus); }
 		else if (skill.name == "Raven") { 				attack = 0; spell = 1; damage_min = character.getSkillData(skill,lvl,1); damage_max = character.getSkillData(skill,lvl,2); cDamage_min = character.getSkillData(skill,lvl,3); cDamage_max = character.getSkillData(skill,lvl,4); }
 		else if (skill.name == "Poison Creeper") { 		attack = 0; spell = 1; pDamage_min = character.getSkillData(skill,lvl,1); pDamage_max = character.getSkillData(skill,lvl,2); pDamage_duration = 5; }
@@ -189,7 +189,7 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 //		else { 	phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_min * (1+(damage_bonus+damage_enhanced)/100)));
 //				phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 //		}
-		if (skill.name == "Shock Wave") {var damage_enhanced = character.damage_bonus}
+		if (skill.name == "Shock Wave") {var damage_enhanced = character.damage_bonus;} // character.e_damage = Math.floor(character.e_damage/4)}
 		phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_min * (1+(damage_bonus+damage_enhanced)/100)));
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100) + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
