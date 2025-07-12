@@ -821,3 +821,29 @@ Added 23 Dec
   text-rendering: optimizeLegibility;
 }
 
+/* Position the nested submenu to the right */
+.nav-dropdown-submenu {
+  position: relative;
+}
+
+.nav-dropdown-submenu-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%; /* fly out to the right of parent */
+  background-color: #222; /* match your theme */
+  min-width: 160px;
+  z-index: 1;
+  border-left: 1px solid #444;
+}
+
+/* Show submenu on hover */
+.nav-dropdown-submenu:hover .nav-dropdown-submenu-content {
+  display: block;
+}
+
+/* Optional styling for submenu items */
+.nav-dropdown-submenu-content .nav-dropdown-content-item {
+  white-space: nowrap;
+}
+

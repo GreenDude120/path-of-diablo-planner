@@ -7902,6 +7902,11 @@ function showPopup(message, duration = 3000) {
   }, duration);
 }
 
+function switchClass(newClass) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("class", newClass);
+  window.location.href = url.toString();
+}
 
 
   
