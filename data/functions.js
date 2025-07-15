@@ -7840,7 +7840,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cachedShort) {
       await navigator.clipboard.writeText(cachedShort);
-      showPopup(`✅ Reused shortlink:\n${cachedShort}`);
+      showPopup(`Reused existing shortlink:\n${cachedShort}`);
       return;
     }
 
@@ -7876,7 +7876,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       localStorage.setItem(cacheKey, shortLink);
       await navigator.clipboard.writeText(shortLink);
-      showPopup(`✅ Shortlink copied:\n${shortLink}`);
+      showPopup(`Shortlink copied:\n${shortLink}`);
     } catch (error) {
       showPopup(`❌ Error:\n${error.message}`);
       console.error(error);
