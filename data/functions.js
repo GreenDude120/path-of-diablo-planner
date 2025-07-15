@@ -4800,7 +4800,19 @@ function updateSecondaryStats() {
 //	if (c.life_regen > 0) { lifeRegen = c.life_regen+"% " }; if (c.life_replenish > 0) { lifeRegen += ("+"+c.life_replenish) }; if (c.life_regen == 0 && c.life_replenish == 0) { lifeRegen = 0 }
 	if (c.life_regen > 0) { lifeRegen = c.life_regen+"% "}; if (c.life_replenish > 0) { lifeRegen += ("+"+c.life_replenish); lifeRegen += " (" + (Math.floor(lifeTotal * (c.life_regen/100))+ c.life_replenish) +")"  }; if (c.life_regen == 0 && c.life_replenish == 0) { lifeRegen = 0 }
 	document.getElementById("life_regen").innerHTML = lifeRegen
-	document.getElementById("mana_regen").innerHTML = Math.round(c.mana_regen,1)+"%"	// TODO: mana_regen should multiply base regen (1.66%) instead of being additive? Or is the 1.66 value meant to be 166%?
+//	Testing mana regen formulas, how much per second
+//	var energyTotal = Math.floor((c.energy + c.all_attributes)*(1+c.max_energy/100));	
+//	console.log(energyTotal, "Energy total")
+//	var mana_addon = (energyTotal-c.starting_energy)*c.mana_per_energy;
+//	console.log(mana_addon, "Mana addon")
+//	var manaTotal = (c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100);
+//	console.log(manaTotal, "Mana total")
+////	Math.floor((c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100))
+//	manaRegeneratedPerSecond = Math.round(10 * (5 * ((256 * manaTotal / (25 * 120)) * (100 + c.mana_regen) / 100) / 256)) / 10;
+////	manaRegeneratedPerSecond = 	Math.round(manaTotal * (100 + c.mana_regen) / 12000)
+//	console.log(manaRegeneratedPerSecond, "Mana per second")
+	document.getElementById("mana_regen").innerHTML = Math.round(c.mana_regen,1)+"%"//+" ("+manaRegeneratedPerSecond+" per second)"	// TODO: mana_regen should multiply base regen (1.66%) instead of being additive? Or is the 1.66 value meant to be 166%?
+//	document.getElementById("mana_regen").innerHTML = Math.round(c.mana_regen,1)+"%"+" ("+manaRegeneratedPerSecond+" per second)"	// TODO: mana_regen should multiply base regen (1.66%) instead of being additive? Or is the 1.66 value meant to be 166%?
 	//var manaTotal = Math.floor((c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100));
 	//var manaRegeneratedPerSecond = 25 * Math.floor(Math.floor(256*manaTotal/(25*120)) * ((100+c.mana_regen)/100)) / 256;
 	
