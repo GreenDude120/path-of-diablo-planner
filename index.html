@@ -110,7 +110,8 @@
         <div class="nav-dropdown-content-item" onclick="switchClass('paladin')"><div class="nav-text"><label>Paladin</label></div></div>
         <div class="nav-dropdown-content-item" onclick="switchClass('sorceress')"><div class="nav-text"><label>Sorceress</label></div></div>
       </div>
-    </div>      <div class="nav-dropdown-content-item" onclick="exportEquippedToCSV()"><div class="nav-text">
+    </div>      
+	<div class="nav-dropdown-content-item" onclick="exportEquippedToCSV()"><div class="nav-text">
         <label>&nbsp;&nbsp;&nbsp;&nbsp;Export CSV&nbsp;&nbsp;</label>
       </div></div>
 	  <div class="nav-dropdown-content-item">
@@ -174,6 +175,20 @@
         <input id="running" type="checkbox" name="running" onclick="return toggleRunning(this);">
         <label for="running">&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
       </div></div>
+    <!-- Class switch submenu -->
+    <div class="nav-dropdown-content-item nav-dropdown-submenu">
+      <div class="nav-text"><label>&nbsp;&nbsp;&nbsp;&nbsp;Switch Class Keeping Equipment&nbsp;&nbsp;</label></div>
+      <div class="nav-dropdown-submenu-content">
+        <div class="nav-dropdown-content-item" onclick="switchClass('amazon')"><div class="nav-text"><label>Amazon</label></div></div>
+        <div class="nav-dropdown-content-item" onclick="switchClass('assassin')"><div class="nav-text"><label>Assassin</label></div></div>
+        <div class="nav-dropdown-content-item" onclick="switchClass('barbarian')"><div class="nav-text"><label>Barbarian</label></div></div>
+        <div class="nav-dropdown-content-item" onclick="switchClass('druid')"><div class="nav-text"><label>Druid</label></div></div>
+        <div class="nav-dropdown-content-item" onclick="switchClass('necromancer')"><div class="nav-text"><label>Necromancer</label></div></div>
+        <div class="nav-dropdown-content-item" onclick="switchClass('paladin')"><div class="nav-text"><label>Paladin</label></div></div>
+        <div class="nav-dropdown-content-item" onclick="switchClass('sorceress')"><div class="nav-text"><label>Sorceress</label></div></div>
+      </div>
+    </div>      
+
     </div>
   </div>
 <!--	filled via loadMonsters()
