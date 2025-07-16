@@ -7920,6 +7920,16 @@ function switchClass(newClass) {
   window.location.href = url.toString();
 }
 
+function copyToClipboard(inputElement) {
+navigator.clipboard.writeText(inputElement.value).then(() => {
+	// Optional: visual feedback
+	inputElement.style.backgroundColor = "#333"; // or any effect
+	inputElement.title = "Copied!";
+	showPopup(`Import link copied, make sure to change character name before sharing`);
+}).catch(err => {
+	console.error('Failed to copy: ', err);
+});
+}
 
   
 // Notes for Organization Overhaul:
