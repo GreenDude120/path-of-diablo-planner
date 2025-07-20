@@ -120,7 +120,11 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.ltick_max = skill.data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); 
 			result.addeddmgdisplaywrong = 1
 		}
-		if (skill.name == "Sanctuary") { result.damage_vs_undead = skill.data.values[0][lvl]; result.radius = 12.6; }
+		if (skill.name == "Sanctuary") { 
+			result.damage_vs_undead = skill.data.values[0][lvl]; 
+			result.radius = 12.6; 
+			result.mtick_min = Math.floor(skill.data.values[1][lvl] * ((1+(0.18*skills[4].level + 0.18*skills[30].level))* (1+character.mDamage/100)));
+			result.mtick_max = Math.floor(skill.data.values[2][lvl] * ((1+(0.18*skills[4].level + 0.18*skills[30].level))* (1+character.mDamage/100))) ; }
 		if (skill.name == "Fanaticism") { result.damage_bonus = skill.data.values[1][lvl]; result.ias_skill = skill.data.values[2][lvl]; result.ar_bonus = skill.data.values[3][lvl]; result.radius = 12; }
 		if (skill.name == "Conviction") { result.enemy_defense = skill.data.values[0][lvl]; result.enemy_fRes = skill.data.values[1][lvl]; result.enemy_cRes = skill.data.values[1][lvl]; result.enemy_lRes = skill.data.values[1][lvl]; result.enemy_pRes = skill.data.values[1][lvl]; result.radius = 24; }
 	    // Combat

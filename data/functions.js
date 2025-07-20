@@ -2221,10 +2221,14 @@ function getAuraData(aura, lvl, source) {
 		} 
 	}
 //	else if (aura == "Sanctuary") { result.damage_vs_undead = auras[a].data.values[0][lvl]; result.radius = 12.6; }
-	else if (aura == "Sanctuary") { result.damage_vs_undead = auras[a].data.values[0][lvl]; result.mtick_min = auras[a].data.values[1][lvl]; result.mtick_max = auras[a].data.values[2][lvl]; result.radius = 12.6; 
-		if (character.class_name != "Paladin") {
-			result.mtick_min = Math.floor(auras[a].data.values[1][lvl] * (1+character.mDamage/100));
-			result.mtick_max = Math.floor(auras[a].data.values[2][lvl] * (1+character.mDamage/100)) ; }
+	else if (aura == "Sanctuary") { 
+		result.damage_vs_undead = auras[a].data.values[0][lvl]; 
+		result.mtick_min = auras[a].data.values[1][lvl] * (1+character.mDamage/100); 
+		result.mtick_max = auras[a].data.values[2][lvl] * (1+character.mDamage/100); 
+		result.radius = 12.6; 
+		if (character.class_name == "Paladin") {
+			result.mtick_min = Math.floor(auras[a].data.values[1][lvl] * ((1+(0.18*skills[4].level + 0.18*skills[30].level))* (1+character.mDamage/100)));
+			result.mtick_max = Math.floor(auras[a].data.values[2][lvl] * ((1+(0.18*skills[4].level + 0.18*skills[30].level))* (1+character.mDamage/100))) ; }
 	}
 	else if (aura == "Fanaticism") { result.radius = 12; if (source == "mercenary" || source == "golem") { result.damage_bonus = auras[a].data.values[0][lvl] } else { result.damage_bonus = auras[a].data.values[1][lvl]; result.ias_skill = auras[a].data.values[2][lvl]; result.ar_bonus = auras[a].data.values[3][lvl]; }}
 	else if (aura == "Conviction") { result.enemy_defense = auras[a].data.values[0][lvl]; result.enemy_fRes = auras[a].data.values[1][lvl]; result.enemy_cRes = auras[a].data.values[1][lvl]; result.enemy_lRes = auras[a].data.values[1][lvl]; result.enemy_pRes = auras[a].data.values[1][lvl]; result.radius = 24; }
