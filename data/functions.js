@@ -7555,9 +7555,18 @@ function larzuk() {
 
 	// Only allow specific slots
 	const allowedSlots = ["weapon", "offhand", "helm", "armor"];
+	const rejectionMessages = {
+		amulet: "Surely you jest, amulets don't get sockets!",
+		ring1: "Ha! Imagine that, a world where rings have sockets!",
+		ring2: "Sockets in rings? Not on my watch!",
+		gloves: "The legend of old socket hands; No thank you.",
+		boots: "We will not help you put holes in your shoes",
+		belt: "This isn't a Batman utility belt",
+	};
+
 	if (!allowedSlots.includes(selectedSlot)) {
-		showPopup("You can only add sockets to weapons, shields, helms, or armor.");
-//		alert("You can only add sockets to weapons, shields, helms, or armor.");
+		const message = rejectionMessages[selectedSlot] || "You can only add sockets to weapons, shields, helms, or armor.";
+		showPopup(message);
 		return;
 	}
 
