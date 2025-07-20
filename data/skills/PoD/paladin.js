@@ -97,7 +97,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.ftick_min = skill.data.values[2][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100);
 			result.ftick_max = skill.data.values[3][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100); 
 			result.radius = 12;
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		if (skill.name == "Precision") { result.pierce = skill.data.values[0][lvl]; result.cstrike = skill.data.values[2][lvl]; result.ar_bonus = skill.data.values[3][lvl]; result.radius = 16; }
 		if (skill.name == "Blessed Aim") { result.hammer_on_hit = skill.data.values[0][lvl]; result.ar_bonus = skill.data.values[1][lvl]; result.radius = 16; }
@@ -110,7 +110,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.slow_enemies = skill.data.values[4][lvl]; result.radius = 13.3;
 			result.ctick_min = skill.data.values[2][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100) ; 
 			result.ctick_max = skill.data.values[3][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		if (skill.name == "Holy Shock") {
 			result.lDamage_min = skill.data.values[0][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
@@ -118,7 +118,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.radius = 18.6;
 			result.ltick_min = skill.data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100);
 			result.ltick_max = skill.data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		if (skill.name == "Sanctuary") { 
 			result.damage_vs_undead = skill.data.values[0][lvl]; 
@@ -139,6 +139,23 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 			result.lDamage_max = skill.data.values[3][lvl] * (1+character.lDamage/100);		}
 		// No stat buffs:
 		if (skill.name == "Conversion") { result.duration = skill.data.values[1][lvl]; }
+	//	Fix for aura display popup damage values
+		if (result.fDamage_min !== undefined) {
+		result.fDamage_min_display = result.fDamage_min * (1+character.fDamage/100);
+		result.fDamage_max_display = result.fDamage_max * (1+character.fDamage/100);
+		}
+		if (result.cDamage_min !== undefined) {
+		result.cDamage_min_display = result.cDamage_min * (1+character.cDamage/100);
+		result.cDamage_max_display = result.cDamage_max * (1+character.cDamage/100);
+		}
+		if (result.lDamage_min !== undefined) {
+		result.lDamage_min_display = result.lDamage_min * (1+character.lDamage/100);
+		result.lDamage_max_display = result.lDamage_max * (1+character.lDamage/100);
+		}
+		if (result.mDamage_min !== undefined) {
+		result.mDamage_min_display = result.mDamage_min * (1+character.mDamage/100);
+		result.mDamage_max_display = result.mDamage_max * (1+character.mDamage/100);
+		}
 		
 	return result
 	},

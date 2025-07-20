@@ -2070,12 +2070,28 @@ function hoverEffectOn(id) {
 	var source = "";
 	var note = "";
 	var affixes = "";
-	for (affix in effects[id]) { if (affix != "info" && affix != "duration" && affix != "radius") {
+//	for (affix in effects[id]) { if (affix != "info" && affix != "duration" && affix != "radius") {
+//		if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
+//			var affix_info = getAffixLine(affix,"effects",id,"");
+//			if (affix_info[1] != 0) { affixes += affix_info[0]+"<br>" }
+//		}
+//	} }
+	// Aura display fix
+	patchAuraDisplayDamage(effects, id);
+
+	for (affix in effects[id]) {
+	if (affix != "info" && affix != "duration" && affix != "radius") {
 		if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
-			var affix_info = getAffixLine(affix,"effects",id,"");
-			if (affix_info[1] != 0) { affixes += affix_info[0]+"<br>" }
+		var affix_info = getAffixLine(affix, "effects", id, "");
+		if (affix_info[1] != 0) {
+			affixes += affix_info[0] + "<br>";
 		}
-	} }
+		}
+	}
+	}
+
+	restoreAuraDisplayDamage(effects, id);
+
 	if (origin != "skill" && origin != "oskill" && origin != "misc") {
 		source = "Source: "
 		var group = other;
@@ -2162,19 +2178,19 @@ function getAuraData(aura, lvl, source) {
 		if (character.class_name == "Sorceress") {
 			result.ftick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100)* (1+character.fDamage/100)) ; 
 			result.ftick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100)* (1+character.fDamage/100)) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		if (character.class_name == "Paladin") {
 			result.fDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level);
 			result.fDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level); 
 			result.ftick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100);
 			result.ftick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100); 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		else { 
 			result.ftick_min = Math.floor(auras[a].data.values[2][lvl] * (1+character.fDamage/100)) ; 
 			result.ftick_max = Math.floor(auras[a].data.values[3][lvl] * (1+character.fDamage/100)) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 	}
 	else if (aura == "Precision") { result.cstrike = auras[a].data.values[2][lvl]; result.ar_bonus = auras[a].data.values[3][lvl]; result.radius = 16; if (source == "mercenary" || source == "golem") { result.pierce = auras[a].data.values[1][lvl] } else { result.pierce = auras[a].data.values[0][lvl] }}
@@ -2185,19 +2201,19 @@ function getAuraData(aura, lvl, source) {
 		if (character.class_name == "Sorceress") {
 			result.ctick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[10].level+skills[10].force_levels))*(~~skills[10].data.values[1][skills[10].level+skills[10].extra_levels])/100)* (1+character.cDamage/100)) ; 
 			result.ctick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[10].level+skills[10].force_levels))*(~~skills[10].data.values[1][skills[10].level+skills[10].extra_levels])/100)* (1+character.cDamage/100)) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		if (character.class_name == "Paladin") {
 			result.cDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level);
 			result.cDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level); 
 			result.ctick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100);
 			result.ctick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100); 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		else { 
 			result.ctick_min = Math.floor(auras[a].data.values[2][lvl] * (1+character.cDamage/100)) ; 
 			result.ctick_max = Math.floor(auras[a].data.values[3][lvl] * (1+character.cDamage/100)) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		} 
 	}	
 //	else if (aura == "Holy Shock") { result.lDamage_min = auras[a].data.values[0][lvl]; result.lDamage_max = auras[a].data.values[1][lvl]; result.radius = 18.6; }
@@ -2205,19 +2221,19 @@ function getAuraData(aura, lvl, source) {
 		if (character.class_name == "Sorceress") {
 			result.ltick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[20].level+skills[20].force_levels))*(~~skills[20].data.values[1][skills[20].level+skills[20].extra_levels])/100)* (1+character.lDamage/100)) ; 
 			result.ltick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[20].level+skills[20].force_levels))*(~~skills[20].data.values[1][skills[20].level+skills[20].extra_levels])/100)* (1+character.lDamage/100)) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		if (character.class_name == "Paladin") {
 			result.lDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
 			result.lDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level); 
 			result.ltick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100);
 			result.ltick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		}
 		else { 
 			result.ltick_min = Math.floor(auras[a].data.values[2][lvl] * (1+character.lDamage/100)) ; 
 			result.ltick_max = Math.floor(auras[a].data.values[3][lvl] * (1+character.lDamage/100)) ; 
-			result.addeddmgdisplaywrong = 1
+//			result.addeddmgdisplaywrong = 1
 		} 
 	}
 //	else if (aura == "Sanctuary") { result.damage_vs_undead = auras[a].data.values[0][lvl]; result.radius = 12.6; }
@@ -2251,12 +2267,30 @@ function getAuraData(aura, lvl, source) {
 //			result.cDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level); 
 //			result.ctick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100);
 //			result.ctick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100); }
-		else if (aura == "Holy Shock") { 
-			result.lDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
-			result.lDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level); 
-			result.ltick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100);
-			result.ltick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); }
+//		else if (aura == "Holy Shock") { 
+//			result.lDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
+//			result.lDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level); 
+//			result.ltick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100);
+//			result.ltick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); }
 	}
+//	Fix for aura display popup damage values
+	if (result.fDamage_min !== undefined) {
+	result.fDamage_min_display = result.fDamage_min * (1+character.fDamage/100);
+	result.fDamage_max_display = result.fDamage_max * (1+character.fDamage/100);
+	}
+	if (result.cDamage_min !== undefined) {
+	result.cDamage_min_display = result.cDamage_min * (1+character.cDamage/100);
+	result.cDamage_max_display = result.cDamage_max * (1+character.cDamage/100);
+	}
+	if (result.lDamage_min !== undefined) {
+	result.lDamage_min_display = result.lDamage_min * (1+character.lDamage/100);
+	result.lDamage_max_display = result.lDamage_max * (1+character.lDamage/100);
+	}
+	if (result.mDamage_min !== undefined) {
+	result.mDamage_min_display = result.mDamage_min * (1+character.mDamage/100);
+	result.mDamage_max_display = result.mDamage_max * (1+character.mDamage/100);
+	}
+
 	return result;
 }
 
@@ -7963,6 +7997,44 @@ navigator.clipboard.writeText(inputElement.value).then(() => {
 }
 
   
+// Trying to fix aura pop up to display correct damage without double dipping final damage values
+function patchAuraDisplayDamage(effects, id) {
+  const types = ["fDamage", "cDamage", "lDamage", "pDamage", "mDamage"];
+  for (const type of types) {
+    const minKey = `${type}_min`;
+    const maxKey = `${type}_max`;
+    const minDisplay = `${minKey}_display`;
+    const maxDisplay = `${maxKey}_display`;
+
+    if (effects[id][minDisplay] !== undefined) {
+      effects[id][`_original_${minKey}`] = effects[id][minKey];
+      effects[id][minKey] = effects[id][minDisplay];
+    }
+    if (effects[id][maxDisplay] !== undefined) {
+      effects[id][`_original_${maxKey}`] = effects[id][maxKey];
+      effects[id][maxKey] = effects[id][maxDisplay];
+    }
+  }
+}
+
+function restoreAuraDisplayDamage(effects, id) {
+  const types = ["fDamage", "cDamage", "lDamage", "pDamage", "mDamage"];
+  for (const type of types) {
+    for (const suffix of ["min", "max"]) {
+      const key = `${type}_${suffix}`;
+      const orig = `_original_${key}`;
+      if (effects[id][orig] !== undefined) {
+        effects[id][key] = effects[id][orig];
+        delete effects[id][orig];
+      }
+    }
+  }
+}
+
+
+
+
+
 // Notes for Organization Overhaul:
 //   TODO...
 //   variable names for item classification 
