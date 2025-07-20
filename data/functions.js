@@ -5912,6 +5912,65 @@ function processCharacterData(characterData) {
     equipItemDirectly(item);
     });
 
+	// Add Torch and Anni by default
+	addCharm("Hellfire Torch");
+	addCharm("Annihilus");
+
+	// Determine which SkillTab has the most points
+	let dominantTab = characterData.SkillTabs.reduce((maxTab, currentTab) =>
+		currentTab.Total > maxTab.Total ? currentTab : maxTab
+	);
+
+	// Map skill tab names to charm names
+	const charmMap = {
+		// Amazon
+		"Javelin and Spear Skills": "+1 Harpoonist's Grand Charm",
+		"Passive and Magic Skills": "+1 Acrobat's Grand Charm",
+		"Bow and Crossbow Skills": "+1 Fletcher's Grand Charm",
+
+		// Assassin
+		"Martial Arts": "+1 Shogukusha's Grand Charm",
+		"Shadow Disciplines": "+1 Mentalist's Grand Charm",
+		"Traps": "+1 Entrapping Grand Charm",
+
+		// Barbarian
+		"Warcries": "+1 Sounding Grand Charm",
+		"Masteries": "+1 Fanatic Grand Charm",
+		"Combat Skills": "+1 Expert's Grand Charm",
+
+		// Druid
+		"Elemental Skills": "+1 Nature's Grand Charm",
+		"Shape Shifting Skills": "+1 Spiritual Grand Charm",
+		"Summoning Skills": "+1 Trainer's Grand Charm",
+
+		// Necromancer
+		"Summoning Skills": "+1 Graverobber's Grand Charm",
+		"Poison and Bone Skills": "+1 Fungal Grand Charm",
+		"Curses": "+1 Hexing Grand Charm",
+
+		// Paladin
+		"Defensive Auras": "+1 Preserver's Grand Charm",
+		"Offensive Auras": "+1 Captain's Grand Charm",
+		"Combat Skills": "+1 Lion Branded Grand Charm",
+
+		// Sorceress
+		"Cold Skills": "+1 Chilling Grand Charm",
+		"Lightning Skills": "+1 Sparking Grand Charm",
+		"Fire Skills": "+1 Burning Grand Charm"
+	};
+
+
+	// Add charm if there's a match
+	if (charmMap[dominantTab.Name]) {
+		for (let i = 0; i < 9; i++) {
+			addCharm(charmMap[dominantTab.Name]);
+		}
+//		addCharm(charmMap[dominantTab.Name]);
+		console.log(`Added charm for dominant tab: ${dominantTab.Name}`);
+	} else {
+		console.warn(`No charm mapped for dominant skill tab: ${dominantTab.Name}`);
+	}
+
     update(); // Update interface dynamically
 }
 
