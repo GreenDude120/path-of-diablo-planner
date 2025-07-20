@@ -7545,6 +7545,63 @@ function addCustomStat() {
 		updateSelectedItemSummary(selectedSlot);
 	}
 	
+function larzuk() {
+	const statKey = "sockets";
+	const value = 1;
+	const selectedSlot = document.getElementById("slotSelect").value;
+	console.log("larzuk called");
+	console.log("equipped:", equipped);
+	console.log("selectedSlot:", selectedSlot);
+
+	// Only allow specific slots
+	const allowedSlots = ["weapon", "offhand", "helm", "armor"];
+	if (!allowedSlots.includes(selectedSlot)) {
+		showPopup("You can only add sockets to weapons, shields, helms, or armor.");
+//		alert("You can only add sockets to weapons, shields, helms, or armor.");
+		return;
+	}
+
+	if (isNaN(value)) return;
+
+	// Auto-equip a named custom item if slot is empty
+	if (!equipped[selectedSlot] || equipped[selectedSlot].name === "none") {
+		const customNames = {
+			weapon: "Custom Weapon",
+			helm: "Custom Helm",
+			armor: "Custom Armor",
+			offhand: "Custom Offhand"
+		};
+
+		const itemName = customNames[selectedSlot];
+		const slotItems = equipment[selectedSlot];
+
+		if (itemName && Array.isArray(slotItems)) {
+			const found = slotItems.find(item => item.name.trim().toLowerCase() === itemName.toLowerCase());
+
+			if (found) {
+				equipped[selectedSlot] = JSON.parse(JSON.stringify(found));
+				equip(selectedSlot, itemName);
+				updateSelectedItemSummary(selectedSlot);
+			} else {
+				alert(`Could not find "${itemName}" in equipment[${selectedSlot}]`);
+				return;
+			}
+		}
+	}
+
+	const item = equipped[selectedSlot];
+	if (!item) return;
+
+	if (!item[statKey]) item[statKey] = 0;
+	item[statKey] += value;
+
+	if (!character[statKey]) character[statKey] = 0;
+	character[statKey] += value;
+
+	update();
+	updateSelectedItemSummary(selectedSlot);
+}
+
 
 // Update the summary box
 function updateSelectedItemSummary() {
