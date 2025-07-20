@@ -48,7 +48,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	var equipment = {
 		helm: [
 	{name:"Helm"},
-//	{rarity:"craft", name:"Qords Diadem of Socket Testing", req_level:64, sockets:3, base:"Diadem"},
+	{rarity:"craft", name:"Qords Diadem of Socket Testing", req_level:64, sockets:3, base:"Diadem"},
 	{not:["amazon","assassin","druid","necromancer","paladin","sorceress","Rogue Scout","Desert Guard","Iron Wolf"], name:"Arreat's Face", req_level:42, skills_combat_barbarian:2, skills_barbarian:2, fhr:30, ar_bonus:20, life_leech:6, e_def:200, strength:20, dexterity:20, all_res:30, base:"Slayer Guard"},
 	{not:["amazon","assassin","druid","necromancer","paladin","sorceress","Rogue Scout","Desert Guard","Iron Wolf"], name:"Wolfhowl", req_level:79, skills_warcries:3, oskill_Lycanthropy:6, oskill_Werewolf:6, oskill_Feral_Rage:6, e_def:150, strength:15, dexterity:15, vitality:15, base:"Fury Visor", cskill:[[15,"Summon Dire Wolf",18]]},	// TODO: something goes wrong when trying to switch to a Druid while Wolfhowl is equipped on the current character
 	{not:["amazon","assassin","druid","necromancer","paladin","sorceress","Rogue Scout","Desert Guard","Iron Wolf"], name:"Demonhorn's Edge", req_level:61, skills_warcries:3, skills_masteries:3, skills_combat_barbarian:3, e_def:160, ias:10, life_leech:6, thorns:77, base:"Destroyer Helm"},

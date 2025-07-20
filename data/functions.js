@@ -2162,10 +2162,19 @@ function getAuraData(aura, lvl, source) {
 		if (character.class_name == "Sorceress") {
 			result.ftick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100)* (1+character.fDamage/100)) ; 
 			result.ftick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100)* (1+character.fDamage/100)) ; 
+			result.addeddmgdisplaywrong = 1
 		}
-		if (character.class_name != "Sorceress"){ 
+		if (character.class_name == "Paladin") {
+			result.fDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level);
+			result.fDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level); 
+			result.ftick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100);
+			result.ftick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100); 
+			result.addeddmgdisplaywrong = 1
+		}
+		else { 
 			result.ftick_min = Math.floor(auras[a].data.values[2][lvl] * (1+character.fDamage/100)) ; 
 			result.ftick_max = Math.floor(auras[a].data.values[3][lvl] * (1+character.fDamage/100)) ; 
+			result.addeddmgdisplaywrong = 1
 		}
 	}
 	else if (aura == "Precision") { result.cstrike = auras[a].data.values[2][lvl]; result.ar_bonus = auras[a].data.values[3][lvl]; result.radius = 16; if (source == "mercenary" || source == "golem") { result.pierce = auras[a].data.values[1][lvl] } else { result.pierce = auras[a].data.values[0][lvl] }}
@@ -2176,10 +2185,19 @@ function getAuraData(aura, lvl, source) {
 		if (character.class_name == "Sorceress") {
 			result.ctick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[10].level+skills[10].force_levels))*(~~skills[10].data.values[1][skills[10].level+skills[10].extra_levels])/100)* (1+character.cDamage/100)) ; 
 			result.ctick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[10].level+skills[10].force_levels))*(~~skills[10].data.values[1][skills[10].level+skills[10].extra_levels])/100)* (1+character.cDamage/100)) ; 
+			result.addeddmgdisplaywrong = 1
 		}
-		if (character.class_name != "Sorceress"){ 
+		if (character.class_name == "Paladin") {
+			result.cDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level);
+			result.cDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level); 
+			result.ctick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100);
+			result.ctick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100); 
+			result.addeddmgdisplaywrong = 1
+		}
+		else { 
 			result.ctick_min = Math.floor(auras[a].data.values[2][lvl] * (1+character.cDamage/100)) ; 
 			result.ctick_max = Math.floor(auras[a].data.values[3][lvl] * (1+character.cDamage/100)) ; 
+			result.addeddmgdisplaywrong = 1
 		} 
 	}	
 //	else if (aura == "Holy Shock") { result.lDamage_min = auras[a].data.values[0][lvl]; result.lDamage_max = auras[a].data.values[1][lvl]; result.radius = 18.6; }
@@ -2187,10 +2205,19 @@ function getAuraData(aura, lvl, source) {
 		if (character.class_name == "Sorceress") {
 			result.ltick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[20].level+skills[20].force_levels))*(~~skills[20].data.values[1][skills[20].level+skills[20].extra_levels])/100)* (1+character.lDamage/100)) ; 
 			result.ltick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[20].level+skills[20].force_levels))*(~~skills[20].data.values[1][skills[20].level+skills[20].extra_levels])/100)* (1+character.lDamage/100)) ; 
+			result.addeddmgdisplaywrong = 1
 		}
-		if (character.class_name != "Sorceress"){ 
+		if (character.class_name == "Paladin") {
+			result.lDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
+			result.lDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level); 
+			result.ltick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100);
+			result.ltick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); 
+			result.addeddmgdisplaywrong = 1
+		}
+		else { 
 			result.ltick_min = Math.floor(auras[a].data.values[2][lvl] * (1+character.lDamage/100)) ; 
 			result.ltick_max = Math.floor(auras[a].data.values[3][lvl] * (1+character.lDamage/100)) ; 
+			result.addeddmgdisplaywrong = 1
 		} 
 	}
 //	else if (aura == "Sanctuary") { result.damage_vs_undead = auras[a].data.values[0][lvl]; result.radius = 12.6; }
@@ -2210,21 +2237,21 @@ function getAuraData(aura, lvl, source) {
 	if (character.class_name == "Paladin") {
 		if (aura == "Cleansing") { result.life_replenish = Math.min(1,(skills[0].level+skills[0].force_levels))*~~(skills[0].data.values[0][skills[0].level+skills[0].extra_levels]); }
 		else if (aura == "Meditation") { result.life_replenish = Math.min(1,(skills[0].level+skills[0].force_levels))*~~(skills[0].data.values[0][skills[0].level+skills[0].extra_levels]); }
-		else if (aura == "Holy Fire") { 
-			result.fDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level);
-			result.fDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level); 
-			result.ftick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level);
-			result.ftick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level); }
-		else if (aura == "Holy Freeze") { 
-			result.cDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level);
-			result.cDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level); 
-			result.ctick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level);
-			result.ctick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level); }
+//		else if (aura == "Holy Fire") { 
+//			result.fDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level);
+//			result.fDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level); 
+//			result.ftick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100);
+//			result.ftick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100); }
+//		else if (aura == "Holy Freeze") { 
+//			result.cDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level);
+//			result.cDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level); 
+//			result.ctick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100);
+//			result.ctick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[3].level + 0.06*skills[9].level) * (1+character.cDamage/100); }
 		else if (aura == "Holy Shock") { 
 			result.lDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
 			result.lDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level); 
-			result.ltick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level);
-			result.ltick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level); }
+			result.ltick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100);
+			result.ltick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[5].level + 0.06*skills[9].level) * (1+character.lDamage/100); }
 	}
 	return result;
 }

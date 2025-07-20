@@ -1533,7 +1533,7 @@ easymathdmg:{index:[], format:["<font color='red'>100 Base Damage for easy math<
 obsessiontheory:{index:[], format:["<font color='red'>Theorycrafting Obsession ideas<br>Check the discord channel for more info</font>"]},
 maul_charges:{index:["maul_charges"], format:[""," Max Maul charges"]},
 oskill_Cleave:{index:["oskill_Cleave"], format:["+"," to Cleave"]},
-
+addeddmgdisplaywrong:{index:[], format:["<font color='red'><br>Display of aura damage added to attack display <b>in this pop up</b> is not<br>properly reflecting % elemental modifiers<br>Aura tick display is correct, overall added damage is correct</font>"]},
 
 addcraft:{index:[], format:[]},
 customStats:"",
