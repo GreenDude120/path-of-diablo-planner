@@ -4181,7 +4181,7 @@ function skillHover(skill) {
 	if (typeof(skill.notupdated) != 'undefined') { if (skill.notupdated != "") {
 		if (skill.syn_text != "") { document.getElementById("syn_text").innerHTML += "<br>" }
 		if (skill.notupdated == 1) {
-			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>Skill has not been updated to P22 Minium</font>"
+			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'font-size:12px>Skill may not be updated to newest patch values</font>"
 		} else {
 			document.getElementById("syn_text").innerHTML += "<br><font color='"+colors.Red+"'>"+skill.notupdated+"</font>"
 		}
