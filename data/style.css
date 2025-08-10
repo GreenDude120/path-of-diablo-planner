@@ -660,8 +660,10 @@ input[type="file"] {
   left: 180px;
 }
 .stat-3 {
-  left: 925px;
-  top: -650px;
+/*  left: 925px;
+  top: -650px; */
+  left: 460px;
+  top: 350px;
   width: 300px;
 }
 .stat-4 {
@@ -674,8 +676,11 @@ input[type="file"] {
   left: 460px;
 }
 .stat-7 {
-  left: 1250px;
+/*  left: 1250px;
+  top:130px; */
+  left: 1050px;
   top:130px;
+  width: 350px;  
 }
 #stats_positioning_alignment {
   width: 869px;
