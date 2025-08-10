@@ -660,10 +660,10 @@ input[type="file"] {
   left: 180px;
 }
 .stat-3 {
-/*  left: 925px;
-  top: -650px; */
-  left: 460px;
-  top: 350px;
+  left: 925px;
+  top: -650px; 
+/*  left: 460px;
+  top: 350px; */
   width: 300px;
 }
 .stat-4 {
@@ -678,7 +678,7 @@ input[type="file"] {
 .stat-7 {
 /*  left: 1250px;
   top:130px; */
-  left: 1050px;
+   left: 1050px;
   top:130px;
   width: 350px;  
 }
