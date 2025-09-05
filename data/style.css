@@ -873,6 +873,7 @@ Added 23 Dec
     z-index: 999;
     max-height: 400px;
     overflow: auto;
+    scrollbar-gutter: stable; /* Chrome/Edge */    
 }
 
 .sidepanel {
