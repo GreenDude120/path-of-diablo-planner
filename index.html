@@ -42,6 +42,7 @@
 <!--<script type="text/javascript" src="./data/functions.js"></script> -->
 <script type="text/javascript" src="./data/quicklinks.js"></script>
 <script type="text/javascript" src="./data/custom.js"></script>
+<script type="text/javascript" src="./data/runeword_properties.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script> -->
 
 </head>
@@ -270,7 +271,7 @@
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;Not all items and properties are supported by importing&nbsp;&nbsp;</label>
 			</div></div>
 		<div class="nav-dropdown-content-item"><div class="nav-text">
-			<label>&nbsp;&nbsp;&nbsp;&nbsp;Build planner has no way to know what charms an impotred character uses, so it takes a guess&nbsp;&nbsp;</label>
+			<label>&nbsp;&nbsp;&nbsp;&nbsp;Build planner has no way to know what charms an imported character uses, so it takes a guess&nbsp;&nbsp;</label>
 			</div></div>
 		<div class="nav-dropdown-content-item"><div class="nav-text">
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;Switch classes without losing equipment in the Character menu button&nbsp;&nbsp;</label>
@@ -278,7 +279,9 @@
 		<div class="nav-dropdown-content-item"><div class="nav-text">
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;Get a friendly PoD short link to the current page with the Short Link button&nbsp;&nbsp;</label>
 			</div></div>
-
+		<div class="nav-dropdown-content-item"><div class="nav-text">
+			<label>&nbsp;&nbsp;&nbsp;&nbsp;The new Runeword Picker allows you create runewords in the base of your choosing&nbsp;&nbsp;</label>
+			</div></div>
 		</div>
 	</div>
 <!--
@@ -473,16 +476,40 @@
 <!--	Equipment Menus 	-->
 <div class="dropdown" id="equipment">
 <div id="equipment_a" class="equipment">
-<select class="dropdown" id="dropdown_helm" onChange="equip('helm', this.value)" onContextMenu="equip('helm', 'helm')"></select>
-<select class="dropdown" id="dropdown_armor" onChange="equip('armor', this.value)" onContextMenu="equip('armor', 'armor')"></select>
+<!--<select class="dropdown" id="dropdown_helm" onChange="equip('helm', this.value)" onContextMenu="equip('helm', 'helm')"></select>-->
+    <div class="dropdown-wrapper">
+      <select class="dropdown" id="dropdown_helm" 
+              onChange="equip('helm', this.value)" 
+              onContextMenu="equip('helm', 'helm')"></select>
+      <div class="popover" id="popover_helm"></div>
+    </div>
+<!--<select class="dropdown" id="dropdown_armor" onChange="equip('armor', this.value)" onContextMenu="equip('armor', 'armor')"></select>-->
+    <div class="dropdown-wrapper">
+      <select class="dropdown" id="dropdown_armor" 
+              onChange="equip('armor', this.value)" 
+              onContextMenu="equip('armor', 'armor')"></select>
+      <div class="popover" id="popover_armor"></div>
+    </div>
 <select class="dropdown" id="dropdown_gloves" onChange="equip('gloves', this.value)" onContextMenu="equip('gloves', 'gloves')"></select>
 <select class="dropdown" id="dropdown_boots" onChange="equip('boots', this.value)" onContextMenu="equip('boots', 'boots')"></select>
 <select class="dropdown" id="dropdown_belt" onChange="equip('belt', this.value)" onContextMenu="equip('belt', 'belt')"></select>
 <select class="dropdown" id="dropdown_amulet" onChange="equip('amulet', this.value)" onContextMenu="equip('amulet', 'amulet')"></select>
 <select class="dropdown" id="dropdown_ring1" onChange="equip('ring1', this.value)" onContextMenu="equip('ring1', 'ring1')"></select>
 <select class="dropdown" id="dropdown_ring2" onChange="equip('ring2', this.value)" onContextMenu="equip('ring2', 'ring2')"></select>
-<select class="dropdown" id="dropdown_weapon" onChange="equip('weapon', this.value)" onContextMenu="equip('weapon', 'weapon')"></select>
-<select class="dropdown" id="dropdown_offhand" onChange="equip('offhand', this.value)" onContextMenu="equip('offhand', 'offhand')"></select>
+<!--<select class="dropdown" id="dropdown_weapon" onChange="equip('weapon', this.value)" onContextMenu="equip('weapon', 'weapon')"></select>-->
+<div class="dropdown-wrapper">
+  <select class="dropdown" id="dropdown_weapon"
+          onChange="equip('weapon', this.value)"
+          onContextMenu="equip('weapon', 'weapon')"></select>
+  <div class="dropdown popover" id="popover_weapon"></div>
+</div>
+<!--<select class="dropdown" id="dropdown_offhand" onChange="equip('offhand', this.value)" onContextMenu="equip('offhand', 'offhand')"></select>-->
+<div class="dropdown-wrapper">
+  <select class="dropdown" id="dropdown_offhand"
+          onChange="equip('offhand', this.value)"
+          onContextMenu="equip('offhand', 'offhand')"></select>
+  <div class="dropdown popover" id="popover_offhand"></div>
+</div>
 <br><br>
 </div>
 <select class="dropdown" id="dropdown_charms" onChange="addCharm(this.value)"></select>
@@ -490,8 +517,20 @@
 <select class="dropdown" id="dropdown_socketables" onChange="addSocketable(this.value)"></select>
 <br><br>
 <select class="dropdown" id="dropdown_mercenary" onChange="setMercenary(this.value)" onContextMenu="setMercenary('none')"></select>
-<select class="dropdown" id="dropdown_merc_helm" onChange="equipMerc('helm', this.value)" onContextMenu="equipMerc('helm', 'helm')"></select>
+<select class="dropdown" id="dropdown_merc_helm" onChange="equipMerc('helm', this.value)" onContextMenu="equipMerc('helm', 'helm')"></select> 
+<!--    <div class="dropdown-wrapper">
+      <select class="dropdown" id="dropdown_merc_helm" 
+              onChange="equipMerc('hels', this.value)" 
+              onContextMenu="equipMerc('armor', 'armor')"></select>
+      <div class="dropdown popover" id="popover_merc_helm"></div>
+    </div> -->
 <select class="dropdown" id="dropdown_merc_armor" onChange="equipMerc('armor', this.value)" onContextMenu="equipMerc('armor', 'armor')"></select>
+<!--    <div class="dropdown-wrapper">
+      <select class="dropdown" id="dropdown_merc_armor" 
+              onChange="equipMerc('armor', this.value)" 
+              onContextMenu="equipMerc('armor', 'armor')"></select>
+      <div class="dropdown popover" id="popover_merc_armor"></div>
+    </div>-->
 <select class="dropdown" id="dropdown_merc_weapon" onChange="equipMerc('weapon', this.value)" onContextMenu="equipMerc('weapon', 'weapon')"></select>
 <select class="dropdown" id="dropdown_merc_offhand" onChange="equipMerc('offhand', this.value)" onContextMenu="equipMerc('offhand', 'offhand')"></select>
 <div id="merc_space"></div>

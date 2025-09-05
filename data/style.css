@@ -129,7 +129,7 @@
   height: 38px;
   z-index: 4;
 }
-.dropdown select, .dropdown-corruption select {
+.dropdown select, .dropdown-corruption select, .popover select, .runeword-option {
   color: #ddd !important;
   background-color: black;
   padding-left: 7px;
@@ -853,3 +853,65 @@ Added 23 Dec
   white-space: nowrap;
 }
 
+/* /////////////////////////////// */
+/* css for runeword creator/picker */
+.dropdown-wrapper, .sidepanel {
+    position: relative; /* ensures popover aligns correctly */
+    display: inline-block;
+}
+
+.popover  {
+    font-family: inherit;
+    font-size: 14px;
+    display: none;       /* hidden by default */
+    position: absolute;
+    top: 0;
+    left: 100%;          /* just to the right of the dropdown */
+    background-color: #222;
+/*    border: 1px solid #333; */
+    min-width: 180px;
+    z-index: 999;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.sidepanel {
+    font-family: inherit;
+    font-size: 14px;
+    min-width: 180px;
+    height: 350px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.runeword-option, .base-option {
+    padding-top: 2px;
+    cursor: pointer;
+    color: #ddd !important;
+    background-color: black;
+    padding-left: 7px;
+    width: 200px;
+    height: 24px;
+    z-index: 5;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;    
+}
+
+.runeword-option:hover, .base-option:hover {
+    background-color: #222;
+}
+
+.runeword-option.active {
+    background-color: #222; /* same as hover highlight */
+}
+
+.dropdown-wrapper:hover .popover {
+    display: block;
+}
+
+/* temporary debug
+.popover {
+    border: 1px solid limegreen;  
+}
+*/

@@ -748,89 +748,120 @@ function corrupt(group, val) {
 //	val: name of item
 // ---------------------------------
 function equipMerc(group, val) {
-	var auraName = "";
-	var auraLevel = 0;
-	for (old_affix in mercEquipped[group]) {
-		if (old_affix == "aura" || old_affix == "aura_lvl" || old_affix == "name" || old_affix == "type" || old_affix == "base" || old_affix == "only" || old_affix == "not" || old_affix == "img") {
-			if (old_affix == "aura") {
-				removeEffect(mercEquipped[group][old_affix].split(' ').join('_')+"-mercenary_"+group)
-			}
-		} else {
-			mercenary[old_affix] -= mercEquipped[group][old_affix]
-		}
-	}
-	mercEquipped[group] = {name:"none"}
-	if (group == val) { document.getElementById(("dropdown_merc_"+group)).selectedIndex = 0 }
-	else {
-		for (item in equipment[group]) {
-			if (equipment[group][item].name == val) {
-				// add affixes from base item
-				if (typeof(equipment[group][item]["base"]) != 'undefined') {	// TODO: Combine with duplicate code from equip()
-					var base = getBaseId(equipment[group][item].base);
-					var multEth = 1;
-					var multED = 1;
-					var multReq = 1;
-					var reqEth = 0;
-					if (typeof(equipment[group][item]["ethereal"]) != 'undefined') { if (equipment[group][item]["ethereal"] == 1) { multEth = 1.5; reqEth = 10; } }
-					if (typeof(equipment[group][item]["e_def"]) != 'undefined') { multED += (equipment[group][item]["e_def"]/100) }
-					if (typeof(equipment[group][item]["req"]) != 'undefined') { multReq += (equipment[group][item]["req"]/100) }
-					for (affix in bases[base]) {
-						if (affix != "group" && affix != "type" && affix != "upgrade" && affix != "downgrade" && affix != "subtype" && affix != "only" && affix != "def_low" && affix != "def_high" && affix != "durability" && affix != "range" && affix != "twoHands") {
-							if (typeof(mercEquipped[group][affix]) == 'undefined') { mercEquipped[group][affix] = unequipped[affix] }	// undefined (new) affixes get initialized to zero
-							if (affix == "base_damage_min" || affix == "base_damage_max") {
-								mercEquipped[group][affix] = Math.ceil(multEth*bases[base][affix])
-								mercenary[affix] += Math.ceil(multEth*bases[base][affix])
-							} else if (affix == "req_strength" || affix == "req_dexterity") {
-								mercEquipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))
-							} else {
-								mercEquipped[group][affix] = bases[base][affix]
-								mercenary[affix] += bases[base][affix]
-							}
-						}
-					}
-				}
-				// add regular affixes
-				for (affix in equipment[group][item]) {
-					if (typeof(mercEquipped[group][affix]) == 'undefined') { mercEquipped[group][affix] = unequipped[affix] }
-					if (affix == "damage_vs_undead") {
-						mercEquipped[group][affix] += equipment[group][item][affix]
-						mercenary[affix] += equipment[group][item][affix]
-					} else if (affix == "name" || affix == "type" || affix == "base" || affix == "only" || affix == "not" || affix == "img" || affix == "rarity" || affix == "req" || affix == "ethereal" || affix == "indestructible" || affix == "autorepair" || affix == "autoreplenish" || affix == "stack_size" || affix == "set_bonuses" || affix == "pod_changes" || affix == "aura_lvl" || affix == "twoHanded" || affix == "sockets" || affix == "e_def" || affix == "ctc" || affix == "cskill" || affix == "aura" || affix == "req_strength" || affix == "req_dexterity") {
-						if (affix == "req_strength" || affix == "req_dexterity") {
-							if (equipment[group][item][affix] > mercEquipped[group][affix]) { mercEquipped[group][affix] = equipment[group][item][affix] }
-						} else {
-							mercEquipped[group][affix] = equipment[group][item][affix]
-							if (affix == "aura") { auraName = equipment[group][item][affix]; auraLevel = equipment[group][item].aura_lvl; }
-						}
-					} else {
-						if (affix == "sup" || affix == "e_damage") {
-							if (typeof(mercEquipped[group]["e_damage"]) == 'undefined') { mercEquipped[group]["e_damage"] = unequipped["e_damage"] }
-							if (affix == "sup") { mercEquipped[group][affix] = equipment[group][item][affix] }
-							mercEquipped[group]["e_damage"] += equipment[group][item][affix]
-							mercenary["e_damage"] += equipment[group][item][affix]
-						} else {
-							mercEquipped[group][affix] = equipment[group][item][affix]
-							mercenary[affix] += equipment[group][item][affix]
-						}
-					}
-				}
-				// TODO: implement set bonuses for mercenaries
+    console.log("Merc Equip function kicked off");
+
+//    if (val === "[runeword]") {
+//        openRunewordPicker("merc_" + group);  // important: distinguish merc slots!
+//        const dd = document.getElementById(`dropdown_merc_${group}`);
+//        if (mercEquipped[group]?.name) dd.value = mercEquipped[group].name;
+//        else dd.selectedIndex = 0;
+//        return;
+//    } 
+
+    // unequip old item
+    let auraName = "";
+    let auraLevel = 0;
+    for (old_affix in mercEquipped[group]) {
+        if (old_affix === "aura") {
+            removeEffect(mercEquipped[group][old_affix].split(' ').join('_') + "-mercenary_" + group);
+        } else if (!["name","type","base","only","not","img"].includes(old_affix)) {
+            mercenary[old_affix] -= mercEquipped[group][old_affix];
+        }
+    }
+    mercEquipped[group] = { name: "none" };
+
+    if (group == val) {
+        document.getElementById(`dropdown_merc_${group}`).selectedIndex = 0;
+        return;
+    }
+
+	// Reset runeword option text if unequipped or placeholder for picker
+	if (val === group || val === "none") {
+		const dropdown = document.getElementById(`dropdown_merc_${group}`);
+		if (dropdown) {
+			const rwOption = dropdown.querySelector(`option[value="[runeword]"]`);
+			if (rwOption) {
+				rwOption.textContent = "Runeword Picker";
 			}
 		}
-		updateMercenary()
 	}
-	if (auraName != "" && auraLevel != 0) {
-		addEffect("aura",auraName,auraLevel,"mercenary_"+group)
-	}
-	updateStats()
-	updateAllEffects()
+
+    // 🔑 FIX: iterate over items from the *right source*
+    // All possible gear is still in equipment[group], runewords included.
+    for (let itemKey in equipment[group]) {
+        let item = equipment[group][itemKey];
+        if (item.name == val) {
+            // --- add base stats ---
+            if (item.base) {
+                let base = getBaseId(item.base);
+                let multEth = (item.ethereal ? 1.5 : 1);
+                let reqEth = (item.ethereal ? 10 : 0);
+                let multED = 1 + (item.e_def || 0) / 100;
+                let multReq = 1 + (item.req || 0) / 100;
+
+                for (let affix in bases[base]) {
+                    if (["group","type","upgrade","downgrade","subtype","only","def_low","def_high","durability","range","twoHands"].includes(affix)) continue;
+
+                    if (typeof mercEquipped[group][affix] === "undefined") {
+                        mercEquipped[group][affix] = unequipped[affix];
+                    }
+
+                    if (affix === "base_damage_min" || affix === "base_damage_max") {
+                        mercEquipped[group][affix] = Math.ceil(multEth * bases[base][affix]);
+                        mercenary[affix] += mercEquipped[group][affix];
+                    } else if (affix === "req_strength" || affix === "req_dexterity") {
+                        mercEquipped[group][affix] = Math.max(0, Math.ceil(multReq * bases[base][affix] - reqEth));
+                    } else {
+                        mercEquipped[group][affix] = bases[base][affix];
+                        mercenary[affix] += bases[base][affix];
+                    }
+                }
+            }
+
+            // --- add item affixes ---
+            for (let affix in item) {
+                if (typeof mercEquipped[group][affix] === "undefined") {
+                    mercEquipped[group][affix] = unequipped[affix];
+                }
+
+                if (affix === "name" || affix === "type" || affix === "base" || affix === "img") {
+                    mercEquipped[group][affix] = item[affix];
+                } else if (affix === "aura") {
+                    auraName = item.aura;
+                    auraLevel = item.aura_lvl || 0;
+                    mercEquipped[group][affix] = item[affix];
+                } else {
+                    mercEquipped[group][affix] += item[affix];
+                    mercenary[affix] += item[affix];
+                }
+            }
+        }
+    }
+
+    updateMercenary();
+
+    if (auraName && auraLevel) {
+        addEffect("aura", auraName, auraLevel, "mercenary_" + group);
+    }
+    updateStats();
+    updateAllEffects();
 }
+
 
 // equip - Equips an item by adding its stats to the character, or unequips it if it's already equipped
 //	group: equipment group
 //	val: name of item
 // ---------------------------------
 function equip(group, val) {
+	console.log("Equip function kicked off")
+    if (val === "[runeword]") {
+        openRunewordPicker(group); // ← you’ll build this UI next
+        // reset dropdown to current selection so selecting “Runeword…” doesn’t clear the item
+        const dd = document.getElementById(`dropdown_${group}`);
+        if (equipped[group]?.name) dd.val = equipped[group].name;
+        else dd.selectedIndex = 0;
+        return;
+    }	
 	// TODO: consider renaming... switchItem()?  Also, split into multiple smaller functions
 	var auraName = "";
 	var auraLevel = 0;
@@ -1086,6 +1117,18 @@ function equip(group, val) {
 		if (equipped.offhand.type != "quiver" && twoHanded == 1 && (itemType != "sword" || character.class_name != "Barbarian") && corruptsEquipped.offhand.name != "none") { reloadOffhandCorruptions("shield"); }
 	}
 	if (val == group || val == "none") { document.getElementById(("dropdown_"+group)).selectedIndex = 0; }
+
+	// Reset runeword option text if unequipped, runeword picker
+	if (val == group || val == "none") {
+		const dropdown = document.getElementById(`dropdown_${group}`);
+		if (dropdown) {
+			const rwOption = dropdown.querySelector(`option[value="[runeword]"]`);
+			if (rwOption) {
+				rwOption.textContent = "Runeword Picker";
+			}
+		}
+	}
+
 	// set inventory image
 	if (equipped[group].name != "none") {
 		var src = "";
@@ -1380,6 +1423,10 @@ function loadItems(group, dropdown, className) {
 	else {
 		var choices = "";
 		var choices_offhand = "";
+		// only show Runeword for slots that can reasonably have them
+		const canHaveRunewords = (group === "weapon" || group === "offhand" || group === "armor" || group === "helm");
+		const RUN_EWORD_VALUE = "[runeword]"; // sentinel value we’ll catch in equip()
+
 //			if(synthwep != 0)
 //		{
 //			equipment["weapon"] =+ '{debug:1, name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},'
@@ -1414,6 +1461,46 @@ function loadItems(group, dropdown, className) {
 
 						if (group != "charms") { addon = "<option selected>" + "­ ­ ­ ­ " + item.name + "</option>" }
 						else { addon = "<option disabled selected>" + "­ ­ ­ ­ " + item.name + "</option>" }
+						// 👇 inject the Runeword option right after the header (for eligible slots)
+//						if (canHaveRunewords) {
+//							addon += `<option class="dropdown-runeword" value="${RUN_EWORD_VALUE}">Runeword…</option>`;
+//						}						
+						if (canHaveRunewords) {
+							const rwOpt = document.createElement("option");
+							rwOpt.value = RUN_EWORD_VALUE;
+							rwOpt.textContent = "Runeword Picker";
+							rwOpt.classList.add("dropdown-runeword");
+
+							// Insert at top if you want
+							addon += `<option class="dropdown-runeword" value="${RUN_EWORD_VALUE}">Runeword Picker</option>`;
+
+							// Hover logic for pop-out panel
+							rwOpt.addEventListener("mouseenter", () => {
+								openRunewordPicker(group, rwOpt); // pass slot and reference element
+							});
+							rwOpt.addEventListener("mouseleave", () => {
+								closeRunewordPicker();
+							});
+							// Remove Runeword Picker from merc dropdowns for now
+							["weapon", "offhand", "armor", "helm"].forEach(slot => {
+							const mercDropdown = document.getElementById(`dropdown_merc_${slot}`);
+							if (mercDropdown) {
+								const rwOpt = mercDropdown.querySelector(`option[value="${RUN_EWORD_VALUE}"]`);
+								if (rwOpt) rwOpt.remove();
+							}
+							});
+
+							attachRunewordHover("dropdown_weapon");
+							attachRunewordHover("dropdown_offhand");
+							attachRunewordHover("dropdown_armor");
+							attachRunewordHover("dropdown_helm");
+//							attachRunewordHover("dropdown_merc_weapon");
+//							attachRunewordHover("dropdown_merc_offhand");
+//							attachRunewordHover("dropdown_merc_armor");
+//							attachRunewordHover("dropdown_merc_helm");
+
+						}
+
 					} else {
 						if (game_version == 2) {	// PoD item loading
 							if (typeof(item.pd2) != 'undefined') { addon = "" }
@@ -1421,6 +1508,10 @@ function loadItems(group, dropdown, className) {
 							else if (typeof(item.rarity) != 'undefined') { addon = "<option class='dropdown-"+item.rarity+"'>" + item.name + "</option>" }
 //							else if (settings.synthwep == "1" && item.synth_wep == "true") { addon = "" }
 							else { addon = "<option class='dropdown-unique'>" + item.name + "</option>" }
+//							// 👇 inject the Runeword option right after the header (for eligible slots)
+//							if (canHaveRunewords) {
+//								addon += `<option class="dropdown-runeword" value="${RUN_EWORD_VALUE}">Runeword…</option>`;
+//							}							
 						} else {
 							if (typeof(item.pod) != 'undefined') { addon = "" }
 							else {
@@ -1446,6 +1537,7 @@ function loadItems(group, dropdown, className) {
 		}
 		if (group == "weapon") { offhandSetup = choices_offhand }
 		if (className == "barbarian" && group == "offhand") { choices += offhandSetup }	// weapons inserted into offhand dropdown list
+		
 		document.getElementById(dropdown).innerHTML = choices
 	}
 }
@@ -6726,7 +6818,8 @@ function equipItemDirectly(item) {
 			equipName = item.Title;
 			break;
 		case "q_runeword":
-			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
+//			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
+			selectRuneword(rawSlot,item.Title,item.Tag)
 			break;
 		case "q_magic":
 		case "q_rare":
@@ -7543,66 +7636,74 @@ populateStatDropdown();
 
 // Add stats from custom list
 function addCustomStat() {
+    const statKey = document.getElementById('statDropdown').value;
+    const rawValue = document.getElementById('statValue').value.trim();
+    const selectedSlot = document.getElementById("slotSelect").value;
 
-		const statKey = document.getElementById('statDropdown').value;
-//		const value = parseInt(document.getElementById('statValue').value, 10);
-		const value = parseFloat(document.getElementById('statValue').value);
-		const selectedSlot = document.getElementById("slotSelect").value;
-		console.log("addCustomStat called");
-		console.log("equipped:", equipped);
-	console.log("selectedSlot:", selectedSlot);
-		
-		if (isNaN(value)) return;
-	
-		// Auto-equip a named custom item if slot is empty
-		if (!equipped[selectedSlot] || equipped[selectedSlot].name === "none") {
-			const customNames = {
-				weapon: "Custom Weapon",
-				helm: "Custom Helm",
-				armor: "Custom Armor",
-				offhand: "Custom Offhand",
-				gloves: "Custom Gloves",
-				boots: "Custom Boots",
-				belt: "Custom Belt",
-				ring1: "Custom Ring",
-				ring2: "Custom Ring",
-				amulet: "Custom Amulet"
-			};
-	
-			const itemName = customNames[selectedSlot];
-			const slotItems = equipment[selectedSlot];
-			console.log("Trying to equip from slot:", selectedSlot);
-			console.log("Looking for item named:", itemName);
-			console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));	
-			if (itemName && Array.isArray(slotItems)) {
-				console.log("Trying to equip from slot:", selectedSlot);
-				console.log("Looking for item named:", itemName);
-				console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));
-				const found = slotItems.find(item => item.name.trim().toLowerCase() === itemName.toLowerCase());
+    console.log("addCustomStat called");
+    console.log("equipped:", equipped);
+    console.log("selectedSlot:", selectedSlot);
 
-				if (found) {
-					equipped[selectedSlot] = JSON.parse(JSON.stringify(found));
-					equip(selectedSlot,itemName);
-					updateSelectedItemSummary(selectedSlot);
-				} else {
-					alert(`Could not find "${itemName}" in equipment[${selectedSlot}]`);
-					return;
-				}
-			}
-		}
-	
-		const item = equipped[selectedSlot];
-		if (!item) return;
-	
-		if (!item[statKey]) item[statKey] = 0;
-		item[statKey] += value;
-	
-		if (!character[statKey]) character[statKey] = 0;
-		character[statKey] += value;
-	
-		update();
-		updateSelectedItemSummary(selectedSlot);
-	}
+    // Detect numeric vs string
+    const numericValue = parseFloat(rawValue);
+    const isNumeric = !isNaN(numericValue);
+
+    // Auto-equip a named custom item if slot is empty
+    if (!equipped[selectedSlot] || equipped[selectedSlot].name === "none") {
+        const customNames = {
+            weapon: "Custom Weapon",
+            helm: "Custom Helm",
+            armor: "Custom Armor",
+            offhand: "Custom Offhand",
+            gloves: "Custom Gloves",
+            boots: "Custom Boots",
+            belt: "Custom Belt",
+            ring1: "Custom Ring",
+            ring2: "Custom Ring",
+            amulet: "Custom Amulet"
+        };
+
+        const itemName = customNames[selectedSlot];
+        const slotItems = equipment[selectedSlot];
+        console.log("Trying to equip from slot:", selectedSlot);
+        console.log("Looking for item named:", itemName);
+        console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));
+
+        if (itemName && Array.isArray(slotItems)) {
+            const found = slotItems.find(item => item.name.trim().toLowerCase() === itemName.toLowerCase());
+
+            if (found) {
+                equipped[selectedSlot] = JSON.parse(JSON.stringify(found));
+                equip(selectedSlot, itemName);
+                updateSelectedItemSummary(selectedSlot);
+            } else {
+                alert(`Could not find "${itemName}" in equipment[${selectedSlot}]`);
+                return;
+            }
+        }
+    }
+
+    const item = equipped[selectedSlot];
+    if (!item) return;
+
+    if (isNumeric) {
+        // ✅ Handle numbers (preserve existing behavior)
+        if (!item[statKey]) item[statKey] = 0;
+        item[statKey] += numericValue;
+
+        if (!character[statKey]) character[statKey] = 0;
+        character[statKey] += numericValue;
+    } else {
+        // ✅ Handle strings
+        item[statKey] = rawValue;
+
+        // Don’t touch character[statKey] if it’s not numeric
+        if (!character[statKey]) character[statKey] = rawValue;
+    }
+
+    update();
+    updateSelectedItemSummary(selectedSlot);
+}
 	
 function larzuk() {
 	const statKey = "sockets";
@@ -7703,7 +7804,9 @@ function updateSelectedItemSummary() {
 			removeButton.style.cursor = 'pointer';
 			removeButton.title = `Remove ${key}`;
 			removeButton.onclick = function () {
-				character[key] -= item[key];
+				if (typeof item[key] === "number") {
+					character[key] = (character[key] || 0) - item[key];
+				}
 				delete item[key];
 				updateSelectedItemSummary();
 				update?.(); // Optional: update character stats
@@ -8155,6 +8258,312 @@ function restoreAuraDisplayDamage(effects, id) {
     }
   }
 }
+
+//////////////////////////////////////
+//////////////////////////////////////
+// Start runeword creator functions //
+//////////////////////////////////////
+//////////////////////////////////////
+
+function getSlotId(context, slot) {
+  // slot should be UNprefixed ("weapon","offhand","helm","armor")
+  return context === "merc" ? `merc_${slot}` : slot;
+}
+
+function normalizeSlot(slot) {
+  // returns unprefixed category for filtering/validation
+  return slot.startsWith("merc_") ? slot.replace("merc_", "") : slot;
+}
+
+function openRunewordPicker(slot, context = "player") {
+  // `slot` must be unprefixed here (e.g., "weapon")
+  const slotId = getSlotId(context, slot);
+  const picker = document.getElementById(`popover_${slotId}`);
+  if (!picker) return;
+
+  picker.innerHTML = "";
+
+  const slotCategory = slot; // already unprefixed
+  const className = context === "merc" ? merc?.class_name : character?.class_name;
+  const lowerClass = className?.toLowerCase();
+
+  const availableRunewords = Object.values(runewordProperties).filter(rw => {
+    // Normal case: must be in allowed categories
+    let allowed = rw.allowedCategories.includes(slotCategory);
+
+    // Exception: allow certain classes to equip weapons in offhand
+    if (!allowed && slotCategory === "offhand" && rw.allowedCategories.includes("weapon")) {
+      if (lowerClass === "barbarian") {
+        allowed = true; // any weapon
+      } else if (lowerClass === "assassin") {
+        // assassins can only dual wield claws, 3 sockets max
+        const isClaw = (rw.allowedTypes?.includes("claw") || rw.allowedGroups?.includes("weapon"));
+        if (isClaw && rw.sockets <= 3) {
+          allowed = true;
+        }
+      }
+    }
+
+    if (!allowed) return false;
+
+    // Exile only makes sense for Paladin class
+    if (rw.name.toLowerCase() === "exile" && lowerClass !== "paladin") return false;
+
+    // Claw-only assassin runewords (redundant but keeps safety)
+    const assassinOnly = ["chaos", "mosaic", "pattern", "pattern2"];
+    if (assassinOnly.includes(rw.name.toLowerCase()) && lowerClass !== "assassin") return false;
+
+    return true;
+  });
+
+  availableRunewords.forEach(rw => {
+    const rwDiv = document.createElement("div");
+    rwDiv.className = "runeword-option";
+    rwDiv.textContent = rw.name;
+    rwDiv.onmouseenter = () => showRunewordBases(rw, slot, rwDiv, context);
+    rwDiv.onclick = () => showRunewordBases(rw, slot, rwDiv, context);
+    picker.appendChild(rwDiv);
+  });
+
+  picker.style.display = "block";
+}
+
+
+function attachRunewordHover(selectId) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+
+  // Determine context + unprefixed slot from the selectId
+  // Examples:
+  //  - dropdown_weapon         -> context "player", slot "weapon"
+  //  - dropdown_merc_weapon    -> context "merc",   slot "weapon"
+  const isMerc = selectId.startsWith("dropdown_merc_");
+  const context = isMerc ? "merc" : "player";
+//  const slot = isMerc ? selectId.replace("dropdown_merc_", "") : selectId.replace("dropdown_", "");
+  const slot = selectId.replace("dropdown_", "");
+  const popover = document.getElementById(`popover_${getSlotId(context, slot)}`);
+
+  select.addEventListener("mousemove", () => {
+    const option = select.options[select.selectedIndex];
+    if (option && option.value === "[runeword]") {
+      if (popover) popover.style.display = "block";
+      openRunewordPicker(slot, context); // pass unprefixed slot + correct context
+    } else {
+      if (popover) popover.style.display = "none";
+    }
+  });
+
+  // Keep if you want delayed hide behavior on mouseleave
+  select.addEventListener("mouseleave", () => {
+    // if (popover) popover.style.display = "none";
+  });
+}
+
+document.addEventListener("click", (e) => {
+  const popovers = document.querySelectorAll(".popover");
+  popovers.forEach(p => {
+    if (!p.contains(e.target) && !p.previousElementSibling?.contains?.(e.target)) {
+      p.style.display = "none";
+    }
+  });
+
+  const basePanel = document.getElementById("runeword-bases");
+  if (basePanel && !basePanel.contains(e.target)) {
+    basePanel.remove();
+  }
+});
+
+function hideRunewordPopover(slot, context = "player") {
+  const slotId = getSlotId(context, slot);
+  const picker = document.getElementById(`popover_${slotId}`);
+  if (picker) picker.style.display = "none";
+}
+
+function showFilteredRuneword(slot, text, context = "player") {
+  const slotId = getSlotId(context, slot);
+  const popover = document.getElementById(`popover_${slotId}`);
+  if (popover) {
+    popover.textContent = text;
+    popover.style.display = "block";
+  }
+}
+
+function hideFilteredRuneword(slot, context = "player") {
+  const slotId = getSlotId(context, slot);
+  const popover = document.getElementById(`popover_${slotId}`);
+  if (popover) popover.style.display = "none";
+}
+
+function positionPopoverRelative(dropdown, popover) {
+  popover.style.position = "absolute";
+  popover.style.top = (dropdown.offsetTop) + "px";
+  popover.style.left = (dropdown.offsetLeft + dropdown.offsetWidth + 5) + "px";
+  popover.style.minWidth = dropdown.offsetWidth + "px";
+  popover.style.zIndex = 999;
+}
+
+function showRunewordBases(runeword, slot, anchorElement, context = "player") {
+  // slot is unprefixed
+  const basePanelOld = document.getElementById("runeword-bases");
+  if (basePanelOld) {
+    const prevActive = document.querySelector(".runeword-option.active");
+    if (prevActive) prevActive.classList.remove("active");
+    basePanelOld.remove();
+  }
+
+  const basePanel = document.createElement("div");
+  basePanel.id = "runeword-bases";
+  basePanel.className = "sidepanel";
+  anchorElement.classList.add("active");
+
+  const charRef = context === "merc" ? merc : character;
+
+  const availableBases = Object.entries(bases).filter(([key, item]) =>
+    isRunewordValidForBase(runeword, item, slot, key, charRef) // pass charRef
+  );
+
+  availableBases.forEach(([key]) => {
+    const baseDiv = document.createElement("div");
+    baseDiv.className = "base-option";
+    baseDiv.textContent = key.replace(/_/g, " ");
+    baseDiv.onclick = () => selectRuneword(slot, runeword, key, context);
+    basePanel.appendChild(baseDiv);
+  });
+
+  const rect = anchorElement.getBoundingClientRect();
+  const dropdownRect = anchorElement.parentElement.getBoundingClientRect();
+  basePanel.style.position = "absolute";
+  basePanel.style.top = `${dropdownRect.top + window.scrollY}px`;
+  basePanel.style.left = `${rect.right}px`;
+
+  document.body.appendChild(basePanel);
+
+  const removePanelIfOutside = () => {
+    setTimeout(() => {
+      if (!basePanel.matches(':hover') && !anchorElement.matches(':hover')) {
+        basePanel.remove();
+        anchorElement.classList.remove("active");
+      }
+    }, 100);
+  };
+
+  anchorElement.addEventListener("mouseleave", removePanelIfOutside);
+  basePanel.addEventListener("mouseleave", removePanelIfOutside);
+}
+
+function isRunewordValidForBase(runeword, base, slotCategory, baseKey, charRef) {
+  const className = charRef?.class_name?.toLowerCase();
+
+  // --- 1) Category gate ---
+  // Treat offhand slot as its own category unless dual-wield applies.
+  let effectiveCategory = slotCategory;
+
+  if (slotCategory === "offhand" && className) {
+    // Barbs can offhand any weapon
+    if (className === "barbarian" && base.group === "weapon") {
+      effectiveCategory = "weapon";
+    }
+    // Assassins can offhand claws only
+    else if (className === "assassin" && base.type === "claw" && runeword.sockets <= 3) {
+      effectiveCategory = "weapon";
+    }
+    // Otherwise shields/other offhand items keep "offhand" category
+  }
+
+  if (runeword.allowedCategories?.length > 0 &&
+      !runeword.allowedCategories.includes(effectiveCategory)) {
+    return false;
+  }
+
+  // --- 2) Any-of matching against type/subtype/group/name ---
+  let match = false;
+  if (runeword.allowedTypes?.includes(base.type)) match = true;
+  if (runeword.allowedSubtypes?.includes(base.subtype)) match = true;
+  if (runeword.allowedGroups?.includes(base.group)) match = true;
+  if (runeword.allowedNames?.includes(baseKey)) match = true;
+
+  // Base-level class restriction
+  if (base.only && base.only.length > 0 && match === true) {
+    if (!className || base.only.toLowerCase() !== className) {
+      return false;
+    }
+  }
+
+  // Exile must be Paladin-only shields
+  if (runeword.name.toLowerCase() === "exile") {
+    if (!(base.only && base.only.toLowerCase() === "paladin")) return false;
+  }
+
+  // --- 3) If restrictions exist but no match, reject ---
+  const hasRestrictions =
+    (runeword.allowedTypes?.length ||
+     runeword.allowedSubtypes?.length ||
+     runeword.allowedGroups?.length ||
+     runeword.allowedNames?.length) > 0;
+
+  if (hasRestrictions && !match) return false;
+
+  // --- 4) Sockets ---
+  if (!base.max_sockets || base.max_sockets < runeword.sockets) return false;
+
+  return true;
+}
+
+
+
+
+function flattenRuneword(runeword, baseItem) {
+  const displayBase = baseItem.replace(/_/g, " ");
+  const flat = {
+    rarity: "rw",
+    name: `${runeword.name} ­ ­ - ­ ­ ${displayBase}`,
+    type: bases[baseItem].type,
+    base: displayBase,
+    runewordStats: runeword.stats,
+    runes: runeword.runes,
+    cskill: runeword.cskill || [],
+  };
+  Object.assign(flat, runeword.stats);
+
+  // Keep a little metadata if you need it later
+  ["allowedTypes", "allowedCategories"].forEach(k => {
+    if (runeword[k]) flat[k] = runeword[k];
+  });
+
+  return flat;
+}
+
+function selectRuneword(slot, runeword, baseItem, context = "player") {
+  // slot is unprefixed; equip functions expect unprefixed group names.
+  const flatRuneword = flattenRuneword(runeword, baseItem);
+
+  // IMPORTANT: equipMerc() looks up items in `equipment[slot]`,
+  // so we must store the constructed runeword in `equipment`, not `mercEquipment`.
+  if (!equipment[slot]) equipment[slot] = {};
+  equipment[slot][flatRuneword.name] = flatRuneword;
+
+  if (context === "merc") {
+    equipMerc(slot, flatRuneword.name);
+  } else {
+    equip(slot, flatRuneword.name);
+  }
+
+  // Update the dropdown's [runeword] option label
+  const slotId = getSlotId(context, slot);
+  const dropdown = document.getElementById(`dropdown_${slotId}`);
+  if (dropdown) {
+    const rwOption = dropdown.querySelector(`option[value="[runeword]"]`);
+    if (rwOption) rwOption.textContent = flatRuneword.name;
+  }
+
+  const basePanel = document.getElementById("runeword-bases");
+  if (basePanel) basePanel.remove();
+}
+
+
+
+
+
 
 
 
