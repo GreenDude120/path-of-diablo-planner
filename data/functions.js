@@ -6095,7 +6095,8 @@ function equipItemDirectly(item) {
 			equipName = item.Title;
 			break;
 		case "q_runeword":
-			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
+//			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
+			selectRuneword(rawSlot,item.Title,item.Tag)
 			break;
 		case "q_magic":
 		case "q_rare":
