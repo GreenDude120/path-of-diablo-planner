@@ -872,7 +872,7 @@ Added 23 Dec
     min-width: 180px;
     z-index: 999;
     max-height: 400px;
-    overflow: auto;
+    overflow: scroll;
     scrollbar-gutter: stable; /* Chrome/Edge */    
 }
 

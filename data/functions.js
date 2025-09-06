@@ -6072,80 +6072,149 @@ function formatSlotName(slot) {
     return slot.charAt(0).toUpperCase() + slot.slice(1);
 }
 
+// --- helpers ---
+function resolveRunewordByName(name) {
+  return Object.values(runewordProperties)
+    .find(rw => rw.name.toLowerCase() === String(name).toLowerCase());
+}
+
+function resolveBaseKey(tag) {
+  if (!tag) return null;
+
+  // Normalize "Dusk Shroud" → "Dusk_Shroud"
+  let key = tag.replace(/ /g, "_");
+
+  // Direct match
+  if (bases[key]) return key;
+
+  // Case-insensitive fallback
+  const found = Object.keys(bases).find(
+    k => k.toLowerCase() === key.toLowerCase()
+  );
+  return found || null;
+}
+
+
+
 const pendingPropertyLists = {};
 
 function equipItemDirectly(item) {
-	const pendingPropertyLists = {};
+  const pendingPropertyLists = {};
 
-	const slotMapping = {
-		body: "armor",
-		weapon1: "weapon",
-		weapon2: "offhand",
-		helmet: "helm"
-	};
+  const slotMapping = { body:"armor", weapon1:"weapon", weapon2:"offhand", helmet:"helm" };
+  const rawSlot = item.Worn;
+// Ignore swap weapon slots
+if (rawSlot.startsWith("sweapon")) {
+    console.log("Skipping swap weapon slot:", rawSlot);
+    return;
+}  
+  const slot = slotMapping[rawSlot] || rawSlot; // unprefixed
 
-	const rawSlot = item.Worn;
-	const slot = slotMapping[rawSlot] || rawSlot;
+  let equipName = item.Title;
+  const offhandtag = item.Tag;
 
-	let equipName = item.Title;
-	let offhandtag = item.Tag
-	switch (item.QualityCode) {
-		case "q_unique":
-		case "q_set":
-			equipName = item.Title;
-			break;
-		case "q_runeword":
-//			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
-			selectRuneword(rawSlot,item.Title,item.Tag)
-			break;
-		case "q_magic":
-		case "q_rare":
-		case "q_crafted":
-			// Check if Tag is Bolts or Arrows
-			if (item.Tag === "Bolts" || item.Tag === "Arrows") {
-				console.log("Offhand equipped: ", offhandtag)
-				equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
-			} else {
-				equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
-			}
-			break;
-	}
+  switch (item.QualityCode) {
+    case "q_unique":
+    case "q_set":
+      equipName = item.Title;
+      break;
+
+case "q_runeword": {
+    const rw = resolveRunewordByName(item.Title);
+    const baseKey = resolveBaseKey(item.Tag);
+
+    if (!rw || !bases[baseKey]) {
+        console.warn("Runeword or base not found:", item.Title, item.Tag);
+        break;
+    }
+
+    // Map Worn slots to proper dropdown/equipment keys
+    const slotMapping = { body: "armor", helmet: "helm", weapon1: "weapon", weapon2: "offhand" };
+    const equipSlot = slotMapping[item.Worn] || item.Worn;
+
+    // Flatten runeword for direct equip
+    const displayBase = baseKey.replace(/_/g, " ");
+    const flatRuneword = {
+        rarity: "rw",
+        name: `${rw.name} ­ ­ - ­ ­ ${displayBase}`,
+        type: bases[baseKey].type,
+        base: displayBase,
+        runewordStats: rw.stats,
+        runes: rw.runes,
+        cskill: rw.cskill || [],
+        ...rw.stats
+    };
+    ["allowedTypes", "allowedCategories"].forEach(k => {
+        if (rw[k]) flatRuneword[k] = rw[k];
+    });
+
+    // Ensure equipment object exists
+    if (!equipment[equipSlot]) equipment[equipSlot] = {};
+
+    // Add runeword to equipment
+    equipment[equipSlot][flatRuneword.name] = flatRuneword;
+
+    // Equip it
+    equip(equipSlot, flatRuneword.name);
+
+    // Update the dropdown to reflect the runeword
+    const dropdown = document.getElementById(`dropdown_${equipSlot}`);
+  if (dropdown) {
+    const rwOption = dropdown.querySelector(`option[value="*"]`);
+    if (rwOption) rwOption.textContent = flatRuneword.name;
+	console.log("UI changed to: ", equipSlot, flatRuneword.name)
+  }	
 
 
-	// Save the real properties for use *after* placeholder is equipped
-	if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
-		pendingPropertyLists[slot] = item.PropertyList;
-		console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
-	}
-
-	// Equip the placeholder item via dropdown
-	const dropdownId = `dropdown_${slot}`;
-	const dropdown = document.getElementById(dropdownId);
-	if (dropdown) {
-		dropdown.value = equipName;
-		dropdown.dispatchEvent(new Event("change"));
-		console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
-	} else {
-		console.warn(`Dropdown not found for slot: ${slot}`);
-	}
-
-	// After a short delay, apply the stored properties to the equipped item
-	setTimeout(() => {
-		if (pendingPropertyLists[slot]) {
-			if (!equipped[slot]) {
-				console.warn(`❌ No item equipped in slot: ${slot} to apply properties`);
-				return;
-			}
-
-			// Inject PropertyList temporarily into the equipped item
-			equipped[slot].PropertyList = pendingPropertyLists[slot];
-			console.log(`✅ Injecting PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
-
-			applyMatchedProperties(slot);
-			delete pendingPropertyLists[slot]; // Clean up
-		}
-	}, 0);
+    console.log(`✅ Equipped runeword: ${flatRuneword.name} in slot: ${equipSlot}`);
+    return; // Important: don’t fall through to generic dropdown logic
 }
+
+
+
+    case "q_magic":
+    case "q_rare":
+    case "q_crafted":
+      if (offhandtag === "Bolts" || offhandtag === "Arrows") {
+        equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
+      } else {
+        equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+      }
+      break;
+  }
+
+  // Save props for crafted/magic/rare
+  if (item.PropertyList && ["q_magic","q_rare","q_crafted"].includes(item.QualityCode)) {
+    pendingPropertyLists[slot] = item.PropertyList;
+    console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
+  }
+
+  // Fallback generic dropdown flow
+  const dropdownId = `dropdown_${slot}`;
+  const dropdown = document.getElementById(dropdownId);
+  if (dropdown) {
+    dropdown.value = equipName;
+    dropdown.dispatchEvent(new Event("change"));
+    console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
+  } else {
+    console.warn(`Dropdown not found for slot: ${slot}`);
+  }
+
+  // Delay apply properties
+  setTimeout(() => {
+    if (pendingPropertyLists[slot]) {
+      if (!equipped[slot]) {
+        console.warn(`❌ No item equipped in slot: ${slot} to apply properties`);
+        return;
+      }
+      equipped[slot].PropertyList = pendingPropertyLists[slot];
+      console.log(`✅ Injected PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
+      applyMatchedProperties(slot);
+      delete pendingPropertyLists[slot];
+    }
+  }, 0);
+}
+
 
 
 
@@ -6712,6 +6781,7 @@ function determinePropertyKey(property) {
 //	window.open(builderurl);
 //	window.location.href = builderurl ;
 document.getElementById('importname').value = ""
+update()
 }
 
 async function justthesynth() {
