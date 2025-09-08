@@ -303,12 +303,49 @@
       </div></div>	
 	</div></div>
 
-  <div class="nav-dropdown">
-	<button class="nav-dropbtn" style="cursor:pointer;" id="importtest" title="Import has limited support for magic, rare, or crafted items, &#013Synthesized items might spawn missing properties, you can add them on the right ">Character Import</a></button>
+	<div class="nav-dropdown">
+	<button 
+		class="nav-dropbtn" 
+		id="importtest" 
+		title="Import has limited support for magic, rare, or crafted items. 
+Imported items might spawn missing properties, you can add them on the right."
+		style="cursor:pointer;"
+	>
+		Character Import
+	</button>
 	<div class="nav-dropdown-content">
-		<div class="nav-dropdown-content-item" id="nav_difficulty"><div class="nav-difficulty">&nbsp;&nbsp;&nbsp;Enter Character Name and click the button &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;<input type="text" autocomplete="new-password" name="importname" class="nav-dropdown-content-item" id="importname"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;<input type="button" value="Import Whole Character" onClick="importChar()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="button" value="Just the Synth" onClick="justthesynth()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;
+		<div class="nav-dropdown-content-item">
+		
+		<label for="importname">Enter Character Name:</label><br>
+		<input 
+			type="text" 
+			id="importname" 
+			name="importname" 
+			autocomplete="new-password" 
+			class="nav-dropdown-input"
+		><br><br>
+		
+		<label>
+			<input type="checkbox" id="assumeCharms">
+			Assume charms (Torch, Anni, and skillers)
+		</label><br><br>
+		
+		<input 
+			type="button" 
+			value="Import Whole Character" 
+			onClick="importChar()"
+			class="import-button"
+		>
+		<input 
+			type="button" 
+			value="Just the Synth" 
+			onClick="justthesynth()"
+			class="import-button"
+		>
+		</div>
+	</div>
+	</div>
 
-</div><br><br></div></div></div>
   <div class="nav-dropdown">
 	<button class="nav-dropbtn" style="cursor:pointer;" id="createLink" title="Get a short link ">Short Link</button> 
   </div>
