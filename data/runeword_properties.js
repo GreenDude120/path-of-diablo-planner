@@ -860,7 +860,7 @@ var runewordProperties = {
         },
     },
     Heart_of_the_Oak:{
-        name: "Heart_of_the_Oak",
+        name: "Heart of the Oak",
         runes: ["Ko","Vex","Pul","Thul"],
         allowedCategories: ["weapon"],  
         allowedTypes: ["staff","mace"],
@@ -901,7 +901,7 @@ var runewordProperties = {
         },
     },
     Holy_Thunder:{
-        name: "Holy_Thunder",
+        name: "Holy Thunder",
         runes: ["Eth","Ral","Ort","Tal"],
         allowedCategories: ["weapon"],  
         allowedTypes: ["scepter"],
@@ -1059,7 +1059,7 @@ var runewordProperties = {
         },
     },
     Kings_Grace:{
-        name: "Kings_Grace",
+        name: "Kings Grace",
         runes: ["Amn","Ral","Thul"],
         allowedCategories: ["weapon"],  
         allowedTypes: ["sword"],
@@ -1105,7 +1105,7 @@ var runewordProperties = {
         },
     },
     Last_Wish:{
-        name: "Last_Wish",
+        name: "Last Wish",
         runes: ["Jah","Mal","Jah","Sur","Jah","Ber"],
         allowedCategories: ["weapon"],  
         allowedTypes: ["sword","axe"],
@@ -2033,7 +2033,7 @@ var runewordProperties = {
         },
     },
     Unbending_Will:{
-        name: "Unbending_Will",
+        name: "Unbending Will",
         runes: ["Fal","Io","Ith","Eld","El","Hel"],
         allowedCategories: ["weapon"],  
         allowedTypes: ["sword"],
@@ -2081,7 +2081,7 @@ var runewordProperties = {
         },
     },
     Voice_of_Reason:{
-        name: "Voice_of_Reason",
+        name: "Voice of Reason",
         runes: ["Lem","Ko","El","Eld"],
         allowedCategories: ["weapon"],  
         allowedTypes: ["sword"],
