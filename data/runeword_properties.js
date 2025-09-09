@@ -804,7 +804,7 @@ var runewordProperties = {
         },
     },
     Hand_of_Justice:{
-        name: "Hand_of_Justice",
+        name: "Hand of Justice",
         runes: ["Sur","Cham","Amn","Lo"],
         allowedCategories: ["weapon"],  
         allowedTypes: [],
