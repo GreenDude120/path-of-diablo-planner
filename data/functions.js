@@ -5707,83 +5707,107 @@ function debounce(func, wait) {
 // updateURL - Updates the character parameters in the browser URL
 // ---------------------------------
 let updateURLTimeout = null;
-function updateURL() {
-	var param_quests = ~~character.quests_completed; if (param_quests == -1) { param_quests = 0 };
-	var param_run = ~~character.running; if (param_run == -1) { param_run = 0 };
-	
-	//params.set('v', game_version)		// handled elsewhere currently
-	params.set('class', character.class_name.toLowerCase())
-	params.set('level', ~~character.level)
-	params.set('difficulty', ~~character.difficulty)
-	params.set('quests', param_quests)
-	if (game_version == 2) { params.set('running', param_run) } else if (params.has('running')) { params.delete('running') }
-	//params.set('running', param_run)
-	params.set('strength', ~~character.strength_added)
-	params.set('dexterity', ~~character.dexterity_added)
-	params.set('vitality', ~~character.vitality_added)
-	params.set('energy', ~~character.energy_added)
-	params.set('url', ~~settings.parameters)
-	params.set('coupling', ~~settings.coupling)
-	params.set('synthwep', ~~settings.synthwep)
-	if (game_version == 2) { params.set('autocast', ~~settings.autocast) } else if (params.has('autocast')) { params.delete('autocast') }
-	//params.set('autocast', ~~settings.autocast)
-	var param_skills = '';
-	for (let s = 0; s < skills.length; s++) {
-		var skill_level = skills[s].level;
-		if (skill_level < 10) { skill_level = '0'+skill_level }
-		param_skills += skill_level
-	}
-	params.set('skills', param_skills)
-	params.delete('selected')
-	for (group in corruptsEquipped) { params.delete(group) }
-	params.delete('effect')
-	params.delete('mercenary')
-	params.delete('irongolem')
-	
-	if (game_version == 2) {	// these features are only available on the PoD version
-		params.set('selected', selectedSkill[0]+','+selectedSkill[1])
-		for (group in corruptsEquipped) {
-			var param_equipped = equipped[group].name+','+equipped[group].tier+','+corruptsEquipped[group].name
-			for (group_sock in socketed) { if (group == group_sock) {
-				for (let i = 0; i < socketed[group].items.length; i++) {
-					param_equipped += ','+socketed[group].items[i].name
-				}
-			} }
-			params.set(group, param_equipped)
-		}
-	}
-	
-	for (id in effects) { if (typeof(effects[id].info.enabled) != 'undefined') {
-		var param_effect = id+','+effects[id].info.enabled+','+effects[id].info.snapshot;
-		if (effects[id].info.snapshot == 1) {
-			param_effect += ','+effects[id].info.origin+','+effects[id].info.index
-			for (affix in effects[id]) { if (affix != "info") {
-				param_effect += ','+affix+','+effects[id][affix]
-			} }
-		}
-		params.append('effect', param_effect)
-	} }
-		
-	if (game_version == 2) {	// these features are only available on the PoD version
-		var param_mercenary = mercenary.name;
-		if (mercenary.name == "­ ­ ­ ­ Mercenary") { param_mercenary = "none" }
-		for (group in mercEquipped) { param_mercenary += ','+mercEquipped[group].name }
-		params.set('mercenary', param_mercenary)
-		if (golemItem.name != "none") { params.set('irongolem', golemItem.name) }
-	}
-	
-	params.delete('charm')
-//	for (charm in equipped.charms) { if (typeof(equipped.charms[charm].name) != 'undefined' && equipped.charms[charm].name != 'none') { params.append('charm', equipped.charms[charm].name) }}
-	for (charm in equipped.charms) { if (typeof(equipped.charms[charm].name) != 'undefined' && equipped.charms[charm].name != 'none') { params.append('charm', equipped.charms[charm].name) }}
-	
-	if (settings.parameters == 1) { window.history.replaceState({}, '', `${location.pathname}?${params}`) }
-	
-	// TODO: Shorten URL?
-	//var params_string = params.toString();
-	//params_string = params_string.split("%2C").join(",")
-	//params_string = params_string.split("%C2%AD").join("~")
-	//if (settings.parameters == 1) { window.history.replaceState({}, '', `${location.pathname}?`+params_string) }
+function buildCharacterURL(character, settings) {
+    const params = new URLSearchParams();
+
+    // --- Core stats & metadata ---
+    let param_quests = ~~character.quests_completed;
+    if (param_quests === -1) param_quests = 0;
+
+    let param_run = ~~character.running;
+    if (param_run === -1) param_run = 0;
+
+    params.set("class", character.class_name.toLowerCase());
+    params.set("level", ~~character.level);
+    params.set("difficulty", ~~character.difficulty);
+    params.set("quests", param_quests);
+    params.set("strength", ~~character.strength_added);
+    params.set("dexterity", ~~character.dexterity_added);
+    params.set("vitality", ~~character.vitality_added);
+    params.set("energy", ~~character.energy_added);
+    params.set("url", ~~settings.parameters);
+    params.set("coupling", ~~settings.coupling);
+    params.set("synthwep", ~~settings.synthwep);
+
+    if (game_version === 2) {
+        params.set("running", param_run);
+        params.set("autocast", ~~settings.autocast);
+    }
+
+    // --- Skills (zero-padded string) ---
+    let skillString = "";
+    for (let s = 0; s < skills.length; s++) {
+        let lvl = skills[s].level;
+        if (lvl < 10) lvl = "0" + lvl;
+        skillString += lvl;
+    }
+    params.set("skills", skillString);
+
+    // --- Items / equips ---
+    if (game_version === 2) {
+        params.set("selected", selectedSkill[0] + "," + selectedSkill[1]);
+        for (let group in corruptsEquipped) {
+            let eq = equipped[group];
+            let corr = corruptsEquipped[group];
+            let socked = socketed[group] || { items: [] };
+
+            let value = [eq.name, eq.tier, corr.name];
+            for (let item of socked.items) {
+                value.push(item.name);
+            }
+            params.set(group, value.join(","));
+        }
+    }
+
+    // --- Effects ---
+    for (let id in effects) {
+        if (typeof effects[id].info.enabled !== "undefined") {
+            let e = effects[id];
+            let value = [id, e.info.enabled, e.info.snapshot];
+
+            if (e.info.snapshot == 1) {
+                value.push(e.info.origin, e.info.index);
+                for (let affix in e) {
+                    if (affix !== "info") {
+                        value.push(affix, e[affix]);
+                    }
+                }
+            }
+            params.append("effect", value.join(","));
+        }
+    }
+
+    // --- Mercenary / Golem ---
+    if (game_version === 2) {
+        let mercStr = mercenary.name === "­ ­ ­ ­ Mercenary" ? "none" : mercenary.name;
+        for (let group in mercEquipped) {
+            mercStr += "," + mercEquipped[group].name;
+        }
+        params.set("mercenary", mercStr);
+
+        if (golemItem.name !== "none") {
+            params.set("irongolem", golemItem.name);
+        }
+    }
+
+    // --- Charms ---
+    for (let charm in equipped.charms) {
+        let c = equipped.charms[charm];
+        if (c && c.name && c.name !== "none") {
+            params.append("charm", c.name);
+        }
+    }
+
+    return `${location.pathname}?${params.toString()}`;
 }
+
+function updateURL() {
+    if (settings.parameters === 1) {
+        const newURL = buildCharacterURL(character, settings);
+        window.history.replaceState({}, "", newURL);
+    }
+}
+
 // 	getmmmpl
 //	This creates the url to mmmpld's ias calc and opens it in a new browser tab
 //  url structure: https://mmmpld.github.io/pod-attack-calc/?c=2&ss=2&io=55&w1=22
@@ -5905,887 +5929,887 @@ async function importChar() {
 //        return;
     }
 
-//let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
-//let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
-//let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
-let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&"
-let data; 
-function normalizeText(text) {
-    return text.replace(/[\u00A0\u200B\u200C\u200D\uFEFF\u2011]/g, '').trim(); // Removes invisible spaces
-}
-
-// API call to get character
-//characterName = "PIG_ASN"
-if (characterName) {
-	console.log("Character Name:", characterName);
-	
-	// Fetch character data and process it
-	try {
-		const characterData = await fetchCharacterData(characterName);
-		processCharacterData(characterData);  // Process after retrieval
-	} catch (error) {
-		console.error("Error during API calls:", error);
+	//let builderurl = "https://build.pathofdiablo.com/?v=PoD&"
+	//let builderurl = "https://build.pathofdiablo.com/?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
+	//let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&quests=1&coupling=1&synthwep=0&autocast=1&"
+	let builderurl = "file:///home/derek/Desktop/path-of-diablo-planner/index.html?v=2&"
+	let data; 
+	function normalizeText(text) {
+		return text.replace(/[\u00A0\u200B\u200C\u200D\uFEFF\u2011]/g, '').trim(); // Removes invisible spaces
 	}
-} else {
-	console.warn("Character Name is not set in the configuration.");
-}
 
-async function fetchCharacterData(characterName) {
-	console.log("Start function fetchCharacterData");
-//    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
-	const url = 'https://beta.pathofdiablo.com/api/characters/'+characterName+'/summary'
-	//    console.log("API URL:", url);
-
-    try {
-        const response = await fetch(url);
-        console.log("fetch worked");
-
-        if (!response.ok) {
-            throw new Error(`API call failed with status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Character Data fetched:", data);
-        return data;
-    } catch (error) {
-        console.error("Error fetching character data:", error);
-        return null;
-    }
-}
-
-// Set character stats & skills from api response
-// Function to process characterData after it's fetched
-function processCharacterData(characterData) {
-    if (!characterData || !characterData.Equipped) {
-        console.warn("No character data found.");
-        return;
-    }
-
-    console.log("Processing character data for direct item equipping...");
-    
-	reset(characterData.Class.toLowerCase())
-//    character.class = characterData.Class;
-    character.level = characterData.Stats.Level;
-	character.strength = characterData.Stats.Strength
-	character.dexterity = characterData.Stats.Dexterity
-	character.vitality = characterData.Stats.Vitality
-	character.energy = characterData.Stats.Energy
-    // Loop through equipped items and equip them directly
-    characterData.Equipped.forEach(item => {
-        if (item.SynthesisedFrom && item.SynthesisedFrom.length > 0) {
-            console.log(`Synthesized item detected: ${item.Title}`);
-            item = synthesizeFromAPI(item, characterData); // Merge donor properties
-        }
-//	character.skills_sorceress.skillName["Warmth"] = 10
-//	skills_sorceress.find(skill => skill.name === "Warmth").level = 10
-//	character["skill_warmth"].level = 10
-//	character.skillName["skill_warmth"].level = 10
-    // Dynamically reference the correct skills array
-    const classKey = `skills_${characterData.Class.toLowerCase()}`; // Example: "skills_sorceress"
-    const classSkills = window[classKey]; // Assuming skill arrays are globally accessible
-
-    if (!classSkills) {
-        console.error(`Skill data not found for class: ${characterData.Class}`);
-        return;
-    }
-
-    // Loop through each skill from API and update
-    characterData.SkillTabs.forEach(tab => {
-        tab.Skills.forEach(apiSkill => {
-            const skillObject = classSkills.find(skill => skill.name === apiSkill.Name);
-            
-            if (skillObject) {
-                skillObject.level = apiSkill.Level;
-//                console.log(`Updated ${skillObject.name} to level ${skillObject.level}`);
-            } else {
-                console.warn(`Skill not found for class ${characterData.Class}: ${apiSkill.Name}`);
-            }
-        });
-    });
-    equipItemDirectly(item);
-    });
-
-
-	// Determine which SkillTab has the most points
-	let dominantTab = characterData.SkillTabs.reduce((maxTab, currentTab) =>
-		currentTab.Total > maxTab.Total ? currentTab : maxTab
-	);
-
-	const charmMap = {
-	Amazon: {
-		"Javelin and Spear Skills": "+1 Harpoonist's Grand Charm",
-		"Passive and Magic Skills": "+1 Acrobat's Grand Charm",
-		"Bow and Crossbow Skills": "+1 Fletcher's Grand Charm"
-	},
-	Assassin: {
-		"Martial Arts": "+1 Shogukusha's Grand Charm",
-		"Shadow Disciplines": "+1 Mentalist's Grand Charm",
-		"Traps": "+1 Entrapping Grand Charm"
-	},
-	Barbarian: {
-		"Warcries": "+1 Sounding Grand Charm",
-		"Masteries": "+1 Fanatic Grand Charm",
-		"Combat Skills": "+1 Expert's Grand Charm"
-	},
-	Druid: {
-		"Elemental Skills": "+1 Nature's Grand Charm",
-		"Shape Shifting Skills": "+1 Spiritual Grand Charm",
-		"Summoning Skills": "+1 Trainer's Grand Charm"
-	},
-	Necromancer: {
-		"Summoning Skills": "+1 Graverobber's Grand Charm",
-		"Poison and Bone Skills": "+1 Fungal Grand Charm",
-		"Curses": "+1 Hexing Grand Charm"
-	},
-	Paladin: {
-		"Defensive Auras": "+1 Preserver's Grand Charm",
-		"Offensive Auras": "+1 Captain's Grand Charm",
-		"Combat Skills": "+1 Lion Branded Grand Charm"
-	},
-	Sorceress: {
-		"Cold Skills": "+1 Chilling Grand Charm",
-		"Lightning Skills": "+1 Sparking Grand Charm",
-		"Fire Skills": "+1 Burning Grand Charm"
-	}
-	};
-
-	// Character class comes from your API data, e.g. "Paladin"
-	const charClass = characterData.Class;
-
-	// Add charm if there's a match
-	if (charmMap[charClass] && charmMap[charClass][dominantTab.Name]) {
-		if (document.getElementById("assumeCharms").checked) { // ✅ only if checkbox is checked
-			for (let i = 0; i < 9; i++) {
-				addCharm("Hellfire Torch");
-				addCharm("Annihilus");
-				addCharm(charmMap[charClass][dominantTab.Name]);
-			}
-			console.log(`Added charms for ${charClass} / ${dominantTab.Name}`);
-		} else {
-			console.log("Skipped charms — assume charms not checked");
+	// API call to get character
+	//characterName = "PIG_ASN"
+	if (characterName) {
+		console.log("Character Name:", characterName);
+		
+		// Fetch character data and process it
+		try {
+			const characterData = await fetchCharacterData(characterName);
+			processCharacterData(characterData);  // Process after retrieval
+		} catch (error) {
+			console.error("Error during API calls:", error);
 		}
 	} else {
-		console.warn(`No charm mapped for class/tab: ${charClass} / ${dominantTab.Name}`);
+		console.warn("Character Name is not set in the configuration.");
 	}
 
-    update(); // Update interface dynamically
-}
+	async function fetchCharacterData(characterName) {
+		console.log("Start function fetchCharacterData");
+	//    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
+		const url = 'https://beta.pathofdiablo.com/api/characters/'+characterName+'/summary'
+		//    console.log("API URL:", url);
 
-// Equip items from api response
-function formatSlotName(slot) {
-    if (slot === "ring1" || slot === "ring2") return "Ring"; // Special case for ring1
-    return slot.charAt(0).toUpperCase() + slot.slice(1);
-}
+		try {
+			const response = await fetch(url);
+			console.log("fetch worked");
 
-// --- helpers ---
-function resolveRunewordByName(name) {
-  return Object.values(runewordProperties)
-    .find(rw => rw.name.toLowerCase() === String(name).toLowerCase());
-}
-
-function resolveBaseKey(tag) {
-  if (!tag) return null;
-
-  // Normalize "Dusk Shroud" → "Dusk_Shroud"
-  let key = tag.replace(/ /g, "_");
-
-  // Direct match
-  if (bases[key]) return key;
-
-  // Case-insensitive fallback
-  const found = Object.keys(bases).find(
-    k => k.toLowerCase() === key.toLowerCase()
-  );
-  return found || null;
-}
-
-
-
-const pendingPropertyLists = {};
-
-function equipItemDirectly(item) {
-  const pendingPropertyLists = {};
-
-  const slotMapping = { body:"armor", weapon1:"weapon", weapon2:"offhand", helmet:"helm" };
-  const rawSlot = item.Worn;
-// Ignore swap weapon slots
-if (rawSlot.startsWith("sweapon")) {
-    console.log("Skipping swap weapon slot:", rawSlot);
-    return;
-}  
-  const slot = slotMapping[rawSlot] || rawSlot; // unprefixed
-
-  let equipName = item.Title;
-  const offhandtag = item.Tag;
-
-  switch (item.QualityCode) {
-    case "q_unique":
-    case "q_set":
-      equipName = item.Title;
-      break;
-
-case "q_runeword": {
-    const rw = resolveRunewordByName(item.Title);
-    const baseKey = resolveBaseKey(item.Tag);
-
-    if (!rw || !bases[baseKey]) {
-        console.warn("Runeword or base not found:", item.Title, item.Tag);
-        break;
-    }
-
-    // Map Worn slots to proper dropdown/equipment keys
-    const slotMapping = { body: "armor", helmet: "helm", weapon1: "weapon", weapon2: "offhand" };
-    const equipSlot = slotMapping[item.Worn] || item.Worn;
-
-    // Flatten runeword for direct equip
-    const displayBase = baseKey.replace(/_/g, " ");
-    const flatRuneword = {
-        rarity: "rw",
-        name: `${rw.name} ­ ­ - ­ ­ ${displayBase}`,
-        type: bases[baseKey].type,
-        base: displayBase,
-        runewordStats: rw.stats,
-        runes: rw.runes,
-        cskill: rw.cskill || [],
-        ...rw.stats
-    };
-    ["allowedTypes", "allowedCategories"].forEach(k => {
-        if (rw[k]) flatRuneword[k] = rw[k];
-    });
-
-    // Ensure equipment object exists
-    if (!equipment[equipSlot]) equipment[equipSlot] = {};
-
-    // Add runeword to equipment
-    equipment[equipSlot][flatRuneword.name] = flatRuneword;
-
-    // Equip it
-    equip(equipSlot, flatRuneword.name);
-
-    // Update the dropdown to reflect the runeword
-    const dropdown = document.getElementById(`dropdown_${equipSlot}`);
-  if (dropdown) {
-    const rwOption = dropdown.querySelector(`option[value="*"]`);
-    if (rwOption) rwOption.textContent = flatRuneword.name;
-	console.log("UI changed to: ", equipSlot, flatRuneword.name)
-  }	
-
-
-    console.log(`✅ Equipped runeword: ${flatRuneword.name} in slot: ${equipSlot}`);
-    return; // Important: don’t fall through to generic dropdown logic
-}
-
-
-
-    case "q_magic":
-    case "q_rare":
-    case "q_crafted":
-      if (offhandtag === "Bolts" || offhandtag === "Arrows") {
-        equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
-      } else {
-        equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
-      }
-      break;
-  }
-
-  // Save props for crafted/magic/rare
-  if (item.PropertyList && ["q_magic","q_rare","q_crafted"].includes(item.QualityCode)) {
-    pendingPropertyLists[slot] = item.PropertyList;
-    console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
-  }
-
-  // Fallback generic dropdown flow
-  const dropdownId = `dropdown_${slot}`;
-  const dropdown = document.getElementById(dropdownId);
-  if (dropdown) {
-    dropdown.value = equipName;
-    dropdown.dispatchEvent(new Event("change"));
-    console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
-  } else {
-    console.warn(`Dropdown not found for slot: ${slot}`);
-  }
-
-  // Delay apply properties
-  setTimeout(() => {
-    if (pendingPropertyLists[slot]) {
-      if (!equipped[slot]) {
-        console.warn(`❌ No item equipped in slot: ${slot} to apply properties`);
-        return;
-      }
-      equipped[slot].PropertyList = pendingPropertyLists[slot];
-      console.log(`✅ Injected PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
-      applyMatchedProperties(slot);
-      delete pendingPropertyLists[slot];
-    }
-  }, 0);
-}
-
-
-
-
-function applyMatchedProperties(slot) {
-    if (!equipped[slot]) {
-        console.warn(`❌ No equipped item found in slot: ${slot}`);
-        return;
-    }
-    const equippedItem = equipped[slot];
-
-    // Rename generic items if needed
-    if (["q_magic", "q_rare", "q_crafted"].includes(equippedItem.QualityCode)) {
-        const qualityName = equippedItem.QualityCode.split("_")[1];
-        const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1);
-        const formattedSlot = formatSlotName(slot);
-        equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
-        console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
-    }
-
-    equippedItem.PropertyList.forEach(propText => {
-        const matches = findMatchingStat(propText, stats);
-        if (!matches || matches.length === 0) {
-            console.warn(`❌ No match for: "${propText}"`);
-            return;
-        }
-
-        // If we can extract a number from the propertyText, do it once here
-        const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
-
-	matches.forEach(({ statKey, value }) => {
-		if (statKey === "ctc") {
-			if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
-			equippedItem.ctc.push(value);
-			console.log(`✅ Added CTC:`, value);
-		} else if (statKey === "cskill") {
-			if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
-			equippedItem.cskill.push(value);
-			console.log(`✅ Added Charged Skill:`, value);
-		} else {
-			const valueToApply = typeof value === "number" ? value : numericValue;
-			equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
-			character[statKey] = (character[statKey] || 0) + valueToApply;
+			if (!response.ok) {
+				throw new Error(`API call failed with status: ${response.status}`);
+			}
+			const data = await response.json();
+			console.log("Character Data fetched:", data);
+			return data;
+		} catch (error) {
+			console.error("Error fetching character data:", error);
+			return null;
 		}
-	});
-
-    });
-
-    updateSelectedItemSummary(equippedItem);
-    update();
-    console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
-}
-
-
-
-function findMatchingStat(propertyText, stats) {
-    console.log(`Checking property: "${propertyText}" against stats`);
-	const afterKillStat = parseAfterKillStat(propertyText);
-	if (afterKillStat) {
-		return [afterKillStat];
 	}
 
-    const ctcParsed = parseChanceToCast(propertyText);
-    if (ctcParsed) {
-        console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
-        return [ctcParsed];  // Return in array form for compatibility
-    }
-    const cskillParsed = parseChargedSkill(propertyText);
-    if (cskillParsed) {
-        console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
-        return [cskillParsed];
-    }	
-    // Try to match "Adds #–# [Element] Damage"
-    const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
-    if (damageMatch) {
-        const [, min, max, elementRaw] = damageMatch;
-        const element = elementRaw.toLowerCase();
-        let prefix = "damage"; // default is physical
+	// Set character stats & skills from api response
+	// Function to process characterData after it's fetched
+	function processCharacterData(characterData) {
+		if (!characterData || !characterData.Equipped) {
+			console.warn("No character data found.");
+			return;
+		}
 
-        switch (element) {
-            case "fire": prefix = "fDamage"; break;
-            case "cold": prefix = "cDamage"; break;
-            case "lightning": prefix = "lDamage"; break;
-            case "poison": prefix = "pDamage"; break;
-            // fall through: unknown/empty means physical
-        }
+		console.log("Processing character data for direct item equipping...");
+		
+		reset(characterData.Class.toLowerCase())
+	//    character.class = characterData.Class;
+		character.level = characterData.Stats.Level;
+		character.strength = characterData.Stats.Strength
+		character.dexterity = characterData.Stats.Dexterity
+		character.vitality = characterData.Stats.Vitality
+		character.energy = characterData.Stats.Energy
+		// Loop through equipped items and equip them directly
+		characterData.Equipped.forEach(item => {
+			if (item.SynthesisedFrom && item.SynthesisedFrom.length > 0) {
+				console.log(`Synthesized item detected: ${item.Title}`);
+				item = synthesizeFromAPI(item, characterData); // Merge donor properties
+			}
+	//	character.skills_sorceress.skillName["Warmth"] = 10
+	//	skills_sorceress.find(skill => skill.name === "Warmth").level = 10
+	//	character["skill_warmth"].level = 10
+	//	character.skillName["skill_warmth"].level = 10
+		// Dynamically reference the correct skills array
+		const classKey = `skills_${characterData.Class.toLowerCase()}`; // Example: "skills_sorceress"
+		const classSkills = window[classKey]; // Assuming skill arrays are globally accessible
 
-        console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
-        return [
-            { statKey: `${prefix}_min`, value: parseInt(min, 10) },
-            { statKey: `${prefix}_max`, value: parseInt(max, 10) }
-        ];
-    }
+		if (!classSkills) {
+			console.error(`Skill data not found for class: ${characterData.Class}`);
+			return;
+		}
 
-    // Fallback to format-based matching
-    for (const [statKey, statData] of Object.entries(stats)) {
-        if (statData.editable !== 1) continue;
-
-        const formatPattern = new RegExp(
-            statData.format.map(f =>
-                f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-            ).join(".*"),
-            "i"
-        );
-
-        if (formatPattern.test(propertyText)) {
-            console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
-            return [{ statKey }];
-        }
-    }
-
-    console.warn(`❌ No match found for "${propertyText}"`);
-    return [];
-}
-
-// Inside findMatchingStat or as a helper function
-function parseChanceToCast(line) {
-    const ctcRegex = /(\d+)% Chance to cast level (\d+)\s+(.+?)\s+(when [\w\s]+)$/i;
-    const match = line.match(ctcRegex);
-    if (!match) return null;
-
-    const [, percent, level, skillName, trigger] = match;
-    return {
-        statKey: "ctc",
-        value: [parseInt(percent), parseInt(level), skillName.trim(), trigger.trim()]
-    };
-}
-
-function parseChargedSkill(line) {
-    const chargedRegex = /Level (\d+)\s+(.+?)\s+\((\d+)\/\d+ Charges\)/i;
-    const match = line.match(chargedRegex);
-    if (!match) return null;
-
-    const [, level, skillName, charges] = match;
-    return {
-        statKey: "cskill",
-        value: [parseInt(level), skillName.trim(), parseInt(charges)]
-    };
-}
-
-function parseAfterKillStat(line) {
-    const match = line.match(/\+(\d+)\s+(?:to\s+)?(Mana|Life)\s+after\s+each\s+Kill/i);
-    if (!match) return null;
-
-    const [, value, type] = match;
-    const statKey = type.toLowerCase() + "_after_kill";  // e.g., "mana_after_kill"
-
-    return {
-        statKey,
-        value: parseInt(value, 10)
-    };
-}
+		// Loop through each skill from API and update
+		characterData.SkillTabs.forEach(tab => {
+			tab.Skills.forEach(apiSkill => {
+				const skillObject = classSkills.find(skill => skill.name === apiSkill.Name);
+				
+				if (skillObject) {
+					skillObject.level = apiSkill.Level;
+	//                console.log(`Updated ${skillObject.name} to level ${skillObject.level}`);
+				} else {
+					console.warn(`Skill not found for class ${characterData.Class}: ${apiSkill.Name}`);
+				}
+			});
+		});
+		equipItemDirectly(item);
+		});
 
 
+		// Determine which SkillTab has the most points
+		let dominantTab = characterData.SkillTabs.reduce((maxTab, currentTab) =>
+			currentTab.Total > maxTab.Total ? currentTab : maxTab
+		);
 
-// recreate synths found in api response
-function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
-    if (!baseItem.SynthesisedFrom) return baseItem;
+		const charmMap = {
+		Amazon: {
+			"Javelin and Spear Skills": "+1 Harpoonist's Grand Charm",
+			"Passive and Magic Skills": "+1 Acrobat's Grand Charm",
+			"Bow and Crossbow Skills": "+1 Fletcher's Grand Charm"
+		},
+		Assassin: {
+			"Martial Arts": "+1 Shogukusha's Grand Charm",
+			"Shadow Disciplines": "+1 Mentalist's Grand Charm",
+			"Traps": "+1 Entrapping Grand Charm"
+		},
+		Barbarian: {
+			"Warcries": "+1 Sounding Grand Charm",
+			"Masteries": "+1 Fanatic Grand Charm",
+			"Combat Skills": "+1 Expert's Grand Charm"
+		},
+		Druid: {
+			"Elemental Skills": "+1 Nature's Grand Charm",
+			"Shape Shifting Skills": "+1 Spiritual Grand Charm",
+			"Summoning Skills": "+1 Trainer's Grand Charm"
+		},
+		Necromancer: {
+			"Summoning Skills": "+1 Graverobber's Grand Charm",
+			"Poison and Bone Skills": "+1 Fungal Grand Charm",
+			"Curses": "+1 Hexing Grand Charm"
+		},
+		Paladin: {
+			"Defensive Auras": "+1 Preserver's Grand Charm",
+			"Offensive Auras": "+1 Captain's Grand Charm",
+			"Combat Skills": "+1 Lion Branded Grand Charm"
+		},
+		Sorceress: {
+			"Cold Skills": "+1 Chilling Grand Charm",
+			"Lightning Skills": "+1 Sparking Grand Charm",
+			"Fire Skills": "+1 Burning Grand Charm"
+		}
+		};
 
-//    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
-    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn === "weapon2" ? "offhand" : baseItem.Worn;
-    window.currentSynthSlot = slot;
+		// Character class comes from your API data, e.g. "Paladin"
+		const charClass = characterData.Class;
 
-    equipItemDirectly(baseItem);
-    const equippedItem = equipped[slot];
+		// Add charm if there's a match
+		if (charmMap[charClass] && charmMap[charClass][dominantTab.Name]) {
+			if (document.getElementById("assumeCharms").checked) { // ✅ only if checkbox is checked
+				for (let i = 0; i < 9; i++) {
+					addCharm("Hellfire Torch");
+					addCharm("Annihilus");
+					addCharm(charmMap[charClass][dominantTab.Name]);
+				}
+				console.log(`Added charms for ${charClass} / ${dominantTab.Name}`);
+			} else {
+				console.log("Skipped charms — assume charms not checked");
+			}
+		} else {
+			console.warn(`No charm mapped for class/tab: ${charClass} / ${dominantTab.Name}`);
+		}
 
-    if (!equippedItem) {
-        console.warn(`Failed to equip synthesized item "${baseItem.Title}"`);
-        return baseItem;
-    }
-
-    // Collect donor items
-    const donorItems = baseItem.SynthesisedFrom
-        .map(name => findDonorItem(name, apiData))
-        .filter(Boolean);
-
-    // Include base (equipped) item in synth properties
-    const synthProperties = gatherSynthPropertiesFromMultiple([equippedItem, ...donorItems]);
-//	applyMatchedProperties(slot)
-if (!applyAll) {
-	for (const key in equippedItem) {
-		if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue;
-		character[key] -= equippedItem[key];
-		delete equippedItem[key];
+		update(); // Update interface dynamically
 	}
-	equippedItem.emptysynth = 1;
 
-	// Generate synth property UI
-	generateSynthPropertyUI(synthProperties, slot);
+	// Equip items from api response
+	function formatSlotName(slot) {
+		if (slot === "ring1" || slot === "ring2") return "Ring"; // Special case for ring1
+		return slot.charAt(0).toUpperCase() + slot.slice(1);
+	}
 
+	// --- helpers ---
+	function resolveRunewordByName(name) {
+	return Object.values(runewordProperties)
+		.find(rw => rw.name.toLowerCase() === String(name).toLowerCase());
+	}
+
+	function resolveBaseKey(tag) {
+	if (!tag) return null;
+
+	// Normalize "Dusk Shroud" → "Dusk_Shroud"
+	let key = tag.replace(/ /g, "_");
+
+	// Direct match
+	if (bases[key]) return key;
+
+	// Case-insensitive fallback
+	const found = Object.keys(bases).find(
+		k => k.toLowerCase() === key.toLowerCase()
+	);
+	return found || null;
+	}
+
+
+
+	const pendingPropertyLists = {};
+
+	function equipItemDirectly(item) {
+	const pendingPropertyLists = {};
+
+	const slotMapping = { body:"armor", weapon1:"weapon", weapon2:"offhand", helmet:"helm" };
+	const rawSlot = item.Worn;
+	// Ignore swap weapon slots
+	if (rawSlot.startsWith("sweapon")) {
+		console.log("Skipping swap weapon slot:", rawSlot);
+		return;
+	}  
+	const slot = slotMapping[rawSlot] || rawSlot; // unprefixed
+
+	let equipName = item.Title;
+	const offhandtag = item.Tag;
+
+	switch (item.QualityCode) {
+		case "q_unique":
+		case "q_set":
+		equipName = item.Title;
+		break;
+
+	case "q_runeword": {
+		const rw = resolveRunewordByName(item.Title);
+		const baseKey = resolveBaseKey(item.Tag);
+
+		if (!rw || !bases[baseKey]) {
+			console.warn("Runeword or base not found:", item.Title, item.Tag);
+			break;
+		}
+
+		// Map Worn slots to proper dropdown/equipment keys
+		const slotMapping = { body: "armor", helmet: "helm", weapon1: "weapon", weapon2: "offhand" };
+		const equipSlot = slotMapping[item.Worn] || item.Worn;
+
+		// Flatten runeword for direct equip
+		const displayBase = baseKey.replace(/_/g, " ");
+		const flatRuneword = {
+			rarity: "rw",
+			name: `${rw.name} ­ ­ - ­ ­ ${displayBase}`,
+			type: bases[baseKey].type,
+			base: displayBase,
+			runewordStats: rw.stats,
+			runes: rw.runes,
+			cskill: rw.cskill || [],
+			...rw.stats
+		};
+		["allowedTypes", "allowedCategories"].forEach(k => {
+			if (rw[k]) flatRuneword[k] = rw[k];
+		});
+
+		// Ensure equipment object exists
+		if (!equipment[equipSlot]) equipment[equipSlot] = {};
+
+		// Add runeword to equipment
+		equipment[equipSlot][flatRuneword.name] = flatRuneword;
+
+		// Equip it
+		equip(equipSlot, flatRuneword.name);
+
+		// Update the dropdown to reflect the runeword
+		const dropdown = document.getElementById(`dropdown_${equipSlot}`);
+	if (dropdown) {
+		const rwOption = dropdown.querySelector(`option[value="*"]`);
+		if (rwOption) rwOption.textContent = flatRuneword.name;
+		console.log("UI changed to: ", equipSlot, flatRuneword.name)
+	}	
+
+
+		console.log(`✅ Equipped runeword: ${flatRuneword.name} in slot: ${equipSlot}`);
+		return; // Important: don’t fall through to generic dropdown logic
+	}
+
+
+
+		case "q_magic":
+		case "q_rare":
+		case "q_crafted":
+		if (offhandtag === "Bolts" || offhandtag === "Arrows") {
+			equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
+		} else {
+			equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+		}
+		break;
+	}
+
+	// Save props for crafted/magic/rare
+	if (item.PropertyList && ["q_magic","q_rare","q_crafted"].includes(item.QualityCode)) {
+		pendingPropertyLists[slot] = item.PropertyList;
+		console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
+	}
+
+	// Fallback generic dropdown flow
+	const dropdownId = `dropdown_${slot}`;
+	const dropdown = document.getElementById(dropdownId);
+	if (dropdown) {
+		dropdown.value = equipName;
+		dropdown.dispatchEvent(new Event("change"));
+		console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
+	} else {
+		console.warn(`Dropdown not found for slot: ${slot}`);
+	}
+
+	// Delay apply properties
 	setTimeout(() => {
-		matchSynthStatsFromAPIStrings(baseItem.PropertyList || [], synthProperties, stats);
+		if (pendingPropertyLists[slot]) {
+		if (!equipped[slot]) {
+			console.warn(`❌ No item equipped in slot: ${slot} to apply properties`);
+			return;
+		}
+		equipped[slot].PropertyList = pendingPropertyLists[slot];
+		console.log(`✅ Injected PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
+		applyMatchedProperties(slot);
+		delete pendingPropertyLists[slot];
+		}
 	}, 0);
+	}
 
-    } else {
-        donorItems.forEach(donor => mergeItemProperties(equippedItem, donor));
-        updateSelectedItemSummary(slot);
-        update();
-    }
 
-    return equippedItem;
-}
 
-function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
-	if (!Array.isArray(apiStatStrings) || !Array.isArray(synthProperties)) return;
 
-	apiStatStrings.forEach(apiText => {
-		apiText = apiText.trim();
-		console.log(`🔍 Matching API stat: "${apiText}"`);
+	function applyMatchedProperties(slot) {
+		if (!equipped[slot]) {
+			console.warn(`❌ No equipped item found in slot: ${slot}`);
+			return;
+		}
+		const equippedItem = equipped[slot];
 
-		let matchedKey = null;
-		let matchedValue = null;
+		// Rename generic items if needed
+		if (["q_magic", "q_rare", "q_crafted"].includes(equippedItem.QualityCode)) {
+			const qualityName = equippedItem.QualityCode.split("_")[1];
+			const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1);
+			const formattedSlot = formatSlotName(slot);
+			equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
+			console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
+		}
 
-		// Loop through all editable stats
+		equippedItem.PropertyList.forEach(propText => {
+			const matches = findMatchingStat(propText, stats);
+			if (!matches || matches.length === 0) {
+				console.warn(`❌ No match for: "${propText}"`);
+				return;
+			}
+
+			// If we can extract a number from the propertyText, do it once here
+			const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
+
+		matches.forEach(({ statKey, value }) => {
+			if (statKey === "ctc") {
+				if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
+				equippedItem.ctc.push(value);
+				console.log(`✅ Added CTC:`, value);
+			} else if (statKey === "cskill") {
+				if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
+				equippedItem.cskill.push(value);
+				console.log(`✅ Added Charged Skill:`, value);
+			} else {
+				const valueToApply = typeof value === "number" ? value : numericValue;
+				equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
+				character[statKey] = (character[statKey] || 0) + valueToApply;
+			}
+		});
+
+		});
+
+		updateSelectedItemSummary(equippedItem);
+		update();
+		console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
+	}
+
+
+
+	function findMatchingStat(propertyText, stats) {
+		console.log(`Checking property: "${propertyText}" against stats`);
+		const afterKillStat = parseAfterKillStat(propertyText);
+		if (afterKillStat) {
+			return [afterKillStat];
+		}
+
+		const ctcParsed = parseChanceToCast(propertyText);
+		if (ctcParsed) {
+			console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+			return [ctcParsed];  // Return in array form for compatibility
+		}
+		const cskillParsed = parseChargedSkill(propertyText);
+		if (cskillParsed) {
+			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+			return [cskillParsed];
+		}	
+		// Try to match "Adds #–# [Element] Damage"
+		const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
+		if (damageMatch) {
+			const [, min, max, elementRaw] = damageMatch;
+			const element = elementRaw.toLowerCase();
+			let prefix = "damage"; // default is physical
+
+			switch (element) {
+				case "fire": prefix = "fDamage"; break;
+				case "cold": prefix = "cDamage"; break;
+				case "lightning": prefix = "lDamage"; break;
+				case "poison": prefix = "pDamage"; break;
+				// fall through: unknown/empty means physical
+			}
+
+			console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+			return [
+				{ statKey: `${prefix}_min`, value: parseInt(min, 10) },
+				{ statKey: `${prefix}_max`, value: parseInt(max, 10) }
+			];
+		}
+
+		// Fallback to format-based matching
 		for (const [statKey, statData] of Object.entries(stats)) {
 			if (statData.editable !== 1) continue;
 
-			// Build regex pattern from the stat's format, e.g. ["+", "% Enhanced Damage"]
-			const patternStr = statData.format
-				.map(piece => piece.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // escape regex chars
-				.join(".*?"); // allow anything (like numbers) in between
-			const pattern = new RegExp(`^${patternStr}$`, "i");
+			const formatPattern = new RegExp(
+				statData.format.map(f =>
+					f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+				).join(".*"),
+				"i"
+			);
 
-			if (pattern.test(apiText)) {
-				// Try to extract the number value from the string
-				const numMatch = apiText.match(/[-+]?\d+(\.\d+)?/);
-				const value = numMatch ? parseFloat(numMatch[0]) : null;
-				if (value !== null) {
-					matchedKey = statKey;
-					matchedValue = value;
-					break;
+			if (formatPattern.test(propertyText)) {
+				console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
+				return [{ statKey }];
+			}
+		}
+
+		console.warn(`❌ No match found for "${propertyText}"`);
+		return [];
+	}
+
+	// Inside findMatchingStat or as a helper function
+	function parseChanceToCast(line) {
+		const ctcRegex = /(\d+)% Chance to cast level (\d+)\s+(.+?)\s+(when [\w\s]+)$/i;
+		const match = line.match(ctcRegex);
+		if (!match) return null;
+
+		const [, percent, level, skillName, trigger] = match;
+		return {
+			statKey: "ctc",
+			value: [parseInt(percent), parseInt(level), skillName.trim(), trigger.trim()]
+		};
+	}
+
+	function parseChargedSkill(line) {
+		const chargedRegex = /Level (\d+)\s+(.+?)\s+\((\d+)\/\d+ Charges\)/i;
+		const match = line.match(chargedRegex);
+		if (!match) return null;
+
+		const [, level, skillName, charges] = match;
+		return {
+			statKey: "cskill",
+			value: [parseInt(level), skillName.trim(), parseInt(charges)]
+		};
+	}
+
+	function parseAfterKillStat(line) {
+		const match = line.match(/\+(\d+)\s+(?:to\s+)?(Mana|Life)\s+after\s+each\s+Kill/i);
+		if (!match) return null;
+
+		const [, value, type] = match;
+		const statKey = type.toLowerCase() + "_after_kill";  // e.g., "mana_after_kill"
+
+		return {
+			statKey,
+			value: parseInt(value, 10)
+		};
+	}
+
+
+
+	// recreate synths found in api response
+	function synthesizeFromAPI(baseItem, apiData, applyAll = false) {
+		if (!baseItem.SynthesisedFrom) return baseItem;
+
+	//    const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn;
+		const slot = baseItem.Worn === "weapon1" ? "weapon" : baseItem.Worn === "weapon2" ? "offhand" : baseItem.Worn;
+		window.currentSynthSlot = slot;
+
+		equipItemDirectly(baseItem);
+		const equippedItem = equipped[slot];
+
+		if (!equippedItem) {
+			console.warn(`Failed to equip synthesized item "${baseItem.Title}"`);
+			return baseItem;
+		}
+
+		// Collect donor items
+		const donorItems = baseItem.SynthesisedFrom
+			.map(name => findDonorItem(name, apiData))
+			.filter(Boolean);
+
+		// Include base (equipped) item in synth properties
+		const synthProperties = gatherSynthPropertiesFromMultiple([equippedItem, ...donorItems]);
+	//	applyMatchedProperties(slot)
+	if (!applyAll) {
+		for (const key in equippedItem) {
+			if (key === "name" || key.startsWith("base") || key.startsWith("req_")) continue;
+			character[key] -= equippedItem[key];
+			delete equippedItem[key];
+		}
+		equippedItem.emptysynth = 1;
+
+		// Generate synth property UI
+		generateSynthPropertyUI(synthProperties, slot);
+
+		setTimeout(() => {
+			matchSynthStatsFromAPIStrings(baseItem.PropertyList || [], synthProperties, stats);
+		}, 0);
+
+		} else {
+			donorItems.forEach(donor => mergeItemProperties(equippedItem, donor));
+			updateSelectedItemSummary(slot);
+			update();
+		}
+
+		return equippedItem;
+	}
+
+	function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
+		if (!Array.isArray(apiStatStrings) || !Array.isArray(synthProperties)) return;
+
+		apiStatStrings.forEach(apiText => {
+			apiText = apiText.trim();
+			console.log(`🔍 Matching API stat: "${apiText}"`);
+
+			let matchedKey = null;
+			let matchedValue = null;
+
+			// Loop through all editable stats
+			for (const [statKey, statData] of Object.entries(stats)) {
+				if (statData.editable !== 1) continue;
+
+				// Build regex pattern from the stat's format, e.g. ["+", "% Enhanced Damage"]
+				const patternStr = statData.format
+					.map(piece => piece.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // escape regex chars
+					.join(".*?"); // allow anything (like numbers) in between
+				const pattern = new RegExp(`^${patternStr}$`, "i");
+
+				if (pattern.test(apiText)) {
+					// Try to extract the number value from the string
+					const numMatch = apiText.match(/[-+]?\d+(\.\d+)?/);
+					const value = numMatch ? parseFloat(numMatch[0]) : null;
+					if (value !== null) {
+						matchedKey = statKey;
+						matchedValue = value;
+						break;
+					}
 				}
 			}
-		}
 
-		if (!matchedKey) {
-			console.warn(`❌ No matching stat key for "${apiText}"`);
-			return;
-		}
-console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
-//console.table(synthProperties);
-
-		// Now match with synthProperties using resolved key and value
-		const match = synthProperties.find(
-			p => p.key === matchedKey && Number(p.value) === Number(matchedValue)
-		);
-		if (match) {
-			const checkbox = document.querySelector(
-				`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
-			);
-			if (checkbox && !checkbox.checked) {
-				checkbox.checked = true;
-				checkbox.dispatchEvent(new Event("change"));
-				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+			if (!matchedKey) {
+				console.warn(`❌ No matching stat key for "${apiText}"`);
+				return;
 			}
-		} else {
-			console.warn(`❌ No synth property matched for resolved stat "${matchedKey}: ${matchedValue}"`);
-		}
-	});
-}
+	console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
+	//console.table(synthProperties);
 
-function matchSynthStatsFromAPI(apiPropertyList, synthProperties) {
-	if (!Array.isArray(apiPropertyList) || !Array.isArray(synthProperties)) return;
+			// Now match with synthProperties using resolved key and value
+			const match = synthProperties.find(
+				p => p.key === matchedKey && Number(p.value) === Number(matchedValue)
+			);
+			if (match) {
+				const checkbox = document.querySelector(
+					`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
+				);
+				if (checkbox && !checkbox.checked) {
+					checkbox.checked = true;
+					checkbox.dispatchEvent(new Event("change"));
+					console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+				}
+			} else {
+				console.warn(`❌ No synth property matched for resolved stat "${matchedKey}: ${matchedValue}"`);
+			}
+		});
+	}
 
-	apiPropertyList.forEach(apiProp => {
-		const match = synthProperties.find(({ key, value }) => {
-			const [apiKey, apiRawValue] = apiProp.split(":").map(s => s.trim());
-			const apiValue = isNaN(apiRawValue) ? apiRawValue : parseFloat(apiRawValue);
-			return apiKey === key && apiValue === value;
+	function matchSynthStatsFromAPI(apiPropertyList, synthProperties) {
+		if (!Array.isArray(apiPropertyList) || !Array.isArray(synthProperties)) return;
+
+		apiPropertyList.forEach(apiProp => {
+			const match = synthProperties.find(({ key, value }) => {
+				const [apiKey, apiRawValue] = apiProp.split(":").map(s => s.trim());
+				const apiValue = isNaN(apiRawValue) ? apiRawValue : parseFloat(apiRawValue);
+				return apiKey === key && apiValue === value;
+			});
+
+			if (match) {
+				const checkbox = document.querySelector(
+					`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
+				);
+				if (checkbox && !checkbox.checked) {
+					checkbox.checked = true;
+					checkbox.dispatchEvent(new Event("change"));
+					console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+				}
+			} else {
+				console.warn(`❌ No matching synth checkbox found for: "${apiProp}"`);
+			}
+		});
+	}
+
+	function gatherSynthPropertiesFromMultiple(items) {
+		const result = [];
+
+		items.forEach(item => {
+			const source = item.Title || item.name || "Unknown";
+
+			// ✅ If PropertyList doesn't exist, build it from raw properties
+			let propList = item.PropertyList;
+			if (!propList || propList.length === 0) {
+				propList = Object.entries(item)
+					.filter(([key]) =>
+						!["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill", "Worn", "SynthesisedFrom", "Title", "PropertyList", "tier", "max_sockets", "baseSpeed", "light_radius", "base_damage_min", "base_damage_max", "original_tier", "pod_changes", "req_strength", "req_dexterity", "iasindex"].includes(key)
+					)
+					.map(([key, value]) => `${key}: ${value}`);
+			}
+
+			propList.forEach(propString => {
+				const [key, value] = propString.split(":").map(s => s.trim());
+				result.push({ key, value, source });
+			});
 		});
 
-		if (match) {
-			const checkbox = document.querySelector(
-				`input[type="checkbox"][data-key="${match.key}"][data-value="${match.value}"]`
-			);
-			if (checkbox && !checkbox.checked) {
-				checkbox.checked = true;
-				checkbox.dispatchEvent(new Event("change"));
-				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
-			}
-		} else {
-			console.warn(`❌ No matching synth checkbox found for: "${apiProp}"`);
+		return result;
+	}
+
+
+
+
+	function findDonorItem(name) {
+		for (const slot in equipment) {
+			const item = equipment[slot].find(i => i.name === name);
+			if (item) return item;
 		}
+		return null; // Return `null` if the donor item isn't found
+	}
+
+
+
+
+	function mergeItemProperties(baseItem, donor) {
+		if (!donor) {
+			console.warn(`Donor item is missing or undefined.`);
+			return;
+		}
+
+		if (!baseItem.PropertyList) baseItem.PropertyList = [];
+
+		if (!donor.PropertyList) {
+			console.warn(`Donor item "${donor.name}" has no PropertyList—building dynamically.`);
+			donor.PropertyList = Object.entries(donor)
+				.filter(([key]) => !["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill"].includes(key))
+				.map(([key, value]) => `${key}: ${value}`);
+		}
+
+		donor.PropertyList.forEach(propString => {
+			const [key, value] = propString.split(": ").map(str => str.trim());
+			const numericValue = parseFloat(value);
+
+			// Apply to baseItem
+			if (!baseItem[key]) baseItem[key] = 0;
+			if (!isNaN(numericValue)) {
+				baseItem[key] += numericValue;
+			} else {
+				baseItem[key] = value;
+			}
+
+			// Apply to character (if relevant)
+			if (!character[key]) character[key] = 0;
+			if (!isNaN(numericValue)) {
+				character[key] += numericValue;
+			}
+
+			// Avoid duplicates in PropertyList
+			if (!baseItem.PropertyList.includes(propString) && !key.includes("PropertyList")) {
+				baseItem.PropertyList.push(propString);
+				console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
+			}
+		});
+
+		console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
+		updateSelectedItemSummary(baseItem.Worn);
+		update();
+	}
+
+	////////////////////////////////////////////////////////
+	// start listing potential properties for synth items
+
+	const validEquipmentProperties = new Set();
+
+	// ✅ Extract valid properties from all items inside nested lists (`weapon`, `armor`, etc.)
+	Object.entries(equipment).forEach(([category, itemList]) => {
+		itemList.forEach(item => {
+			Object.keys(item).forEach(prop => validEquipmentProperties.add(prop));
+		});
 	});
-}
-
-function gatherSynthPropertiesFromMultiple(items) {
-    const result = [];
-
-    items.forEach(item => {
-        const source = item.Title || item.name || "Unknown";
-
-        // ✅ If PropertyList doesn't exist, build it from raw properties
-        let propList = item.PropertyList;
-        if (!propList || propList.length === 0) {
-            propList = Object.entries(item)
-                .filter(([key]) =>
-                    !["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill", "Worn", "SynthesisedFrom", "Title", "PropertyList", "tier", "max_sockets", "baseSpeed", "light_radius", "base_damage_min", "base_damage_max", "original_tier", "pod_changes", "req_strength", "req_dexterity", "iasindex"].includes(key)
-                )
-                .map(([key, value]) => `${key}: ${value}`);
-        }
-
-        propList.forEach(propString => {
-            const [key, value] = propString.split(":").map(s => s.trim());
-            result.push({ key, value, source });
-        });
-    });
-
-    return result;
-}
 
+	function gatherSynthProperties(baseItem, donorItems) {
+		const properties = []; // ✅ Store all occurrences (including duplicates)
+
+		const addProperties = (item, source) => {
+			Object.entries(item).forEach(([key, value]) => {
+				properties.push({ key, value, source }); // ✅ Keep ALL properties, ensuring they remain in the equipped item
+			});
+		};
+
+		addProperties(baseItem, "Base Item");
+		donorItems.forEach(donor => addProperties(donor, `Donor: ${donor.name}`));
+
+		return properties; // ✅ This ensures properties exist for merging and deletion later
+	}
+
+	function filterPropertiesForUI(properties) {
+		const equipmentItems = Object.values(equipment).flat(); // ✅ Flatten all categories
+		const equipmentProperties = new Set(equipmentItems.flatMap(item => Object.keys(item))); // ✅ Extract valid names
+
+		const excludedPrefixes = ["img", "base", "twoHanded", "name", "req_", "type"];
+
+		return properties.filter(prop => {
+			return equipmentProperties.has(prop.key) && !excludedPrefixes.some(prefix => prop.key.startsWith(prefix));
+		});
+	}
+
+
+	function shouldIncludeProperty(key) {
+		const excludedKeys = ["name", "type", "base", "img", "req_level"];
+		return !excludedKeys.includes(key);
+	}
+
+	function generateSynthPropertyUI(properties, slot = "weapon") {
+		const containerId = slot === "offhand" ? "offhandsynthPropertyContainer" : "synthPropertyContainer";
+		const container = document.getElementById(containerId);
+
+		if (!container || !properties || properties.length === 0) {
+			if (container) container.style.display = "none";
+			return;
+		}
+
+		container.style.display = "block";
+		container.innerHTML = `<strong>Potential Synth Properties (${slot}):</strong>`;
+
+		const equippedItem = equipped[slot];
+
+		properties.forEach(({ key, value, source }) => {
+			const checkboxId = `${slot}-${key}-${source.replace(/\s+/g, '_')}`;
+			const div = document.createElement("div");
+
+			div.innerHTML = `
+				<label>
+					<input type="checkbox" id="${checkboxId}" data-key="${key}" data-value="${value}">
+					${key}: ${value} <small>(${source})</small>
+				</label>
+			`;
+
+			const checkbox = div.querySelector("input");
+			checkbox.addEventListener("change", (e) => {
+				const statKey = e.target.dataset.key;
+				const rawValue = e.target.dataset.value;
+				const value = isNaN(rawValue) ? rawValue : parseFloat(rawValue);
+
+				if (e.target.checked) {
+					equippedItem[statKey] = value;
+					character[statKey] = (character[statKey] || 0) + (isNaN(value) ? 0 : value);
+				} else {
+					if (!isNaN(value)) {
+						character[statKey] -= value;
+					}
+					delete equippedItem[statKey];
+				}
+
+				// Update PropertyList without duplication
+				equippedItem.PropertyList = equippedItem.PropertyList || [];
+				const propString = `${statKey}: ${value}`;
+				if (e.target.checked) {
+					if (!equippedItem.PropertyList.includes(propString)) {
+						equippedItem.PropertyList.push(propString);
+					}
+				} else {
+					equippedItem.PropertyList = equippedItem.PropertyList.filter(p => p !== propString);
+				}
+
+				updateSelectedItemSummary(equippedItem.Worn);
+				update();
+			});
+
+			container.appendChild(div);
+		});
+	}
+
+	function parseAddsDamageStat(text) {
+		const regex = /Adds\s+(\d+)\s*(?:–|to|-)\s*(\d+)\s*(Cold|Fire|Lightning|Magic|Poison)?\s*Damage/i;
+		const match = text.match(regex);
+		if (!match) return null;
+
+		const min = parseInt(match[1], 10);
+		const max = parseInt(match[2], 10);
+		const element = match[3] ? match[3].toLowerCase() : null;
 
+		let keyPrefix;
+		switch (element) {
+			case "cold": keyPrefix = "cDamage"; break;
+			case "fire": keyPrefix = "fDamage"; break;
+			case "lightning": keyPrefix = "lDamage"; break;
+			case "magic": keyPrefix = "mDamage"; break;
+			case "poison": keyPrefix = "pDamage"; break;
+			default: keyPrefix = "damage"; // physical
+		}
 
-
-function findDonorItem(name) {
-    for (const slot in equipment) {
-        const item = equipment[slot].find(i => i.name === name);
-        if (item) return item;
-    }
-    return null; // Return `null` if the donor item isn't found
-}
-
-
+		return {
+			keys: [`${keyPrefix}_min`, `${keyPrefix}_max`],
+			values: [min, max],
+			label: `${element ? element.charAt(0).toUpperCase() + element.slice(1) + " " : ""}Damage`,
+		};
+	}
 
+	const parsed = parseAddsDamageStat(propertyText);
+	if (parsed) {
+		parsed.keys.forEach((key, idx) => {
+			const value = parsed.values[idx];
 
-function mergeItemProperties(baseItem, donor) {
-    if (!donor) {
-        console.warn(`Donor item is missing or undefined.`);
-        return;
-    }
+			const match = synthProperties.find(
+				prop => prop.key === key && Number(prop.value) === value
+			);
 
-    if (!baseItem.PropertyList) baseItem.PropertyList = [];
+			if (match) {
+				console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
+				const checkbox = document.querySelector(`input[type="checkbox"][data-key="${key}"][data-value="${value}"]`);
+				if (checkbox && !checkbox.checked) {
+					checkbox.checked = true;
+					checkbox.dispatchEvent(new Event("change"));
+				}
+			} else {
+				console.warn(`❌ No synth match found for "${key}: ${value}"`);
+			}
+		});
+	}
 
-    if (!donor.PropertyList) {
-        console.warn(`Donor item "${donor.name}" has no PropertyList—building dynamically.`);
-        donor.PropertyList = Object.entries(donor)
-            .filter(([key]) => !["name", "req_level", "type", "base", "img", "twoHanded", "ctc", "cskill"].includes(key))
-            .map(([key, value]) => `${key}: ${value}`);
-    }
 
-    donor.PropertyList.forEach(propString => {
-        const [key, value] = propString.split(": ").map(str => str.trim());
-        const numericValue = parseFloat(value);
-
-        // Apply to baseItem
-        if (!baseItem[key]) baseItem[key] = 0;
-        if (!isNaN(numericValue)) {
-            baseItem[key] += numericValue;
-        } else {
-            baseItem[key] = value;
-        }
-
-        // Apply to character (if relevant)
-        if (!character[key]) character[key] = 0;
-        if (!isNaN(numericValue)) {
-            character[key] += numericValue;
-        }
-
-        // Avoid duplicates in PropertyList
-        if (!baseItem.PropertyList.includes(propString) && !key.includes("PropertyList")) {
-            baseItem.PropertyList.push(propString);
-            console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
-        }
-    });
-
-    console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
-    updateSelectedItemSummary(baseItem.Worn);
-    update();
-}
-
-////////////////////////////////////////////////////////
-// start listing potential properties for synth items
-
-const validEquipmentProperties = new Set();
-
-// ✅ Extract valid properties from all items inside nested lists (`weapon`, `armor`, etc.)
-Object.entries(equipment).forEach(([category, itemList]) => {
-    itemList.forEach(item => {
-        Object.keys(item).forEach(prop => validEquipmentProperties.add(prop));
-    });
-});
-
-function gatherSynthProperties(baseItem, donorItems) {
-    const properties = []; // ✅ Store all occurrences (including duplicates)
-
-    const addProperties = (item, source) => {
-        Object.entries(item).forEach(([key, value]) => {
-            properties.push({ key, value, source }); // ✅ Keep ALL properties, ensuring they remain in the equipped item
-        });
-    };
-
-    addProperties(baseItem, "Base Item");
-    donorItems.forEach(donor => addProperties(donor, `Donor: ${donor.name}`));
-
-    return properties; // ✅ This ensures properties exist for merging and deletion later
-}
-
-function filterPropertiesForUI(properties) {
-    const equipmentItems = Object.values(equipment).flat(); // ✅ Flatten all categories
-    const equipmentProperties = new Set(equipmentItems.flatMap(item => Object.keys(item))); // ✅ Extract valid names
-
-    const excludedPrefixes = ["img", "base", "twoHanded", "name", "req_", "type"];
-
-    return properties.filter(prop => {
-        return equipmentProperties.has(prop.key) && !excludedPrefixes.some(prefix => prop.key.startsWith(prefix));
-    });
-}
-
-
-function shouldIncludeProperty(key) {
-    const excludedKeys = ["name", "type", "base", "img", "req_level"];
-    return !excludedKeys.includes(key);
-}
-
-function generateSynthPropertyUI(properties, slot = "weapon") {
-    const containerId = slot === "offhand" ? "offhandsynthPropertyContainer" : "synthPropertyContainer";
-    const container = document.getElementById(containerId);
-
-    if (!container || !properties || properties.length === 0) {
-        if (container) container.style.display = "none";
-        return;
-    }
-
-    container.style.display = "block";
-    container.innerHTML = `<strong>Potential Synth Properties (${slot}):</strong>`;
-
-    const equippedItem = equipped[slot];
-
-    properties.forEach(({ key, value, source }) => {
-        const checkboxId = `${slot}-${key}-${source.replace(/\s+/g, '_')}`;
-        const div = document.createElement("div");
-
-        div.innerHTML = `
-            <label>
-                <input type="checkbox" id="${checkboxId}" data-key="${key}" data-value="${value}">
-                ${key}: ${value} <small>(${source})</small>
-            </label>
-        `;
-
-        const checkbox = div.querySelector("input");
-        checkbox.addEventListener("change", (e) => {
-            const statKey = e.target.dataset.key;
-            const rawValue = e.target.dataset.value;
-            const value = isNaN(rawValue) ? rawValue : parseFloat(rawValue);
-
-            if (e.target.checked) {
-                equippedItem[statKey] = value;
-                character[statKey] = (character[statKey] || 0) + (isNaN(value) ? 0 : value);
-            } else {
-                if (!isNaN(value)) {
-                    character[statKey] -= value;
-                }
-                delete equippedItem[statKey];
-            }
-
-            // Update PropertyList without duplication
-            equippedItem.PropertyList = equippedItem.PropertyList || [];
-            const propString = `${statKey}: ${value}`;
-            if (e.target.checked) {
-                if (!equippedItem.PropertyList.includes(propString)) {
-                    equippedItem.PropertyList.push(propString);
-                }
-            } else {
-                equippedItem.PropertyList = equippedItem.PropertyList.filter(p => p !== propString);
-            }
-
-            updateSelectedItemSummary(equippedItem.Worn);
-            update();
-        });
-
-        container.appendChild(div);
-    });
-}
-
-function parseAddsDamageStat(text) {
-    const regex = /Adds\s+(\d+)\s*(?:–|to|-)\s*(\d+)\s*(Cold|Fire|Lightning|Magic|Poison)?\s*Damage/i;
-    const match = text.match(regex);
-    if (!match) return null;
-
-    const min = parseInt(match[1], 10);
-    const max = parseInt(match[2], 10);
-    const element = match[3] ? match[3].toLowerCase() : null;
-
-    let keyPrefix;
-    switch (element) {
-        case "cold": keyPrefix = "cDamage"; break;
-        case "fire": keyPrefix = "fDamage"; break;
-        case "lightning": keyPrefix = "lDamage"; break;
-        case "magic": keyPrefix = "mDamage"; break;
-        case "poison": keyPrefix = "pDamage"; break;
-        default: keyPrefix = "damage"; // physical
-    }
-
-    return {
-        keys: [`${keyPrefix}_min`, `${keyPrefix}_max`],
-        values: [min, max],
-        label: `${element ? element.charAt(0).toUpperCase() + element.slice(1) + " " : ""}Damage`,
-    };
-}
-
-const parsed = parseAddsDamageStat(propertyText);
-if (parsed) {
-    parsed.keys.forEach((key, idx) => {
-        const value = parsed.values[idx];
-
-        const match = synthProperties.find(
-            prop => prop.key === key && Number(prop.value) === value
-        );
-
-        if (match) {
-            console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
-            const checkbox = document.querySelector(`input[type="checkbox"][data-key="${key}"][data-value="${value}"]`);
-            if (checkbox && !checkbox.checked) {
-                checkbox.checked = true;
-                checkbox.dispatchEvent(new Event("change"));
-            }
-        } else {
-            console.warn(`❌ No synth match found for "${key}: ${value}"`);
-        }
-    });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-function applyItemStatToCharacter(property) {
-    console.log(`Applying property: ${property}`);
-    
-    // Check if the property is numerical
-    const numericMatch = property.match(/(\d+)/);
-    if (numericMatch) {
-        const value = parseInt(numericMatch[1], 10);
-
-        // Determine property type (Strength, Energy, Resistances, etc.)
-        const propertyKey = determinePropertyKey(property);
-        
-        if (!character[propertyKey]) {
-            character[propertyKey] = 0; // Initialize if missing
-        }
-        character[propertyKey] += value;
-    }
-}
-
-function determinePropertyKey(property) {
-    if (property.includes("Strength")) return "strength";
-    if (property.includes("Dexterity")) return "dexterity";
-    if (property.includes("Vitality")) return "vitality";
-    if (property.includes("Energy")) return "energy";
-    if (property.includes("Resist")) return "resistances";
-    
-    return "misc"; // Catch-all for unknown properties
-}
-
-
-
-
-//	window.open(builderurl);
-//	window.location.href = builderurl ;
-document.getElementById('importname').value = ""
-update()
+
+
+
+
+
+
+
+
+
+
+	function applyItemStatToCharacter(property) {
+		console.log(`Applying property: ${property}`);
+		
+		// Check if the property is numerical
+		const numericMatch = property.match(/(\d+)/);
+		if (numericMatch) {
+			const value = parseInt(numericMatch[1], 10);
+
+			// Determine property type (Strength, Energy, Resistances, etc.)
+			const propertyKey = determinePropertyKey(property);
+			
+			if (!character[propertyKey]) {
+				character[propertyKey] = 0; // Initialize if missing
+			}
+			character[propertyKey] += value;
+		}
+	}
+
+	function determinePropertyKey(property) {
+		if (property.includes("Strength")) return "strength";
+		if (property.includes("Dexterity")) return "dexterity";
+		if (property.includes("Vitality")) return "vitality";
+		if (property.includes("Energy")) return "energy";
+		if (property.includes("Resist")) return "resistances";
+		
+		return "misc"; // Catch-all for unknown properties
+	}
+
+
+
+
+	//	window.open(builderurl);
+	//	window.location.href = builderurl ;
+	document.getElementById('importname').value = ""
+	update()
 }
 
 async function justthesynth() {
