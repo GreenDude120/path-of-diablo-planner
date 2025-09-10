@@ -8226,8 +8226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   button.addEventListener('click', async () => {
-    // Always get the latest built URL
-    const currentUrl = buildCharacterURL(character, settings);
+    const currentUrl = window.location.href;
     const cacheKey = `short:${currentUrl}`;
     const cachedShort = localStorage.getItem(cacheKey);
 
@@ -8238,25 +8237,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const now = Math.floor(Date.now() / 1000);
-    const expiration = now + 2419200; // 4 weeks
+//    const expiration = now + 300; // 5 minutes for quick expiration testing
+//	const expiration = now + 604800; //one week
+//	const expiration = now + 1209600; // 2 weeks
+	const expiration = now + 2419200; // 4 weeks
+//	const expiration = now + 60 * 60 * 24 * 365; // 1 year
 
     try {
+//      const res = await fetch('https://sink.actuallyiamqord.workers.dev/api/proxy-create-link', {
       const res = await fetch('https://b.pathofdiablo.com/api/proxy-create-link', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ url: currentUrl, expiration }),
       });
 
-      if (!res.ok) {
-        if (res.status === 1105 || res.status === 503) {
-          showPopup(`⚠️ The shortener is currently offline due to rate limiting. Please try again later.`);
-        } else {
-          const errText = await res.text();
-          throw new Error(`Server returned ${res.status}: ${errText}`);
-        }
-        return;
+    if (!res.ok) {
+      // Friendly fallback for Cloudflare quota exhaustion
+      if (res.status === 1105 || res.status === 503) {
+        showPopup(`⚠️ The shortener is currently offline due to rate limiting. Please try again later.`);
+      } else {
+        const errText = await res.text();
+        throw new Error(`Server returned ${res.status}: ${errText}`);
       }
-
+      return;
+    }
       const data = await res.json();
       const shortLink = data.shortLink;
 
@@ -8269,7 +8275,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
 
 function showPopup(message, duration = 3000) {
   const popup = document.getElementById('popup');
