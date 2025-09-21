@@ -718,35 +718,37 @@ function loadParams() {
         setIronGolem(param_irongolem);
     }
 
-    // --- Effects ---
-    if (param_effects.length>0) {
-        for (let e of param_effects) {
-            for (let i=1;i<non_items.length;i++){
-                if (e[0]==non_items[i].effect){ addEffect('misc',non_items[i].name,i,''); }
-            }
-            if (e[2]==1){  // snapshot
-                let active=0,new_effect=0;
-                if (effects[e[0]]) {
-                    if (e[1]==1) active=1;
-                    toggleEffect(e[0]);
-                } else {
-                    new_effect=1;
-                    if (e[3]=="skill") skills[e[4]].level += 1;
-                    if (e[3]=="oskill") character["oskill_"+e[0]] += 1;
-                    addEffect(e[3],e[0].replace(/_/g," "), e[4], "");
-                    if (e[1]==1) active=1; toggleEffect(e[0]);
-                }
-                effects[e[0]].info.snapshot=1;
-                const img = document.getElementById(e[0]+"_ss"); if(img) img.src="./images/skills/snapshot.png";
-                for (let a=5;a<e.length;a+=2) effects[e[0]][e[a]]=e[a+1];
-                if (active==1) toggleEffect(e[0]);
-                if (new_effect==1){
-                    if (e[3]=="skill") skills[e[4]].level -=1;
-                    if (e[3]=="oskill") character["oskill_"+e[0]] -=1;
-                }
-            }
-        }
-    }
+			if (param_effects.length > 0) {
+				for (e in param_effects) { for (let i = 1; i < non_items.length; i++) {		// shrine effects
+					if (param_effects[e][0] == non_items[i].effect) { addEffect('misc',non_items[i].name,i,'') }
+				} }
+				for (e in param_effects) { if (param_effects[e][2] == 1) {	// snapshotted effects
+					var active = 0;
+					var new_effect = 0;
+					if (typeof(effects[param_effects[e][0]]) != 'undefined') {
+						if (param_effects[e][1] == 1) { active = 1; toggleEffect(param_effects[e][0]); }
+					} else {	// add temporary levels
+						new_effect = 1;
+						if (param_effects[e][3] == "skill") { skills[param_effects[e][4]].level += 1 }
+						if (param_effects[e][3] == "oskill") { character["oskill_"+param_effects[e][0]] += 1 }
+						addEffect(param_effects[e][3],param_effects[e][0].split('_').join(' '),param_effects[e][4],"")	// addEffect() doesn't work with zero skill levels, so this implementation is 'hacky'
+						if (param_effects[e][1] == 1) { active = 1; toggleEffect(param_effects[e][0]); }
+					}
+						effects[param_effects[e][0]].info.snapshot = 1;
+						document.getElementById(param_effects[e][0]+"_ss").src = "./images/skills/snapshot.png";
+						for (let a = 5; a < param_effects[e].length; a=a+2) {
+							effects[param_effects[e][0]][param_effects[e][a]] = param_effects[e][a+1]
+						}
+						if (active == 1) { toggleEffect(param_effects[e][0]) }
+						if (new_effect == 1) {	// remove temporary levels
+							if (param_effects[e][3] == "skill") { skills[param_effects[e][4]].level -= 1 }
+							if (param_effects[e][3] == "oskill") { character["oskill_"+param_effects[e][0]] -= 1 }
+						}
+				} }
+				if (effects != {}) { for (effect in effects) { if (typeof(effects[effect].info.enabled) != 'undefined') { for (e in param_effects) { if (param_effects[e][0] == effect) { if (param_effects[e][1] != effects[effect].info.enabled) { toggleEffect(effect) } } } } } }
+			}
+
+
     // --- Selected skills ---
     selectedSkill[0] = param_selected[0];
     selectedSkill[1] = param_selected[1];
