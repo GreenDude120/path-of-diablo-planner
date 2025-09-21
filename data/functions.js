@@ -9169,13 +9169,16 @@ function selectRuneword(slot, runeword, baseItem, context = "player") {
         if (rwOption) rwOption.textContent = flatRuneword.name;
 //		dropdown.textContent = flatRuneword.name;
     }
-
+	setDropdownToItem(slotId, flatRuneword.name)
     // Remove the runeword base panel if it exists
     const basePanel = document.getElementById("runeword-bases");
     if (basePanel) basePanel.remove();
-    // Remove the runeword base panel if it exists
-    const rwPanel = document.getElementById("runeword-option");
-    if (rwPanel) rwPanel.remove();
+    // Remove the runeword popover panel if it exists
+    const popPanel = document.getElementById(`popover_${slotId}`);
+    if (popPanel) popPanel.remove();
+    // Remove the runeword options panel if it exists
+//    const rwPanel = document.getElementById("runeword-options");
+//    if (rwPanel) rwPanel.remove();
 
     console.log("✅ Equipped runeword with custom data for URL:", flatRuneword.custom);
 }
