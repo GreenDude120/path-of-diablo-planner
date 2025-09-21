@@ -508,9 +508,10 @@ function getBaseId(base_name) {
 function loadParams() {
     checkShorturl();
     window._loadingParams = true;
+
     const params = new URLSearchParams(window.location.search);
 
-    // --- Local helpers ---
+    // --- Helpers ---
     function findRunewordByName(name) {
         if (!name) return null;
         const n = String(name).trim().toLowerCase();
@@ -523,22 +524,19 @@ function loadParams() {
     }
     function canonicalBaseKey(candidate) {
         if (!candidate) return null;
-        try {
-            const kb = resolveBaseKey(candidate);
-            if (kb) return kb;
-        } catch (e) {}
-        return String(candidate).replace(/ /g, "_");
+        try { const kb = resolveBaseKey(candidate); if (kb) return kb; } catch(e){}
+        return String(candidate).replace(/ /g,"_");
     }
 
-    // --- Parse runewords param ---
+    // --- Runewords ---
     let runewordMap = {};
     const rwParam = params.get("runewords");
     if (rwParam) {
         try {
             runewordMap = JSON.parse(decodeURIComponent(rwParam));
             if (!runewordMap || typeof runewordMap !== "object") runewordMap = {};
-            console.log("✅ Parsed runewords (JSON) from URL:", runewordMap);
-        } catch (e) {
+        } catch(e){
+            // fallback legacy pipe format
             try {
                 runewordMap = {};
                 const entries = rwParam.split("|");
@@ -548,87 +546,79 @@ function loadParams() {
                     const slot = parts[0];
                     const name = parts[1] ? decodeURIComponent(parts[1]) : null;
                     const base = parts[2] ? decodeURIComponent(parts[2]) : null;
-                    if (slot && name) runewordMap[slot] = { name: name, base: base };
+                    if (slot && name) runewordMap[slot] = { name, base };
                 }
-                console.log("✅ Parsed runewords (pipe) from URL:", runewordMap);
-            } catch (e2) {
-                console.warn("Failed to parse runewords param:", e, e2);
-                runewordMap = {};
-            }
+            } catch(e2) { runewordMap = {}; }
         }
     }
 
     // --- Basic stats & skills ---
-    var spent_skillpoints = 0;
-    var param_level = Math.floor(Math.max(1, Math.min(99, ~~params.get("level"))));
-    var param_diff = ~~params.get("difficulty");
-    var param_quests = ~~params.get("quests");
-    var param_run = ~~params.get("running");
-    var param_str = Math.max(0, Math.min(505, ~~params.get("strength")));
-    var param_dex = Math.max(0, Math.min(505, ~~params.get("dexterity")));
-    var param_vit = Math.max(0, Math.min(505, ~~params.get("vitality")));
-    var param_ene = Math.max(0, Math.min(505, ~~params.get("energy")));
-    var param_url = ~~params.get("url");
-    var param_coupling = params.has("coupling") ? params.get("coupling") : 1;
-    var param_synthwep = params.has("synthwep") ? params.get("synthwep") : 1;
-    var param_autocast = params.has("autocast") ? params.get("autocast") : 1;
-    var param_skills = params.has("skills") ? params.get("skills") : "0".repeat(skills.length * 2);
-    var param_charms = params.has("charm") ? params.getAll("charm") : [];
-    var param_effects = params.has("effect") ? params.getAll("effect") : [];
-    var param_mercenary = params.has("mercenary") ? params.get("mercenary").split(",") : "none";
-    var param_irongolem = params.has("irongolem") ? params.get("irongolem") : "none";
-    var param_selected = params.has("selected") ? params.get("selected").split(",") : [" ­ ­ ­ ­ Skill 1"," ­ ­ ­ ­ Skill 2"];
+    let spent_skillpoints = 0;
+    const param_level = Math.floor(Math.max(1, Math.min(99, ~~params.get("level"))));
+    const param_diff = ~~params.get("difficulty");
+    const param_quests = ~~params.get("quests");
+    const param_run = ~~params.get("running");
+    const param_str = Math.max(0, Math.min(505, ~~params.get("strength")));
+    const param_dex = Math.max(0, Math.min(505, ~~params.get("dexterity")));
+    const param_vit = Math.max(0, Math.min(505, ~~params.get("vitality")));
+    const param_ene = Math.max(0, Math.min(505, ~~params.get("energy")));
+    const param_url = ~~params.get("url");
+    const param_coupling = params.has("coupling") ? params.get("coupling") : 1;
+    const param_synthwep = params.has("synthwep") ? params.get("synthwep") : 1;
+    const param_autocast = params.has("autocast") ? params.get("autocast") : 1;
+    const param_skills = params.has("skills") ? params.get("skills") : "0".repeat(skills.length*2);
+    const param_charms = params.has("charm") ? params.getAll("charm") : [];
+    const param_effects = params.has("effect") ? params.getAll("effect").map(e => e.split(",")) : [];
+    const param_mercenary = params.has("mercenary") ? params.get("mercenary").split(",") : "none";
+    const param_irongolem = params.has("irongolem") ? params.get("irongolem") : "none";
+    const param_selected = params.has("selected") ? params.get("selected").split(",") : [" ­ ­ ­ ­ Skill 1"," ­ ­ ­ ­ Skill 2"];
 
-    // --- Parse legacy equipment params ---
-    var param_equipped = {};
+    // --- Parse legacy equipment ---
+    let param_equipped = {};
     for (let group of Object.keys(corruptsEquipped)) {
         if (!params.has(group)) continue;
-
-        let segments = params.get(group).split(",");
+        const segments = params.get(group).split(",");
         param_equipped[group] = {
             name: segments[0] || "none",
             tier: segments[1] || "0",
             corruption: segments[2] || "none",
             props: {},
-            sockets: [],
-            flags: [],
+            sockets: segments.slice(3).filter(s => s && !s.toLowerCase().includes("sockets")),
+            flags: segments.slice(3).filter(s => /sockets?/i.test(s)),
             socketCount: 0
         };
-
-        for (let i = 3; i < segments.length; i++) {
-            let seg = segments[i];
+        for (let seg of segments.slice(3)) {
             if (!seg) continue;
-
-            if (seg.includes(":")) {
-                let [statKey, value] = seg.split(/:(.+)/);
-                if (statKey.toLowerCase() === "sockets") {
-                    param_equipped[group].socketCount = parseInt(value) || 0;
-                    continue;
-                }
-                try { value = JSON.parse(decodeURIComponent(value)); } catch (e) { try { value = decodeURIComponent(value); } catch(e2) {} }
-                param_equipped[group].props[statKey] = value;
-            } else if (/sockets?/i.test(seg) && seg.trim().length > 0) {
-                param_equipped[group].flags.push(seg);
-            } else {
-                param_equipped[group].sockets.push(seg);
+            if (seg.toLowerCase().startsWith("sockets:")) {
+                param_equipped[group].socketCount = parseInt(seg.split(":")[1]) || 0;
+            } else if (!/sockets?/i.test(seg)) {
                 if (!socketed[group]) socketed[group] = { items: [] };
                 socketed[group].items.push({ name: seg });
             }
         }
     }
 
-    // --- Apply other flags & stats ---
-    if (param_quests != 1) param_quests = 0;
-    if (param_run != 1) param_run = 0;
-    if ((param_str + param_dex + param_vit + param_ene) > (5 * param_level + 15 * param_quests)) param_str = param_dex = param_vit = param_ene = 0;
+    // --- Apply stats ---
+    let totalStat = param_str + param_dex + param_vit + param_ene;
+    if ((totalStat) > (5*param_level + 15*param_quests)) {
+        param_str = param_dex = param_vit = param_ene = 0;
+    }
 
     character.level = param_level;
     character.strength_added = param_str;
     character.dexterity_added = param_dex;
     character.vitality_added = param_vit;
     character.energy_added = param_ene;
+    character.strength = character.starting_strength + param_str;
+    character.dexterity = character.starting_dexterity + param_dex;
+    character.vitality = character.starting_vitality + param_vit;
+    character.energy = character.starting_energy + param_ene;
+    character.life += character.levelup_life*(param_level-1);
+    character.mana += character.levelup_mana*(param_level-1);
+    character.stamina += character.levelup_stamina*(param_level-1);
 
-    if ([1,2,3].includes(param_diff)) { document.getElementById("difficulty" + param_diff).checked = true; changeDifficulty(param_diff); }
+    // --- UI toggles ---
+    if ([1,2,3].includes(param_diff)) { document.getElementById("difficulty"+param_diff).checked = true; changeDifficulty(param_diff); }
     if (param_run == 1) { document.getElementById("running").checked = true; toggleRunning(param_run); character.running = 1; }
     if (param_quests == 1) {
         document.getElementById("quests").checked = true;
@@ -639,150 +629,134 @@ function loadParams() {
         character.lRes += 30;
         character.pRes += 30;
     }
-    if (param_url == 1) { document.getElementById("parameters").checked = true; toggleParameters(param_url); settings.parameters = 1; params.set("url", ~~settings.parameters); window.history.replaceState({}, "", `${location.pathname}?${params}`); }
+    if (param_url == 1) {
+        document.getElementById("parameters").checked = true;
+        toggleParameters(param_url);
+        settings.parameters = 1;
+        params.set("url", ~~settings.parameters);
+        window.history.replaceState({}, "", `${location.pathname}?${params}`);
+    }
 
-    // --- Set skill levels ---
+    // --- Set skills ---
     for (let s = 0; s < skills.length; s++) {
         skills[s].level = ~~(param_skills[s*2] + param_skills[s*2+1]);
         spent_skillpoints += skills[s].level;
     }
-    character.skillpoints = character.level - 1 + Math.max(0, character.quests_completed * 12) - spent_skillpoints;
-    character.statpoints = (character.level - 1) * 5 + Math.max(0, character.quests_completed * 15) - param_str - param_dex - param_vit - param_ene;
+    character.skillpoints = character.level-1 + Math.max(0, character.quests_completed*12) - spent_skillpoints;
+    character.statpoints = (character.level-1)*5 + Math.max(0,character.quests_completed*15) - param_str - param_dex - param_vit - param_ene;
 
-    // --- Charms, Mercenary, Golem, Effects ---
-    for (let i = 0; i < param_charms.length; i++) addCharm(param_charms[i]);
-    if (param_mercenary !== "none") setMercenary(param_mercenary[0]);
-    if (param_irongolem !== "none") setIronGolem(param_irongolem);
+    // --- Charms ---
+    for (let c of param_charms) addCharm(c);
 
-    // --- Runeword overrides ---
-    if (Object.keys(runewordMap).length > 0) {
-        for (let slot in runewordMap) {
-            const r = runewordMap[slot];
-            if (!r || !r.name) continue;
-            const rwObj = findRunewordByName(r.name);
-            const baseKey = canonicalBaseKey(r.baseKey || r.base || r.baseItem || r.baseName || r.base);
-            if (rwObj && baseKey && bases[baseKey]) selectRuneword(slot, rwObj, baseKey);
-            else equipItemDirectly({ Worn: slot, QualityCode: "q_runeword", Title: r.name, Tag: r.base || r.baseKey, PropertyList: r.props || [] });
-        }
+    // --- Runewords ---
+    for (let slot in runewordMap) {
+        const r = runewordMap[slot];
+        if (!r || !r.name) continue;
+        const rwObj = findRunewordByName(r.name);
+        const baseKey = canonicalBaseKey(r.baseKey || r.base || r.baseItem || r.baseName || r.base);
+        if (rwObj && baseKey && bases[baseKey]) selectRuneword(slot, rwObj, baseKey);
+        else equipItemDirectly({ Worn: slot, QualityCode: "q_runeword", Title: r.name, Tag: r.base || r.baseKey, PropertyList: r.props || [] });
     }
 
-    // --- Equip legacy items & restore socketables ---
+    // --- Equip legacy items & socketables ---
     for (let group in param_equipped) {
         if (runewordMap[group]) continue;
-
         const eqData = param_equipped[group];
         if (!eqData || eqData.name === "none") continue;
 
-        // equip item
         equip(group, eqData.name);
         try { setDropdownToItem(getSlotId("player", group), eqData.name); } catch(e) {}
 
-        // tier/corruption/socketCount/props
         if (eqData.tier) equipped[group].tier = eqData.tier;
         if (eqData.corruption) equipped[group].corruption = eqData.corruption;
+		if (eqData.corruption && eqData.corruption !== "none") corrupt(group, eqData.corruption);	
         if (eqData.socketCount) equipped[group].socketCount = eqData.socketCount;
-        for (let key in eqData.props) {
-            const val = eqData.props[key];
-            const numeric = parseFloat(val);
-            if (!isNaN(numeric) && typeof val !== "object") {
-                if (!equipped[group][key]) equipped[group][key] = 0;
-                equipped[group][key] += numeric;
-                if (!character[key]) character[key] = 0;
-                character[key] += numeric;
-            } else {
-                equipped[group][key] = val;
-                if (!character[key]) character[key] = val;
+
+        if (eqData.sockets && eqData.sockets.length) {
+            if (!socketed[group]) socketed[group] = { items: [] };
+            while (socketed[group].items.length < eqData.sockets.length) socketed[group].items.push({ id:"", name:"" });
+            if (equipped[group].rarity !== "rw") corrupt(group,"+ Sockets");
+
+            for (let i=0;i<eqData.sockets.length;i++){
+                const name = eqData.sockets[i];
+                if (!name || name==="none") continue;
+                const newId = addSocketable(name);
+                const invIndex = inv.length-1;
+                inv[invIndex].load = group;
+                socketed[group].items[i].id = newId;
+                socketed[group].items[i].name = name;
+
+                try {
+                    window.itemName = name;
+                    inv[0].onpickup = newId;
+                    socket(null, group, newId);
+                    window.itemName = null;
+                    inv[0].onpickup = "none";
+                } catch(err) { console.error(`Failed to socket ${name} into ${group}`,err); }
             }
         }
-
-			if (eqData.sockets && eqData.sockets.length) {
-				if (!socketed[group]) socketed[group] = { items: [] };
-				while (socketed[group].items.length < eqData.sockets.length) socketed[group].items.push({ id: "", name: "" });
-				if (equipped[group].rarity !== "rw") corrupt(group, "+ Sockets");
-
-			for (let i = 0; i < eqData.sockets.length; i++) {
-				const name = eqData.sockets[i];
-				if (!name || name === "none") continue;
-
-				const newId = addSocketable(name);
-				const invIndex = inv.length - 1;
-
-				inv[invIndex].load = group;
-
-				if (socketed[group].items[i]) {
-					socketed[group].items[i].id = newId;
-					socketed[group].items[i].name = name;
-				}
-
-				try {
-					// Prepare both globals
-					window.itemName = name;
-					inv[0].onpickup = newId;   // <-- needed by socket()
-					socket(null, group, newId);
-					window.itemName = null;
-					inv[0].onpickup = "none";
-				} catch (err) {
-					console.error(`Failed to socket ${name} into ${group}`, err);
-				}
-			}
-
-		}
-
     }
 
+    // --- Mercenary ---
+    if (param_mercenary !== "none") {
+        setMercenary(param_mercenary[0]);
+        let g = 1;
+        for (let group in mercEquipped) {
+            if (param_mercenary[g] && param_mercenary[g]!=='none') {
+                const options = document.getElementById("dropdown_merc_"+group).options;
+                for (let i=0;i<options.length;i++) { if (options[i].innerHTML===param_mercenary[g]) { document.getElementById("dropdown_merc_"+group).selectedIndex=i; } }
+                equipMerc(group,param_mercenary[g]);
+            }
+            g++;
+        }
+    }
 
+    // --- Iron Golem ---
+    if (param_irongolem !== "none") {
+        const options = document.getElementById("dropdown_golem").options;
+        for (let i=0;i<options.length;i++){ if (options[i].innerHTML===param_irongolem){ document.getElementById("dropdown_golem").selectedIndex=i; } }
+        setIronGolem(param_irongolem);
+    }
 
-    // --- Handle custom_<slot> parameters ---
-    const equipGroups = ["helm","armor","gloves","boots","belt","amulet","ring1","ring2","weapon","offhand"];
-    for (let group of equipGroups) {
-        const key = `custom_${group}`;
-        if (!params.has(key)) continue;
-
-        try {
-            const data = JSON.parse(decodeURIComponent(params.get(key)));
-            if (!equipment[group]) equipment[group] = {};
-            equipment[group].custom = data;
-
-            if (data && data.rarity === "rw") {
-                let rawName = data.name || "";
-                let rwName = rawName.includes(" ­ ­ - ­ ­ ") ? rawName.split(" ­ ­ - ­ ­ ")[0].trim() : rawName;
-                const baseKey = canonicalBaseKey(data.baseKey || data.base || (rawName.includes(" ­ ­ - ­ ­ ") ? rawName.split(" ­ ­ - ­ ­ ")[1] : null));
-                const rwObj = findRunewordByName(rwName);
-                if (rwObj && baseKey && bases[baseKey]) selectRuneword(group, rwObj, baseKey);
-                else equipItemDirectly({ Worn: group, QualityCode: "q_runeword", Title: data.name, Tag: data.base || data.baseKey, PropertyList: data.props || [], custom: data });
-            } else {
-                equip(group, data.name);
-                try { setDropdownToItem(getSlotId("player", group), data.name); } catch(e) {}
-                if (data.props) for (let key in data.props) {
-                    const val = data.props[key];
-                    const numeric = parseFloat(val);
-                    if (!isNaN(numeric) && typeof val !== "object") {
-                        if (!equipped[group][key]) equipped[group][key] = 0;
-                        equipped[group][key] += numeric;
-                        if (!character[key]) character[key] = 0;
-                        character[key] += numeric;
-                    } else {
-                        equipped[group][key] = val;
-                        if (!character[key]) character[key] = val;
-                    }
+    // --- Effects ---
+    if (param_effects.length>0) {
+        for (let e of param_effects) {
+            for (let i=1;i<non_items.length;i++){
+                if (e[0]==non_items[i].effect){ addEffect('misc',non_items[i].name,i,''); }
+            }
+            if (e[2]==1){  // snapshot
+                let active=0,new_effect=0;
+                if (effects[e[0]]) {
+                    if (e[1]==1) active=1;
+                    toggleEffect(e[0]);
+                } else {
+                    new_effect=1;
+                    if (e[3]=="skill") skills[e[4]].level += 1;
+                    if (e[3]=="oskill") character["oskill_"+e[0]] += 1;
+                    addEffect(e[3],e[0].replace(/_/g," "), e[4], "");
+                    if (e[1]==1) active=1; toggleEffect(e[0]);
                 }
-                if (data.sockets && data.sockets.length) {
-                    if (!socketed[group]) socketed[group] = { items: [] };
-                    for (let s of data.sockets) {
-                        socketed[group].items.push({ name: s });
-                        addSocketable(s);
-                    }
+                effects[e[0]].info.snapshot=1;
+                const img = document.getElementById(e[0]+"_ss"); if(img) img.src="./images/skills/snapshot.png";
+                for (let a=5;a<e.length;a+=2) effects[e[0]][e[a]]=e[a+1];
+                if (active==1) toggleEffect(e[0]);
+                if (new_effect==1){
+                    if (e[3]=="skill") skills[e[4]].level -=1;
+                    if (e[3]=="oskill") character["oskill_"+e[0]] -=1;
                 }
             }
-        } catch (e) { console.warn(`Failed to parse ${key}:`, e); }
+        }
     }
+    // --- Selected skills ---
+    selectedSkill[0] = param_selected[0];
+    selectedSkill[1] = param_selected[1];
 
-    // --- Finalize ---
     updateSkills();
     updateAllEffects();
     window._loadingParams = false;
     updateURLDebounced();
 }
+
 
 
 
@@ -946,7 +920,9 @@ function equipMerc(group, val) {
 //	val: name of item
 // ---------------------------------
 function equip(group, val) {
-	console.log("Equip function kicked off")
+//	console.log("Equip function kicked off for ", group, val);
+//	console.log("Char STR= ", character.strength, character.strength_added);
+	
     if (val === "[runeword]") {
         openRunewordPicker(group); // ← you’ll build this UI next
         // reset dropdown to current selection so selecting “Runeword…” doesn’t clear the item
@@ -1249,6 +1225,8 @@ function equip(group, val) {
 			addEffect("ctcskill",ctcskillName[i],ctcskillLevel[i],group)
 		}
 	}
+//	console.log("Char STR at end of equip function", character.strength, character.strength_added);
+
 //	applyCustomED('weapon');
 //	if (equipped.weapon.name == "none") {equip(group, "none");}
 	document.getElementById("slotSelect").value = group;
@@ -9217,6 +9195,7 @@ function selectRuneword(slot, runeword, baseItem, context = "player") {
 
 	
 function equipItemDirectly(item) {
+	console.log("equipitemdirectly kicked off for ", item);
     // single pendingPropertyLists object scoped to this invocation (captured by the timeout)
     const pendingPropertyLists = {};
 
