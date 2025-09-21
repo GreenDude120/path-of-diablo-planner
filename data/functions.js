@@ -704,26 +704,28 @@ function loadParams() {
 				const name = eqData.sockets[i];
 				if (!name || name === "none") continue;
 
-				addSocketable(name);
+				const newId = addSocketable(name);
 				const invIndex = inv.length - 1;
+
 				inv[invIndex].load = group;
 
-				// preload socketed slot
 				if (socketed[group].items[i]) {
-					socketed[group].items[i].id = inv[invIndex].id;
+					socketed[group].items[i].id = newId;
 					socketed[group].items[i].name = name;
 				}
 
 				try {
+					// Prepare both globals
 					window.itemName = name;
-					// pass the **id**, not the array index
-					socket(null, group, inv[invIndex].id);
+					inv[0].onpickup = newId;   // <-- needed by socket()
+					socket(null, group, newId);
 					window.itemName = null;
+					inv[0].onpickup = "none";
 				} catch (err) {
 					console.error(`Failed to socket ${name} into ${group}`, err);
 				}
-
 			}
+
 		}
 
     }
