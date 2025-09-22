@@ -669,7 +669,7 @@ function loadParams() {
 
         if (eqData.tier) equipped[group].tier = eqData.tier;
         if (eqData.corruption) equipped[group].corruption = eqData.corruption;
-		if (eqData.corruption && eqData.corruption !== "none") corrupt(group, eqData.corruption);	
+		if (eqData.corruption && eqData.corruption !== "none") {corrupt(group, eqData.corruption); document.getElementById("corruptions_"+group).selectedIndex = 1;	};
         if (eqData.socketCount) equipped[group].socketCount = eqData.socketCount;
 
         if (eqData.sockets && eqData.sockets.length) {
