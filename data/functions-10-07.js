@@ -6644,6 +6644,155 @@ for (let group of equipGroups) {
 	// --- global stash so multiple calls can resolve properly ---
 //	const pendingPropertyLists = {};
 
+function equipItemDirectly(item) {
+    const slotMapping = { body: "armor", weapon1: "weapon", weapon2: "offhand", helmet: "helm" };
+    const rawSlot = (item && item.Worn) || "";
+
+    // ignore swap weapons
+    if (typeof rawSlot === "string" && rawSlot.startsWith("sweapon")) {
+        console.log("Skipping swap weapon slot:", rawSlot);
+        return;
+    }
+
+    const slot = slotMapping[rawSlot] || rawSlot;
+    let equipName = item.Title || "none";
+    const offhandtag = item.Tag || "";
+
+    // ---- Runeword handling ----
+    if (item.QualityCode === "q_runeword") {
+        const rw = resolveRunewordByName(item.Title);
+        const baseKey = resolveBaseKey(item.Tag);
+
+        if (!rw || !bases[baseKey]) {
+            console.warn("Runeword or base not found for import:", item.Title, item.Tag);
+            return;
+        }
+
+        const displayBase = baseKey.replace(/_/g, " ");
+        const flatRuneword = {
+            rarity: "rw",
+            name: `${rw.name} ­ ­ - ­ ­ ${displayBase}`,
+            type: bases[baseKey].type,
+            base: displayBase,
+            baseKey: baseKey,
+            runewordStats: rw.stats,
+            runes: rw.runes,
+            cskill: rw.cskill || [],
+            ...rw.stats
+        };
+        ["allowedTypes", "allowedCategories"].forEach(k => { if (rw[k]) flatRuneword[k] = rw[k]; });
+
+		// Normalize equipment[slot] to an array and store non-enumerable custom metadata
+		if (!Array.isArray(equipment[slot])) {
+			const arr = [];
+			if (equipment[slot] && typeof equipment[slot] === 'object') {
+				for (let k in equipment[slot]) {
+					if (k === 'custom') continue;
+					const v = equipment[slot][k];
+					if (v && v.name) arr.push(v);
+				}
+			}
+			equipment[slot] = arr;
+		}
+
+		Object.defineProperty(equipment[slot], 'custom', {
+			value: {
+				name: flatRuneword.name,
+				base: flatRuneword.base,
+				baseKey: flatRuneword.baseKey,
+				rarity: 'rw',
+				props: flatRuneword.runewordStats || {}
+			},
+			enumerable: false,
+			writable: true,
+			configurable: true
+		});
+
+		equipment[slot] = equipment[slot].filter(it => !(it && it.name === flatRuneword.name));
+		equipment[slot].unshift(flatRuneword);
+
+        console.log(`Import: equipping runeword ${flatRuneword.name} -> slot ${slot}`);
+        importItem(slot, item);
+
+		try { setDropdownToItem(getSlotId("player", slot), flatRuneword.name, true); } catch (e) {
+            const dd = document.getElementById(`dropdown_${slot}`);
+            if (dd) {
+                const starOpt = Array.from(dd.options).find(o => o.value === "*" || o.value === "");
+                if (starOpt) starOpt.text = flatRuneword.name;
+            }
+        }
+
+        // Save to URL immediately for runewords
+        saveImportedItemToUrl(slot);
+
+        return; // done
+    }
+
+    // ---- Non-runeword items ----
+    switch (item.QualityCode) {
+        case "q_unique":
+        case "q_set":
+            equipName = item.Title || equipName;
+            break;
+
+        case "q_magic":
+        case "q_rare":
+        case "q_crafted":
+            equipName = (offhandtag === "Bolts" || offhandtag === "Arrows")
+                ? `Imported ${item.QualityCode.slice(2)} ${offhandtag}`
+                : `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
+            break;
+
+        case "q_normal":
+            equipName = item.Title;
+            break;
+    }
+
+    // Stash PropertyList if present
+    if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
+        pendingPropertyLists[slot] = item.PropertyList;
+        console.log(`Import: stashed PropertyList for slot ${slot}`, item.PropertyList);
+    }
+
+    // Update dropdown UI
+    const dropdownId = `dropdown_${slot}`;
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+        dropdown.value = equipName;
+        try { setDropdownToItem(getSlotId("player", slot), equipName); } catch (e) { }
+    }
+
+    // Equip item directly
+    try {
+        if (["q_magic", "q_rare", "q_crafted", "q_normal"].includes(item.QualityCode)) {
+            equipName = importItem(slot, item);
+        } else {
+            equip(slot, equipName);
+        }
+    } catch (e) {
+        console.error("Import: equip() threw:", e);
+    }
+
+    // ---- Delayed PropertyList application and URL save ----
+    setTimeout(() => {
+        if (pendingPropertyLists[slot] && equipped[slot]) {
+            if (item.PropertyList && ["q_magic","q_rare","q_crafted"].includes(item.QualityCode)) {
+                equipped[slot].PropertyList = item.PropertyList;
+                pendingPropertyLists[slot] = item.PropertyList;
+            }
+            console.log(`Import: applying pending properties to equipped[${slot}]`, equipped[slot].PropertyList);
+            applyMatchedProperties(slot);
+
+            // Save this imported item to the URL as JSON
+            saveImportedItemToUrl(slot);
+
+            delete pendingPropertyLists[slot];
+        }
+    }, 0);
+}
+
+
+
 	function saveCustomItemToUrl(slot) {
 		const params = new URLSearchParams(window.location.search);
 		const eq = equipped[slot];
@@ -6679,21 +6828,8 @@ for (let group of equipGroups) {
 			const propText = String(propTextRaw).trim();
 			if (!propText) continue;
 
-			// try to get matches via your existing matcher (guarded: may be undefined
-			// in some nested scopes when import functions are executed)
-			let matches = [];
-			try {
-				if (typeof findMatchingStat === 'function') {
-					matches = findMatchingStat(propText, stats) || [];
-				} else {
-					// no matcher available in this scope; leave matches empty so
-					// numericFallback will be used when possible
-					matches = [];
-				}
-			} catch (err) {
-				console.warn('buildPropsFromPropertyList: findMatchingStat threw', err);
-				matches = [];
-			}
+			// try to get matches via your existing matcher
+			const matches = findMatchingStat(propText, stats) || [];
 
 			// If matcher returned a single object (non-array form), normalize to array
 			const arrMatches = Array.isArray(matches) ? matches : [matches];
@@ -6728,15 +6864,32 @@ for (let group of equipGroups) {
 		return props;
 	}
 
-	// Save an imported item by inlining its properties into the slot CSV parameter
-	// instead of creating a separate custom_<slot> JSON blob.
+	// Save an imported item as a custom_<slot> JSON blob containing normalized props & sockets.
+	// slot: "helm","armor","weapon","offhand",...
+	// PropertyList (optional): the original API property list (array of strings) to parse.
 	function saveImportedItemToUrl(slot, PropertyList = null) {
 		const params = new URLSearchParams(window.location.search);
 		const eq = equipped[slot];
 		if (!eq) return;
-
+	    params.delete(slot);	
 		// canonical name/title
-		const title = eq.name || eq.Title || (`Imported ${(eq.QualityCode||"").replace(/^q_/, "")} ${typeof formatSlotName === 'function' ? formatSlotName(slot) : slot}`);
+		const title = eq.name || eq.Title || (`Imported ${(eq.QualityCode||"").replace(/^q_/, "")} ${slot}`);
+
+		// attempt to pick a base/baseKey if available
+		const base = eq.base || eq.baseKey || eq.Tag || eq.tag || null;
+		const baseKey = (function() {
+			if (eq.baseKey) return eq.baseKey;
+			if (eq.base) {
+				try { return resolveBaseKey(eq.base); } catch(e){ return eq.base.replace(/ /g,"_"); }
+			}
+			if (eq.Tag) {
+				try { return resolveBaseKey(eq.Tag); } catch(e){ return String(eq.Tag).replace(/ /g,"_"); }
+			}
+			return null;
+		})();
+
+		// deduce rarity string: "magic", "rare", "crafted", "unique", etc.
+		const rarity = eq.rarity || (eq.QualityCode ? eq.QualityCode.replace(/^q_/, "") : "magic");
 
 		// build props — prefer parsing PropertyList if provided; else use eq.PropertyList if present,
 		// else fall back to picking numeric keys already applied to the equipped item.
@@ -6746,6 +6899,7 @@ for (let group of equipGroups) {
 		} else if (eq.PropertyList && eq.PropertyList.length) {
 			props = buildPropsFromPropertyList(eq.PropertyList);
 		} else {
+			// fallback: collect numeric own-properties on the equipped item (safe fallback)
 			for (const k in eq) {
 				if (["name","base","baseKey","rarity","tier","corruption","socketCount","PropertyList","Title","Worn","QualityCode"].includes(k)) continue;
 				const v = eq[k];
@@ -6759,25 +6913,29 @@ for (let group of equipGroups) {
 			? socketed[slot].items.map(s => s.name).filter(Boolean)
 			: (eq.sockets || []);
 
-		// Build CSV-style slot value (match buildCharacterURL format)
-		const arr = [title, eq.tier || 0, eq.corruption || "none"];
+		// build JSON object
+		const data = {
+			name: title,
+			base: base,
+			baseKey: baseKey,
+			rarity: rarity,
+			props: props,
+			sockets: sockets
+		};
 
-		// Inline sockets
-		if (sockets && sockets.length) {
-			for (const s of sockets) arr.push(s || "none");
-		}
+		// store in-memory so buildCharacterURL will also write the same custom_ blob going forward
+		if (!equipment[slot]) equipment[slot] = {};
+		// mark as persisted so buildCharacterURL knows this blob is intentionally saved
+		data._persist = true;
+		equipment[slot].custom = data;
+		if (!equipped[slot]) equipped[slot] = {};
+		equipped[slot].custom = data;
 
-		// Inline props as key:val pairs joined by commas (single token)
-		if (props && Object.keys(props).length > 0) {
-			const propList = Object.entries(props).map(([k, v]) => `${k}:${Array.isArray(v) ? v.join("|") : v}`).join(",");
-			arr.push(propList);
-		}
-
-		// Replace the slot parameter in the URL with our inline CSV
-		params.set(slot, arr.join(","));
+		// write to URL as custom_<slot>=<json>
+		params.set(`custom_${slot}`, JSON.stringify(data));
 		const newUrl = `${window.location.pathname}?${params.toString()}`;
 		window.history.replaceState({}, "", newUrl);
-		console.debug(`Saved imported ${slot} to URL (inlined):`, arr.join(","));
+		console.debug(`Saved custom_${slot} to URL:`, data);
 	}
 
 
@@ -6804,7 +6962,7 @@ for (let group of equipGroups) {
 
 		const newUrl = `${window.location.pathname}?${params.toString()}`;
 		window.history.replaceState({}, "", newUrl);
-//		console.debug(`Added matched properties for ${slot} to URL:`, [...params.entries()].filter(([k]) => k.startsWith(`${slot}_prop`)));
+		console.debug(`Added matched properties for ${slot} to URL:`, [...params.entries()].filter(([k]) => k.startsWith(`${slot}_prop`)));
 	}
 
 	function addItemPropsToUrl(slot, PropertyList) {
@@ -6829,18 +6987,16 @@ for (let group of equipGroups) {
 		}
 		const equippedItem = equipped[slot];
 
-		// Rename generic items if needed. Use equippedItem (not an undefined `item`).
-		if (equippedItem && equippedItem.PropertyList && Array.isArray(equippedItem.PropertyList)) {
-			// If this item was originally imported from API and had QualityCode metadata
-			// it may have been stashed in pendingPropertyLists already; preserve that.
-			pendingPropertyLists[slot] = equippedItem.PropertyList;
-			console.log(`✅ Stashed PropertyList for slot ${slot}`, equippedItem.PropertyList);
+		// Rename generic items if needed
+		if (item.PropertyList && ["q_magic","q_rare","q_crafted"].includes(item.QualityCode)) {
+			pendingPropertyLists[slot] = item.PropertyList;
+			console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
 		}
 
 		equippedItem.PropertyList.forEach(propText => {
 			const matches = findMatchingStat(propText, stats);
 			if (!matches || matches.length === 0) {
-//				console.warn(`❌ No match for: "${propText}"`);
+				console.warn(`❌ No match for: "${propText}"`);
 				return;
 			}
 
@@ -6882,7 +7038,7 @@ for (let group of equipGroups) {
 
 
 	function findMatchingStat(propertyText, stats) {
-//		console.log(`Checking property: "${propertyText}" against stats`);
+		console.log(`Checking property: "${propertyText}" against stats`);
 		const afterKillStat = parseAfterKillStat(propertyText);
 		if (afterKillStat) {
 			return [afterKillStat];
@@ -6890,12 +7046,12 @@ for (let group of equipGroups) {
 
 		const ctcParsed = parseChanceToCast(propertyText);
 		if (ctcParsed) {
-//			console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+			console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
 			return [ctcParsed];  // Return in array form for compatibility
 		}
 		const cskillParsed = parseChargedSkill(propertyText);
 		if (cskillParsed) {
-//			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
 			return [cskillParsed];
 		}	
 		// Try to match "Adds #–# [Element] Damage"
@@ -6913,7 +7069,7 @@ for (let group of equipGroups) {
 				// fall through: unknown/empty means physical
 			}
 
-//			console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+			console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
 			return [
 				{ statKey: `${prefix}_min`, value: parseInt(min, 10) },
 				{ statKey: `${prefix}_max`, value: parseInt(max, 10) }
@@ -6932,12 +7088,12 @@ for (let group of equipGroups) {
 			);
 
 			if (formatPattern.test(propertyText)) {
-//				console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
+				console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
 				return [{ statKey }];
 			}
 		}
 
-//		console.warn(`❌ No match found for "${propertyText}"`);
+		console.warn(`❌ No match found for "${propertyText}"`);
 		return [];
 	}
 
@@ -7326,11 +7482,8 @@ for (let group of equipGroups) {
 		};
 	}
 
-	// Only attempt the ad-hoc adds-damage parsing when propertyText exists in scope
-	// and when synthProperties is available (synth matching context).
-	if (typeof propertyText !== 'undefined' && typeof synthProperties !== 'undefined') {
-		let parsed = parseAddsDamageStat(propertyText);
-		if (parsed) {
+	let parsed = parseAddsDamageStat(propertyText);
+	if (parsed) {
 		parsed.keys.forEach((key, idx) => {
 			const value = parsed.values[idx];
 
@@ -7349,8 +7502,7 @@ for (let group of equipGroups) {
 				console.warn(`❌ No synth match found for "${key}: ${value}"`);
 			}
 		});
-			updateURLDebounced()
-		}
+	updateURLDebounced()
 	}
 
 
@@ -7580,7 +7732,7 @@ function applyMatchedProperties(slot) {
     equippedItem.PropertyList.forEach(propText => {
         const matches = findMatchingStat(propText, stats);
         if (!matches || matches.length === 0) {
-//            console.warn(`❌ No match for: "${propText}"`);
+            console.warn(`❌ No match for: "${propText}"`);
             return;
         }
 
@@ -7669,7 +7821,7 @@ function findMatchingStat(propertyText, stats) {
         }
     }
 
-//    console.warn(`❌ No match found for "${propertyText}"`);
+    console.warn(`❌ No match found for "${propertyText}"`);
     return [];
 }
 
@@ -9327,6 +9479,10 @@ function selectRuneword(slot, runeword, baseItem, context = "player") {
 
 	
 function equipItemDirectly(item) {
+	console.log("equipitemdirectly kicked off for ", item);
+    // single pendingPropertyLists object scoped to this invocation (captured by the timeout)
+    const pendingPropertyLists = {};
+
     const slotMapping = { body: "armor", weapon1: "weapon", weapon2: "offhand", helmet: "helm" };
     const rawSlot = (item && item.Worn) || "";
 
@@ -9340,7 +9496,7 @@ function equipItemDirectly(item) {
     let equipName = item.Title || "none";
     const offhandtag = item.Tag || "";
 
-    // ---- Runeword handling ----
+    // ---- Runeword handling: equip once and return immediately ----
     if (item.QualityCode === "q_runeword") {
         const rw = resolveRunewordByName(item.Title);
         const baseKey = resolveBaseKey(item.Tag);
@@ -9364,7 +9520,7 @@ function equipItemDirectly(item) {
         };
         ["allowedTypes", "allowedCategories"].forEach(k => { if (rw[k]) flatRuneword[k] = rw[k]; });
 
-		// Normalize equipment[slot] to an array and store non-enumerable custom metadata
+		// normalize to array and add non-enumerable custom metadata
 		if (!Array.isArray(equipment[slot])) {
 			const arr = [];
 			if (equipment[slot] && typeof equipment[slot] === 'object') {
@@ -9376,7 +9532,6 @@ function equipItemDirectly(item) {
 			}
 			equipment[slot] = arr;
 		}
-
 		Object.defineProperty(equipment[slot], 'custom', {
 			value: {
 				name: flatRuneword.name,
@@ -9389,36 +9544,33 @@ function equipItemDirectly(item) {
 			writable: true,
 			configurable: true
 		});
-
 		equipment[slot] = equipment[slot].filter(it => !(it && it.name === flatRuneword.name));
 		equipment[slot].unshift(flatRuneword);
 
-		console.log(`Import: equipping runeword ${flatRuneword.name} -> slot ${slot}`);
-		// Use selectRuneword so the runeword is flattened and equipped correctly
-		// (importItem/equip paths often pass only the short Title which doesn't
-		// match the flattened "Name - Base" display and can fail to equip).
-		try {
-			selectRuneword(slot, rw, displayBase);
-		} catch (e) {
-			console.error("Import: selectRuneword failed, falling back to importItem", e);
-			importItem(slot, item);
-		}
+        console.log(`Import: equipping runeword ${flatRuneword.name} -> slot ${slot}`);
+        // Equip directly (call your equip implementation)
+        equip(slot, flatRuneword.name);
 
-		try { setDropdownToItem(getSlotId("player", slot), flatRuneword.name, true); } catch (e) {
-            const dd = document.getElementById(`dropdown_${slot}`);
-            if (dd) {
-                const starOpt = Array.from(dd.options).find(o => o.value === "*" || o.value === "");
-                if (starOpt) starOpt.text = flatRuneword.name;
-            }
+        // Update dropdown label (don't dispatch change — we already did the equip)
+        try {
+            // prefer the app helper if available
+            setDropdownToItem(getSlotId("player", slot), flatRuneword.name);
+        } catch (e) {
+            try {
+                const dd = document.getElementById(`dropdown_${slot}`);
+                if (dd) {
+                    // attempt to find placeholder option and update its text
+                    const starOpt = Array.from(dd.options).find(o => o.value === "*" || o.value === "");
+                    if (starOpt) starOpt.text = flatRuneword.name;
+                }
+            } catch (e2) { /* best-effort only */ }
         }
 
-        // Save to URL immediately for runewords
-        saveImportedItemToUrl(slot);
-
-        return; // done
+        // done — return so we DON'T fall through and re-equip via dropdown handlers
+        return;
     }
 
-    // ---- Non-runeword items ----
+    // ---- Non-runeword: translate names for uniques/sets/magic/rare/crafted ----
     switch (item.QualityCode) {
         case "q_unique":
         case "q_set":
@@ -9431,132 +9583,62 @@ function equipItemDirectly(item) {
             equipName = (offhandtag === "Bolts" || offhandtag === "Arrows")
                 ? `Imported ${item.QualityCode.slice(2)} ${offhandtag}`
                 : `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
-				console.log("Import: equipName for magic/rare/crafted:", equipName, slot, item);
             break;
-
-        case "q_normal":
-            equipName = item.Title;
+        default:
+            // leave equipName as-is for everything else
             break;
     }
 
-    // Stash PropertyList if present
+    // If the API provided a PropertyList for an imported magic/rare/crafted item,
+    // stash it and apply after equipping (like your previous flow).
     if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
         pendingPropertyLists[slot] = item.PropertyList;
         console.log(`Import: stashed PropertyList for slot ${slot}`, item.PropertyList);
     }
 
-    // Update dropdown UI
+    // ---- Equip the item: direct approach (avoid dispatchEvent to prevent duplicate equip) ----
+    // Try to set the dropdown value if present (UI), but DO NOT dispatch change.
+    // Instead, call equip(...) directly so we control exactly what happens.
     const dropdownId = `dropdown_${slot}`;
     const dropdown = document.getElementById(dropdownId);
     if (dropdown) {
         dropdown.value = equipName;
-        try { setDropdownToItem(getSlotId("player", slot), equipName); } catch (e) { }
+        // best-effort: update option text if needed
+        try { setDropdownToItem(getSlotId("player", slot), equipName); } catch (e) { /* ignore */ }
+    } else {
+        console.warn(`Import: dropdown not found for slot ${slot} (id=${dropdownId})`);
     }
 
-    // Equip item directly
-	try {
-		if (["q_magic", "q_rare", "q_crafted", "q_normal"].includes(item.QualityCode)) {
-			console.log("Trying to equipItemDirectly:  ",slot,item)
-			// importItem should create the internal representation and return a display name
-			equipName = importItem(slot, item);
+    // Call equip directly instead of triggering the dropdown event (avoids re-entrancy)
+    try {
+        console.log(`equipitemdirectly Import: calling equip(${slot}, ${equipName})`);
+        equip(slot, equipName);
+    } catch (e) {
+        console.error("Import: equip() threw:", e);
+    }
 
-			// Ensure an equipped object exists for the slot
-			if (!equipped[slot] || typeof equipped[slot] !== "object") {
-				equipped[slot] = {};
-			}
-
-			// **Force the exact name for crafted helmet as requested**
-			if (item.QualityCode === "q_crafted" && slot === "helm") {
-				equipped[slot].name  = "Imported crafted Helmet";
-				equipped[slot].Title = "Imported crafted Helmet";
-			} else {
-				// Normal fallback name (preserve whatever importItem returned)
-				equipped[slot].name  = equipName || item.Title || (`Imported ${(item.QualityCode||"").replace(/^q_/,"")} ${formatSlotName(slot)}`);
-				equipped[slot].Title = equipped[slot].name;
-			}
-
-			// Keep some metadata so other code (summary / save / UI) works
-			equipped[slot].QualityCode = item.QualityCode;
-			equipped[slot].rarity = (item.QualityCode || "").replace(/^q_/, "");
-			if (item.PropertyList) equipped[slot].PropertyList = Array.isArray(item.PropertyList) ? item.PropertyList.slice() : [item.PropertyList];
-			if (item.Tag) equipped[slot].Tag = item.Tag;
-			if (item.base) equipped[slot].base = item.base;
-
-			// Ensure equipment[slot] is an array and contains this entry (so dropdowns / lookups can find it)
-			if (!Array.isArray(equipment[slot])) equipment[slot] = [];
-			equipment[slot] = equipment[slot].filter(it => !(it && it.name === equipped[slot].name));
-			equipment[slot].unshift({
-				name: equipped[slot].name,
-				Title: equipped[slot].Title,
-				QualityCode: equipped[slot].QualityCode,
-				rarity: equipped[slot].rarity,
-				Tag: equipped[slot].Tag,
-				base: equipped[slot].base,
-				PropertyList: equipped[slot].PropertyList ? equipped[slot].PropertyList.slice() : []
-			});
-
-			// Update dropdown UI so it shows the imported name
-			const dd = document.getElementById(`dropdown_${slot}`);
-			if (dd) {
-				const blankOpt = Array.from(dd.options).find(o => o.value === "*" || o.value === "");
-				if (blankOpt) {
-					blankOpt.text = equipped[slot].name;
-					dd.value = blankOpt.value;
-				} else {
-					const opt = document.createElement("option");
-					opt.value = "";
-					opt.text = equipped[slot].name;
-					dd.add(opt, dd.options[0] || null);
-					dd.value = opt.value;
-				}
-			}
-
-			// Update UI
-			try { updateSelectedItemSummary(slot); } catch (e) { /* ignore */ }
-			
-			update();
-		} else {
-			// non-custom known items
-			console.log("equipItemDirectly failed, falling back to equip ",slot,equipName)
-			equip(slot, equipName);
-		}
-	} catch (e) {
-		console.error("Import: equip() threw:", e);
-	}
-
-
-    // ---- Delayed PropertyList application and URL save ----
+	// ---- Delayed application of PropertyList (apply stats → update UI) ----
 	setTimeout(() => {
-		if (pendingPropertyLists[slot] && equipped[slot]) {
-			// If the equipped item doesn't yet have a PropertyList, apply the pending one
-			if ((!equipped[slot].PropertyList || equipped[slot].PropertyList.length === 0) && Array.isArray(pendingPropertyLists[slot])) {
-				equipped[slot].PropertyList = pendingPropertyLists[slot].slice();
+		if (pendingPropertyLists[slot]) {
+			if (!equipped[slot]) {
+				console.warn(`Import: nothing equipped in slot ${slot} to apply pending properties`);
+				return;
 			}
-
+			if (item.PropertyList && ["q_magic","q_rare","q_crafted"].includes(item.QualityCode)) {
+				equipped[slot].PropertyList = item.PropertyList;
+				pendingPropertyLists[slot] = item.PropertyList;
+				console.log(`Import: assigned PropertyList to equipped[${slot}]`, equipped[slot].PropertyList);
+			}
 			console.log(`Import: applying pending properties to equipped[${slot}]`, equipped[slot].PropertyList);
 			applyMatchedProperties(slot);
 
-			// Defensive: some code paths later reset equipped[slot] to a default 'none'.
-			// Ensure the imported display name is preserved for UI and URL.
-			try {
-				const finalDisplay = (equipped[slot] && (equipped[slot].name && equipped[slot].name !== "none")) ? equipped[slot].name : (equipped[slot].Title || displayName || slot);
-				if (!equipped[slot] || equipped[slot].name === "none") {
-					if (!equipped[slot]) equipped[slot] = {};
-					equipped[slot].name = finalDisplay;
-					equipped[slot].Title = finalDisplay;
-					console.log(`Import: forced equipped[${slot}] display to '${finalDisplay}'`);
-					try { updateSelectedItemSummary(slot); } catch (e) { try { updateSelectedItemSummary(equipped[slot]); } catch (e2) {} }
-					try { update(); } catch (e) {}
-					try { updateURLDebounced(); } catch (e) {}
-				}
-			} catch (e) { console.error('Import: failed to enforce display name', e); }
-
-			// Save this imported item to the URL (caller controls whether to persist as custom blob)
-			try { saveImportedItemToUrl(slot); } catch (e) { console.error('saveImportedItemToUrl failed', e); }
+			// ---- Save the fully equipped item into the URL ----
+			saveImportedItemToUrl(slot);
 
 			delete pendingPropertyLists[slot];
 		}
 	}, 0);
+
 }
 
 
@@ -9644,67 +9726,56 @@ const dynamicOpt = dropdown.querySelector('option[value="[runeword]"], option[va
 	if (!suppressDispatch) dropdown.dispatchEvent(new Event("change"));
 }
 
-function buildPropsFromPropertyList(PropertyList) {
-	const props = {};
-	if (!Array.isArray(PropertyList)) return props;
+function importItem(slot, itemData) {
+    if (!itemData) return;
 
-	for (const propTextRaw of PropertyList) {
-		const propText = String(propTextRaw).trim();
-		if (!propText) continue;
+    console.log("kicking off importItem for", slot, itemData);
 
-		// try to get matches via your existing matcher (guarded: may be undefined)
-		let matches = [];
-		try {
-			if (typeof findMatchingStat === 'function') {
-				matches = findMatchingStat(propText, stats) || [];
-			} else {
-				matches = [];
-			}
-		} catch (err) {
-			console.warn('buildPropsFromPropertyList: findMatchingStat threw', err);
-			matches = [];
-		}
+    const needsBlob = ["q_magic", "q_rare", "q_crafted", "q_normal"].includes(itemData.QualityCode);
 
-		// If matcher returned a single object (non-array form), normalize to array
-		const arrMatches = Array.isArray(matches) ? matches : [matches];
+    // Build the equipped object
+    let equippedItem;
 
-		// fallback parse numeric value if matcher didn't return a value
-		const numericFallback = (() => {
-			const m = propText.match(/[-+]?\d+(\.\d+)?/);
-			return m ? (m[0].indexOf('.') >= 0 ? parseFloat(m[0]) : parseInt(m[0], 10)) : null;
-		})();
+    if (needsBlob) {
+const blob = {
+    name: itemData.name || `Imported ${itemData.rarity} ${slot}`,
+    rarity: itemData.rarity,
+    base: itemData.base,
+    props: buildPropsFromPropertyList(itemData.PropertyList || []),
+    PropertyList: itemData.PropertyList || [],   // <--- keep the raw list too
+    sockets: itemData.sockets || 0,
+    corruption: itemData.corruption || "none",
+};
 
-		for (const mm of arrMatches) {
-			if (!mm || !mm.statKey) continue;
-			const k = mm.statKey;
-			// prefer explicit mm.value, else fallback to mm.value-like shape, else numeric fallback
-			const v = (mm.value !== undefined && mm.value !== null) ? mm.value : numericFallback;
 
-			if (k === "ctc" || k === "cskill") {
-				if (!props[k]) props[k] = [];
-				props[k].push(v);
-			} else {
-				// accumulate numeric keys, otherwise set string/indicator
-				if (typeof v === "number") {
-					props[k] = (props[k] || 0) + v;
-				} else {
-					// for non-numeric matched values (rare), store raw parsed value
-					props[k] = v;
-				}
-			}
-		}
-	}
+        // Persist the blob for URL / round-trip
+        if (!equipment[slot]) equipment[slot] = {};
+        equipment[slot].custom = blob;
 
-	return props;
+        equippedItem = blob;
+
+    } else {
+        // Unique / Set / Normal / Other
+        equippedItem = {
+            name: itemData.Title || "none",
+            Title: itemData.Title || "none",
+            rarity: itemData.rarity || "normal",
+            PropertyList: itemData.PropertyList ? [...itemData.PropertyList] : [],
+            slot: slot
+        };
+    }
+
+    // Save into the global equipped object
+    equipped[slot] = equippedItem;
+
+    // Trigger existing UI/stat updates
+    equip(slot, equippedItem.Title);
+
+    updateURLDebounced();
+
+    console.log(`✅ Equipped[${slot}] now:`, equipped[slot]);
+    return equippedItem.name;
 }
-
-	function formatSlotName(slot) {
-		if (slot === "ring1" || slot === "ring2") return "Ring"; // Special case for ring1
-		if (slot === "helm" || slot === "helmet") return "Helmet"; // Special case for ring1
-		return slot.charAt(0).toUpperCase() + slot.slice(1);
-	}
-
-
 
 	function cleanName(str) {
 		if (!str) return "";
@@ -9715,249 +9786,10 @@ function buildPropsFromPropertyList(PropertyList) {
 	}
 
 
-	function applyMatchedProperties(slot) {
-		if (!equipped[slot]) {
-			console.warn(`❌ No equipped item found in slot: ${slot}`);
-			return;
-		}
-		const equippedItem = equipped[slot];
-
-		// Rename generic items if needed. Use equippedItem (not an undefined `item`).
-		if (equippedItem && equippedItem.PropertyList && Array.isArray(equippedItem.PropertyList)) {
-			// If this item was originally imported from API and had QualityCode metadata
-			// it may have been stashed in pendingPropertyLists already; preserve that.
-			pendingPropertyLists[slot] = equippedItem.PropertyList;
-			console.log(`✅ Stashed PropertyList for slot ${slot}`, equippedItem.PropertyList);
-		}
-
-		equippedItem.PropertyList.forEach(propText => {
-			const matches = findMatchingStat(propText, stats);
-			if (!matches || matches.length === 0) {
-//				console.warn(`❌ No match for: "${propText}"`);
-				return;
-			}
-
-			// If we can extract a number from the propertyText, do it once here
-			const numericValue = parseInt(propText.match(/[-+]?\d+/)?.[0], 10) || 0;
-
-		matches.forEach(({ statKey, value }) => {
-			if (statKey === "ctc") {
-				if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
-				equippedItem.ctc.push(value);
-				console.log(`✅ Added CTC:`, value);
-			} else if (statKey === "cskill") {
-				if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
-				equippedItem.cskill.push(value);
-				console.log(`✅ Added Charged Skill:`, value);
-			} else {
-				const valueToApply = typeof value === "number" ? value : numericValue;
-				equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
-				character[statKey] = (character[statKey] || 0) + valueToApply;
-			}
-		});
-
-		});
-    // Update UI with the slot (updateSelectedItemSummary expects a slot id in most other places)
-    try {
-        updateSelectedItemSummary(slot);
-    } catch (e) {
-        // fallback: if updateSelectedItemSummary ever accepts an item object, try that
-        try { updateSelectedItemSummary(equippedItem); } catch(e2) { /* ignore */ }
-    }
-    update();
-
-    // Robust display name for logs
-    const displayName = equippedItem.name || equippedItem.Title || (equippedItem.custom && equippedItem.custom.name) || slot || "unknown";
-//    console.log(`🔄 UI refreshed for item: ${displayName}`, equippedItem.PropertyList, equippedItem.PropertyList);
-    console.log(`🔄 UI refreshed for item: ${displayName}`);
-}
-
-	function findMatchingStat(propertyText, stats) {
-//		console.log(`Checking property: "${propertyText}" against stats`);
-		const afterKillStat = parseAfterKillStat(propertyText);
-		if (afterKillStat) {
-			return [afterKillStat];
-		}
-
-		const ctcParsed = parseChanceToCast(propertyText);
-		if (ctcParsed) {
-//			console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
-			return [ctcParsed];  // Return in array form for compatibility
-		}
-		const cskillParsed = parseChargedSkill(propertyText);
-		if (cskillParsed) {
-//			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
-			return [cskillParsed];
-		}	
-		// Try to match "Adds #–# [Element] Damage"
-		const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
-		if (damageMatch) {
-			const [, min, max, elementRaw] = damageMatch;
-			const element = elementRaw.toLowerCase();
-			let prefix = "damage"; // default is physical
-
-			switch (element) {
-				case "fire": prefix = "fDamage"; break;
-				case "cold": prefix = "cDamage"; break;
-				case "lightning": prefix = "lDamage"; break;
-				case "poison": prefix = "pDamage"; break;
-				// fall through: unknown/empty means physical
-			}
-
-//			console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
-			return [
-				{ statKey: `${prefix}_min`, value: parseInt(min, 10) },
-				{ statKey: `${prefix}_max`, value: parseInt(max, 10) }
-			];
-		}
-
-		// Fallback to format-based matching
-		for (const [statKey, statData] of Object.entries(stats)) {
-			if (statData.editable !== 1) continue;
-
-			const formatPattern = new RegExp(
-				statData.format.map(f =>
-					f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-				).join(".*"),
-				"i"
-			);
-
-			if (formatPattern.test(propertyText)) {
-//				console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
-				return [{ statKey }];
-			}
-		}
-
-//		console.warn(`❌ No match found for "${propertyText}"`);
-		return [];
-	}
-
-	// Inside findMatchingStat or as a helper function
-	function parseChanceToCast(line) {
-		const ctcRegex = /(\d+)% Chance to cast level (\d+)\s+(.+?)\s+(when [\w\s]+)$/i;
-		const match = line.match(ctcRegex);
-		if (!match) return null;
-
-		const [, percent, level, skillName, trigger] = match;
-		return {
-			statKey: "ctc",
-			value: [parseInt(percent), parseInt(level), skillName.trim(), trigger.trim()]
-		};
-	}
-
-	function parseChargedSkill(line) {
-		const chargedRegex = /Level (\d+)\s+(.+?)\s+\((\d+)\/\d+ Charges\)/i;
-		const match = line.match(chargedRegex);
-		if (!match) return null;
-
-		const [, level, skillName, charges] = match;
-		return {
-			statKey: "cskill",
-			value: [parseInt(level), skillName.trim(), parseInt(charges)]
-		};
-	}
-
-	function parseAfterKillStat(line) {
-		const match = line.match(/\+(\d+)\s+(?:to\s+)?(Mana|Life)\s+after\s+each\s+Kill/i);
-		if (!match) return null;
-
-		const [, value, type] = match;
-		const statKey = type.toLowerCase() + "_after_kill";  // e.g., "mana_after_kill"
-
-		return {
-			statKey,
-			value: parseInt(value, 10)
-		};
-	}
-
-	function saveImportedItemToUrl(slot, PropertyList = null) {
-		const params = new URLSearchParams(window.location.search);
-		const eq = equipped[slot];
-		if (!eq) return;
-
-		// canonical name/title
-		const title = eq.name || eq.Title || (`Imported ${(eq.QualityCode||"").replace(/^q_/, "")} ${typeof formatSlotName === 'function' ? formatSlotName(slot) : slot}`);
-
-		// build props — prefer parsing PropertyList if provided; else use eq.PropertyList if present,
-		// else fall back to picking numeric keys already applied to the equipped item.
-		let props = {};
-		if (PropertyList && PropertyList.length) {
-			props = buildPropsFromPropertyList(PropertyList);
-		} else if (eq.PropertyList && eq.PropertyList.length) {
-			props = buildPropsFromPropertyList(eq.PropertyList);
-		} else {
-			for (const k in eq) {
-				if (["name","base","baseKey","rarity","tier","corruption","socketCount","PropertyList","Title","Worn","QualityCode"].includes(k)) continue;
-				const v = eq[k];
-				if (typeof v === "number" && v !== 0) props[k] = v;
-				else if (Array.isArray(v) && (k === "ctc" || k === "cskill")) props[k] = v.slice();
-			}
-		}
-
-		// sockets list (names)
-		const sockets = (socketed[slot] && Array.isArray(socketed[slot].items))
-			? socketed[slot].items.map(s => s.name).filter(Boolean)
-			: (eq.sockets || []);
-
-		// Build CSV-style slot value (match buildCharacterURL format)
-		const arr = [title, eq.tier || 0, eq.corruption || "none"];
-
-		// Inline sockets
-		if (sockets && sockets.length) {
-			for (const s of sockets) arr.push(s || "none");
-		}
-
-		// Inline props as key:val pairs joined by commas (single token)
-		if (props && Object.keys(props).length > 0) {
-			const propList = Object.entries(props).map(([k, v]) => `${k}:${Array.isArray(v) ? v.join("|") : v}`).join(",");
-			arr.push(propList);
-		}
-
-		// Replace the slot parameter in the URL with our inline CSV
-		params.set(slot, arr.join(","));
-		const newUrl = `${window.location.pathname}?${params.toString()}`;
-		window.history.replaceState({}, "", newUrl);
-		console.debug(`Saved imported ${slot} to URL (inlined):`, arr.join(","));
-	}
 
 
-	function addMatchedPropsToUrl(slot) {
-		const params = new URLSearchParams(window.location.search);
 
-		const eq = equipped[slot];
-		if (!eq) return;
 
-		// Remove any old props for this slot
-		[...params.keys()]
-			.filter(k => k.startsWith(`${slot}_prop`))
-			.forEach(k => params.delete(k));
-
-		let idx = 1;
-		for (let key in eq) {
-			if (["name","rarity","tier","corruption","socketCount","PropertyList"].includes(key)) continue;
-			const val = eq[key];
-			if (typeof val === "number" && val !== 0) {
-				params.set(`${slot}_prop${idx}`, `${key}:${val}`);
-				idx++;
-			}
-		}
-
-		const newUrl = `${window.location.pathname}?${params.toString()}`;
-		window.history.replaceState({}, "", newUrl);
-//		console.debug(`Added matched properties for ${slot} to URL:`, [...params.entries()].filter(([k]) => k.startsWith(`${slot}_prop`)));
-	}
-
-	function addItemPropsToUrl(slot, PropertyList) {
-		const params = new URLSearchParams(window.location.search);
-
-		PropertyList.forEach((prop, idx) => {
-			// Encode each property, e.g. weapon=+10%25 Enhanced Damage
-			params.set(`${slot}_prop${idx+1}`, encodeURIComponent(prop));
-		});
-
-		const newUrl = `${window.location.pathname}?${params.toString()}`;
-		window.history.replaceState({}, "", newUrl);
-	}
 
 // Notes for Organization Overhaul:
 //   TODO...
