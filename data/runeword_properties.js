@@ -141,7 +141,7 @@ var runewordProperties = {
         sockets: 6,
         stats: {
             req_level:69,  
-            twoHanded:1, 
+//            twoHanded:1, 
             ctc:[[50,20,"Poison Nova","when you Kill an Enemy"]], 
             indestructible:1, 
             ias:60, 

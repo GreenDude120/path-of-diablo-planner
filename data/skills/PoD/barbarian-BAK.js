@@ -185,7 +185,7 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
 		return result
-//		return skill2Breakdown; 
+		return skill2Breakdown; 
 	},
 	
 	// setSkillAmounts - helps update class-related skill levels, called by calculateSkillAmounts()

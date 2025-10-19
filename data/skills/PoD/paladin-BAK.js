@@ -224,7 +224,7 @@ var character_paladin = {class_name:"Paladin", strength:25, dexterity:20, vitali
 
 		var result = {min:skillMin,max:skillMax,ar:skillAr};
 		return result
-//		return skill2Breakdown; 		
+		return skill2Breakdown; 		
 	},
 	
 	// setSkillAmounts - helps update class-related skill levels, called by calculateSkillAmounts()

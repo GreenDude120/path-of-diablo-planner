@@ -588,7 +588,28 @@ function loadParams() {
 
     // --- Apply stats ---
 		if (param_quests != 1) { param_quests = 0 }
-		if ((param_str+param_dex+param_vit+param_ene) > (5*param_level + 15*param_quests)) { param_str = 0; param_dex = 0; param_vit = 0; param_ene = 0; }
+		
+		// Check if stats exceed available points - if so, try converting from total to added stats
+		const maxStatPoints = 5*param_level + 15*param_quests;
+		if ((param_str+param_dex+param_vit+param_ene) > maxStatPoints) {
+			// Assume these are total stats from API data, convert to added stats
+			const addedStr = Math.max(0, param_str - character.starting_strength);
+			const addedDex = Math.max(0, param_dex - character.starting_dexterity);
+			const addedVit = Math.max(0, param_vit - character.starting_vitality);
+			const addedEne = Math.max(0, param_ene - character.starting_energy);
+			
+			// Check if the added stats are within limits
+			if ((addedStr + addedDex + addedVit + addedEne) <= maxStatPoints) {
+				// Use the added stats (conversion successful)
+				param_str = addedStr;
+				param_dex = addedDex;
+				param_vit = addedVit;
+				param_ene = addedEne;
+			} else {
+				// Even as added stats, they exceed limits - reset to 0
+				param_str = 0; param_dex = 0; param_vit = 0; param_ene = 0;
+			}
+		}
 
 
     character.level = param_level;
