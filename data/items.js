@@ -1124,7 +1124,19 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rare", name:"Imported rare Weapon", req_level:64, type:"mace", img:"Wirt's_Leg"},
 	{rarity:"craft", name:"Imported crafted Weapon", req_level:64, type:"mace", img:"Wirt's_Leg"},
 	{only:"", rarity:"craft", name:"Custom Weapon", req_level:64, type:"mace", img:"Wirt's_Leg"},
-	
+
+	{only:"", rarity:"magic", name:"Imported magic Offhand", req_level:64, type:"shield", img:"Lidless_Wall"},
+	{only:"", rarity:"rare", name:"Imported rare Offhand", req_level:64, type:"shield", img:"Lidless_Wall"},
+	{only:"", rarity:"craft", name:"Imported crafted Offhand", req_level:64, type:"shield", img:"Lidless_Wall"},
+
+	{only:"", rarity:"magic", name:"Imported magic Arrows", req_level:64, type:"quiver", img:"images/items/offhand/Arrows"},
+	{only:"", rarity:"rare", name:"Imported rare Arrows", req_level:64, type:"quiver", img:"images/items/offhand/Arrows"},
+	{only:"", rarity:"craft", name:"Imported crafted Arrows", req_level:64, type:"quiver", img:"images/items/offhand/Arrows"},
+
+	{only:"", rarity:"magic", name:"Imported magic Bolts", req_level:64, type:"quiver", base:"Bolts", img:"images/items/offhand/Bolts"},
+	{only:"", rarity:"rare", name:"Imported rare Bolts", req_level:64, type:"quiver", base:"Bolts", img:"images/items/offhand/Bolts"},
+	{only:"", rarity:"craft", name:"Imported crafted Bolts", req_level:64, type:"quiver", base:"Bolts", img:"images/items/offhand/Bolts"},
+
 		],
 
 		offhand: [
