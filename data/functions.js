@@ -1433,6 +1433,7 @@ function equip(group, val) {
 //								{equipped[group][affix] = Math.max(0,Math.ceil((multReq*bases[base][affix] - reqEth) += (equipment[src_group][item]["req"]/100)))}
 //							else {equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))}
 							equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))
+//							equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth - (equipment[src_group][item]["req"]/100)))
 							console.log("  Added req affix", affix, "=", equipped[group][affix], "(base", bases[base][affix]+")")	
 						} else if (affix == "tier") {
 							equipped[group][affix] = bases[base][affix]
@@ -4602,6 +4603,12 @@ if (event == null && source) {
         }
         socketed[group].socketsFilled += 1;
         console.debug(`Socketing ${socketItem} into ${group}`);
+        
+        // Recalculate requirements if socketables have 'req' modifiers (e.g., Hel Rune)
+        if (typeof(socketed[group].totals.req) != 'undefined' && socketed[group].totals.req != 0) {
+            recalculateRequirements(group);
+        }
+        
         calculateSkillAmounts();
         updateStats();
         updateSkills();
@@ -4624,6 +4631,52 @@ if (event == null && source) {
     inv[0].onpickup = "none";
 }
 
+
+// recalculateRequirements - Recalculates req_strength and req_dexterity for an equipped item
+//	when socketables with 'req' modifiers (like Hel Rune) are added or removed
+// ---------------------------------
+function recalculateRequirements(group) {
+    if (!equipped[group] || !equipped[group].base) {
+        return; // No item equipped or no base to reference
+    }
+    
+    // Get the base item's original requirements
+    var base = getBaseId(equipped[group].base);
+    if (typeof(bases[base]) == 'undefined') {
+        return; // Base not found
+    }
+    
+    // Calculate multipliers
+    var multReq = 1;
+    var reqEth = 0;
+    
+    // Apply ethereal reduction (-10 requirements)
+    if (typeof(equipped[group]["ethereal"]) != 'undefined' && equipped[group]["ethereal"] == 1) {
+        reqEth = 10;
+    }
+    
+    // Apply item's own 'req' modifier (if any)
+    if (typeof(equipped[group]["req"]) != 'undefined') {
+        multReq += (equipped[group]["req"] / 100);
+    }
+    
+    // Apply socketables' 'req' modifier (e.g., Hel Rune)
+    if (typeof(socketed[group].totals.req) != 'undefined') {
+        multReq += (socketed[group].totals.req / 100);
+    }
+    
+    // Recalculate req_strength
+    if (typeof(bases[base].req_strength) != 'undefined') {
+        equipped[group].req_strength = Math.max(0, Math.ceil(multReq * bases[base].req_strength - reqEth));
+    }
+    
+    // Recalculate req_dexterity
+    if (typeof(bases[base].req_dexterity) != 'undefined') {
+        equipped[group].req_dexterity = Math.max(0, Math.ceil(multReq * bases[base].req_dexterity - reqEth));
+    }
+    
+    console.debug(`Recalculated requirements for ${group}: STR=${equipped[group].req_strength}, DEX=${equipped[group].req_dexterity}, multReq=${multReq}`);
+}
 
 
 // allowSocket - Checks on mouse-over whether a socketable item may be added
@@ -4714,6 +4767,15 @@ function trashSocketable(event, ident, override) {
 	calculateSkillAmounts()
 	updateStats()
 	updateSkills()
+	
+	// Recalculate requirements for any affected groups (in case 'req' modifier was removed)
+	var groups = ["helm", "armor", "weapon", "offhand"];
+	for (let g = 0; g < groups.length; g++) {
+		if (typeof(socketed[groups[g]].totals.req) != 'undefined' && socketed[groups[g]].totals.req != 0) {
+			recalculateRequirements(groups[g]);
+		}
+	}
+	
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
 	// updateAllEffects()?
