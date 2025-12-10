@@ -4724,11 +4724,13 @@ function trashSocketable(event, ident, override) {
 		if (event.ctrlKey) { dup = 39 }
 	}
 	var nameVal = val.split('_')[0];
+	var affectedGroup = null; // Track which group had a socketable removed
 	// removed from equipment
 	var groups = ["helm", "armor", "weapon", "offhand"];
 	for (let g = 0; g < groups.length; g++) {
 		for (let i = 0; i < socketed[groups[g]].items.length; i++) {
 			if (val == socketed[groups[g]].items[i].id) {
+				var hadReqModifier = (typeof(socketed[groups[g]].items[i].req) != 'undefined' && socketed[groups[g]].items[i].req != 0);
 				for (affix in socketed[groups[g]].items[i]) {
 					if (affix != "id" && affix != "name") {
 						character[affix] -= socketed[groups[g]].items[i][affix]
@@ -4737,6 +4739,9 @@ function trashSocketable(event, ident, override) {
 				}
 				socketed[groups[g]].items[i] = {id:"",name:""}
 				socketed[groups[g]].socketsFilled -= 1
+				if (hadReqModifier) {
+					affectedGroup = groups[g];
+				}
 			}
 		}
 	}
@@ -4762,19 +4767,16 @@ function trashSocketable(event, ident, override) {
 			}
 		}
 	}
-
-	// Recalculate requirements for any affected groups (in case 'req' modifier was removed)
-	var groups = ["helm", "armor", "weapon", "offhand"];
-	for (let g = 0; g < groups.length; g++) {
-		if (typeof(socketed[groups[g]].totals.req) != 'undefined' && socketed[groups[g]].totals.req != 0) {
-			recalculateRequirements(groups[g]);
-		}
-	}
 	
 	// update
 	calculateSkillAmounts()
 	updateStats()
 	updateSkills()
+	
+	// Recalculate requirements if a socketable with 'req' modifier was removed
+	if (affectedGroup != null) {
+		recalculateRequirements(affectedGroup);
+	}
 	
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
