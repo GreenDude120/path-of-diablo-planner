@@ -4762,12 +4762,7 @@ function trashSocketable(event, ident, override) {
 			}
 		}
 	}
-	
-	// update
-	calculateSkillAmounts()
-	updateStats()
-	updateSkills()
-	
+
 	// Recalculate requirements for any affected groups (in case 'req' modifier was removed)
 	var groups = ["helm", "armor", "weapon", "offhand"];
 	for (let g = 0; g < groups.length; g++) {
@@ -4775,6 +4770,11 @@ function trashSocketable(event, ident, override) {
 			recalculateRequirements(groups[g]);
 		}
 	}
+	
+	// update
+	calculateSkillAmounts()
+	updateStats()
+	updateSkills()
 	
 	if (selectedSkill[0] != " ­ ­ ­ ­ Skill 1") { checkSkill(selectedSkill[0], 1) }
 	if (selectedSkill[1] != " ­ ­ ­ ­ Skill 2") { checkSkill(selectedSkill[1], 2) }
