@@ -1094,15 +1094,27 @@ for (let i = 0; i < param_custom_charms.length; i++) {
             // Rebuild PropertyList from stats object for tooltip display
             if (stats[key] && stats[key].format) {
                 // Format the property text using the stats format
-                let propText = stats[key].format.join("");
-                const valStr = val.toString();
-                // Replace placeholders with actual value
-                propText = propText.replace(/[+#]/g, valStr);
-                // Add + prefix for positive numbers where format expects it
-                if (stats[key].format[0] === "+" && parseFloat(val) > 0) {
-                    propText = stats[key].format.join("").replace("+", "+" + valStr).replace(/#/g, valStr);
+                const formatParts = stats[key].format;
+                let propText = "";
+                
+                // Handle format array - typically ["+", " to Something"] or ["", "% Something"]
+                if (formatParts.length >= 2) {
+                    const prefix = formatParts[0]; // e.g., "+" or ""
+                    const suffix = formatParts.slice(1).join(""); // e.g., " to Bow & Crossbow Skills"
+                    
+                    if (prefix === "+" && parseFloat(val) > 0) {
+                        propText = `+${val}${suffix}`;
+                    } else if (prefix === "+") {
+                        propText = `${val}${suffix}`;
+                    } else {
+                        propText = `${val}${prefix}${suffix}`;
+                    }
+                } else {
+                    propText = formatParts.join("").replace(/[+#]/g, val);
                 }
+                
                 PropertyList.push(propText);
+                console.log(`  🔄 Rebuilt property: ${key} = ${val} → "${propText}"`);
             } else {
                 // Fallback: just show key: value
                 PropertyList.push(`${key}: ${val}`);
@@ -6790,11 +6802,17 @@ for (let charm in equipped.charms) {
             const propList = [];
             for (let key in ch) {
                 if (["id", "name", "size", "invSlot", "PropertyList", "custom"].includes(key)) continue;
-                if (typeof ch[key] === "number" && ch[key] !== 0) {
-                    propList.push(`${key}:${ch[key]}`);
-                } else if (key === "ctc" || key === "cskill") {
-                    // Encode arrays as JSON strings for URL
-                    propList.push(`${key}:${JSON.stringify(ch[key])}`);
+                const value = ch[key];
+                
+                // Handle all types of properties
+                if (typeof value === "number" && value !== 0) {
+                    propList.push(`${key}:${value}`);
+                } else if (Array.isArray(value)) {
+                    // Encode arrays as JSON strings for URL (ctc, cskill, etc.)
+                    propList.push(`${key}:${JSON.stringify(value)}`);
+                } else if (value !== null && value !== undefined && value !== "") {
+                    // Include any other non-empty values (strings, etc.)
+                    propList.push(`${key}:${value}`);
                 }
             }
             // Format: custom_charm=slot:size:name:prop1:val1,prop2:val2,...
@@ -7383,9 +7401,13 @@ for (let group of equipGroups) {
 		const props = {};
 		if (!Array.isArray(PropertyList)) return props;
 
+		console.log("🔍 buildPropsFromPropertyList called with:", PropertyList);
+
 		for (const propTextRaw of PropertyList) {
 			const propText = String(propTextRaw).trim();
 			if (!propText) continue;
+
+			console.log(`  📝 Processing: "${propText}"`);
 
 			// try to get matches via your existing matcher (guarded: may be undefined
 			// in some nested scopes when import functions are executed)
@@ -7405,12 +7427,14 @@ for (let group of equipGroups) {
 
 			// If matcher returned a single object (non-array form), normalize to array
 			const arrMatches = Array.isArray(matches) ? matches : [matches];
+			console.log(`    🎯 Matches:`, arrMatches);
 
 			// fallback parse numeric value if matcher didn't return a value
 			const numericFallback = (() => {
 				const m = propText.match(/[-+]?\d+(\.\d+)?/);
 				return m ? (m[0].indexOf('.') >= 0 ? parseFloat(m[0]) : parseInt(m[0], 10)) : null;
 			})();
+			console.log(`    🔢 Numeric fallback:`, numericFallback);
 
 			for (const mm of arrMatches) {
 				if (!mm || !mm.statKey) continue;
@@ -7423,6 +7447,8 @@ for (let group of equipGroups) {
 				if ((v === null || v === undefined) && mm.statKey) {
 					v = 1;
 				}
+
+				console.log(`    ✅ Applying: ${k} = ${v}`);
 
 				if (k === "ctc" || k === "cskill") {
 					if (!props[k]) props[k] = [];
@@ -7438,6 +7464,7 @@ for (let group of equipGroups) {
 			}
 		}
 
+		console.log("✅ buildPropsFromPropertyList result:", props);
 		return props;
 	}
 
@@ -7595,7 +7622,53 @@ function applyInlinePropsToEquipped(slot, props) {
 		if (cskillParsed) {
 //			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
 			return [cskillParsed];
-		}	
+		}
+		
+		// Parse skill bonuses like "+1 to Bow and Crossbow Skills (Amazon Only)"
+		const skillBonusMatch = propertyText.match(/^([+-]?\d+)\s+to\s+(.+?)\s+Skills?\s*\((.+?)\)$/i);
+		if (skillBonusMatch) {
+			const value = parseInt(skillBonusMatch[1], 10);
+			const skillTree = skillBonusMatch[2].trim().toLowerCase();
+			
+			// Map skill tree names to stat keys
+			const skillMap = {
+				"bow and crossbow": "skills_bows",
+				"bow & crossbow": "skills_bows",
+				"javelin and spear": "skills_javelin",
+				"javelin & spear": "skills_javelin",
+				"passive and magic": "skills_passive",
+				"passive & magic": "skills_passive",
+				"martial arts": "skills_martial",
+				"shadow disciplines": "skills_shadow",
+				"traps": "skills_traps",
+				"warcries": "skills_warcries",
+				"masteries": "skills_masteries",
+				"combat skills": "skills_combat",
+				"elemental skills": "skills_elemental",
+				"shape shifting": "skills_shapeshifting",
+				"shape shifting skills": "skills_shapeshifting",
+				"summoning": "skills_summoning",
+				"summoning skills": "skills_summoning",
+				"poison and bone": "skills_poisonbone",
+				"poison & bone": "skills_poisonbone",
+				"poison and bone skills": "skills_poisonbone",
+				"curses": "skills_curses",
+				"defensive auras": "skills_defensive",
+				"offensive auras": "skills_offensive",
+				"cold skills": "skills_cold",
+				"cold": "skills_cold",
+				"lightning skills": "skills_lightning",
+				"lightning": "skills_lightning",
+				"fire skills": "skills_fire",
+				"fire": "skills_fire"
+			};
+			
+			const statKey = skillMap[skillTree];
+			if (statKey) {
+				return [{ statKey, value }];
+			}
+		}
+		
 		// Try to match "Adds #–# [Element] Damage"
 		const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
 		if (damageMatch) {
