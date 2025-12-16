@@ -580,6 +580,7 @@ function loadParams() {
     const param_skills = params.has("skills") ? params.get("skills") : "0".repeat(skills.length*2);
 	var param_charms = [];
 	if (params.has('charm') == true) { param_charms = params.getAll('charm') }
+	const param_custom_charms = params.has('custom_charm') ? params.getAll('custom_charm') : [];
     const param_effects = params.has("effect") ? params.getAll("effect").map(e => e.split(",")) : [];
     const param_mercenary = params.has("mercenary") ? params.get("mercenary").split(",") : "none";
     const param_irongolem = params.has("irongolem") ? params.get("irongolem") : "none";
@@ -1055,6 +1056,71 @@ if (rarity === "rw" || name.includes(" - ")) {
 for (let i = 0; i < param_charms.length; i++) {
     const charmName = getCharmNameFromUrlcode(param_charms[i]);
     addCharm(charmName);
+}
+
+// --- Custom Charms ---
+for (let i = 0; i < param_custom_charms.length; i++) {
+    const parts = param_custom_charms[i].split(":");
+    if (parts.length < 3) continue;
+    
+    const invSlot = parseInt(parts[0], 10);
+    const size = parts[1];
+    const name = decodeURIComponent(parts[2]);
+    const propString = parts.slice(3).join(":"); // Rejoin in case props had colons
+    
+    // Parse properties
+    const props = {};
+    const PropertyList = [];
+    if (propString) {
+        const propPairs = propString.split(",");
+        for (let p of propPairs) {
+            const [key, val] = p.split(":");
+            if (!key || val === undefined) continue;
+            
+            // Try to parse as number first
+            if (!isNaN(val)) {
+                props[key] = parseFloat(val);
+            } else if (val.startsWith("[") || val.startsWith("{")) {
+                // Parse JSON arrays (ctc, cskill)
+                try {
+                    props[key] = JSON.parse(val);
+                } catch(e) {
+                    props[key] = val;
+                }
+            } else {
+                props[key] = val;
+            }
+            
+            // Rebuild PropertyList from stats object for tooltip display
+            if (stats[key] && stats[key].format) {
+                // Format the property text using the stats format
+                let propText = stats[key].format.join("");
+                const valStr = val.toString();
+                // Replace placeholders with actual value
+                propText = propText.replace(/[+#]/g, valStr);
+                // Add + prefix for positive numbers where format expects it
+                if (stats[key].format[0] === "+" && parseFloat(val) > 0) {
+                    propText = stats[key].format.join("").replace("+", "+" + valStr).replace(/#/g, valStr);
+                }
+                PropertyList.push(propText);
+            } else {
+                // Fallback: just show key: value
+                PropertyList.push(`${key}: ${val}`);
+            }
+        }
+    }
+    
+    const charmData = {
+        name: name,
+        size: size,
+        invSlot: invSlot,
+        custom: true,
+        PropertyList: PropertyList,
+        ...props
+    };
+    
+    console.log(`Loading custom charm from URL: ${name} at slot ${invSlot}`, charmData);
+    addCustomCharm(charmData);
 }
 
 
@@ -1737,6 +1803,158 @@ function testCharmURL() {
 
 testCharmURL();
 */
+
+// addCustomCharm - Adds a custom charm with specific stats at a specific position
+//	charmData: object with {name, size, invSlot, PropertyList, custom, ...stats}
+// ---------------------------------
+function addCustomCharm(charmData) {
+	console.log("🎯 addCustomCharm called with:", charmData);
+
+	if (!equipped.charms) equipped.charms = {};
+
+	const charm_img = {
+		prefix: "./images/items/charms/",
+		small: ["charm1_paw.png", "charm1_disc.png", "charm1_coin.png"],
+		large: ["charm2_page.png", "charm2_horn.png", "charm2_lantern.png"],
+		grand: ["charm3_lace.png", "charm3_eye.png", "charm3_monster.png"]
+	};
+
+	const size = charmData.size || "small";
+	const targetSlot = charmData.invSlot;
+	const nameVal = charmData.name;
+
+	console.log(`  📏 Size: ${size}, Target slot: ${targetSlot}, Name: ${nameVal}`);
+
+	let charmImage = charm_img.prefix + "debug_plus.png";
+	let charmHeight = "";
+	const charmWidth = "29";
+	let charm_y = 1;
+
+	const r = Math.floor(Math.random() * 3);
+	if (size === "grand") {
+		charmHeight = "88";
+		charmImage = charm_img.prefix + charm_img.grand[r];
+		charm_y = 3;
+	} else if (size === "large") {
+		charmHeight = "59";
+		charmImage = charm_img.prefix + charm_img.large[r];
+		charm_y = 2;
+	} else if (size === "small") {
+		charmHeight = "29";
+		charmImage = charm_img.prefix + charm_img.small[r];
+		charm_y = 1;
+	}
+
+	// Special images for unique charms
+	const nameLower = nameVal.toLowerCase();
+	if (nameLower.includes("annihilus")) {
+		charmImage = charm_img.prefix + "charm1u.png";
+	} else if (nameLower.includes("hellfire torch")) {
+		charmImage = charm_img.prefix + "charm2u.png";
+	}
+
+	console.log(`  🖼️ Image: ${charmImage}, Height: ${charmHeight}, Y-size: ${charm_y}`);
+
+	// Generate unique ID
+	const append = Math.floor(Math.random() * 999999 + 1);
+	const uniqueID = `${nameVal}_${append}`;
+
+	const charmHTML = `<img style="width: ${charmWidth}; height: ${charmHeight}; pointer-events: auto;" id="${uniqueID}" src="${charmImage}" draggable="true" ondragstart="drag(event)" width="${charmWidth}" height="${charmHeight}" oncontextmenu="trash(event)" onmouseover="itemHover(event, this.value)" onmouseout="itemOut()" onclick="itemSelect(event)">`;
+
+	// Check if target slot is available
+	let i = targetSlot;
+	let insertion = "";
+	let empty = 1;
+
+	console.log(`  🔍 Checking slot availability: slot ${i} (valid range: 1-40)`);
+
+	if (i > 0 && i <= 40) {
+		// Check if slot and required vertical space are empty
+		console.log(`    Slot ${i} empty: ${inv[i].empty === 1}`);
+		if (inv[i].empty === 0) empty = 0;
+		if (charm_y > 1) {
+			console.log(`    Slot ${i + 10} empty: ${inv[i + 10]?.empty === 1}`);
+			if (i + 10 <= 40 && inv[i + 10].empty === 0) empty = 0;
+		}
+		if (charm_y > 2) {
+			console.log(`    Slot ${i + 20} empty: ${inv[i + 20]?.empty === 1}`);
+			if (i + 20 <= 40 && inv[i + 20].empty === 0) empty = 0;
+		}
+
+		console.log(`  📍 Slot availability result: ${empty === 1 ? 'AVAILABLE' : 'OCCUPIED'}`);
+
+		if (empty === 1) {
+			insertion = inv[i].id;
+			console.log(`  🎨 Creating charm HTML element with id: ${uniqueID}, inserting into: ${insertion}`);
+			
+			inv[i].empty = 0;
+			inv[0].in[i] = uniqueID;
+			if (charm_y > 1) {
+				inv[i + 10].empty = 0;
+				inv[0].in[i + 10] = uniqueID;
+			}
+			if (charm_y > 2) {
+				inv[i + 20].empty = 0;
+				inv[0].in[i + 20] = uniqueID;
+			}
+
+			const element = document.getElementById(insertion);
+			if (!element) {
+				console.error(`  ❌ DOM element not found: ${insertion}`);
+			} else {
+				console.log(`  ✅ Found DOM element, adding HTML`);
+				element.innerHTML += charmHTML;
+			}
+
+			const ch = "charms";
+			equipped[ch][uniqueID] = {
+				id: uniqueID,
+				name: nameVal,
+				size: size,
+				custom: true,
+				invSlot: targetSlot,
+				PropertyList: charmData.PropertyList || []
+			};
+
+			console.log(`  💾 Created equipped charm object:`, equipped[ch][uniqueID]);
+
+			// Apply all custom stats from charmData
+			let statsApplied = 0;
+			for (let affix in charmData) {
+				if (["name", "size", "invSlot", "PropertyList", "custom"].includes(affix)) continue;
+
+				equipped[ch][uniqueID][affix] = charmData[affix];
+
+				// Apply numeric stats to character
+				if (typeof charmData[affix] === "number") {
+					const oldVal = character[affix] || 0;
+					character[affix] = oldVal + charmData[affix];
+					console.log(`    ➕ Applied ${affix}: ${oldVal} + ${charmData[affix]} = ${character[affix]}`);
+					statsApplied++;
+				} else if (affix === "ctc" || affix === "cskill") {
+					// Handle arrays (ctc/cskill)
+					if (!Array.isArray(character[affix])) character[affix] = [];
+					if (Array.isArray(charmData[affix])) {
+						character[affix].push(...charmData[affix]);
+					} else {
+						character[affix].push(charmData[affix]);
+					}
+					console.log(`    ➕ Applied ${affix}:`, charmData[affix]);
+					statsApplied++;
+				}
+			}
+
+			console.log(`✅ Successfully added custom charm: ${nameVal} (${statsApplied} stats applied)`);
+		} else {
+			console.warn(`❌ Slot ${targetSlot} not available for charm ${nameVal} - occupied`);
+		}
+	} else {
+		console.warn(`❌ Invalid slot ${targetSlot} for charm ${nameVal} - out of range (1-40)`);
+	}
+
+	updateURLDebounced();
+	updateAllEffects();
+}
 
 // addCharm - Adds a charm to the inventory
 //	val: the name of the charm
@@ -3773,12 +3991,25 @@ function itemHover(ev, id) {
 	var affixes = "";
 	if (type == "charm" && name != "+1 (each) skill") {
 		affixes = ""
-		for (affix in equipped["charms"][val]) {
-			if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
-				var affix_info = getAffixLine(affix,"charms",val,"");
-				if (affix_info[1] != 0) {
-					if (affix == "req_level") { main_affixes += affix_info[0]+"<br>" }
-					else { affixes += affix_info[0]+"<br>" }
+		
+		// Check if this is a custom charm with PropertyList
+		if (equipped["charms"][val].custom && equipped["charms"][val].PropertyList) {
+			// Display custom charm stats from PropertyList
+			const propList = equipped["charms"][val].PropertyList;
+			for (let i = 0; i < propList.length; i++) {
+				affixes += propList[i] + "<br>";
+			}
+			// Add "(Custom Imported)" indicator
+			main_affixes += "<font color='"+colors.Gray+"'>Custom Imported</font><br>";
+		} else {
+			// Standard charm display
+			for (affix in equipped["charms"][val]) {
+				if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
+					var affix_info = getAffixLine(affix,"charms",val,"");
+					if (affix_info[1] != 0) {
+						if (affix == "req_level") { main_affixes += affix_info[0]+"<br>" }
+						else { affixes += affix_info[0]+"<br>" }
+					}
 				}
 			}
 		}
@@ -6552,9 +6783,29 @@ for (let slot of [
 // 	for (charm in equipped.charms) { if (typeof(equipped.charms[charm].name) != 'undefined' && equipped.charms[charm].name != 'none') { params.append('charm', equipped.charms[charm].name) }}
 // --- Charms ---
 for (let charm in equipped.charms) {
-    if (equipped.charms[charm]?.name && equipped.charms[charm].name !== "none") {
-        const code = getCharmUrlCode(equipped.charms[charm].name);
-        params.append("charm", code);
+    const ch = equipped.charms[charm];
+    if (ch?.name && ch.name !== "none") {
+        // Custom charms: encode with position and properties
+        if (ch.custom) {
+            const propList = [];
+            for (let key in ch) {
+                if (["id", "name", "size", "invSlot", "PropertyList", "custom"].includes(key)) continue;
+                if (typeof ch[key] === "number" && ch[key] !== 0) {
+                    propList.push(`${key}:${ch[key]}`);
+                } else if (key === "ctc" || key === "cskill") {
+                    // Encode arrays as JSON strings for URL
+                    propList.push(`${key}:${JSON.stringify(ch[key])}`);
+                }
+            }
+            // Format: custom_charm=slot:size:name:prop1:val1,prop2:val2,...
+            const encoded = `${ch.invSlot}:${ch.size}:${encodeURIComponent(ch.name)}:${propList.join(",")}`;
+            params.append("custom_charm", encoded);
+            console.log(`✅ Encoded custom charm ${ch.name} at slot ${ch.invSlot}:`, encoded);
+        } else {
+            // Standard preset charms
+            const code = getCharmUrlCode(ch.name);
+            params.append("charm", code);
+        }
     }
 }
 
@@ -6907,6 +7158,10 @@ for (let group of equipGroups) {
 		equipItemDirectly(item);
 		});
 
+		// Process charms from inventory
+		if (characterData.Inventory) {
+			processCharacterCharms(characterData.Inventory);
+		}
 
 		// Determine which SkillTab has the most points
 		let dominantTab = characterData.SkillTabs.reduce((maxTab, currentTab) =>
@@ -6971,6 +7226,97 @@ for (let group of equipGroups) {
 		}
 
 		update(); // Update interface dynamically
+	}
+
+	// Helper to convert API position (x, y) to inventory slot index
+	function apiPositionToInvSlot(x, y) {
+		// API uses 0-based coordinates (rows 0-9), planner only has bottom 4 rows (API y=5-8)
+		// inv[] array: 1-10 (API row 5), 11-20 (API row 6), 21-30 (API row 7), 31-40 (API row 8)
+		return (y - 5) * 10 + x + 1;
+	}
+
+	// Helper to determine charm size from API data
+	function determineCharmSize(apiCharm) {
+		if (apiCharm.Size && apiCharm.Size.invheight) {
+			const h = apiCharm.Size.invheight;
+			if (h >= 3) return "grand";
+			if (h >= 2) return "large";
+			return "small";
+		}
+		// Fallback: check title
+		const title = (apiCharm.Title || "").toLowerCase();
+		if (title.includes("grand")) return "grand";
+		if (title.includes("large")) return "large";
+		return "small";
+	}
+
+	// Helper to check if inventory item is a charm
+	function isCharm(item) {
+		return item.TextTag && item.TextTag.toLowerCase().includes("charm");
+	}
+
+	// Process charms from character inventory
+	function processCharacterCharms(inventoryData) {
+		if (!Array.isArray(inventoryData)) {
+			console.warn("⚠️ processCharacterCharms: inventoryData is not an array", inventoryData);
+			return;
+		}
+
+		console.log("🔍 Processing character charms from inventory...", inventoryData.length, "items");
+
+		let charmCount = 0;
+		let skippedCount = 0;
+
+		inventoryData.forEach((item, index) => {
+			console.log(`📦 Item ${index}:`, {
+				Title: item.Title,
+				TextTag: item.TextTag,
+				Position: item.Position,
+				isCharm: isCharm(item),
+				yPos: item.Position?.y
+			});
+
+			// Only process charms in bottom 4 rows (y >= 5)
+			if (!isCharm(item)) {
+				console.log(`  ⏭️ Skipped: Not a charm (TextTag: ${item.TextTag})`);
+				skippedCount++;
+				return;
+			}
+
+			if (!item.Position) {
+				console.log(`  ⏭️ Skipped: No position data`);
+				skippedCount++;
+				return;
+			}
+
+			if (item.Position.y < 5) {
+				console.log(`  ⏭️ Skipped: Row ${item.Position.y} < 5 (top inventory)`);
+				skippedCount++;
+				return;
+			}
+
+			const size = determineCharmSize(item);
+			const invSlot = apiPositionToInvSlot(item.Position.x, item.Position.y);
+			console.log(`  ✅ Processing charm: ${item.Title} | Size: ${size} | Slot: ${invSlot}`);
+
+			const props = buildPropsFromPropertyList(item.PropertyList || []);
+			console.log(`  📊 Parsed props:`, props);
+
+			const charmData = {
+				name: item.Title || "Custom Charm",
+				size: size,
+				invSlot: invSlot,
+				PropertyList: item.PropertyList || [],
+				custom: true,
+				...props
+			};
+
+			console.log(`  🎯 Adding custom charm with data:`, charmData);
+			charmCount++;
+			addCustomCharm(charmData);
+		});
+
+		console.log(`✅ Charm processing complete: ${charmCount} charms added, ${skippedCount} items skipped`);
 	}
 
 	// Equip items from api response
@@ -7833,6 +8179,33 @@ function processCharacterData(characterData) {
 function formatSlotName(slot) {
     if (slot === "ring1" || slot === "ring2") return "Ring"; // Special case for ring1
     return slot.charAt(0).toUpperCase() + slot.slice(1);
+}
+
+// Helper to convert API position (x, y) to inventory slot index
+function apiPositionToInvSlot(x, y) {
+	// API uses 0-based coordinates, inventory grid is 10 wide
+	// inv[] array: 1-10 (row 0), 11-20 (row 1), etc.
+	return y * 10 + x + 1;
+}
+
+// Helper to determine charm size from API data
+function determineCharmSize(apiCharm) {
+	if (apiCharm.Size && apiCharm.Size.invheight) {
+		const h = apiCharm.Size.invheight;
+		if (h >= 3) return "grand";
+		if (h >= 2) return "large";
+		return "small";
+	}
+	// Fallback: check title
+	const title = (apiCharm.Title || "").toLowerCase();
+	if (title.includes("grand")) return "grand";
+	if (title.includes("large")) return "large";
+	return "small";
+}
+
+// Helper to check if inventory item is a charm
+function isCharm(item) {
+	return item.TextTag && item.TextTag.toLowerCase().includes("charm");
 }
 
 const pendingPropertyLists = {};
