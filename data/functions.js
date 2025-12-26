@@ -6177,7 +6177,7 @@ function updateTertiaryStats() {
 	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
 	if (c.avoid > 0) { statlines += c.avoid + "% Chance to <b>Avoid</b> missiles when attacking or standing still" + "<br>"}
 	if (c.evade > 0) { statlines += c.evade + "% Chance to <b>Evade</b> melee or missile attack when walking or running" + "<br>"}
-	if (c.pdr > 0 || c.mDamage_reduced > 0 ) { statlines += "Phys damage Reduced by " + c.pdr +  "% and  " + c.damage_reduced + " flat;" + "Magic damage reduced by: " + c.mDamage_reduced + "<br>"}
+//	if (c.pdr > 0 || c.mDamage_reduced > 0 ) { statlines += "Phys damage Reduced by " + c.pdr +  "% and  " + c.damage_reduced + " flat;" + "Magic damage reduced by: " + c.mDamage_reduced + "<br>"}
 	
 	// Calculate damage taken for various damage types
 	var physResult = calculateDamageTaken(1000, "physical");
