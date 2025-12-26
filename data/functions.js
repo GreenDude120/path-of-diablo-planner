@@ -6035,20 +6035,26 @@ function calculateDamageTaken(damageAmount, damageType) {
 	// Step 6: Resistances (for elemental damage)
 	if (damageType === "fire") {
 		var fireRes = c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup;
+		var fireResMax = c.fRes_max_base + c.fRes_max;
+		fireRes = Math.min(fireRes, fireResMax); // Cap at max resistance
 		damageToMana = damageToMana * (1 - fireRes / 100);
 		damageToLife = damageToLife * (1 - fireRes / 100);
 	} else if (damageType === "cold") {
 		var coldRes = c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup;
+		var coldResMax = c.cRes_max_base + c.cRes_max;
+		coldRes = Math.min(coldRes, coldResMax); // Cap at max resistance
 		damageToMana = damageToMana * (1 - coldRes / 100);
 		damageToLife = damageToLife * (1 - coldRes / 100);
 	} else if (damageType === "lightning") {
 		var lightRes = c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup;
+		var lightResMax = c.lRes_max_base + c.lRes_max;
+		lightRes = Math.min(lightRes, lightResMax); // Cap at max resistance
 		damageToMana = damageToMana * (1 - lightRes / 100);
 		damageToLife = damageToLife * (1 - lightRes / 100);
 	}
 	
 	// Step 7-8: Absorb (applied LAST, after all other reductions)
-	// Both reduces damage AND heals you by that amount
+	// Reduces damage AND heals you by the amount that exceeds the remaining damage
 	var absorbAmount = 0;
 	var absorbPercent = 0;
 	
@@ -6071,9 +6077,18 @@ function calculateDamageTaken(damageAmount, damageType) {
 		damageToLife = damageToLife * (1 - absorbPercent / 100);
 	}
 	
-	// Then flat absorb
-	damageToLife = Math.max(0, damageToLife - absorbAmount);
-	result.healingFromAbsorb = absorbAmount;
+	// Then flat absorb - only heal if absorb exceeds remaining damage
+	var damageBeforeFlatAbsorb = damageToLife;
+	damageToLife = damageToLife - absorbAmount;
+	
+	if (damageToLife < 0) {
+		// Absorb exceeded damage - you heal for the excess
+		result.healingFromAbsorb = Math.abs(damageToLife);
+		damageToLife = 0;
+	} else {
+		// Absorb didn't exceed damage - no healing
+		result.healingFromAbsorb = 0;
+	}
 	
 	// Final results
 	result.damageToLife = Math.max(1, Math.round(damageToLife)); // Min 1 damage
