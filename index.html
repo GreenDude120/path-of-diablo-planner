@@ -155,6 +155,10 @@
         <input id="synthwep" type="checkbox" name="synthwep" value="1" onclick="return toggleSynthwep(this);" checked>
         <label for="synthwep">&nbsp;&nbsp;&nbsp;&nbsp;Show Synthesized Items&nbsp;&nbsp;</label>
       </div></div> 
+	  <div class="nav-dropdown-content-item" title="This is the starting damage taken value used in  &#10; calculating damage reductions values &#10; below. Affects physical and elemental DR calcs."><div class="nav-option">
+        <input id="drcalcbase" type="textbox" size="5" name="drcalcbase" value="1000" oninput="updateTertiaryStats()";>
+        <label for="drcalcbase">&nbsp;&nbsp;&nbsp;&nbsp;Damage Taken for DR Calculations&nbsp;&nbsp;</label>
+      </div></div> 
     </div>
   </div>
   <div class="nav-dropdown">

@@ -6195,11 +6195,14 @@ function updateTertiaryStats() {
 //	if (c.pdr > 0 || c.mDamage_reduced > 0 ) { statlines += "Phys damage Reduced by " + c.pdr +  "% and  " + c.damage_reduced + " flat;" + "Magic damage reduced by: " + c.mDamage_reduced + "<br>"}
 	
 	// Calculate damage taken for various damage types
-	var physResult = calculateDamageTaken(1000, "physical");
-	// var magicResult = calculateDamageTaken(1000, "magic");  // TODO: PoD-specific magic damage mechanics
-	var fireResult = calculateDamageTaken(1000, "fire");
-	var coldResult = calculateDamageTaken(1000, "cold");
-	var lightResult = calculateDamageTaken(1000, "lightning");
+	// Get the configurable base damage amount from the UI (defaults to 1000)
+	var baseDamage = parseInt(document.getElementById("drcalcbase").value) || 1000;
+	
+	var physResult = calculateDamageTaken(baseDamage, "physical");
+	// var magicResult = calculateDamageTaken(baseDamage, "magic");  // TODO: PoD-specific magic damage mechanics
+	var fireResult = calculateDamageTaken(baseDamage, "fire");
+	var coldResult = calculateDamageTaken(baseDamage, "cold");
+	var lightResult = calculateDamageTaken(baseDamage, "lightning");
 	
 	// Set character calc properties
 	c.drcalc = physResult.damageToLife;
@@ -6208,15 +6211,15 @@ function updateTertiaryStats() {
 	c.mdrcoldcalc = coldResult.damageToLife;
 	c.mdrlightcalc = lightResult.damageToLife;
 	
-	// Only show if there's any meaningful damage reduction (less than 1000 damage taken)
-	var hasDR = (physResult.damageToLife < 1000 || // magicResult.damageToLife < 1000 || 
-	             fireResult.damageToLife < 1000 || coldResult.damageToLife < 1000 || 
-	             lightResult.damageToLife < 1000);
+	// Only show if there's any meaningful damage reduction (less than base damage taken)
+	var hasDR = (physResult.damageToLife < baseDamage || // magicResult.damageToLife < baseDamage || 
+	             fireResult.damageToLife < baseDamage || coldResult.damageToLife < baseDamage || 
+	             lightResult.damageToLife < baseDamage);
 	
 	if (hasDR) {
-		var drCalcText = "Per 1000 damage taken:";
+		var drCalcText = "Per " + baseDamage + " damage taken:";
 		
-		if (physResult.damageToLife < 1000) {
+		if (physResult.damageToLife < baseDamage) {
 			drCalcText += "\nPhysical: " + physResult.damageToLife + " HP";
 			if (physResult.damageToMana > 0) { drCalcText += " + " + physResult.damageToMana + " Mana"; }
 			if (physResult.armorAbsorbed > 0) { drCalcText += " (Bone Armor: " + Math.round(physResult.armorAbsorbed) + ")"; }
@@ -6224,7 +6227,7 @@ function updateTertiaryStats() {
 		
 		// Magic damage calc commented out - TODO: PoD-specific magic damage mechanics
 		/*
-		if (magicResult.damageToLife < 1000) {
+		if (magicResult.damageToLife < baseDamage) {
 			drCalcText += "\nMagic: " + magicResult.damageToLife + " HP";
 			if (magicResult.damageToMana > 0) { drCalcText += " + " + magicResult.damageToMana + " Mana"; }
 			if (magicResult.armorAbsorbed > 0) { drCalcText += " (Bone Armor: " + Math.round(magicResult.armorAbsorbed) + ")"; }
@@ -6232,21 +6235,21 @@ function updateTertiaryStats() {
 		}
 		*/
 		
-		if (fireResult.damageToLife < 1000) {
+		if (fireResult.damageToLife < baseDamage) {
 			drCalcText += "\nFire: " + fireResult.damageToLife + " HP";
 			if (fireResult.damageToMana > 0) { drCalcText += " + " + fireResult.damageToMana + " Mana"; }
 			if (fireResult.armorAbsorbed > 0) { drCalcText += " (Cyclone: " + Math.round(fireResult.armorAbsorbed) + ")"; }
 			if (fireResult.healingFromAbsorb > 0) { drCalcText += " [Heal: " + Math.round(fireResult.healingFromAbsorb) + "]"; }
 		}
 		
-		if (coldResult.damageToLife < 1000) {
+		if (coldResult.damageToLife < baseDamage) {
 			drCalcText += "\nCold: " + coldResult.damageToLife + " HP";
 			if (coldResult.damageToMana > 0) { drCalcText += " + " + coldResult.damageToMana + " Mana"; }
 			if (coldResult.armorAbsorbed > 0) { drCalcText += " (Cyclone: " + Math.round(coldResult.armorAbsorbed) + ")"; }
 			if (coldResult.healingFromAbsorb > 0) { drCalcText += " [Heal: " + Math.round(coldResult.healingFromAbsorb) + "]"; }
 		}
 		
-		if (lightResult.damageToLife < 1000) {
+		if (lightResult.damageToLife < baseDamage) {
 			drCalcText += "\nLight: " + lightResult.damageToLife + " HP";
 			if (lightResult.damageToMana > 0) { drCalcText += " + " + lightResult.damageToMana + " Mana"; }
 			if (lightResult.armorAbsorbed > 0) { drCalcText += " (Cyclone: " + Math.round(lightResult.armorAbsorbed) + ")"; }
