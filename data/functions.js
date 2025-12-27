@@ -6067,11 +6067,16 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	
 	// Step 2: Apply Energy Shield (shared pool converts all damage types)
 	var esPercent = 0;
-	if (c.class_name === "Sorceress" && esprcnt > 0) {
-		esPercent = Math.min(95, esprcnt);
+	// Calculate ES percentage from Energy Shield effect if active
+	if (c.class_name === "Sorceress" && effects["Energy Shield"] && effects["Energy Shield"].info.enabled == 1) {
+		var esSkill = effects["Energy Shield"];
+		var esLevel = esSkill.level;
+		if (esLevel > 0 && esSkill.data && esSkill.data.values && esSkill.data.values[2]) {
+			esPercent = Math.min(95, esSkill.data.values[2][esLevel]);
+		}
 	}
 	
-	console.log("Step 2: Energy Shield: " + esPercent + "%");
+	console.log("Step 2: Energy Shield: " + esPercent + "%" + (esPercent > 0 ? " (calculated from Energy Shield skill)" : ""));
 	
 	// Step 3-4: Physical Damage Reduction (track excess DR for later)
 	var physDamageAfterArmor = damages.physical;
@@ -6302,12 +6307,22 @@ function calculateDamageTaken(damageAmount, damageType) {
 	var damageToLife = damage;
 	
 	console.log("Step 2: Energy Shield");
-	if (c.class_name === "Sorceress" && esprcnt > 0) {
-		damageToMana = damage * (esprcnt / 100);
-		damageToLife = damage * (1 - esprcnt / 100);
-		console.log("  " + esprcnt + "% to mana: " + damageToMana + ", " + (100 - esprcnt) + "% to life: " + damageToLife);
+	// Calculate ES percentage from Energy Shield effect if active
+	var esPercent = 0;
+	if (c.class_name === "Sorceress" && effects["Energy Shield"] && effects["Energy Shield"].info.enabled == 1) {
+		var esSkill = effects["Energy Shield"];
+		var esLevel = esSkill.level;
+		if (esLevel > 0 && esSkill.data && esSkill.data.values && esSkill.data.values[2]) {
+			esPercent = Math.min(95, esSkill.data.values[2][esLevel]);
+		}
+	}
+	
+	if (esPercent > 0) {
+		damageToMana = damage * (esPercent / 100);
+		damageToLife = damage * (1 - esPercent / 100);
+		console.log("  " + esPercent + "% to mana: " + damageToMana + ", " + (100 - esPercent) + "% to life: " + damageToLife);
 	} else {
-		console.log("  No Energy Shield (class=" + c.class_name + ")");
+		console.log("  No Energy Shield active (class=" + c.class_name + ")");
 	}
 	
 	// Step 3-4: Physical Damage Reduction (flat then %, for physical damage only)
