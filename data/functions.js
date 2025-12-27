@@ -5989,6 +5989,10 @@ function toggleMixedAttack() {
 // ---------------------------------
 function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg) {
 	var c = character;
+	
+	console.log("=== MIXED DAMAGE ATTACK CALCULATION ===");
+	console.log("Initial Damage: Phys=" + physDmg + " Fire=" + fireDmg + " Cold=" + coldDmg + " Light=" + lightDmg + " Magic=" + magicDmg);
+	
 	var result = {
 		damageToLife: 0,
 		damageToMana: 0,
@@ -6004,6 +6008,10 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	// Track shared absorption pools
 	var boneArmorRemaining = c.absorb_melee || 0;
 	var cycloneArmorRemaining = c.absorb_elemental || 0;
+	
+	console.log("Step 1: Skill-Based Absorption");
+	console.log("  Bone Armor Available: " + boneArmorRemaining);
+	console.log("  Cyclone Armor Available: " + cycloneArmorRemaining);
 	
 	// Step 1: Apply Bone/Cyclone Armor to all damage types (shared pools)
 	var damages = {
@@ -6048,11 +6056,22 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	
 	result.armorAbsorbed = armorAbsorbed.physical + armorAbsorbed.fire + armorAbsorbed.cold + armorAbsorbed.lightning + armorAbsorbed.magic;
 	
+	console.log("  After Armor Absorption:");
+	console.log("    Phys=" + damages.physical + " (absorbed " + armorAbsorbed.physical + ")");
+	console.log("    Fire=" + damages.fire + " (absorbed " + armorAbsorbed.fire + ")");
+	console.log("    Cold=" + damages.cold + " (absorbed " + armorAbsorbed.cold + ")");
+	console.log("    Light=" + damages.lightning + " (absorbed " + armorAbsorbed.lightning + ")");
+	console.log("    Magic=" + damages.magic + " (absorbed " + armorAbsorbed.magic + ")");
+	console.log("    Bone Armor Remaining: " + boneArmorRemaining);
+	console.log("    Cyclone Armor Remaining: " + cycloneArmorRemaining);
+	
 	// Step 2: Apply Energy Shield (shared pool converts all damage types)
 	var esPercent = 0;
 	if (c.class_name === "Sorceress" && esprcnt > 0) {
 		esPercent = Math.min(95, esprcnt);
 	}
+	
+	console.log("Step 2: Energy Shield: " + esPercent + "%");
 	
 	// Step 3-4: Physical Damage Reduction (track excess DR for later)
 	var physDamageAfterArmor = damages.physical;
@@ -6074,6 +6093,12 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		}
 	}
 	
+	console.log("Step 3-4: Physical DR");
+	console.log("  Flat DR: " + (c.damage_reduced || 0));
+	console.log("  % DR: " + (c.pdr || 0) + "%");
+	console.log("  Physical Damage After DR: " + physDamageAfterArmor);
+	console.log("  Excess Physical DR: " + excessPhysDR);
+	
 	// Apply ES to physical damage
 	var physToLife = physDamageAfterArmor * (100 - esPercent) / 100;
 	var physToMana = physDamageAfterArmor * esPercent / 100;
@@ -6081,7 +6106,10 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		physToMana = physToMana / (eseff / 100);
 	}
 	
+	console.log("  Physical After ES: " + physToLife + " to life, " + physToMana + " to mana");
+	
 	// Step 5-6: Process elemental damages through MDR and Resistances
+	console.log("Step 5-6: Elemental MDR and Resistances");
 	var elementalDamages = {};
 	var damageTypes = ["fire", "cold", "lightning", "magic"];
 	
@@ -6103,13 +6131,13 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 			var resistMax = 75;
 			
 			if (type === "fire") {
-				resistance = c.fRes || 0;
+				resistance = c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup;
 				resistMax = (c.fRes_max_base || 75) + (c.fRes_max || 0);
 			} else if (type === "cold") {
-				resistance = c.cRes || 0;
+				resistance = c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup;
 				resistMax = (c.cRes_max_base || 75) + (c.cRes_max || 0);
 			} else if (type === "lightning") {
-				resistance = c.lRes || 0;
+				resistance = c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup;
 				resistMax = (c.lRes_max_base || 75) + (c.lRes_max || 0);
 			}
 			
@@ -6127,12 +6155,18 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 			dmg = dmg * (100 - absorbPercent) / 100;
 		}
 		
+		console.log("  " + type + ": " + damages[type] + " -> " + dmg + " (MDR=" + (c.mDamage_reduced || 0) + ", Res=" + resistance + "%, Absorb%=" + absorbPercent + "%)");
+		
 		elementalDamages[type] = dmg;
 	}
 	
 	// Step 7: Apply excess Physical DR to sum of remaining elemental damage
+	console.log("Step 7: Excess Physical DR Application");
 	if (excessPhysDR > 0) {
 		var totalElemental = elementalDamages.fire + elementalDamages.cold + elementalDamages.lightning + elementalDamages.magic;
+		
+		console.log("  Total Elemental Before: " + totalElemental);
+		console.log("  Applying Excess Phys DR: " + excessPhysDR);
 		
 		if (totalElemental > 0) {
 			totalElemental = Math.max(0, totalElemental - excessPhysDR);
@@ -6147,9 +6181,15 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 				elementalDamages.magic *= ratio;
 			}
 		}
+		
+		console.log("  Total Elemental After: " + totalElemental);
+		console.log("  Fire=" + elementalDamages.fire + " Cold=" + elementalDamages.cold + " Light=" + elementalDamages.lightning + " Magic=" + elementalDamages.magic);
+	} else {
+		console.log("  No excess Physical DR to apply");
 	}
 	
 	// Step 8: Apply Energy Shield and flat absorb to each elemental type
+	console.log("Step 8: Flat Absorb");
 	var totalFlatAbsorb = 0;
 	var absorbTypes = ["fire", "cold", "lightning", "magic"];
 	
@@ -6187,6 +6227,12 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	totalDamageToLife += physToLife;
 	totalDamageToMana += physToMana;
 	
+	console.log("Final Results:");
+	console.log("  Total Damage to Life: " + Math.round(totalDamageToLife));
+	console.log("  Total Damage to Mana: " + Math.round(totalDamageToMana));
+	console.log("  Healing from Absorb: " + Math.round(totalHealing));
+	console.log("=== END MIXED DAMAGE CALCULATION ===\n");
+	
 	// Final results
 	result.damageToLife = Math.max(1, Math.round(totalDamageToLife));
 	result.damageToMana = Math.round(totalDamageToMana);
@@ -6202,7 +6248,6 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	
 	return result;
 }
-
 // calculateDamageTaken - Calculates final damage taken based on Diablo 2 order of operations
 //	damageAmount: initial damage amount (typically 1000 for display purposes)
 //	damageType: "physical", "fire", "cold", "lightning", or "magic"
@@ -6211,6 +6256,10 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 // ---------------------------------
 function calculateDamageTaken(damageAmount, damageType) {
 	var c = character;
+	
+	console.log("=== SINGLE DAMAGE TYPE CALCULATION: " + damageType.toUpperCase() + " ===");
+	console.log("Initial Damage: " + damageAmount);
+	
 	var result = {
 		damageToLife: 0,
 		damageToMana: 0,
@@ -6222,12 +6271,16 @@ function calculateDamageTaken(damageAmount, damageType) {
 	
 	// Step 1: Skill-Based Absorption (Bone Armor, Cyclone Armor)
 	// These absorb damage first, before any other calculations
+	console.log("Step 1: Skill-Based Absorption");
 	if (damageType === "physical" || damageType === "magic") {
 		// Bone Armor absorbs physical and magic damage (Necromancer)
 		if (c.class_name === "Necromancer" && c.absorb_melee > 0) {
 			var absorbed = Math.min(damage, c.absorb_melee);
 			damage = Math.max(0, damage - absorbed);
 			result.armorAbsorbed = absorbed;
+			console.log("  Bone Armor absorbed: " + absorbed + ", remaining damage: " + damage);
+		} else {
+			console.log("  No Bone Armor (class=" + c.class_name + ")");
 		}
 	}
 	
@@ -6237,6 +6290,9 @@ function calculateDamageTaken(damageAmount, damageType) {
 			var absorbed = Math.min(damage, c.absorb_elemental);
 			damage = Math.max(0, damage - absorbed);
 			result.armorAbsorbed = absorbed;
+			console.log("  Cyclone Armor absorbed: " + absorbed + ", remaining damage: " + damage);
+		} else {
+			console.log("  No Cyclone Armor (class=" + c.class_name + ")");
 		}
 	}
 	
@@ -6245,13 +6301,18 @@ function calculateDamageTaken(damageAmount, damageType) {
 	var damageToMana = 0;
 	var damageToLife = damage;
 	
+	console.log("Step 2: Energy Shield");
 	if (c.class_name === "Sorceress" && esprcnt > 0) {
 		damageToMana = damage * (esprcnt / 100);
 		damageToLife = damage * (1 - esprcnt / 100);
+		console.log("  " + esprcnt + "% to mana: " + damageToMana + ", " + (100 - esprcnt) + "% to life: " + damageToLife);
+	} else {
+		console.log("  No Energy Shield (class=" + c.class_name + ")");
 	}
 	
 	// Step 3-4: Physical Damage Reduction (flat then %, for physical damage only)
 	if (damageType === "physical") {
+		console.log("Step 3-4: Physical DR");
 		// Flat reduction first
 		damageToMana = Math.max(0, damageToMana - c.damage_reduced);
 		damageToLife = Math.max(0, damageToLife - c.damage_reduced);
@@ -6259,13 +6320,23 @@ function calculateDamageTaken(damageAmount, damageType) {
 		// Then percentage reduction
 		damageToMana = damageToMana * (1 - c.pdr / 100);
 		damageToLife = damageToLife * (1 - c.pdr / 100);
+		console.log("  Flat DR: " + c.damage_reduced + ", % DR: " + c.pdr + "%");
+		console.log("  After DR: " + damageToLife + " to life, " + damageToMana + " to mana");
 	}
 	
 	// Step 5: Magic Damage Reduction (flat amount, applies to ALL elemental and magic damage)
 	// Applied AFTER physical DR but BEFORE resistances
 	if (damageType === "fire" || damageType === "cold" || damageType === "lightning" || damageType === "magic") {
+		console.log("Step 5: Magic Damage Reduction (MDR)");
+		console.log("  MDR: " + c.mDamage_reduced);
 		damageToMana = Math.max(0, damageToMana - c.mDamage_reduced);
 		damageToLife = Math.max(0, damageToLife - c.mDamage_reduced);
+		console.log("  After MDR: " + damageToLife + " to life, " + damageToMana + " to mana");
+	}
+	
+	// Step 6: Resistances (for elemental damage)
+	console.log("Step 6: Resistances");
+	if (damageType === "fire") {
 	}
 	
 	// Step 6: Resistances (for elemental damage)
@@ -6273,24 +6344,31 @@ function calculateDamageTaken(damageAmount, damageType) {
 		var fireRes = c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup;
 		var fireResMax = c.fRes_max_base + c.fRes_max;
 		fireRes = Math.min(fireRes, fireResMax); // Cap at max resistance
+		console.log("  Fire Res: " + fireRes + "% (max: " + fireResMax + "%)");
 		damageToMana = damageToMana * (1 - fireRes / 100);
 		damageToLife = damageToLife * (1 - fireRes / 100);
 	} else if (damageType === "cold") {
 		var coldRes = c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup;
 		var coldResMax = c.cRes_max_base + c.cRes_max;
 		coldRes = Math.min(coldRes, coldResMax); // Cap at max resistance
+		console.log("  Cold Res: " + coldRes + "% (max: " + coldResMax + "%)");
 		damageToMana = damageToMana * (1 - coldRes / 100);
 		damageToLife = damageToLife * (1 - coldRes / 100);
 	} else if (damageType === "lightning") {
 		var lightRes = c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup;
 		var lightResMax = c.lRes_max_base + c.lRes_max;
 		lightRes = Math.min(lightRes, lightResMax); // Cap at max resistance
+		console.log("  Lightning Res: " + lightRes + "% (max: " + lightResMax + "%)");
 		damageToMana = damageToMana * (1 - lightRes / 100);
 		damageToLife = damageToLife * (1 - lightRes / 100);
+	} else {
+		console.log("  No resistance applied (damage type: " + damageType + ")");
 	}
+	console.log("  After Resistance: " + damageToLife + " to life, " + damageToMana + " to mana");
 	
 	// Step 7-8: Absorb (applied LAST, after all other reductions)
 	// Reduces damage AND heals you by the amount that exceeds the remaining damage
+	console.log("Step 7-8: Absorb");
 	var absorbAmount = 0;
 	var absorbPercent = 0;
 	
@@ -6317,18 +6395,26 @@ function calculateDamageTaken(damageAmount, damageType) {
 	var damageBeforeFlatAbsorb = damageToLife;
 	damageToLife = damageToLife - absorbAmount;
 	
+	console.log("  % Absorb: " + absorbPercent + "%, Flat Absorb: " + absorbAmount);
+	console.log("  Damage before flat absorb: " + damageBeforeFlatAbsorb);
+	
 	if (damageToLife < 0) {
 		// Absorb exceeded damage - you heal for the excess
 		result.healingFromAbsorb = Math.abs(damageToLife);
 		damageToLife = 0;
+		console.log("  Healing from excess absorb: " + result.healingFromAbsorb);
 	} else {
 		// Absorb didn't exceed damage - no healing
 		result.healingFromAbsorb = 0;
+		console.log("  No healing (absorb didn't exceed damage)");
 	}
 	
 	// Final results
 	result.damageToLife = Math.max(1, Math.round(damageToLife)); // Min 1 damage
 	result.damageToMana = Math.round(damageToMana);
+	
+	console.log("Final Result: " + result.damageToLife + " HP, " + result.damageToMana + " Mana, Healing: " + result.healingFromAbsorb);
+	console.log("=== END " + damageType.toUpperCase() + " CALCULATION ===\n");
 	
 	return result;
 }
