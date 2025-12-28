@@ -6614,24 +6614,41 @@ function updateTertiaryStats() {
 		
 		// Display mixed attack results
 		if (totalInputDamage > 0) {
-			var drCalcText = "Mixed Attack (" + mixedPhys + "p/" + mixedFire + "f/" + mixedCold + "c/" + mixedLight + "l/" + mixedMagic + "m):";
-			drCalcText += "\nTotal: " + mixedResult.damageToLife + " HP";
-			if (mixedResult.damageToMana > 0) { drCalcText += " + " + mixedResult.damageToMana + " Mana"; }
-			if (mixedResult.armorAbsorbed > 0) { drCalcText += " (Armor: " + Math.round(mixedResult.armorAbsorbed) + ")"; }
-			if (mixedResult.healingFromAbsorb > 0) { drCalcText += " [Heal: " + Math.round(mixedResult.healingFromAbsorb) + "]"; }
+			var drCalcText = "Mixed Attack: Single hit with multiple damage types";
+			drCalcText += "\nInput: " + mixedPhys + " Physical, " + mixedFire + " Fire, " + mixedCold + " Cold, " + mixedLight + " Lightning, " + mixedMagic + " Magic";
+			drCalcText += "\n\nFinal Damage:";
+			drCalcText += "\n  " + mixedResult.damageToLife + " HP";
+			if (mixedResult.damageToMana > 0) { 
+				var esEff = 6;
+				if (typeof skills !== 'undefined' && skills[13]) {
+					esEff = 6 + (4 * skills[13].level);
+				}
+				drCalcText += " + " + mixedResult.damageToMana + " Mana (ES " + esEff + "% efficiency)"; 
+			}
+			if (mixedResult.armorAbsorbed > 0) { drCalcText += "\n  Absorbed by Armor: " + Math.round(mixedResult.armorAbsorbed); }
+			if (mixedResult.healingFromAbsorb > 0) { drCalcText += "\n  Healing from Absorb: " + Math.round(mixedResult.healingFromAbsorb); }
 			
-			drCalcText += "\n\nBreakdown:";
-			if (mixedPhys > 0) { drCalcText += "\n  Physical: " + mixedResult.breakdown.physical + " HP"; }
-			if (mixedFire > 0) { drCalcText += "\n  Fire: " + mixedResult.breakdown.fire + " HP"; }
-			if (mixedCold > 0) { drCalcText += "\n  Cold: " + mixedResult.breakdown.cold + " HP"; }
-			if (mixedLight > 0) { drCalcText += "\n  Lightning: " + mixedResult.breakdown.lightning + " HP"; }
-			if (mixedMagic > 0) { drCalcText += "\n  Magic: " + mixedResult.breakdown.magic + " HP"; }
+			drCalcText += "\n\nBreakdown by Type:";
+			if (mixedPhys > 0) { drCalcText += "\n  Physical: " + mixedPhys + " → " + mixedResult.breakdown.physical + " HP"; }
+			if (mixedFire > 0) { drCalcText += "\n  Fire: " + mixedFire + " → " + mixedResult.breakdown.fire + " HP"; }
+			if (mixedCold > 0) { drCalcText += "\n  Cold: " + mixedCold + " → " + mixedResult.breakdown.cold + " HP"; }
+			if (mixedLight > 0) { drCalcText += "\n  Lightning: " + mixedLight + " → " + mixedResult.breakdown.lightning + " HP"; }
+			if (mixedMagic > 0) { drCalcText += "\n  Magic: " + mixedMagic + " → " + mixedResult.breakdown.magic + " HP"; }
 			if (mixedResult.breakdown.excessPhysDR > 0) {
-				drCalcText += "\n  Excess Phys DR: " + mixedResult.breakdown.excessPhysDR + " (applied to elementals)";
+				drCalcText += "\n\n  Excess Physical DR: " + Math.round(mixedResult.breakdown.excessPhysDR) + " applied to remaining elemental damage";
 			}
 			
-			drCalcText += "\n\nOrder: Armor (shared) → ES (shared) → Flat DR → %DR → Flat MDR → Resist → %Absorb → Flat Absorb";
-			drCalcText += "\nExcess Physical DR applies to remaining elemental damage total";
+			drCalcText += "\n\nKey Differences from Separate Attacks:";
+			drCalcText += "\n• Bone/Cyclone Armor pools shared across all types";
+			drCalcText += "\n• Energy Shield pool shared across all types";
+			drCalcText += "\n• Excess Physical DR applies to remaining elemental damage";
+			
+			drCalcText += "\n\nOrder of Operations:";
+			drCalcText += "\n1. Bone Armor (phys/magic) / Cyclone Armor (elemental) - shared pool";
+			drCalcText += "\n2. Energy Shield - splits ALL damage into Life & Mana - shared pool";
+			drCalcText += "\n3. Physical: Flat DR → % DR (only on life portion)";
+			drCalcText += "\n4. Elemental: Flat MDR → Resist → % Absorb → Flat Absorb (only on life portion)";
+			drCalcText += "\n5. If Physical DR exceeds physical damage, excess applies to elementals";
 			
 			statlines += "<span id='drcalc_display' title='" + drCalcText + "' style='cursor:help; text-decoration:underline dotted;'>";
 			statlines += "Mixed Attack Calc: Total=" + mixedResult.damageToLife + " HP</span><br>";
