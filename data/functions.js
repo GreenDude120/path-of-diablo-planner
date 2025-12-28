@@ -6011,7 +6011,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	var boneArmorRemaining = c.absorb_melee || 0;
 	var cycloneArmorRemaining = c.absorb_elemental || 0;
 	
-	console.log("Step 1: Skill-Based Absorption");
+	console.log("Bone Armor / Cyclone Armor");
 	console.log("  Bone Armor Available: " + boneArmorRemaining);
 	console.log("  Cyclone Armor Available: " + cycloneArmorRemaining);
 	
@@ -6095,7 +6095,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		esEfficiency = 6 + (4 * skills[13].level); // +4% per Telekinesis level
 	}
 	
-	console.log("Step 2: Energy Shield: " + esPercent + "%" + (esPercent > 0 ? " (level " + esLevel + ")" : ""));
+	console.log("Energy Shield: " + esPercent + "%" + (esPercent > 0 ? " (level " + esLevel + ")" : ""));
 	if (esPercent > 0) {
 		console.log("  ES Efficiency: " + esEfficiency + "% (from Telekinesis level " + (skills[13] ? skills[13].level : 0) + ")");
 	}
@@ -6120,7 +6120,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		}
 	}
 	
-	console.log("Step 3-4: Physical DR");
+	console.log("Damage Reduced (Physical)");
 	console.log("  Flat DR: " + (c.damage_reduced || 0));
 	console.log("  % DR: " + (c.pdr || 0) + "%");
 	console.log("  Physical Damage After DR: " + physDamageAfterArmor);
@@ -6138,7 +6138,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	console.log("  Physical After ES: " + physToLife + " to life, " + physToMana + " to mana");
 	
 	// Step 5-6: Process elemental damages: ES first, then MDR/Resist/%Absorb on life portion only
-	console.log("Step 5-6: Elemental ES, MDR and Resistances");
+	console.log("Energy Shield / Magic Damage Reduced / Resistances (Elemental)");
 	var elementalDamages = {};
 	var damageTypes = ["fire", "cold", "lightning", "magic"];
 	
@@ -6204,7 +6204,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	}
 	
 	// Step 7: Apply excess Physical DR to sum of remaining elemental damage
-	console.log("Step 7: Excess Physical DR Application");
+	console.log("Excess Physical DR Application to Elemental");
 	if (excessPhysDR > 0) {
 		var totalElemental = elementalDamages.fire + elementalDamages.cold + elementalDamages.lightning + elementalDamages.magic;
 		
@@ -6232,7 +6232,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	}
 	
 	// Step 8: Apply flat absorb to each elemental type
-	console.log("Step 8: Flat Absorb");
+	console.log("Flat Absorb");
 	var totalFlatAbsorb = 0;
 	var absorbTypes = ["fire", "cold", "lightning", "magic"];
 	
@@ -6308,7 +6308,7 @@ function calculateDamageTaken(damageAmount, damageType) {
 	
 	// Step 1: Skill-Based Absorption (Bone Armor, Cyclone Armor)
 	// These absorb damage first, before any other calculations
-	console.log("Step 1: Skill-Based Absorption");
+	console.log("Bone Armor / Cyclone Armor");
 	if (damageType === "physical" || damageType === "magic") {
 		// Bone Armor absorbs physical and magic damage (Necromancer)
 		if (c.class_name === "Necromancer" && c.absorb_melee > 0) {
@@ -6334,7 +6334,7 @@ function calculateDamageTaken(damageAmount, damageType) {
 	}
 	
 	// Step 2: Energy Shield (Sorceress) - Splits damage AFTER armor, BEFORE reductions
-	console.log("Step 2: Energy Shield");
+	console.log("Energy Shield");
 	var damageToMana = 0;
 	var damageToLife = damage;
 	var esPercent = 0;
@@ -6378,7 +6378,7 @@ function calculateDamageTaken(damageAmount, damageType) {
 	// Step 3-4: Physical Damage Reduction (flat then %, for physical damage only)
 	// Only applies to the LIFE portion
 	if (damageType === "physical") {
-		console.log("Step 3-4: Physical DR");
+		console.log("Damage Reduced (Physical)");
 		// Flat reduction first
 		damageToLife = Math.max(0, damageToLife - c.damage_reduced);
 		console.log("  After Flat DR (" + c.damage_reduced + "): " + damageToLife + " to life, " + damageToMana + " to mana");
@@ -6391,7 +6391,7 @@ function calculateDamageTaken(damageAmount, damageType) {
 	// Step 5: Magic Damage Reduction (flat amount, applies to ALL elemental and magic damage)
 	// Only applies to the LIFE portion
 	if (damageType === "fire" || damageType === "cold" || damageType === "lightning" || damageType === "magic") {
-		console.log("Step 5: Magic Damage Reduction (MDR)");
+		console.log("Magic Damage Reduced");
 		console.log("  MDR: " + c.mDamage_reduced);
 		damageToLife = Math.max(0, damageToLife - c.mDamage_reduced);
 		console.log("  After MDR: " + damageToLife + " to life, " + damageToMana + " to mana");
@@ -6400,7 +6400,7 @@ function calculateDamageTaken(damageAmount, damageType) {
 	// Step 6: Resistances (for elemental damage)
 	// Only applies to the LIFE portion
 	if (damageType === "fire" || damageType === "cold" || damageType === "lightning") {
-		console.log("Step 6: Resistances");
+		console.log("Resistances");
 		var resistance = 0;
 		var resistMax = 75;
 		
@@ -6424,7 +6424,7 @@ function calculateDamageTaken(damageAmount, damageType) {
 	// Step 7-8: Absorb (applied LAST, after all other reductions)
 	// Reduces damage AND heals you by the amount that exceeds the remaining damage
 	// Only applies to the LIFE portion
-	console.log("Step 7-8: Absorb");
+	console.log("% Absorb / Flat Absorb");
 	var absorbAmount = 0;
 	var absorbPercent = 0;
 	
