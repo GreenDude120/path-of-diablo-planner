@@ -6044,19 +6044,13 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	
 	var armorAbsorbed = {physical: 0, fire: 0, cold: 0, lightning: 0, magic: 0};
 	
-	// Bone Armor absorbs physical and magic
+	// Bone Armor absorbs physical only
 	if (boneArmorRemaining > 0) {
 		if (damages.physical > 0) {
 			var absorbed = Math.min(damages.physical, boneArmorRemaining);
 			damages.physical -= absorbed;
 			boneArmorRemaining -= absorbed;
 			armorAbsorbed.physical = absorbed;
-		}
-		if (damages.magic > 0 && boneArmorRemaining > 0) {
-			var absorbed = Math.min(damages.magic, boneArmorRemaining);
-			damages.magic -= absorbed;
-			boneArmorRemaining -= absorbed;
-			armorAbsorbed.magic = absorbed;
 		}
 	}
 	
@@ -6327,8 +6321,8 @@ function calculateDamageTaken(damageAmount, damageType) {
 	// Step 1: Skill-Based Absorption (Bone Armor, Cyclone Armor)
 	// These absorb damage first, before any other calculations
 	console.log("Bone Armor / Cyclone Armor");
-	if (damageType === "physical" || damageType === "magic") {
-		// Bone Armor absorbs physical and magic damage (Necromancer)
+	if (damageType === "physical") {
+		// Bone Armor absorbs physical damage only (Necromancer)
 		if (c.class_name === "Necromancer" && c.absorb_melee > 0) {
 			var absorbed = Math.min(damage, c.absorb_melee);
 			damage = Math.max(0, damage - absorbed);
@@ -6645,7 +6639,7 @@ function updateTertiaryStats() {
 			drCalcText += "\n• Excess Physical DR applies to remaining elemental damage";
 			
 			drCalcText += "\n\nOrder of Operations:";
-			drCalcText += "\n1. Bone Armor (phys/magic) / Cyclone Armor (elemental) - shared pool";
+			drCalcText += "\n1. Bone Armor (physical) / Cyclone Armor (elemental) - shared pool";
 			drCalcText += "\n2. Energy Shield - splits ALL damage into Life & Mana - shared pool";
 			drCalcText += "\n3. Physical: Flat DR → % DR (only on life portion)";
 			drCalcText += "\n4. Elemental: Flat MDR → Resist → % Absorb → Flat Absorb (only on life portion)";
@@ -6717,7 +6711,7 @@ function updateTertiaryStats() {
 		}
 		
 		var orderExplanation = "\n\nOrder of Operations:";
-		orderExplanation += "\n1. Bone Armor (phys/magic) / Cyclone Armor (elemental)";
+		orderExplanation += "\n1. Bone Armor (physical) / Cyclone Armor (elemental)";
 		orderExplanation += "\n2. Energy Shield - splits damage into Life & Mana";
 		if (physResult.damageToMana > 0 || fireResult.damageToMana > 0 || coldResult.damageToMana > 0 || lightResult.damageToMana > 0) {
 			var esEff = 6;
