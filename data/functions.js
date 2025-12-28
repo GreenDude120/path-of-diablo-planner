@@ -5770,21 +5770,39 @@ function updateSecondaryStats() {
 	if (esprcnt > 0) {
 		document.getElementById("esprcnt_label").style.visibility = "visible"
 		document.getElementById("esprcnt").innerHTML = esprcnt + "%";
-//		getESDamageTaken - No extra function needed, this does the job
-		var esdamagetaken = "Per 500 damage taken,\nHP will lose:" ;
-		esdamagetaken += "\nPhys: " + Math.round(((500 * (1-(esprcnt/100))) - c.damage_reduced) *(1-(c.pdr/100))*(1-(c.block/100)));
-//		esdamagetaken += "\nPhys: " + Math.round((500-c.damage_reduced)*(1-(c.pdr/100))*(1-(c.block/100))*(1-(esprcnt/100))) ;
-//		esdamagetaken += "\nFire: " + Math.round((500-c.mDamage_reduced)*(1-(c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup)/100)*(1-esprcnt/100)) ;
-//		esdamagetaken += "\nCold: " + Math.round((500-c.mDamage_reduced)*(1-(c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup)/100)*(1-esprcnt/100)) ;
-//		esdamagetaken += "\nLight: " + Math.round((500-c.mDamage_reduced)*(1-(c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup)/100)*(1-esprcnt/100)) ;
-		esdamagetaken += "\nFire: " + Math.round(((500 * (1-esprcnt/100))  - c.mDamage_reduced) * (1-(c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup)/100) * (1-c.fAbsorb/100) - (c.fAbsorb_flat + (c.level*c.fAbsorb_flat_per_level))) ;
-		esdamagetaken += "\nCold: " + Math.round(((500 * (1-esprcnt/100))  - c.mDamage_reduced) * (1-(c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup)/100) * (1-c.cAbsorb/100) - (c.cAbsorb_flat + (c.level*c.cAbsorb_flat_per_level))) ;
-		esdamagetaken += "\nLight: " + Math.round(((500 * (1-esprcnt/100))  - c.mDamage_reduced) * (1-(c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup)/100) * (1-c.lAbsorb/100) - c.lAbsorb_flat) ;
-		esdamagetaken += "\nThese cannot be negative numbers, assume anything "
-		esdamagetaken += "\nbelow zero is actually 1"
+		
+		var esdamagetaken = "Energy Shield: " + esprcnt + "% of damage absorbed to Mana";
+		esdamagetaken += "\nEfficiency: " + eseff + "% (from TK level " + (skills[13] ? skills[13].level : 0) + ")";
+		esdamagetaken += "\nMana cost = damage absorbed × (160-" + eseff + ")/80 = " + Math.round((160-eseff)/80 * 100) + "%";
+		esdamagetaken += "\n\nPer 500 damage taken, you lose:";
+		
+		// Physical calculation
+		var physLife = Math.max(1, Math.round(((500 - c.damage_reduced) * (1-(c.pdr/100)) * (1-(esprcnt/100))) * (1-(c.block/100))));
+		var physMana = Math.round((500 * (esprcnt/100)) * (160-eseff)/80);
+		esdamagetaken += "\nPhysical: " + physLife + " HP, " + physMana + " Mana";
+		
+		// Fire calculation
+		var fireAfterReductions = ((500 - c.mDamage_reduced) * (1-(c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup)/100) * (1-c.fAbsorb/100) - (c.fAbsorb_flat + (c.level*c.fAbsorb_flat_per_level)));
+		var fireLife = Math.max(1, Math.round(fireAfterReductions * (1-esprcnt/100)));
+		var fireMana = Math.round((500 * (esprcnt/100)) * (160-eseff)/80);
+		esdamagetaken += "\nFire: " + fireLife + " HP, " + fireMana + " Mana";
+		
+		// Cold calculation
+		var coldAfterReductions = ((500 - c.mDamage_reduced) * (1-(c.cRes + c.all_res - c.cRes_penalty + c.resistance_skillup)/100) * (1-c.cAbsorb/100) - (c.cAbsorb_flat + (c.level*c.cAbsorb_flat_per_level)));
+		var coldLife = Math.max(1, Math.round(coldAfterReductions * (1-esprcnt/100)));
+		var coldMana = Math.round((500 * (esprcnt/100)) * (160-eseff)/80);
+		esdamagetaken += "\nCold: " + coldLife + " HP, " + coldMana + " Mana";
+		
+		// Lightning calculation
+		var lightAfterReductions = ((500 - c.mDamage_reduced) * (1-(c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup)/100) * (1-c.lAbsorb/100) - c.lAbsorb_flat);
+		var lightLife = Math.max(1, Math.round(lightAfterReductions * (1-esprcnt/100)));
+		var lightMana = Math.round((500 * (esprcnt/100)) * (160-eseff)/80);
+		esdamagetaken += "\nLight: " + lightLife + " HP, " + lightMana + " Mana";
+		
+		esdamagetaken += "\n\nOrder: Armor → ES → DR/MDR → Resist → Absorb";
 
 		var TooltipElement = document.getElementById("esprcnt");
-		TooltipElement.title = esdamagetaken  ;	
+		TooltipElement.title = esdamagetaken;	
 	} else {
 		document.getElementById("esprcnt_label").style.visibility = "hidden"
 		document.getElementById("esprcnt").innerHTML = ""
@@ -6680,7 +6698,24 @@ function updateTertiaryStats() {
 			if (lightResult.healingFromAbsorb > 0) { drCalcText += " [Heal: " + Math.round(lightResult.healingFromAbsorb) + "]"; }
 		}
 		
-		drCalcText += "\n\nOrder: Armor → ES → Flat DR → %DR → Flat MDR → Resist → %Absorb → Flat Absorb";
+		var orderExplanation = "\n\nOrder of Operations:";
+		orderExplanation += "\n1. Bone Armor (phys/magic) / Cyclone Armor (elemental)";
+		orderExplanation += "\n2. Energy Shield - splits damage into Life & Mana";
+		if (physResult.damageToMana > 0 || fireResult.damageToMana > 0 || coldResult.damageToMana > 0 || lightResult.damageToMana > 0) {
+			var esEff = 6;
+			if (typeof skills !== 'undefined' && skills[13]) {
+				esEff = 6 + (4 * skills[13].level);
+			}
+			orderExplanation += " (" + esEff + "% efficiency from TK level " + (skills[13] ? skills[13].level : 0) + ")";
+			orderExplanation += "\n   Mana cost = damage absorbed × (160-efficiency)/80";
+		}
+		orderExplanation += "\n3. Damage Reduced (flat, then %) - physical only";
+		orderExplanation += "\n4. Magic Damage Reduced (flat) - elemental only";
+		orderExplanation += "\n5. Resistances - elemental only";
+		orderExplanation += "\n6. % Absorb - reduces damage";
+		orderExplanation += "\n7. Flat Absorb - reduces damage, excess becomes healing";
+		
+		drCalcText += orderExplanation;
 		
 		statlines += "<span id='drcalc_display' title='" + drCalcText + "' style='cursor:help; text-decoration:underline dotted;'>";
 		statlines += "Damage Calc: Phys=" + physResult.damageToLife;
