@@ -6639,8 +6639,9 @@ function updateTertiaryStats() {
 			}
 			
 			drCalcText += "\n\nKey Differences from Separate Attacks:";
-			drCalcText += "\n• Bone/Cyclone Armor pools shared across all types";
-			drCalcText += "\n• Energy Shield pool shared across all types";
+			drCalcText += "\n* Assumes attck includes physical damage to utilize excess physical DR";
+//			drCalcText += "\n• Bone/Cyclone Armor pools shared across all types";
+//			drCalcText += "\n• Energy Shield pool shared across all types";
 			drCalcText += "\n• Excess Physical DR applies to remaining elemental damage";
 			
 			drCalcText += "\n\nOrder of Operations:";
