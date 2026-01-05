@@ -10702,6 +10702,15 @@ function flattenRuneword(runeword, baseItem) {
 	// copy stats onto flat for convenience
 	Object.assign(flat, flat.runewordStats);
 
+	// Add implicit +3 to bow and crossbow skills for Amazon-only bows and spears
+	if (bases[baseItem] && bases[baseItem].only === "amazon" && bases[baseItem].type === "bow") {
+		flat.skills_bows = (flat.skills_bows || 0) + 3;
+	}
+
+	if (bases[baseItem] && bases[baseItem].only === "amazon" && bases[baseItem].type === "spear") {
+		flat.skills_javelins = (flat.skills_javelins || 0) + 3;
+	}
+
 	// Keep a little metadata if you need it later
 	["allowedTypes", "allowedCategories"].forEach(k => {
 	if (runeword[k]) flat[k] = runeword[k];
