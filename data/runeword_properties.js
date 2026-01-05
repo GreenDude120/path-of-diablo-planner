@@ -1316,7 +1316,7 @@ var runewordProperties = {
             pierce:100, 
             damage_bonus:375, 
             damage_max:9, 
-            ar:20, 
+            ar_bonus:20, 
             cDamage_min:3, 
             cDamage_max:14, 
             freezes_target:3, 

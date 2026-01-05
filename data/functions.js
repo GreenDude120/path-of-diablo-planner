@@ -591,7 +591,9 @@ function loadParams() {
 		if (param_quests != 1) { param_quests = 0 }
 		
 		// Check if stats exceed available points - if so, try converting from total to added stats
-		const maxStatPoints = 5*param_level + 15*param_quests;
+//		Vileskin reported quest bonuses getting applied multiple times, maybe this fix?	
+//		const maxStatPoints = 5*param_level + 15*param_quests;
+		const maxStatPoints = 5*param_level;
 		if ((param_str+param_dex+param_vit+param_ene) > maxStatPoints) {
 			// Assume these are total stats from API data, convert to added stats
 			const addedStr = Math.max(0, param_str - character.starting_strength);
@@ -636,7 +638,8 @@ function loadParams() {
 		toggleRunning(param_run)
 		character.running = 1
 	}
-	if (param_quests == 1) {
+//	Vileskin reported quest bonuses getting applied multiple times, maybe this fix?
+/*	if (param_quests == 1) {
         document.getElementById("quests").checked = true;
         character.quests_completed = param_quests;
         character.life += 60;
@@ -644,7 +647,7 @@ function loadParams() {
         character.cRes += 30;
         character.lRes += 30;
         character.pRes += 30;
-    }
+    } */
     if (param_url == 1) {
         document.getElementById("parameters").checked = true;
         toggleParameters(param_url);
