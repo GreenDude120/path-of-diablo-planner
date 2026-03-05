@@ -7725,8 +7725,7 @@ let synthInventory = null;
 async function loadSynthInventory() {
 	if (synthInventory) return synthInventory;
 	try {
-		// Use relative path for /data/ directory
-		const resp = await fetch("data/synth_inventory_parsed.json");
+		const resp = await fetch("/history-builder/PoD-History-Builder/synth_inventory_parsed.json");
 		if (!resp.ok) throw new Error("Failed to load synth inventory");
 		synthInventory = await resp.json();
 		return synthInventory;
@@ -7769,11 +7768,12 @@ for (let group of equipGroups) {
 		}
 		// Equip the synth item using parsed_properties
 		try {
+			// Reset character (optional: could allow user to pick class)
 			reset();
+			// Place item in a slot (default: weapon)
 			const slot = "weapon";
 			equipment[slot] = equipment[slot] || {};
 			equipment[slot].custom = true;
-			equipment[slot].synth = true; // Mark as synth for planner logic
 			equipment[slot].name = item.title || item.base_type || "Synth Item";
 			equipment[slot].rarity = "mag";
 			equipment[slot].PropertyList = item.properties || [];

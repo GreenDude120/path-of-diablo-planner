@@ -1,0 +1,3707 @@
+[
+  {
+    "id": "608b1df58baa0685542603539add16541c5becb4501f2a6787da766881806394",
+    "friendly_id": 1,
+    "owner": "SCplebsHail",
+    "base_type": "Synthesized Wand",
+    "title": "Torch of Iro",
+    "properties": [
+      "+2 to Javelin and Spear Skills (Amazon Only)",
+      "+1 to Necromancer Skill Levels",
+      "+198% Enhanced Damage",
+      "+50% Damage to Undead",
+      "12% Life stolen per hit",
+      "45% Chance of Crushing Blow",
+      "+20 to Vitality",
+      "+10% to Maximum Fire Resist",
+      "Level 6 Hydra (34/36 Charges)"
+    ],
+    "synthesised_from": [
+      "Hexfire",
+      "Hone Sundan",
+      "Lycander's Flank"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "68f463ef9e363cc62b65ed451f016d66a3c444539ddb9ea3007eba043aece82b",
+    "friendly_id": 2,
+    "owner": "SCplebsHail",
+    "base_type": "Synthesized Yew Wand",
+    "title": "Maelstrom",
+    "properties": [
+      "25% Chance to cast level 17 Fissure when struck",
+      "+2 to Druid Skill Levels",
+      "+81% Enhanced Damage",
+      "+396 Kick Damage (Based on Character Level)",
+      "20% Bonus to Attack Rating",
+      "+200% Damage to Demons",
+      "+50% Damage to Undead",
+      "Adds 1-0 Lightning damage",
+      "30% Chance of Open Wounds",
+      "+2 to Terror (Necromancer Only)",
+      "All Resistances +20"
+    ],
+    "synthesised_from": [
+      "Soul Harvest",
+      "Pompeii's Wrath",
+      "Dark Clan Crusher"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "11aa99607b7970410dc068b2cf590216a4d40cfd310d448848147dd944e59681",
+    "friendly_id": 3,
+    "owner": "ZephyraBlair",
+    "base_type": "Synthesized Matriarchal Javelin",
+    "title": "Thunderstroke",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+4 to Javelin and Spear Skills (Amazon Only)",
+      "+33% Piercing Attack",
+      "+511% Enhanced Damage",
+      "+309 to Maximum Damage (Based on Character Level)",
+      "6% Mana stolen per hit",
+      "-15% to Enemy Lightning Resistance",
+      "33% Chance of Open Wounds"
+    ],
+    "synthesised_from": [
+      "Steelgoad",
+      "Windforce",
+      "Gut Siphon"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "80b9d2771066a8f8d39b07d1b77dd2e5f9e9cd8a76f94dc48ade56b5e3655663",
+    "friendly_id": 4,
+    "owner": "Sethiel",
+    "base_type": "Synthesized Bone Knife",
+    "title": "Wizardspike",
+    "properties": [
+      "+1 to All Skills",
+      "+1 to Curses (Necromancer Only)",
+      "+2 to Necromancer Skill Levels",
+      "+50% Faster Cast Rate",
+      "+9 to Dexterity",
+      "Regenerate Mana 15%",
+      "Cold Resist +75%",
+      "Lightning Resist +75%",
+      "Fire Resist +112%",
+      "Poison Resist +75%",
+      "+3 to Mana after each Kill",
+      "-2 to Light Radius",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Suicide Branch",
+      "Blackhand Key"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "da14f8e1fe326c3ae43c61e1e627cee977fa68ac4a0345da8d115149eb3bd55b",
+    "friendly_id": 5,
+    "owner": "DeadArtD",
+    "base_type": "Synthesized Lich Wand",
+    "title": "Boneshade",
+    "properties": [
+      "100% Chance to cast level 29 Blaze when you Level-Up",
+      "+2 to All Skills",
+      "+2 to Necromancer Skill Levels",
+      "+25% Faster Cast Rate",
+      "+74% Enhanced Damage",
+      "+50% Damage to Undead",
+      "Adds 17-45 Fire damage",
+      "+8 to Maximum Fire Damage",
+      "-3% to Enemy Fire Resistance",
+      "+4% Increased Fire Damage",
+      "+5 to Bone Armor (Necromancer Only)",
+      "+2 to Bone Wall (Necromancer Only)",
+      "Knockback",
+      "Physical Damage Taken Reduced by 10%",
+      "+20 to Mana after each Kill",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Felloak",
+      "Crainte Vomir",
+      "Skull Collector"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "5e21261bfdec1c0a7ef1eefa03c6352558544418e7e1dfac59741253c523373b",
+    "friendly_id": 6,
+    "owner": "Kablamofist",
+    "base_type": "Synthesized Cryptic Axe",
+    "title": "Tomb Reaver",
+    "properties": [
+      "+60% Increased Attack Speed",
+      "+50% Faster Hit Recovery",
+      "+268% Enhanced Damage",
+      "Adds 10-30 cold damage",
+      "9% Life stolen per hit",
+      "Slows Target by 50%",
+      "+25 Defense",
+      "+15 to Dexterity",
+      "Cold Resist +20%",
+      "+10 Life after each Kill",
+      "51% Better Chance of Getting Magic Items",
+      "+4 to Light Radius",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "The General's Tan Do Li Ga",
+      "Shadowfang",
+      "Ribcracker"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "264803935611f88e1147c3b26d006569c25e0072363fc10b8a2870a8542f9e7e",
+    "friendly_id": 7,
+    "owner": "Sethionas",
+    "base_type": "Synthesized Fanged Knife",
+    "title": "The Jade Tan Do",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+1 to Druid Skill Levels",
+      "+20% Faster Run/Walk",
+      "+84% Increased Attack Speed",
+      "+351% Enhanced Damage",
+      "+10% Increased Poison Damage",
+      "Slows Target by 20%",
+      "-70 to Monster Defense Per Hit",
+      "Physical Damage Taken Reduced by 10%",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Crainte Vomir",
+      "Athena's Wrath",
+      "Horizon's Tornado"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "981f6283f8b60efdfa0e4bd1a05ae1f41ca17bcd5e98731f06d4ad0e6235ccff",
+    "friendly_id": 8,
+    "owner": "Sethionus",
+    "base_type": "Synthesized Ettin Axe",
+    "title": "Rune Master",
+    "properties": [
+      "43% Chance to cast level 27 Volcano on Kills",
+      "Melee attacks deal splash damage",
+      "+7 to Elemental Skills (Druid Only)",
+      "+95% Increased Attack Speed",
+      "+117% Enhanced Damage",
+      "33% Chance of Crushing Blow",
+      "Cannot Be Frozen",
+      "Requirements -50%",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "Steeldriver",
+      "Blastbark",
+      "Earth Shifter"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1f836b981cdb285abc9216c8351e570543176d944dd3b5b56e19e26f894b50e0",
+    "friendly_id": 9,
+    "owner": "Bliss-EL",
+    "base_type": "Synthesized Caduceus",
+    "title": "Hand of Blessed Light",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "100% Chance to cast level 50 Holy Bolt when you Level-Up",
+      "+2 to All Skills",
+      "+2 to Paladin Skill Levels",
+      "Fires Explosive Arrows or Bolts",
+      "+170% Enhanced Damage",
+      "Adds 20-111 damage",
+      "100% Bonus to Attack Rating",
+      "+50% Damage to Undead",
+      "Adds 10-15 Magic damage",
+      "-5% to Enemy Magic Resistance",
+      "+3% Increased Magic Skill Damage",
+      "+4 to Holy Bolt (Paladin Only)",
+      "+371 Defense",
+      "+20 to Mana after each Kill",
+      "97% Better Chance of Getting Magic Items (Based on Character Level)",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Skull Collector",
+      "Demon Machine"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "af246bcd3c7663429a0478e99bf38b36b679d50379ce62c11543eb7ffbd3f2b2",
+    "friendly_id": 10,
+    "owner": "Mab_one",
+    "base_type": "Synthesized Polished Wand",
+    "title": "Torch of Iro",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "100% Chance to cast level 29 Blaze when you Level-Up",
+      "+5 to All Skills",
+      "+1 to Necromancer Skill Levels",
+      "+30% Faster Cast Rate",
+      "+50% Damage to Undead",
+      "Adds 22-54 Fire damage",
+      "-5% to Enemy Fire Resistance",
+      "+5% Increased Fire Damage",
+      "10% Chance of Crushing Blow",
+      "+4 to Find Potion (Barbarian Only)",
+      "+10 to Energy",
+      "Regenerate Mana 15%",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Heart Carver",
+      "Mang Song's Lesson"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "b6ee5fca975cb6858fd96b6c00eca025753ce6a4ff373c1412b3ef3eb0a0ed03",
+    "friendly_id": 11,
+    "owner": "Beartic",
+    "base_type": "Synthesized Thresher",
+    "title": "Soul Harvest",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "Melee attacks deal splash damage",
+      "5% Chance to cast level 3 Frozen Orb on striking",
+      "+2 to Cold Skills",
+      "+120% Increased Attack Speed",
+      "+239% Enhanced Damage",
+      "Ignore Target's Defense",
+      "Adds 63-112 cold damage",
+      "30% Chance of Open Wounds",
+      "+5 to Cold Mastery",
+      "Freezes target +3",
+      "+20 to Strength",
+      "Cold Resist +25%",
+      "Level 9 Frozen Orb (50/50 Charges)",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "The Diggler",
+      "Bing Sz Wang",
+      "Sureshrill Frost"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "821f4ba21dfda7e15e87f5a6a2daab6eae59a4815da75c7b8b908ce7fd5cf7f1",
+    "friendly_id": 12,
+    "owner": "BoneBender",
+    "base_type": "Synthesized Mythical Sword",
+    "title": "Culwen's Point",
+    "properties": [
+      "15% Chance to cast level 5 Charged Bolt when struck",
+      "5% Chance to cast level 10 Chain Lightning on striking",
+      "10% Chance to cast level 20 Charged Bolt on striking",
+      "+1 to All Skills",
+      "+60% Increased Attack Speed",
+      "+269% Enhanced Damage",
+      "Adds 35-75 damage",
+      "Slows Target by 75%",
+      "+121 to Life (Based on Character Level)",
+      "Fire Resist +50%",
+      "Poison Length Reduced by 50%",
+      "Attacker Takes Lightning Damage of 15",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "The Salamander",
+      "Kelpie Snare",
+      "Stormrider"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "b516c273513df4ba79b35ed9b4ddd4a11e53f06bbedc61546fd0324ed087eb4e",
+    "friendly_id": 13,
+    "owner": "NecroDream",
+    "base_type": "Synthesized Polished Wand",
+    "title": "Torch of Iro",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+5 to All Skills",
+      "+1 to Necromancer Skill Levels",
+      "+231% Enhanced Damage",
+      "+97 to Maximum Damage (Based on Character Level)",
+      "+100% Damage to Undead",
+      "Adds 5-9 Fire damage",
+      "6% Life stolen per hit",
+      "+8 to Dexterity",
+      "Fire Resist +30%",
+      "+3 to Mana after each Kill",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Bonesnap",
+      "Mang Song's Lesson"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "c90b45724a38cdef24df0f864b100c1ba86a753772bb27cab0384a622c1a3982",
+    "friendly_id": 14,
+    "owner": "Ama-mao",
+    "base_type": "Synthesized Crusader Bow",
+    "title": "Wizendraw",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "100% Chance to cast level 43 Frost Nova when you Level-Up",
+      "100% Chance to cast level 37 Blizzard when you Die",
+      "+2 to Cold Skills",
+      "+1 to Amazon Skill Levels",
+      "+20% Increased Attack Speed",
+      "+480% Enhanced Damage",
+      "Adds 25-50 damage",
+      "Ignore Target's Defense",
+      "Adds 98-216 cold damage",
+      "-10% to Enemy Cold Resistance",
+      "+10% Increased Cold Damage",
+      "40% Chance of Open Wounds",
+      "+3 to Power Strike (Amazon Only)",
+      "+4 to Cold Mastery",
+      "Freezes target +2",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "The Impaler",
+      "Magewrath",
+      "Bing Sz Wang"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "63bf7ad45e0a810200e06145f99b655413a53ec1a827286d23790d2d12dde562",
+    "friendly_id": 15,
+    "owner": "Save_Etc",
+    "base_type": "Synthesized Rune Scepter",
+    "title": "Zakarum's Hand",
+    "properties": [
+      "33% Chance to cast level 8 Frost Nova on striking",
+      "6% Chance to cast level 5 Blizzard on striking",
+      "Indestructible",
+      "+2 to Necromancer Skill Levels",
+      "+30% Increased Attack Speed",
+      "+30% Faster Cast Rate",
+      "+18 to Maximum Damage",
+      "-25% Target Defense",
+      "+50% Damage to Undead",
+      "+50 to Life",
+      "+15 to Mana after each Kill",
+      "Level 13 Grim Ward (30/30 Charges)",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Humongous",
+      "Blackhand Key",
+      "Shadow Killer"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "aaf1cd2bff099e22becb0d90f9086236978aad9b5e125267566db984e6bf8f4f",
+    "friendly_id": 16,
+    "owner": "TaylorsVersion",
+    "base_type": "Synthesized Matriarchal Javelin",
+    "title": "Titan's Revenge",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to All Skills",
+      "+2 to Amazon Skill Levels",
+      "+150% Enhanced Damage",
+      "Adds 1-120 Lightning damage",
+      "6% Life stolen per hit",
+      "+12 to Pulverize",
+      "+75 Defense",
+      "+20 to Strength",
+      "+20 to Mana after each Kill",
+      "+60% added chance to release Whirling Axes",
+      "+1% increased Attack Speed per 4 Dexterity",
+      "Repairs 1 durability in 3 seconds"
+    ],
+    "synthesised_from": [
+      "Warlord's Trust",
+      "Stormspike",
+      "Skull Collector"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "2beaa9e9fa5bf8e0d977df698c5cd675e46936f54f524588c4f7c910339559f2",
+    "friendly_id": 17,
+    "owner": "Mouseysorc",
+    "base_type": "Synthesized Elegant Blade",
+    "title": "Hexfire",
+    "properties": [
+      "+3 to fire skills",
+      "+1 to Amazon Skill Levels",
+      "+155% Enhanced Damage",
+      "Adds 35-55 damage",
+      "Ignore Target's Defense",
+      "3% Mana stolen per hit",
+      "+100 to Mana",
+      "Fire Resist +25%",
+      "130% Better Chance of Getting Magic Items",
+      "Level 1 Teleport (20/20 Charges)",
+      "Level 12 Firestorm (60/60 Charges)",
+      "Can Summon One Additional Hydra",
+      "Requirements -60%",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Gull",
+      "Blastbark",
+      "Spellsteel"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "70d4e6f9a47db8d17eceb739b80e660d55f4fd7fb707d0ee19cf9d19dac0d356",
+    "friendly_id": 18,
+    "owner": "bless_me",
+    "base_type": "Synthesized Cutlass",
+    "title": "Coldsteel Eye",
+    "properties": [
+      "2% Chance to cast level 5 Amplify Damage on striking",
+      "+3 to Sorceress Skill Levels",
+      "+20% Faster Run/Walk",
+      "+70% Increased Attack Speed",
+      "+400% Enhanced Damage",
+      "+3 to Teleport (Sorceress Only)",
+      "+20 to Magic Arrow"
+    ],
+    "synthesised_from": [
+      "Crainte Vomir",
+      "Warpspear",
+      "Witchwild String"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "bdbc7fd1de22f7775faa3342759cd6e4a2297774a2a4711e613523f23e67703f",
+    "friendly_id": 19,
+    "owner": "MongE",
+    "base_type": "Synthesized Hydra Bow",
+    "title": "Windforce",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "400% Chance to cast level 31 War Cry when you Level-Up",
+      "33% Chance to cast level 1 Decrepify on striking",
+      "Adds 20-10 damage",
+      "+300 to Maximum Damage (Based on Character Level)",
+      "Ignore Target's Defense",
+      "Adds 4-44 cold damage",
+      "7% Mana stolen per hit",
+      "-20% to Enemy Physical Resistance",
+      "+20% Increased Physical Damage",
+      "33% Deadly Strike",
+      "+5 to Dexterity",
+      "Socketed (4)"
+    ],
+    "synthesised_from": [
+      "The Reaper's Toll",
+      "Skewer of Krintiz"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1bef36b340a7588011f6cfa16ddf43f88b12ddb31a5f33cc62df118cdc242edb",
+    "friendly_id": 20,
+    "owner": "CATTT",
+    "base_type": "Synthesized Battle Cestus",
+    "title": "Shadow Killer",
+    "properties": [
+      "Indestructible",
+      "+15% Increased Attack Speed",
+      "+444% Enhanced Damage",
+      "Ignore Target's Defense",
+      "+150 to Attack Rating",
+      "15% Life stolen per hit",
+      "+3 to Resist Lightning (Paladin Only)",
+      "Freezes target +2",
+      "Replenish Life 10 per second",
+      "+4 to Light Radius",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Stormeye",
+      "Blood Crescent",
+      "The Impaler"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "425680c59189580e73e02ec2208efa2a92686f722d0fa2c1220833e54fdff88c",
+    "friendly_id": 21,
+    "owner": "Bowjamin",
+    "base_type": "Synthesized Large Siege Bow",
+    "title": "Cliffkiller",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to Amazon Skill Levels",
+      "+20 to Maximum Damage",
+      "Ignore Target's Defense",
+      "+250 poison damage over 6 seconds",
+      "10% Deadly Strike",
+      "+1 to Multiple Shot",
+      "Slows Target by 75%",
+      "+80 Defense vs. Missile",
+      "+10 to Strength",
+      "+120 to Life (Based on Character Level)",
+      "Fire Resist +50%",
+      "Poison Resist +50%",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Doomslinger",
+      "The Vile Husk",
+      "Kelpie Snare"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "6b4e636c71608a74fb1d3bf6d13367a17f4a9c36292cfaa78823a239d38ca1da",
+    "friendly_id": 22,
+    "owner": "z_n",
+    "base_type": "Synthesized Tulwar",
+    "title": "Blade of Ali Baba",
+    "properties": [
+      "+5 to All Skills",
+      "-11% to Enemy Cold Resistance",
+      "-13% to Enemy Fire Resistance",
+      "All Resistances +23",
+      "237% Extra Gold from Monsters (Based on Character Level)",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Mang Song's Lesson"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "072fd195e9ad681cc2ee467be6d53a49ffb838164a79c6fa0c15b66f6a98410a",
+    "friendly_id": 23,
+    "owner": "granitefire",
+    "base_type": "Synthesized Flanged Mace",
+    "title": "Sureshrill Frost",
+    "properties": [
+      "+6 to All Skills",
+      "+153% Enhanced Damage",
+      "Adds 5-10 damage",
+      "+50% Damage to Undead",
+      "Poison Resist +30%",
+      "Cannot Be Frozen",
+      "Attacker Takes Damage of 15",
+      "95% Better Chance of Getting Magic Items (Based on Character Level)",
+      "Level 9 Frozen Orb (50/50 Charges)"
+    ],
+    "synthesised_from": [
+      "Guardian Naga",
+      "Skull Collector",
+      "Ondal's Wisdom"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "6d259b929c4c3fc3bc2b86e781c949e61f360d7d25f4a7f88aa49d797a52bae3",
+    "friendly_id": 24,
+    "owner": "DieByFire",
+    "base_type": "Synthesized Wrist Sword",
+    "title": "Jade Talon",
+    "properties": [
+      "Adds 25-75 Fire damage",
+      "+100 to Mana",
+      "Regenerate Mana 25%",
+      "All Resistances +50",
+      "Level 1 Teleport (20/20 Charges)",
+      "Level 3 Decrepify (30/30 Charges)",
+      "Level 10 Holy Bolt (100/100 Charges)",
+      "Requirements -60%"
+    ],
+    "synthesised_from": [
+      "Hellplague",
+      "Spellsteel"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "317a6b701adc3dd0e26028192b22cab34d16c3105c1a26ef4b3295a465d33efb",
+    "friendly_id": 25,
+    "owner": "KR_GRF",
+    "base_type": "Synthesized Petrified Wand",
+    "title": "Carin Shard",
+    "properties": [
+      "+2 to All Skills",
+      "+2 to Summoning Skills (Necromancer Only)",
+      "+1 to Necromancer Skill Levels",
+      "+30% Faster Hit Recovery",
+      "+50% Damage to Undead",
+      "Adds 38-0 poison damage over 3 seconds",
+      "+50 to Energy",
+      "Replenish Life 5 per second",
+      "Poison Resist +50%",
+      "+6 to Mana after each Kill",
+      "Ethereal (Cannot be Repaired)"
+    ],
+    "synthesised_from": [
+      "Rakescar",
+      "The Chieftain",
+      "Ondal's Wisdom"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "45d246a88d30fa57a3c4449e57c667932bf98c4b4416813817d8b40336441635",
+    "friendly_id": 26,
+    "owner": "Criplycan",
+    "base_type": "Synthesized Grim Wand",
+    "title": "Ume's Lament",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to Necromancer Skill Levels",
+      "+3 to Druid Skill Levels",
+      "+50% Increased Attack Speed",
+      "+20% Faster Cast Rate",
+      "+50% Damage to Undead",
+      "+5 to Magic Arrow",
+      "Hit Causes Monster to Flee +64%",
+      "+95 to Life (Based on Character Level)",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Wizendraw",
+      "Athena's Wrath"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "ca55db635fa15c58d86e36116090aea80ac4e8bee2e25a95f4caf10f055199eb",
+    "friendly_id": 27,
+    "owner": "Criplycan",
+    "base_type": "Synthesized Cryptic Axe",
+    "title": "Pierre Tombale Couant",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+155% Increased Attack Speed",
+      "+30% Faster Hit Recovery",
+      "+544% Enhanced Damage",
+      "+158% Damage to Undead",
+      "Adds 222-333 Fire damage",
+      "6% Mana stolen per hit",
+      "55% Deadly Strike",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "Skystrike",
+      "Demon Limb",
+      "Tomb Reaver"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "048bd3a545b4833d24e8f258609457d84eb0c7d2a9171f6ec3fbec6b5f191444",
+    "friendly_id": 28,
+    "owner": "Swansong",
+    "base_type": "Synthesized Diamond Bow",
+    "title": "Witchwild String",
+    "properties": [
+      "2% Chance to cast level 5 Amplify Damage on striking",
+      "+30% Increased Attack Speed",
+      "+450% Enhanced Damage",
+      "Ignore Target's Defense",
+      "95% Deadly Strike (Based on Character Level)",
+      "+1 to Fury (Druid Only)",
+      "+4 to Find Item (Barbarian Only)",
+      "+1 to Maul (Druid Only)",
+      "+75 Defense",
+      "+10 to Strength",
+      "+10 to Vitality",
+      "+10 to Energy",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Islestrike",
+      "Warlord's Trust",
+      "Heart Carver"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "011018469252cad6ab1ff6e6cb40d02e0c232d0e73461de6c80a4bc2027cccd6",
+    "friendly_id": 29,
+    "owner": "Dinkerr",
+    "base_type": "Synthesized War Sword",
+    "title": "Culwen's Point",
+    "properties": [
+      "+1 to All Skills",
+      "+20% Increased Attack Speed",
+      "+66 to Maximum Damage",
+      "+200 to Attack Rating",
+      "Adds 11-0 Fire damage",
+      "+180 poison damage over 4 seconds",
+      "Knockback",
+      "+20% to Maximum Poison Resist",
+      "Poison Resist +95%",
+      "Poison Length Reduced by 50%",
+      "Ethereal (Cannot be Repaired), Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Griswold's Edge",
+      "The Jade Tan Do",
+      "Demon Machine"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "914c4fb2e0633ea2b86aec08692892c79c0487d8ac8748b4722ce9b46ff1077a",
+    "friendly_id": 30,
+    "owner": "Dinkerr",
+    "base_type": "Synthesized Crowbill",
+    "title": "Pompeii's Wrath",
+    "properties": [
+      "25% Chance to cast level 17 Fissure when struck",
+      "+2 to Cold Skills",
+      "+30% Increased Attack Speed",
+      "+97% Enhanced Damage",
+      "+9 to Maximum Damage",
+      "Adds 3-5 cold damage",
+      "+3 to Resist Lightning (Paladin Only)",
+      "+45 to Strength",
+      "Replenish Life 10 per second"
+    ],
+    "synthesised_from": [
+      "Goreshovel",
+      "Stormeye",
+      "Bing Sz Wang"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "ab3dff95163067c5c0fd0f832d9cfdfd531f9b801b5953e2ce01e065946fa7f2",
+    "friendly_id": 31,
+    "owner": "Billybobjoefred",
+    "base_type": "Synthesized Stiletto",
+    "title": "Stormspike",
+    "properties": [
+      "+4 to All Skills",
+      "Adds 1-120 Lightning damage",
+      "+3 to Corpse Explosion (Necromancer Only)",
+      "+49 to Energy",
+      "+13 to Mana",
+      "Magic & Elemental Damage Taken Reduced by 7",
+      "30% Better Chance of Getting Magic Items",
+      "+1% increased Attack Speed per 4 Dexterity",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Maelstrom",
+      "Ondal's Wisdom"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "55fb5cdbee24bd3183a5b24dad972e02319a0f2b4da1dcaf470f8eea299cc732",
+    "friendly_id": 32,
+    "owner": "MongLOW",
+    "base_type": "Synthesized Tomb Wand",
+    "title": "Arm of King Leoric",
+    "properties": [
+      "5% Chance to cast level 7 Fist of the Heavens on striking",
+      "+10% Increased Attack Speed",
+      "+209% Enhanced Damage",
+      "177% Bonus to Attack Rating",
+      "+213% Damage to Undead",
+      "5% Life stolen per hit",
+      "+3 to Summon Mastery (Necromancer Only)",
+      "+2 to Terror (Necromancer Only)",
+      "+118 to Mana (Based on Character Level)",
+      "Physical Damage Taken Reduced by 10%"
+    ],
+    "synthesised_from": [
+      "Bloodrise",
+      "Arm of King Leoric",
+      "Crainte Vomir",
+      "Goldstrike Arch"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "177d7630b594392f03a3ba314c6d1adabdacde533cd3a6488a65b3c02dcac66f",
+    "friendly_id": 33,
+    "owner": "necgogogo",
+    "base_type": "Synthesized Knout",
+    "title": "Baezil's Vortex",
+    "properties": [
+      "5% Chance to cast level 8 Nova on striking",
+      "+5 to All Skills",
+      "+20% Increased Attack Speed",
+      "+30% Faster Cast Rate",
+      "Fires Explosive Arrows or Bolts",
+      "+50% Damage to Undead",
+      "-10% to Enemy Cold Resistance",
+      "-13% to Enemy Fire Resistance",
+      "+100 to Mana"
+    ],
+    "synthesised_from": [
+      "Hellcast",
+      "Mang Song's Lesson"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "edb3112232fce18b206b08ccb4e4d539919b8be7d13498097e6c0092700b04cf",
+    "friendly_id": 34,
+    "owner": "EIektra",
+    "base_type": "Synthesized Eldritch Orb",
+    "title": "Eschuta's Temper",
+    "properties": [
+      "5% Chance to cast level 7 Fissure on striking",
+      "+3 to Elemental Skills (Druid Only)",
+      "+3 to Sorceress Skill Levels",
+      "+40% Faster Cast Rate",
+      "+2 to Nova (Sorceress Only)",
+      "+6 to Holy Fire (Paladin Only)",
+      "+30 Defense",
+      "Casting Frost Nova also Casts Nova"
+    ],
+    "synthesised_from": [
+      "Kinemil's Awl",
+      "The Iron Jang Bong",
+      "Earthshaker"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1ee87453b0b3d7f90dfaf1c7b293055126008c2be6b4af8c4175190e1fbe96d8",
+    "friendly_id": 35,
+    "owner": "StillBroken",
+    "base_type": "Synthesized Bone Wand",
+    "title": "Gravenspine",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "100% Chance to cast level 29 Blaze when you Level-Up",
+      "+2 to All Skills",
+      "+2 to Poison and Bone Skills (Necromancer Only)",
+      "+2 to Necromancer Skill Levels",
+      "+50% Damage to Undead",
+      "Adds 17-45 Fire damage",
+      "Adds 4-0 cold damage",
+      "-4% to Enemy Fire Resistance",
+      "+3% Increased Fire Damage",
+      "+3 to Precision (Paladin Only)",
+      "+10 to Strength",
+      "+10 to Dexterity",
+      "+36 to Mana",
+      "+12 to Mana after each Kill",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Rusthandle",
+      "Death's Web"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "f5a79bd76d65551d9fca4d85876b75d9ec3bf5090ae94b0c188b657ad127686a",
+    "friendly_id": 36,
+    "owner": "Agonar",
+    "base_type": "Synthesized Conquest Sword",
+    "title": "Headstriker",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "6% Chance to cast level 1 Amplify Damage on striking",
+      "+3 to Elemental Skills (Druid Only)",
+      "+624% Enhanced Damage",
+      "Ignore Target's Defense",
+      "7% Life stolen per hit",
+      "Prevent Monster Heal",
+      "Knockback",
+      "+1 to Energy",
+      "+29 to Life",
+      "Poison Resist +50%",
+      "Socketed (4)"
+    ],
+    "synthesised_from": [
+      "Earthshaker",
+      "The Vile Husk",
+      "Eaglehorn"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "feb89c198605ae72623f84844e67fd799036b11dd875bb269dd00edd179ccc2a",
+    "friendly_id": 37,
+    "owner": "KR_GRI",
+    "base_type": "Synthesized Matriarchal Javelin",
+    "title": "Thunderstroke",
+    "properties": [
+      "+4 to Javelin and Spear Skills (Amazon Only)",
+      "+35% Piercing Attack",
+      "+84% Enhanced Damage",
+      "-15% to Enemy Lightning Resistance",
+      "+3 to Lightning Bolt (Amazon Only)",
+      "-70 to Monster Defense Per Hit",
+      "237% Extra Gold from Monsters (Based on Character Level)"
+    ],
+    "synthesised_from": [
+      "Doomslinger",
+      "Blade of Ali Baba",
+      "Crainte Vomir"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "356bd77cc0a60a389d068d1bdd4df54d7c93c56ad916aed52b39bfbdcfaa0d0e",
+    "friendly_id": 38,
+    "owner": "AA-mA",
+    "base_type": "Synthesized Matriarchal Javelin",
+    "title": "Thunderstroke",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+22% Increased Attack Speed",
+      "+25% Piercing Attack",
+      "+360% Enhanced Damage",
+      "+58 to Attack Rating",
+      "+35 to Maximum Fire Damage",
+      "-15% to Enemy Lightning Resistance",
+      "45% Chance of Crushing Blow",
+      "+3 to Lightning Bolt (Amazon Only)",
+      "Lightning Resist +25%",
+      "Repairs 1 durability in 10 seconds"
+    ],
+    "synthesised_from": [
+      "Stormstrike",
+      "Hellclap",
+      "Hone Sundan"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "06926887f3513f538f6d6c55f2e0d30a954fa27f54e194917e53d3666879a3cc",
+    "friendly_id": 39,
+    "owner": "Zardomancer",
+    "base_type": "Synthesized Short Sword",
+    "title": "Rixot's Keen",
+    "properties": [
+      "100% Chance to cast level 51 Poison Nova when you Die",
+      "+5 to All Skills",
+      "+30% Faster Cast Rate",
+      "+114% Enhanced Damage",
+      "+94 to Maximum Damage (Based on Character Level)",
+      "20% Bonus to Attack Rating",
+      "+137 to Attack Rating",
+      "+37 poison damage over 2 seconds",
+      "-5% to Enemy Poison Resistance",
+      "+5% Increased Poison Damage",
+      "+25 Defense",
+      "+15 to Strength",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Ironstone",
+      "Headstriker",
+      "Mang Song's Lesson"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "dc9bcc6b6f54611b9164431909fa87319b186602385394a6bf3c71f7329cdaf8",
+    "friendly_id": 40,
+    "owner": "Maxmillion",
+    "base_type": "Synthesized Shadow Bow",
+    "title": "Raven Claw",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "33% Chance to cast level 1 Decrepify on striking",
+      "Fires Explosive Arrows or Bolts",
+      "+313% Enhanced Damage",
+      "+3 to Maximum Damage",
+      "50% Bonus to Attack Rating",
+      "Adds 4-44 cold damage",
+      "15% Life stolen per hit",
+      "10% Chance of Crushing Blow",
+      "25% Deadly Strike",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Witherstring",
+      "Leadcrow",
+      "The Reaper's Toll"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1e8a7a002ef3c1edca34b5bbb86aa09b69539f9d2cac0fa3cbdc1a80ee9dc3d5",
+    "friendly_id": 41,
+    "owner": "Sevenspades",
+    "base_type": "Synthesized Crowbill",
+    "title": "Pompeii's Wrath",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "4% Chance to cast level 8 Volcano on striking",
+      "9% Chance to cast level 16 Desecrate on attack",
+      "+50% Increased Attack Speed",
+      "+252% Enhanced Damage",
+      "Adds 35-150 Fire damage",
+      "Adds 1-150 Lightning damage",
+      "+325 poison damage over 5 seconds",
+      "Slows Target by 50%",
+      "Lightning Resist +25%",
+      "Level 15 Nova (31/80 Charges)"
+    ],
+    "synthesised_from": [
+      "The Minotaur",
+      "Baezil's Vortex",
+      "Viperfork"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "1bc267822d88e958055e6dc2b6ecd34c4f506a168ac7d3465bd71f77aaace085",
+    "friendly_id": 42,
+    "owner": "BigBillyBas",
+    "base_type": "Synthesized Bastard Sword",
+    "title": "Blacktongue",
+    "properties": [
+      "+1 to Paladin Skill Levels",
+      "+50% Increased Attack Speed",
+      "+54% Enhanced Damage",
+      "+50 to Attack Rating",
+      "+53% Damage to Undead",
+      "+113 poison damage over 6 seconds",
+      "8% Mana stolen per hit",
+      "+3 to Precision (Paladin Only)",
+      "+1 to Vengeance (Paladin Only)",
+      "+2 to Holy Freeze (Paladin Only)",
+      "Poison Resist +50%"
+    ],
+    "synthesised_from": [
+      "Rusthandle",
+      "Blacktongue",
+      "Dimoak's Hew",
+      "Zakarum's Hand"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "54cb3e8c84957f428f2763e307f169816c99d48d707b4c4427f7f58f5f39a32e",
+    "friendly_id": 43,
+    "owner": "AspireToInspire",
+    "base_type": "Synthesized War Scepter",
+    "title": "Stormeye",
+    "properties": [
+      "+111% Enhanced Damage",
+      "+50% Damage to Undead",
+      "+3 to Resist Lightning (Paladin Only)",
+      "Hit Blinds Target +1",
+      "+10 to Strength",
+      "Lightning Resist 94% (Based on Character Level)",
+      "Physical Damage Taken Reduced by 3",
+      "Magic & Elemental Damage Taken Reduced by 3",
+      "+4 to Mana after each Kill",
+      "+1% increased Attack Speed per 4 Dexterity"
+    ],
+    "synthesised_from": [
+      "Deathspade",
+      "The Patriarch",
+      "Stormspike"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "36b6205222a8a7c85d0b95b60a9af48da7efc4bfb3e9986d62b51e26cd144a19",
+    "friendly_id": 44,
+    "owner": "Cesuna",
+    "base_type": "Synthesized Scepter",
+    "title": "Knell Striker",
+    "properties": [
+      "5% Chance to cast level 10 Bone Spirit when struck",
+      "+2 to All Skills",
+      "+45% Faster Cast Rate",
+      "+74% Enhanced Damage",
+      "+50% Damage to Undead",
+      "-24% to Enemy Cold Resistance",
+      "25% Chance of Crushing Blow",
+      "+3 to Raise Skeleton Warrior (Necromancer Only)",
+      "+2 to Terror (Necromancer Only)",
+      "+20 to Ball Lightning",
+      "+60 to Energy",
+      "Cold Resist +26%",
+      "Fire Resist +20%",
+      "+3 to Mana after each Kill",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Arm of King Leoric",
+      "Ondal's Wisdom",
+      "Wizendraw"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "97b7a72cd5c6b8c9424114f1296f06b6835c31803df995d3f8cdd1c410630faf",
+    "friendly_id": 45,
+    "owner": "YoonSeokYeol",
+    "base_type": "Synthesized Cedar Staff",
+    "title": "Chromatic Ire",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "5% Chance to cast level 8 Poison Nova on striking",
+      "6% Chance to cast level 5 Blizzard on striking",
+      "+3 to Sorceress Skill Levels",
+      "+178% Enhanced Damage",
+      "+50% Damage to Undead",
+      "8% Mana stolen per hit",
+      "+1 to Fire Mastery (Sorceress Only)",
+      "+1 to Lightning Mastery (Sorceress Only)",
+      "Increase Maximum Mana 20%",
+      "Regenerate Mana 10%",
+      "+20 to Mana after each Kill",
+      "Attacker Takes Lightning Damage of 20",
+      "Attacker Takes Damage of 15",
+      "94% Better Chance of Getting Magic Items (Based on Character Level)",
+      "Socketed (4)"
+    ],
+    "synthesised_from": [
+      "Guardian Naga",
+      "Zakarum's Hand",
+      "Skull Collector"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "009c44b7803745e47ca77546594739ba67bc0328c804889beb902f4e2ef60672",
+    "friendly_id": 46,
+    "owner": "Gasbrakedip",
+    "base_type": "Synthesized Dagger",
+    "title": "Gull",
+    "properties": [
+      "5% Chance to cast level 7 Fissure on striking",
+      "+3 to Bow and Crossbow Skills (Amazon Only)",
+      "Fires Explosive Arrows or Bolts",
+      "+162% Enhanced Damage",
+      "+3 to Immolation Arrow (Amazon Only)",
+      "Hit Blinds Target +1",
+      "Knockback",
+      "Magic & Elemental Damage Taken Reduced by 3",
+      "100% Extra Gold from Monsters"
+    ],
+    "synthesised_from": [
+      "The Patriarch",
+      "Earthshaker",
+      "Kuko Shakaku"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "a8081f07c38757be88683a937552fb02ef315805f521656dc7e30c8a73346969",
+    "friendly_id": 47,
+    "owner": "OceanKnight",
+    "base_type": "Synthesized Hyperion Spear",
+    "title": "The Impaler",
+    "properties": [
+      "+511% Enhanced Damage",
+      "Ignore Target's Defense",
+      "40% Chance of Open Wounds",
+      "+3 to Power Strike (Amazon Only)",
+      "+5 to Molten Strike (Amazon Only)",
+      "+4 to Find Item (Barbarian Only)",
+      "Freezes target +1",
+      "-3 to Light Radius",
+      "Requirements -50%",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Steeldriver",
+      "Woestave",
+      "Heart Carver"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "462e863779962652d75aab7bc63fabd28d28598dc6d21735017830f78f9962ed",
+    "friendly_id": 48,
+    "owner": "Duchebag",
+    "base_type": "Synthesized Hyperion Spear",
+    "title": "Arioc's Needle",
+    "properties": [
+      " Righteous Fire Aura When Equipped",
+      "+30% Increased Attack Speed",
+      "+294% Enhanced Damage",
+      "-50% Target Defense",
+      "Adds 150-300 Fire damage",
+      "-25% to Enemy Fire Resistance",
+      "Poison Resist +50%",
+      "Attacker Takes Lightning Damage of 27"
+    ],
+    "synthesised_from": [
+      "Serpent Lord",
+      "Todesfaelle Flamme",
+      "Stormspire"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "3e98aada40e6bf762bced910d8873c66278f4fadbbcb9515bc4a3382c576bb2e",
+    "friendly_id": 49,
+    "owner": "chargetopunch",
+    "base_type": "Synthesized Ward Bow",
+    "title": "Magewrath",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to Paladin Skill Levels",
+      "+120% Increased Attack Speed",
+      "+100% Piercing Attack",
+      "+243% Enhanced Damage",
+      "+235 to Maximum Damage (Based on Character Level)",
+      "Adds 25-50 damage",
+      "Ignore Target's Defense",
+      "Hit Blinds Target +1",
+      "+126 Defense",
+      "+16 to Strength",
+      "+12 to Dexterity",
+      "Magic & Elemental Damage Taken Reduced by 11",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "The Atlantean",
+      "Skull Collector",
+      "Buriza-Do Kyanon"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "6774aae2c2003f6e05e257921c1a9284aab32e68089b2ce6b0ddffbe094ad1c6",
+    "friendly_id": 50,
+    "owner": "Slickdruid",
+    "base_type": "Synthesized Petrified Wand",
+    "title": "Carin Shard",
+    "properties": [
+      "+1 to Necromancer Skill Levels",
+      "+3 to Druid Skill Levels",
+      "+355% Enhanced Damage",
+      "+50% Damage to Undead",
+      "Adds 20-240 Fire damage",
+      "+15 to Strength",
+      "+15 to Dexterity",
+      "+211 to Life (Based on Character Level)"
+    ],
+    "synthesised_from": [
+      "Butcher's Pupil",
+      "Athena's Wrath",
+      "Messerschmidt's Reaver"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "27af64d90eb499bc3a9186fc48275762db3ce3f228defea3f45fce274671ccbb",
+    "friendly_id": 51,
+    "owner": "zills",
+    "base_type": "Synthesized Legendary Mallet",
+    "title": "Ironstone",
+    "properties": [
+      "+40% Increased Attack Speed",
+      "+456% Enhanced Damage",
+      "+290 to Maximum Damage (Based on Character Level)",
+      "+150 to Attack Rating",
+      "+50% Damage to Undead",
+      "+5 to Dexterity",
+      "232% Extra Gold from Monsters (Based on Character Level)",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Steeldriver",
+      "Blade of Ali Baba",
+      "Windforce"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "f1cb8ea7ff5727f1b493ad5d5916c5dc32d36f2a8d2472a73d776e252c047f8f",
+    "friendly_id": 52,
+    "owner": "AraiRima",
+    "base_type": "Synthesized Tulwar",
+    "title": "Blade of Ali Baba",
+    "properties": [
+      "+40% Faster Cast Rate",
+      "+68% Enhanced Damage",
+      "+90 to Attack Rating",
+      "+16% Increased Fire Damage",
+      "8% Life stolen per hit",
+      "20% Chance of Crushing Blow",
+      "+3 to Edged Weapon Mastery (Barbarian Only)",
+      "+7 to Dexterity",
+      "+15 to Mana",
+      "10% Slower Stamina Drain",
+      "93% Better Chance of Getting Magic Items (Based on Character Level)",
+      "Ethereal (Cannot be Repaired), Socketed (2)"
+    ],
+    "synthesised_from": [
+      "The Gnasher",
+      "Bloodletter",
+      "Eschuta's Temper"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "bff452da8adc4a17cb4510206f24f6591c76a5839a5b64d7f7126c8bc4395b7f",
+    "friendly_id": 53,
+    "owner": "PracticeNec",
+    "base_type": "Synthesized Scourge",
+    "title": "Horizon's Tornado",
+    "properties": [
+      "+50% Increased Attack Speed",
+      "+194% Enhanced Damage",
+      "-33% Target Defense",
+      "+50% Damage to Undead",
+      "Adds 10-30 cold damage",
+      "9% Mana stolen per hit",
+      "80% Deadly Strike",
+      "Cold Resist +20%",
+      "Requirements -20%"
+    ],
+    "synthesised_from": [
+      "Shadowfang",
+      "Rogue's Bow",
+      "Razor's Edge"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "4dee9cfdcc4d4bc76ea37cfc2105eac36c29099b1ce8c008832fc8eee3d058ea",
+    "friendly_id": 54,
+    "owner": "zerokey",
+    "base_type": "Synthesized Legendary Mallet",
+    "title": "Stone Crusher",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "15% Chance to cast level 26 Ball Lightning on striking",
+      "Indestructible",
+      "+2 to All Skills",
+      "+2 to Druid Skill Levels",
+      "+95% Faster Cast Rate",
+      "+48% Enhanced Damage",
+      "+50% Damage to Undead",
+      "25% Chance of Crushing Blow",
+      "+1 to Fury (Druid Only)",
+      "+20 to Ball Lightning",
+      "+519 Defense",
+      "+10 to Dexterity",
+      "+50 to Mana",
+      "+2 to Mana after each Kill",
+      "+1 to Light Radius",
+      "Requirements -15%",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Ondal's Wisdom",
+      "Spectral Shard",
+      "Islestrike"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "0572c6661219cca6ad3934026e458ab9231fb88ec862c5f3802401439742f6f9",
+    "friendly_id": 55,
+    "owner": "Gos",
+    "base_type": "Synthesized Grim Wand",
+    "title": "Ume's Lament",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+1 to Curses (Necromancer Only)",
+      "+4 to Necromancer Skill Levels",
+      "+30% Faster Cast Rate",
+      "+150% Enhanced Damage",
+      "-33% Target Defense",
+      "+50% Damage to Undead",
+      "139% Deadly Strike (Based on Character Level)",
+      "Prevent Monster Heal",
+      "+15 to Strength",
+      "20% Damage Taken Gained as Mana when Hit",
+      "30% Better Chance of Getting Magic Items",
+      "-2 to Light Radius",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Headstriker",
+      "Executioner's Justice",
+      "Blackhand Key"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "ec41c062ba18965f2b537a1e87d93fc46bc161fabffa94395def3a505f8633ff",
+    "friendly_id": 56,
+    "owner": "storm-mussang",
+    "base_type": "Synthesized Rune Staff",
+    "title": "Skull Collector",
+    "properties": [
+      "+327% Enhanced Damage",
+      "+50% Damage to Undead",
+      "+7 to Vitality",
+      "Increase Maximum Mana 20%",
+      "Half Freeze Duration"
+    ],
+    "synthesised_from": [
+      "Stoutnail",
+      "Skull Collector",
+      "Frostwind"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "a1172a3fe45571fec700154e4e62e46a4d7785953860323cf2350d246c0aa772",
+    "friendly_id": 57,
+    "owner": "RaeRaeh",
+    "base_type": "Synthesized Polished Wand",
+    "title": "Suicide Branch",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+1 to All Skills",
+      "+80% Faster Cast Rate",
+      "+50% Damage to Undead",
+      "Adds 1-0 Lightning damage",
+      "Adds 3-5 cold damage",
+      "+3 to Amplify Damage (Necromancer Only)",
+      "+5 to Resist Lightning (Paladin Only)",
+      "+3 to Holy Shock (Paladin Only)",
+      "+80 to Life",
+      "All Resistances +60"
+    ],
+    "synthesised_from": [
+      "Stormeye",
+      "Razorswitch",
+      "Maelstrom"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "ceec936184e65393a39bf97e304fae6049150eecc349a720a39f33a1bb7b5bb9",
+    "friendly_id": 58,
+    "owner": "jaun_chang",
+    "base_type": "Synthesized Decapitator",
+    "title": "Hellslayer",
+    "properties": [
+      "5% Chance to cast level 1 Amplify Damage on striking",
+      "Indestructible",
+      "+372% Enhanced Damage",
+      "Adds 12-30 damage",
+      "-25% Target Defense",
+      "+47 to Strength (Based on Character Level)",
+      "+105 to Life",
+      "+8 Lightning Absorb",
+      "Attacker Takes Damage of 41",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "The Gavel of Pain",
+      "Razorswitch",
+      "Stormlash"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "985cdfb12703a7be30efb50c33e88c7d94aa0e5db9bb9a9206d92a6aaddee276",
+    "friendly_id": 59,
+    "owner": "blockguy",
+    "base_type": "Synthesized Ataghan",
+    "title": "Djinn Slayer",
+    "properties": [
+      "+136% Enhanced Damage",
+      "+105 to Attack Rating",
+      "+129% Damage to Demons",
+      "+281 to Attack Rating against Demons",
+      "Adds 5-9 Fire damage",
+      "6% Life stolen per hit",
+      "30% Deadly Strike",
+      "+5 to Energy",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Torch of Iro",
+      "Soul Harvest",
+      "Rogue's Bow"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "2d228c5a9cdad2bf457283573971e696cc2c1a892a927f917a01f7c2dbb81664",
+    "friendly_id": 60,
+    "owner": "Tiddy_Witch",
+    "base_type": "Synthesized Edge Bow",
+    "title": "Skystrike",
+    "properties": [
+      "2% Chance to cast level 5 Amplify Damage on striking",
+      "+1 to fire skills",
+      "+50% Increased Attack Speed",
+      "+51% Enhanced Damage",
+      "Adds 15-0 Fire damage",
+      "Adds 1-250 Lightning damage",
+      "33% Chance of Crushing Blow",
+      "+20 to Magic Arrow",
+      "+15 to Strength",
+      "Fire Resist +50%",
+      "+2 to Light Radius",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Crushflange",
+      "Hellclap",
+      "Witchwild String"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "8b9e96071fe30a0157d9522324396c73ebee4df2dc7e1c4187b6e42d5f59b899",
+    "friendly_id": 61,
+    "owner": "Kekimo",
+    "base_type": "Synthesized Mighty Scepter",
+    "title": "The Redeemer",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to Druid Skill Levels",
+      "+478% Enhanced Damage",
+      "Adds 63-120 damage",
+      "+236% Damage to Demons",
+      "+50% Damage to Undead",
+      "Adds 50-140 cold damage",
+      "+4 to Cold Mastery",
+      "Freezes target +2",
+      "Requirements -60%",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Raven Claw",
+      "Islestrike",
+      "Bing Sz Wang"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "3256bbf6b2c0cb1cd4b11db6bdc50f2c7e13c0bfe2d95aba238a7f334458b262",
+    "friendly_id": 62,
+    "owner": "jaun_wolf",
+    "base_type": "Synthesized Champion Sword",
+    "title": "Cloudcrack",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "33% Chance to cast level 1 Decrepify on striking",
+      "+20% Increased Attack Speed",
+      "+170% Enhanced Damage",
+      "+94 to Maximum Damage (Based on Character Level)",
+      "50% Bonus to Attack Rating",
+      "+215 to Attack Rating",
+      "Adds 1-240 Lightning damage",
+      "Adds 4-44 cold damage",
+      "15% Mana stolen per hit",
+      "33% Deadly Strike",
+      "+3 to Magic Arrow (Amazon Only)",
+      "+3 to Strength",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Magewrath",
+      "The Reaper's Toll",
+      "Raven Claw"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "bc602f7541d84147cc324115701f01d542653991b55dffcf2138443b24fc5059",
+    "friendly_id": 63,
+    "owner": "konkittt",
+    "base_type": "Synthesized Archon Staff",
+    "title": "Mang Song's Lesson",
+    "properties": [
+      "+5 to All Skills",
+      "+75% Faster Cast Rate",
+      "+161% Enhanced Damage",
+      "Adds 35-50 damage",
+      "+50% Damage to Undead",
+      "-9% to Enemy Lightning Resistance",
+      "20% Chance of Crushing Blow",
+      "20% Deadly Strike",
+      "+40 to Energy"
+    ],
+    "synthesised_from": [
+      "Fleshrender",
+      "Ondal's Wisdom"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "3282f61c53ef24b327698097e53321ae46d5bd8f83df18d4c94f06d954623099",
+    "friendly_id": 64,
+    "owner": "Stormgnarok",
+    "base_type": "Synthesized Wand",
+    "title": "Torch of Iro",
+    "properties": [
+      "+20% Increased Attack Speed",
+      "Adds 1-3 damage",
+      "+50 to Attack Rating",
+      "+50% Damage to Undead",
+      "+7 to Vitality",
+      "Regenerate Mana 5%",
+      "Magic & Elemental Damage Taken Reduced by 2",
+      "+3 to Light Radius",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Torch of Iro",
+      "Stoutnail",
+      "Witherstring",
+      "Hellrack"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "945dd40016f67670dfedda8bfbc95d2494efaeba61b8752360a4c1cf7bbe0b13",
+    "friendly_id": 65,
+    "owner": "Heklo",
+    "base_type": "Synthesized War Staff",
+    "title": "The Iron Jang Bong",
+    "properties": [
+      "+5 to All Skills",
+      "+2 to Sorceress Skill Levels",
+      "+30% Faster Cast Rate",
+      "50% Bonus to Attack Rating",
+      "+50% Damage to Undead",
+      "6% Mana stolen per hit",
+      "-14% to Enemy Cold Resistance",
+      "12% Life stolen per hit",
+      "Casting Frost Nova also Casts Nova"
+    ],
+    "synthesised_from": [
+      "Coldsteel Eye",
+      "Mang Song's Lesson",
+      "Demon's Arch"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "18b4dc77987a2baf88edf6e1f1e95f64a13303d34c0525ca7fd179491bbf993b",
+    "friendly_id": 66,
+    "owner": "nec-skull",
+    "base_type": "Synthesized Grave Wand",
+    "title": "Blackhand Key",
+    "properties": [
+      "+1 to Curses (Necromancer Only)",
+      "+2 to Necromancer Skill Levels",
+      "+20% Increased Attack Speed",
+      "+30% Faster Cast Rate",
+      "+274% Enhanced Damage",
+      "+50 to Attack Rating",
+      "+50% Damage to Undead",
+      "+113 poison damage over 6 seconds",
+      "-25% to Enemy Cold Resistance",
+      "+20 to Strength",
+      "Poison Resist +50%",
+      "-2 to Light Radius"
+    ],
+    "synthesised_from": [
+      "Blacktongue",
+      "Wizendraw",
+      "The Minotaur"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "6bac4b511f069d1560056d7e1f4ecd77ab79abae00806c9350dd12babbea780a",
+    "friendly_id": 67,
+    "owner": "Grella",
+    "base_type": "Synthesized Gladius",
+    "title": "Bloodletter",
+    "properties": [
+      " Righteous Fire Aura When Equipped",
+      "+1 to Amazon Skill Levels",
+      "+268% Enhanced Damage",
+      "Adds 12-45 damage",
+      "+90 to Attack Rating",
+      "+552 to Attack Rating (Based on Character Level)",
+      "Adds 150-300 Fire damage",
+      "+1 to Whirlwind (Barbarian Only)",
+      "+25 to Dexterity",
+      "Level 15 Enflame (37/45 Charges)"
+    ],
+    "synthesised_from": [
+      "Ginther's Rift",
+      "Todesfaelle Flamme",
+      "Eaglehorn"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "fcfeb07cf150c5a2e709c1275f3feec9a7fe50b2f84f6d1faca57e49db992012",
+    "friendly_id": 68,
+    "owner": "soulbutter",
+    "base_type": "Synthesized Hydra Bow",
+    "title": "Windforce",
+    "properties": [
+      "400% Chance to cast level 31 War Cry when you Level-Up",
+      "+20% Increased Attack Speed",
+      "+495% Enhanced Damage",
+      "Adds 20-10 damage",
+      "+287 to Maximum Damage (Based on Character Level)",
+      "-25% Target Defense",
+      "-18% to Enemy Physical Resistance",
+      "+18% Increased Physical Damage",
+      "+5% to Maximum Cold Resist",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "The Atlantean",
+      "Rune Master"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "ea42335b946a8e11a30f7b614aa8c5da11cee40aac5c63217216a26675549c70",
+    "friendly_id": 69,
+    "owner": "rip_ley",
+    "base_type": "Synthesized Long Sword",
+    "title": "Hellplague",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "100% Chance to cast level 31 Meteor when you Die",
+      "+4 to All Skills",
+      "+2 to fire skills",
+      "+20% Faster Cast Rate",
+      "Adds 42-120 Fire damage",
+      "-5% to Enemy Fire Resistance",
+      "+5% Increased Fire Damage",
+      "5% Life stolen per hit",
+      "50% Deadly Strike",
+      "+20% Enhanced Defense",
+      "+20 to Vitality",
+      "Fire Resist +36%",
+      "50% Better Chance of Getting Magic Items",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "The Oculus",
+      "Death's Fathom",
+      "Arioc's Needle"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "f8e2931eb61c4e20f05419e9c20971320448765d59d8c73321c35c1b0b04ea12",
+    "friendly_id": 70,
+    "owner": "Neare",
+    "base_type": "Synthesized Crusader Bow",
+    "title": "Eaglehorn",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+19% Increased Attack Speed",
+      "+296% Enhanced Damage",
+      "+184% Enhanced Maximum Damage (Based on Character Level)",
+      "+92 to Maximum Damage (Based on Character Level)",
+      "Ignore Target's Defense",
+      "-33% Target Defense",
+      "+552 to Attack Rating (Based on Character Level)",
+      "50% Deadly Strike",
+      "+5 to Rabies (Druid Only)",
+      "Freezes target +2",
+      "+25 to Dexterity",
+      "Requirements -30%"
+    ],
+    "synthesised_from": [
+      "Plague Bearer",
+      "Bing Sz Wang",
+      "Razor's Edge"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "09384d7af49c04c0addceb1f932a9b2995f73f03b434a076ba5bddc73d147bc5",
+    "friendly_id": 71,
+    "owner": "Raputin",
+    "base_type": "Synthesized Ettin Axe",
+    "title": "Rune Master",
+    "properties": [
+      "5% Chance to cast level 3 Frozen Orb on striking",
+      "+425% Enhanced Damage",
+      "Ignore Target's Defense",
+      "Freezes target +2",
+      "Fire Resist +25%",
+      "Cannot Be Frozen",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "The Diggler",
+      "Bing Sz Wang",
+      "Fleshripper"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "e822401c067eb02c1074a75d396005196fec6d13e2e09e0757b7c35d8cb66627",
+    "friendly_id": 72,
+    "owner": "OPENIONS-NEC",
+    "base_type": "Synthesized Polished Wand",
+    "title": "Suicide Branch",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "Indestructible",
+      "+3 to All Skills",
+      "+30% Increased Attack Speed",
+      "+30 to Attack Rating",
+      "+50% Damage to Undead",
+      "10% Chance of Crushing Blow",
+      "Hit Causes Monster to Flee +96%",
+      "Increase Maximum Mana 10%",
+      "All Resistances +5",
+      "+20 to Mana after each Kill"
+    ],
+    "synthesised_from": [
+      "Butcher's Pupil",
+      "Skull Collector",
+      "Steelgoad"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "97da0583d934d87d38db93d5d9838b4a0b5348303516a90998de521a7f0f6873",
+    "friendly_id": 73,
+    "owner": "yes_soso",
+    "base_type": "Synthesized Flanged Mace",
+    "title": "Sureshrill Frost",
+    "properties": [
+      "25% Chance to cast level 1 Teleport when struck",
+      "+170% Enhanced Damage",
+      "Adds 5-10 damage",
+      "+50% Damage to Undead",
+      "Freezes target +3",
+      "All Resistances +20",
+      "+7 to Mana after each Kill",
+      "Attacker Takes Damage of 8",
+      "50% Better Chance of Getting Magic Items"
+    ],
+    "synthesised_from": [
+      "Pluckeye",
+      "Sureshrill Frost",
+      "Grim's Burning Dead",
+      "The Oculus"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "4c3cb2718fa7fedcbbd03099e54ab32f28459fdc5fedea85b9acf6ef4511422d",
+    "friendly_id": 74,
+    "owner": "BMW",
+    "base_type": "Synthesized Ceremonial Javelin",
+    "title": "Titan's Revenge",
+    "properties": [
+      "+2 to Summoning Skills (Necromancer Only)",
+      "+2 to Javelin and Spear Skills (Amazon Only)",
+      "+30% Faster Run/Walk",
+      "+30% Increased Attack Speed",
+      "+10% Faster Cast Rate",
+      "+183% Enhanced Damage",
+      "35% Deadly Strike",
+      "25% Chance of Open Wounds",
+      "+3 to Summon Mastery (Necromancer Only)",
+      "+3 to Raise Skeleton Warrior (Necromancer Only)",
+      "+2 to Terror (Necromancer Only)",
+      "+15 to Dexterity",
+      "+115 to Mana (Based on Character Level)",
+      "Increased Stack Size"
+    ],
+    "synthesised_from": [
+      "Athena's Wrath",
+      "Butcher's Pupil",
+      "Arm of King Leoric"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "cc15227984e0b340b3307865e707614e3977b36b2ae638ef8e20e01c1c360fa3",
+    "friendly_id": 75,
+    "owner": "Yantar",
+    "base_type": "Synthesized Barbed Club",
+    "title": "Fleshrender",
+    "properties": [
+      "+1 to Druid Skill Levels",
+      "+30% Increased Attack Speed",
+      "+230% Enhanced Damage",
+      "Adds 35-50 damage",
+      "+50% Damage to Undead",
+      "5% Mana stolen per hit",
+      "30% Chance of Open Wounds",
+      "Freezes target +3",
+      "Slows Target by 80%",
+      "+25 Defense",
+      "Cannot Be Frozen",
+      "Level 9 Frozen Orb (10/50 Charges)"
+    ],
+    "synthesised_from": [
+      "The General's Tan Do Li Ga",
+      "Sureshrill Frost",
+      "Riphook"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "df8f9666a16ebcdde650f1e36c44d6f2c91d3398621690cc6ecfb19352f3ebae",
+    "friendly_id": 76,
+    "owner": "WearwolfBarb",
+    "base_type": "Synthesized Colossus Sword",
+    "title": "Ripsaw",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+100% Increased Attack Speed",
+      "+20% Faster Hit Recovery",
+      "+374% Enhanced Damage",
+      "25% Bonus to Attack Rating",
+      "6% Mana stolen per hit",
+      "25% Chance of Crushing Blow",
+      "+92 Wounds Bleed Damage Per Second (Based on Character Level)",
+      "+25% Enhanced Defense",
+      "Replenish Life 20 per second",
+      "+3 to Light Radius",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "Rixot's Keen",
+      "Spire of Honor"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1ac3b512c866a4d6f6408cbda9383c0b1ffed7cfaca4c588e9582ea981e99b02",
+    "friendly_id": 77,
+    "owner": "IWantSurSur",
+    "base_type": "Synthesized Grim Wand",
+    "title": "Ume's Lament",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to Sorceress Skill Levels",
+      "+2 to Necromancer Skill Levels",
+      "+70% Faster Cast Rate",
+      "+147% Enhanced Damage",
+      "+55 to Attack Rating",
+      "+50% Damage to Undead",
+      "Adds 1-40 Lightning damage",
+      "+2 to Decrepify (Necromancer Only)",
+      "+3 to Frost Nova (Sorceress Only)",
+      "+30 Defense",
+      "+7 to Energy",
+      "+40 to Mana",
+      "+3 to Mana after each Kill",
+      "Casting Frost Nova also Casts Nova",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Spectral Shard",
+      "The Chieftain",
+      "The Iron Jang Bong"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "db9ceccb87bf9a9a75d0720f641b2102afe234728b1fe9a7f0bc58615647a87f",
+    "friendly_id": 78,
+    "owner": "NP_Po",
+    "base_type": "Synthesized War Sword",
+    "title": "Culwen's Point",
+    "properties": [
+      "+1 to All Skills",
+      "+1 to Amazon Skill Levels",
+      "+80% Enhanced Damage",
+      "Hit Blinds Target +2",
+      "+5 to Strength",
+      "Increase Maximum Mana 20%",
+      "Poison Length Reduced by 50%",
+      "+20 to Mana after each Kill",
+      "92% Better Chance of Getting Magic Items (Based on Character Level)",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Skull Splitter",
+      "Blastbark",
+      "Skull Collector"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "ba0f265b2cfb7d5798c0e00fff11d6e562715c2b4fe589cdb6e1a7ecc8d01314",
+    "friendly_id": 79,
+    "owner": "iguessillsee",
+    "base_type": "Synthesized Gnarled Staff",
+    "title": "Spire of Lazarus",
+    "properties": [
+      "33% Chance to cast level 5 Static Field on Kills",
+      "+1 to Lightning Skills",
+      "+20% Increased Attack Speed",
+      "+247% Enhanced Damage",
+      "+79 to Attack Rating",
+      "+50% Damage to Undead",
+      "Adds 63-112 cold damage",
+      "-27% to Enemy Cold Resistance",
+      "-10% to Enemy Lightning Resistance",
+      "Physical Damage Taken Reduced by 5",
+      "Cannot Be Frozen",
+      "Releases One Additional Telekinesis Burst"
+    ],
+    "synthesised_from": [
+      "Wizendraw",
+      "Sureshrill Frost"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "072162e746ef71b226842227a927c0e20da0f4aa293c3376392c9455d48c310a",
+    "friendly_id": 80,
+    "owner": "kvs",
+    "base_type": "Synthesized Matriarchal Bow",
+    "title": "Blood Raven's Charge",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "10% Chance to cast level 20 Charged Bolt on striking",
+      "5% Chance to cast level 10 Chain Lightning on striking",
+      "33% Chance to cast level 1 Decrepify on striking",
+      "+4 to Bow and Crossbow Skills (Amazon Only)",
+      "Fires Explosive Arrows or Bolts",
+      "+301% Enhanced Damage",
+      "Adds 2-240 Lightning damage",
+      "+6 to Mana after each Kill"
+    ],
+    "synthesised_from": [
+      "The Chieftain",
+      "Stormrider",
+      "The Reaper's Toll"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "e8e3c8e5635ff5c5705a752b5e3997303948524ce83bc0090fe6b6f81ae73729",
+    "friendly_id": 81,
+    "owner": "Lee_Speed",
+    "base_type": "Synthesized War Staff",
+    "title": "The Iron Jang Bong",
+    "properties": [
+      "+1 to fire skills",
+      "+10% Increased Attack Speed",
+      "+20% Faster Cast Rate",
+      "50% Bonus to Attack Rating",
+      "+58 to Attack Rating",
+      "+50% Damage to Undead",
+      "+37 to Maximum Fire Damage",
+      "+3 to Frost Nova (Sorceress Only)",
+      "+80 Defense",
+      "Level 15 Enflame (8/45 Charges)",
+      "Casting Frost Nova also Casts Nova"
+    ],
+    "synthesised_from": [
+      "Hellclap",
+      "Todesfaelle Flamme",
+      "Blackbog's Sharp"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "63d887336ca485dbbfd2951687e7e70d91ce8a9562e6cf1f7d963c5ceb849d13",
+    "friendly_id": 82,
+    "owner": "Lee_Speed",
+    "base_type": "Synthesized Executioner Sword",
+    "title": "Swordguard",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "5% Chance to cast level 1 Decrepify on striking",
+      "10% Chance to cast level 1 Confuse on striking",
+      "+2 to Paladin Skill Levels",
+      "+20% Faster Hit Recovery",
+      "+235% Enhanced Damage",
+      "+273% Enhanced Maximum Damage (Based on Character Level)",
+      "+91 to Maximum Damage (Based on Character Level)",
+      "Adds 150-250 Fire damage",
+      "+200 Defense vs. Melee",
+      "+100 Defense vs. Missile",
+      "30% Damage Taken Gained as Mana when Hit"
+    ],
+    "synthesised_from": [
+      "Steeldriver",
+      "Hellslayer",
+      "The Fetid Sprinkler"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "fffc7032ec9265909ceb03fb6c931ae16038ca158c56f5d2f2af7db375fa090b",
+    "friendly_id": 83,
+    "owner": "Zardsmasher",
+    "base_type": "Synthesized Espandon",
+    "title": "Crainte Vomir",
+    "properties": [
+      "+2 to Paladin Skill Levels",
+      "+20% Faster Run/Walk",
+      "Adds 71-120 damage",
+      "-33% Target Defense",
+      "+4 to Holy Bolt (Paladin Only)",
+      "+3 to Redemption (Paladin Only)",
+      "+20 to Ball Lightning",
+      "+2 to Dexterity",
+      "+56 to Energy",
+      "+25 to Mana",
+      "Physical Damage Taken Reduced by 10%",
+      "Magic & Elemental Damage Taken Reduced by 5",
+      "+2 to Mana after each Kill",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Brainhew",
+      "Ondal's Wisdom",
+      "The Redeemer"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1d85938046a86e545f8af456700a72dbb6b8a5b57419a01284bb175733df1d97",
+    "friendly_id": 84,
+    "owner": "Zardsmasher",
+    "base_type": "Synthesized Bone Knife",
+    "title": "Wizardspike",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "Indestructible",
+      "+3 to All Skills",
+      "+20% Increased Attack Speed",
+      "+7% Faster Hit Recovery",
+      "+142% Enhanced Damage",
+      "+20 to Ball Lightning",
+      "+20 to Strength",
+      "Increase Maximum Mana 15%",
+      "Regenerate Mana 15%",
+      "+3 to Mana after each Kill",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "The Impaler",
+      "Titan's Revenge",
+      "Ondal's Wisdom"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "92d4fe3041e54c5ff69ad4db74accec7cdf8f17e6a1f0d8b33739e1ac89b0e26",
+    "friendly_id": 85,
+    "owner": "Sylardruid",
+    "base_type": "Synthesized Tulwar",
+    "title": "Blade of Ali Baba",
+    "properties": [
+      "13% Chance to cast level 11 Fire Ball on attack",
+      "+2 to All Skills",
+      "+6 to Minimum Damage",
+      "+5 to Dexterity",
+      "+7 to Energy",
+      "Increase Maximum Mana 20%",
+      "All Resistances +25",
+      "+20 to Mana after each Kill",
+      "227% Extra Gold from Monsters (Based on Character Level)",
+      "Level 15 Enflame (45/45 Charges)",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Todesfaelle Flamme",
+      "Skull Collector"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "4eca89cfe24d1d3fcadca54547e1a61f0dec04d8b9782af55f7fada6137e91f3",
+    "friendly_id": 86,
+    "owner": "Zardogrunk",
+    "base_type": "Synthesized War Sword",
+    "title": "Culwen's Point",
+    "properties": [
+      "50% Chance to cast level 20 Holy Bolt when struck",
+      "+1 to All Skills",
+      "+3 to Druid Skill Levels",
+      "+20% Faster Hit Recovery",
+      "+191% Enhanced Damage",
+      "+100 to Attack Rating",
+      "25% Chance of Crushing Blow",
+      "20% Deadly Strike",
+      "+10 to Strength",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Islestrike",
+      "Boneslayer Blade",
+      "Fleshrender"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "840c06bcd41074e8c2fc8ed73ddecdd8cafbfa8881963e95e35a1e6446a0a026",
+    "friendly_id": 87,
+    "owner": "Fresus_LT",
+    "base_type": "Synthesized Double Bow",
+    "title": "Endlesshail",
+    "properties": [
+      "+67% Enhanced Damage",
+      "Adds 15-30 cold damage",
+      "30% Deadly Strike",
+      "+15 to Dexterity",
+      "+55 to Mana",
+      "Cold Resist +35%",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Steelgoad",
+      "Blade of Ali Baba",
+      "Endlesshail"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "2bb476fb813f47d8c1b2c8d7e2cb1951a59a8114c1f1e5c3288b121c791ba260",
+    "friendly_id": 88,
+    "owner": "HungLikeASkittl",
+    "base_type": "Synthesized Knout",
+    "title": "Baezil's Vortex",
+    "properties": [
+      "5% Chance to cast level 8 Nova on striking",
+      "+2 to Summoning Skills (Necromancer Only)",
+      "+1 to Necromancer Skill Levels",
+      "+10% Faster Cast Rate",
+      "+50% Damage to Undead",
+      "3% Mana stolen per hit",
+      "+2 to Exploding Arrow (Amazon Only)",
+      "+113 to Life (Based on Character Level)",
+      "+113 to Mana (Based on Character Level)",
+      "+20 to Mana after each Kill",
+      "91% Better Chance of Getting Magic Items (Based on Character Level)",
+      "+40% to Exploding Arrow Radius"
+    ],
+    "synthesised_from": [
+      "Blastbark",
+      "Carin Shard",
+      "Skull Collector"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "dee20617e514f75fac631349a712ba6ce4011148ca9648aeee0ae55d1dbe80fa",
+    "friendly_id": 89,
+    "owner": "Stormshild",
+    "base_type": "Synthesized Great Bow",
+    "title": "Rogue's Bow",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "200% Chance to cast level 31 War Cry when you Level-Up",
+      "+50% Increased Attack Speed",
+      "+305% Enhanced Damage",
+      "Adds 10-10 damage",
+      "105% Bonus to Attack Rating",
+      "+163% Damage to Demons",
+      "+140% Damage to Undead",
+      "7% Mana stolen per hit",
+      "-7% to Enemy Physical Resistance",
+      "+6% Increased Physical Damage",
+      "-23% to Enemy Cold Resistance",
+      "Replenish Life 12 per second",
+      "+30 to Mana",
+      "All Resistances +10",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Goldstrike Arch",
+      "Wizendraw"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "66a400ac6647edb79f842c7681be6245494aa1163dddfc22c2380fcbcd3fed3c",
+    "friendly_id": 90,
+    "owner": "Goat_TaintIV",
+    "base_type": "Synthesized Shadow Bow",
+    "title": "Kuko Shakaku",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "2% Chance to cast level 6 Meteor on striking",
+      "+2 to Necromancer Skill Levels",
+      "+30% Increased Attack Speed",
+      "+349% Enhanced Damage",
+      "+100 to Attack Rating",
+      "Adds 40-180 Fire damage",
+      "3% Mana stolen per hit",
+      "4% Life stolen per hit",
+      "Knockback",
+      "+25 to Strength",
+      "+10 to Energy",
+      "Fire Resist +37%",
+      "20% Damage Taken Gained as Mana when Hit",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Skystrike",
+      "Goreshovel",
+      "Blackhand Key"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "3f3944de0c8f7e8b89d1cbac39e0ddcfb71f189b3ab5c9a06b082d1ba52ba835",
+    "friendly_id": 91,
+    "owner": "Stabadon",
+    "base_type": "Synthesized Legend Spike",
+    "title": "Ghostflame",
+    "properties": [
+      "Indestructible",
+      "+20% Increased Attack Speed",
+      "+404% Enhanced Damage",
+      "Ignore Target's Defense",
+      "+28 to Attack Rating",
+      "+108 Magic damage",
+      "Adds 3-5 cold damage",
+      "+15 to Dexterity",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Gleamscythe",
+      "Dimoak's Hew",
+      "Stormstrike"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "185928844a7192716992322528096f0b81abd31660bfc9d45cc9e10d616b336f",
+    "friendly_id": 92,
+    "owner": "KR_GRD",
+    "base_type": "Synthesized Shadow Bow",
+    "title": "Kuko Shakaku",
+    "properties": [
+      "5% Chance to cast level 3 Frozen Orb on striking",
+      "+3 to Bow and Crossbow Skills (Amazon Only)",
+      "+30% Increased Attack Speed",
+      "Fires Explosive Arrows or Bolts",
+      "+154% Enhanced Damage",
+      "Adds 40-180 Fire damage",
+      "Adds 50-140 cold damage",
+      "+4 to Cold Mastery"
+    ],
+    "synthesised_from": [
+      "Bing Sz Wang",
+      "Skystrike"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "8f340c9a5000da1291709b24d6d516414446e61ba3d4d8cd7a6082019b9bb74f",
+    "friendly_id": 93,
+    "owner": "KR_GRD",
+    "base_type": "Synthesized Thresher",
+    "title": "Athena's Wrath",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "Melee attacks deal splash damage",
+      "33% Chance to cast level 3 Amplify Damage on striking",
+      "+75% Increased Attack Speed",
+      "+566% Enhanced Damage",
+      "+90 to Maximum Damage (Based on Character Level)",
+      "+214 to Attack Rating",
+      "Prevent Monster Heal",
+      "+3 to Summon Mastery (Necromancer Only)",
+      "+2 to Terror (Necromancer Only)",
+      "+4 to Energy",
+      "+112 to Mana (Based on Character Level)",
+      "Poison Resist +49%",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "Arm of King Leoric",
+      "Lacerator",
+      "Viperfork"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "90e94214a4183089bcde19584d4c4f9493d5645a1bd1ef2a3d35084d9b5ac0dc",
+    "friendly_id": 94,
+    "owner": "Cayana",
+    "base_type": "Synthesized Ballista",
+    "title": "Buriza-Do Kyanon",
+    "properties": [
+      "+107% Increased Attack Speed",
+      "+288% Enhanced Damage",
+      "-25% Target Defense",
+      "40% Chance of Crushing Blow",
+      "33% Chance of Open Wounds",
+      "+27 to Strength",
+      "+10 to Dexterity"
+    ],
+    "synthesised_from": [
+      "The Diggler",
+      "Stone Crusher",
+      "Lacerator"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "5eb82399d095e528157dd4d328a78a6b68216d84c6f1d6488a067d56e6f6857e",
+    "friendly_id": 95,
+    "owner": "goldbaba",
+    "base_type": "Synthesized Ogre Maul",
+    "title": "Bloodtree Stump",
+    "properties": [
+      "+20% Faster Hit Recovery",
+      "+445% Enhanced Damage",
+      "+136% Damage to Demons (Based on Character Level)",
+      "+100% Damage to Undead",
+      "40% Chance of Crushing Blow",
+      "+3 to Blunt Weapon Mastery (Barbarian Only)",
+      "Cold Resist +20%",
+      "Lightning Resist +20%",
+      "Fire Resist +50%",
+      "Poison Resist +20%",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Bonesnap",
+      "Hone Sundan",
+      "Spire of Honor"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "4990cb79e2588baea99752313d171cc7ba9c73acff27cd6c2d244fa1ea5071c4",
+    "friendly_id": 96,
+    "owner": "mouseybarb",
+    "base_type": "Synthesized Ghost Spear",
+    "title": "Hone Sundan",
+    "properties": [
+      "50% Chance to cast level 6 Decrepify when you Kill an Enemy",
+      "+30% Increased Attack Speed",
+      "+495% Enhanced Damage",
+      "Ignore Target's Defense",
+      "70% Chance of Crushing Blow",
+      "+4 to Grim Ward (Barbarian Only)",
+      "90% Better Chance of Getting Magic Items",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Heart Carver",
+      "Executioner's Justice"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "038f3294d96f5179fadf67646f5e32dfce55092c299ac90c7e73dfa071e5b204",
+    "friendly_id": 97,
+    "owner": "Bo",
+    "base_type": "Synthesized Tulwar",
+    "title": "Blade of Ali Baba",
+    "properties": [
+      "+1 to Paladin Skill Levels",
+      "+105% Enhanced Damage",
+      "+53% Damage to Undead",
+      "3% Mana stolen per hit",
+      "4% Life stolen per hit",
+      "+3 to Vengeance (Paladin Only)",
+      "+21 to Dexterity",
+      "+15 to Mana",
+      "93% Better Chance of Getting Magic Items (Based on Character Level)",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "Rusthandle"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "ed0d3d13724607c9a82e9d9048e562f971b6f1b5e14222907e0a317c6662f4b1",
+    "friendly_id": 98,
+    "owner": "XsavageX",
+    "base_type": "Synthesized Hydra Edge",
+    "title": "Gleamscythe",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+50% Increased Attack Speed",
+      "+511% Enhanced Damage",
+      "Adds 45-85 damage",
+      "35% Deadly Strike",
+      "+12 to Pulverize",
+      "+75 Defense",
+      "+30 to Mana",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Butcher's Pupil",
+      "Warlord's Trust",
+      "Heart Carver"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "d0ac959cc745cbedbd911fe0a3b76c9df9485f76bdb251d5d7c33ecb11f76bcc",
+    "friendly_id": 99,
+    "owner": "fewbaba",
+    "base_type": "Synthesized Colossus Blade",
+    "title": "Swordguard",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "20% Increased Chance of Blocking",
+      "+295% Enhanced Damage",
+      "Ignore Target's Defense",
+      "+455 Defense (Based on Character Level)",
+      "+75 Defense",
+      "+40 to Life",
+      "All Resistances +10",
+      "Physical Damage Taken Reduced by 3",
+      "Attacker Takes Damage of 25",
+      "+60% added chance to release Whirling Axes",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "The Patriarch",
+      "Warlord's Trust",
+      "Suicide Branch"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "5bc46f1adc25c35224103c31d2f7cac834240bc43e4eea55c57fe06a31a35b15",
+    "friendly_id": 100,
+    "owner": "Nogadagirl",
+    "base_type": "Synthesized Winged Axe",
+    "title": "Lacerator",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "33% Chance to cast level 3 Amplify Damage on striking",
+      "+10% Faster Cast Rate",
+      "+250% Enhanced Damage",
+      "33% Chance of Crushing Blow",
+      "33% Chance of Open Wounds",
+      "Prevent Monster Heal",
+      "Knockback",
+      "Heal Stamina Plus 30%",
+      "Repairs 1 durability in 4 seconds"
+    ],
+    "synthesised_from": [
+      "The Atlantean",
+      "Windforce",
+      "Earth Shifter"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "152ed55b6e8c6d1ccaeb3dcebffb868fed77d59ae3023eaeb93e4414b6fcdd08",
+    "friendly_id": 101,
+    "owner": "brb_kvs",
+    "base_type": "Synthesized Mithril Point",
+    "title": "Heart Carver",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "50% Chance to cast level 20 Holy Bolt when struck",
+      "+442% Enhanced Damage",
+      "+5 to Minimum Damage",
+      "35% Bonus to Attack Rating",
+      "+450 to Attack Rating against Undead (Based on Character Level)",
+      "25% Chance of Crushing Blow",
+      "+4 to Grim Ward (Barbarian Only)",
+      "+1 to Fury (Druid Only)",
+      "+25 Defense",
+      "+18 to Strength",
+      "+10 to Energy",
+      "+2 to Light Radius"
+    ],
+    "synthesised_from": [
+      "Islestrike",
+      "Boneslayer Blade",
+      "Rixot's Keen"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "8f1b42876d28bcc770ef2b2c172e207b1fa0d95f2def272b856133d559fc102a",
+    "friendly_id": 102,
+    "owner": "lowbringer",
+    "base_type": "Synthesized Ghost Glaive",
+    "title": "Wraith Flight",
+    "properties": [
+      "+2 to Necromancer Skill Levels",
+      "+347% Enhanced Damage",
+      "Freezes target +2",
+      "Repairs 1 durability in 3 seconds",
+      "Tiger Strike also generates a Blades of Ice Charge",
+      "Ethereal (Cannot be Repaired)"
+    ],
+    "synthesised_from": [
+      "Ume's Lament",
+      "Shadow Killer"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "324b6fc2efdb353c92fa29b1db1f40df9ce2c4f41c1274037934e53f0c8d76db",
+    "friendly_id": 103,
+    "owner": "lowbringer",
+    "base_type": "Synthesized Ghost Glaive",
+    "title": "Wraith Flight",
+    "properties": [
+      "100% Chance to cast level 5 Firestorm on attack",
+      "+1 to Curses (Necromancer Only)",
+      "+20% Increased Attack Speed",
+      "+30% Faster Cast Rate",
+      "+237% Enhanced Damage",
+      "+50 to Attack Rating",
+      "Adds 4-0 Fire damage",
+      "+113 poison damage over 6 seconds",
+      "Poison Resist +50%",
+      "-2 to Light Radius",
+      "Level 13 Grim Ward (21/30 Charges)",
+      "Ethereal (Cannot be Repaired)"
+    ],
+    "synthesised_from": [
+      "Blacktongue",
+      "Bane Ash",
+      "Blackhand Key"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "e744f2beee2e142826cf0dcc2aac8bf239aae21ec640f97c32b07cf888223d95",
+    "friendly_id": 104,
+    "owner": "Dad-Vik",
+    "base_type": "Synthesized Colossus Sword",
+    "title": "Todesfaelle Flamme",
+    "properties": [
+      " Righteous Fire Aura When Equipped",
+      "13% Chance to cast level 11 Fire Ball on attack",
+      "+140% Enhanced Damage",
+      "Adds 12-45 damage",
+      "+112 to Maximum Damage (Based on Character Level)",
+      "+90 to Attack Rating",
+      "-20% to Enemy Fire Resistance",
+      "10% Slower Stamina Drain",
+      "Heal Stamina Plus 15%",
+      "Fire Resist +40%",
+      "-2 to Light Radius",
+      "Level 15 Enflame (45/45 Charges)"
+    ],
+    "synthesised_from": [
+      "Zakarum's Hand",
+      "Bloodletter",
+      "Blackleach Blade"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "71beab069bc02d717481715cc0053c55c9e3d84f7330e221109211507914bd16",
+    "friendly_id": 105,
+    "owner": "Iso_Meisseli",
+    "base_type": "Synthesized Battle Axe",
+    "title": "The Chieftain",
+    "properties": [
+      "25% Chance to cast level 17 Fissure when struck",
+      "+166% Enhanced Damage",
+      "+356 Kick Damage (Based on Character Level)",
+      "-13% to Enemy Lightning Resistance",
+      "33% Chance of Open Wounds",
+      "Slows Target by 50%",
+      "+15 to Energy",
+      "All Resistances +16",
+      "Physical Damage Taken Reduced by 5"
+    ],
+    "synthesised_from": [
+      "The Chieftain",
+      "Spire of Lazarus",
+      "Pompeii's Wrath",
+      "Langer Briser"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "cddf14f50ef71c50abd052acbb952c68fd2d59527934fff27e7e31af8a2c7faa",
+    "friendly_id": 106,
+    "owner": "Nib_baba",
+    "base_type": "Synthesized Berserker Axe",
+    "title": "Rakescar",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+232% Enhanced Damage",
+      "+50 to Attack Rating",
+      "+89 Wounds Bleed Damage Per Second (Based on Character Level)",
+      "Prevent Monster Heal",
+      "+12 to Pulverize",
+      "Knockback",
+      "+75 Defense",
+      "All Resistances +10",
+      "+60% added chance to release Whirling Axes",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Blacktongue",
+      "Ripsaw",
+      "Warlord's Trust"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "1a07d3102195842506bd178647e6822613eda6a7754b06cdf27baad3355b9f7c",
+    "friendly_id": 107,
+    "owner": "jeexz",
+    "base_type": "Synthesized Thunder Maul",
+    "title": "Earth Shifter",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "10% Chance to cast level 5 Frost Nova when struck",
+      "100% Chance to cast level 31 War Cry when you Level-Up",
+      "18% Chance to cast level 19 Fissure on striking",
+      "+30% Increased Attack Speed",
+      "+467% Enhanced Damage",
+      "+15 to Minimum Damage",
+      "+27 to Maximum Damage",
+      "+50% Damage to Undead",
+      "-4% to Enemy Physical Resistance",
+      "+3% Increased Physical Damage",
+      "33% Chance of Crushing Blow",
+      "+5 to Vitality",
+      "+15% to Maximum Cold Resist",
+      "Cold Resist +15%",
+      "Fire Absorb 27%",
+      "Requirements -20%",
+      "Socketed (5)"
+    ],
+    "synthesised_from": [
+      "Cliffkiller",
+      "Coldkill",
+      "Flamebellow"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "028300f3f9e1cd514ee504add8d46a9a0cdb0a5382b1b114520bd7b01cbf16df",
+    "friendly_id": 108,
+    "owner": "konkitttt",
+    "base_type": "Synthesized Winged Harpoon",
+    "title": "Gargoyle's Bite",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "5% Chance to cast level 8 Poison Nova on striking",
+      "Indestructible",
+      "+448% Enhanced Damage",
+      "+140% Damage to Undead",
+      "+250 poison damage over 10 seconds",
+      "13% Life stolen per hit",
+      "10% Chance of Crushing Blow",
+      "Replenish Life 12 per second",
+      "Attacker Takes Damage of 15",
+      "Level 11 Plague Javelin (21/60 Charges)",
+      "Level 8 Amplify Damage (2/3 Charges)"
+    ],
+    "synthesised_from": [
+      "Guardian Naga",
+      "Goldstrike Arch",
+      "The Gavel of Pain"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "47b3383e1b34cf18d015e37de1b34ee965e09078c549c381168fa65ffdab68f7",
+    "friendly_id": 109,
+    "owner": "SickBrain",
+    "base_type": "Synthesized Ogre Maul",
+    "title": "Bonesnap",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+504% Enhanced Damage",
+      "Ignore Target's Defense",
+      "+50% Damage to Undead",
+      "88% Deadly Strike (Based on Character Level)",
+      "+3 to Telekinesis (Sorceress Only)",
+      "+3 to Energy Shield (Sorceress Only)",
+      "+250 Defense vs. Missile",
+      "+10 to Dexterity",
+      "Cold Resist +30%"
+    ],
+    "synthesised_from": [
+      "The Diggler",
+      "Warpspear",
+      "Witchwild String"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "4f551dab121126401094a9c29eb8d52c81c98523c8b07d55fd366b2dc380750c",
+    "friendly_id": 110,
+    "owner": "Rx_Mi",
+    "base_type": "Synthesized Tulwar",
+    "title": "Blade of Ali Baba",
+    "properties": [
+      "33% Chance to cast level 1 Decrepify on striking",
+      "+40% Increased Attack Speed",
+      "Adds 4-44 cold damage",
+      "33% Deadly Strike",
+      "+17 to Dexterity",
+      "Requirements -25%",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "The Battlebranch",
+      "The Reaper's Toll"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "7b1d5e761aaa4b793b1c7cef5dd07018224dcf5378a0d76ea601852779b10b8c",
+    "friendly_id": 111,
+    "owner": "Absolute_Furry",
+    "base_type": "Synthesized Seraph Rod",
+    "title": "Rusthandle",
+    "properties": [
+      "43% Chance to cast level 27 Volcano on Kills",
+      "100% Chance to cast level 31 Meteor when you Die",
+      "+7 to Elemental Skills (Druid Only)",
+      "+1 to Paladin Skill Levels",
+      "+30% Increased Attack Speed",
+      "Adds 3-7 damage",
+      "+98 to Attack Rating",
+      "+50% Damage to Undead",
+      "Adds 17-45 Fire damage",
+      "-4% to Enemy Fire Resistance",
+      "+5% Increased Fire Damage",
+      "8% Life stolen per hit",
+      "33% Chance of Crushing Blow",
+      "Hit Blinds Target +1",
+      "Magic & Elemental Damage Taken Reduced by 1",
+      "Ethereal (Cannot be Repaired), Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Earth Shifter",
+      "The Patriarch",
+      "The Battlebranch"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "8e2c095ea64b6d50d472fb37a1eab915ddc1e21374f7e0b9b586270e4b52b043",
+    "friendly_id": 112,
+    "owner": "NyakDrool",
+    "base_type": "Synthesized Colossus Crossbow",
+    "title": "Buriza-Do Kyanon",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+100% Increased Attack Speed",
+      "+100% Piercing Attack",
+      "+177% Enhanced Damage",
+      "+227 to Maximum Damage (Based on Character Level)",
+      "+14 to Minimum Damage",
+      "Adds 32-196 cold damage",
+      "7% Life stolen per hit",
+      "10% Deadly Strike",
+      "136% Deadly Strike (Based on Character Level)",
+      "+93 Defense",
+      "+25 to Mana",
+      "+15% to Maximum Fire Resist",
+      "+4 to Light Radius",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Hellcast",
+      "Headstriker",
+      "Brainhew"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "31e2a97c9ed34380c0d418b6eb4280fc763246faedcae28f17ebc6f06f1587ab",
+    "friendly_id": 113,
+    "owner": "StormBender",
+    "base_type": "Synthesized Walking Stick",
+    "title": "Bane Ash",
+    "properties": [
+      "4% Chance to cast level 10 Lower Resist on striking",
+      "100% Chance to cast level 5 Firestorm on attack",
+      "+50% Increased Attack Speed",
+      "+56% Enhanced Damage",
+      "+450 to Attack Rating (Based on Character Level)",
+      "+50% Damage to Undead",
+      "Adds 4-0 Fire damage",
+      "+3 to Poison Dagger",
+      "+30 to Mana",
+      "+15% to Maximum Fire Resist",
+      "All Resistances +10",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Hellcast",
+      "Warlord's Trust",
+      "Pus Spitter"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "3dcf9c15f9b676be5101c492bd2ea4d8296c2676331a26f12395d1018a2e5df2",
+    "friendly_id": 114,
+    "owner": "HUGH",
+    "base_type": "Synthesized Unearthed Wand",
+    "title": "Ume's Lament",
+    "properties": [
+      "5% Chance to cast level 1 Decrepify on striking",
+      "33% Chance to cast level 3 Amplify Damage on striking",
+      "+2 to Necromancer Skill Levels",
+      "+50% Faster Cast Rate",
+      "+170% Enhanced Damage",
+      "Adds 15-25 damage",
+      "+50% Damage to Undead",
+      "+160 poison damage over 4 seconds",
+      "7% Life stolen per hit",
+      "+3 to Terror (Necromancer Only)",
+      "+2 to Decrepify (Necromancer Only)",
+      "+40 to Mana",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "The Fetid Sprinkler",
+      "Lacerator",
+      "Spectral Shard"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "7b2ea31b73fd32ff6cc2abddced145707bfe4390cba52bcdc4e0a0ca6161b780",
+    "friendly_id": 115,
+    "owner": "GTO_D",
+    "base_type": "Synthesized Glorious Axe",
+    "title": "The Minotaur",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "5% Chance to cast level 6 Meteor on striking",
+      "+100% Increased Attack Speed",
+      "+439% Enhanced Damage",
+      "+24 to Maximum Damage",
+      "Adds 55-115 Fire damage",
+      "Slows Target by 50%",
+      "+33 to Strength",
+      "Level 11 Meteor (60/60 Charges)",
+      "Socketed (6)"
+    ],
+    "synthesised_from": [
+      "Humongous",
+      "Moonfall"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "fade94cabe2b11fe043a71bc03c1d93cba6f198b586809ade4e23eb5c8d866fa",
+    "friendly_id": 116,
+    "owner": "Blake-Druid",
+    "base_type": "Synthesized Ettin Axe",
+    "title": "Islestrike",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to All Skills",
+      "+2 to Druid Skill Levels",
+      "Fires Explosive Arrows or Bolts",
+      "+66% Piercing Attack",
+      "+197% Enhanced Damage",
+      "25% Chance of Crushing Blow",
+      "50% Deadly Strike",
+      "+36 to Mana",
+      "Magic & Elemental Damage Taken Reduced by 10",
+      "Level 11 Meteor (33/60 Charges)"
+    ],
+    "synthesised_from": [
+      "Moonfall",
+      "Demon Machine",
+      "Arioc's Needle"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "18530a5057c4a01ed91aef91a496570f3e64dd22baa273777e2bdb002baa33ae",
+    "friendly_id": 117,
+    "owner": "ColdWindFire",
+    "base_type": "Synthesized Chu-Ko-Nu",
+    "title": "Demon Machine",
+    "properties": [
+      "2% Chance to cast level 5 Amplify Damage on striking",
+      "100% Chance to cast level 5 Firestorm on attack",
+      "+5 to All Skills",
+      "+30% Faster Cast Rate",
+      "+66% Piercing Attack",
+      "+123% Enhanced Damage",
+      "-9% to Enemy Cold Resistance",
+      "-14% to Enemy Fire Resistance",
+      "+2 to Warmth (Sorceress Only)",
+      "+321 Defense",
+      "+30 to Mana"
+    ],
+    "synthesised_from": [
+      "Bane Ash",
+      "Witchwild String",
+      "Mang Song's Lesson"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "e1f596f5894854e8f1a90f908508e0bdf5f297c4addc08cb71b8a87893333c9e",
+    "friendly_id": 118,
+    "owner": "RabidSlurper",
+    "base_type": "Synthesized Colossus Blade",
+    "title": "Swordguard",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+30% Increased Attack Speed",
+      "+213% Enhanced Damage",
+      "+20 to Maximum Damage",
+      "+45 to Attack Rating",
+      "10% Mana stolen per hit",
+      "30% Chance of Open Wounds",
+      "+80 Defense vs. Missile",
+      "All Resistances +19",
+      "30% Damage Taken Gained as Mana when Hit",
+      "Requirements -50%"
+    ],
+    "synthesised_from": [
+      "Soul Harvest",
+      "Witherstring",
+      "Cliffkiller"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "466127f5be3d80b93e35493b88f8978993d085e507fccf523fbf4e97aaa3eee0",
+    "friendly_id": 119,
+    "owner": "Bearyy",
+    "base_type": "Synthesized Falchion",
+    "title": "Gleamscythe",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "5% Chance to cast level 7 Fissure on striking",
+      "+3 to Elemental Skills (Druid Only)",
+      "+20% Increased Attack Speed",
+      "+246% Enhanced Damage",
+      "10% Deadly Strike",
+      "Hit Blinds Target +1",
+      "Fire Resist +50%",
+      "+3 to Light Radius"
+    ],
+    "synthesised_from": [
+      "Soulflay",
+      "Earthshaker",
+      "Kelpie Snare"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "5fab43ce707d466d1e441946c8fd37ddec22aa6371b3716bf8b3d1b342f1a62c",
+    "friendly_id": 120,
+    "owner": "Apoco-Druid",
+    "base_type": "Synthesized Fanged Knife",
+    "title": "Fleshripper",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+20% Increased Attack Speed",
+      "+50% Faster Cast Rate",
+      "+214% Enhanced Damage",
+      "-50% Target Defense",
+      "9% Mana stolen per hit",
+      "12% Life stolen per hit",
+      "25% Chance of Crushing Blow",
+      "33% Deadly Strike",
+      "50% Chance of Open Wounds",
+      "Hit Blinds Target +1",
+      "Increase Maximum Mana 10%",
+      "Heal Stamina Plus 25%",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Steeldriver",
+      "Suicide Branch",
+      "Coldsteel Eye"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "3120e38142054a226d796a5f2e78eb1a52ce31cfd943d4c08ba621b8d0d83cfd",
+    "friendly_id": 121,
+    "owner": "KR_GRK",
+    "base_type": "Synthesized Flanged Mace",
+    "title": "Sureshrill Frost",
+    "properties": [
+      "+2 to Paladin Skill Levels",
+      "+3 to Druid Skill Levels",
+      "+153% Enhanced Damage",
+      "Adds 63-120 damage",
+      "+50% Damage to Undead",
+      "Adds 63-112 cold damage",
+      "-24% to Enemy Fire Resistance",
+      "+3 to Holy Bolt (Paladin Only)",
+      "Freezes target +3",
+      "+90 to Life (Based on Character Level)"
+    ],
+    "synthesised_from": [
+      "Todesfaelle Flamme",
+      "Athena's Wrath",
+      "The Redeemer"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "443cc159790d7517d95e8c94c9a78edec16ac0056661e998046070819fd7c2b5",
+    "friendly_id": 122,
+    "owner": "Friction",
+    "base_type": "Synthesized Champion Axe",
+    "title": "Brainhew",
+    "properties": [
+      "6% Chance to cast level 5 Blizzard on striking",
+      "+611% Enhanced Damage",
+      "Adds 45-90 damage",
+      "Ignore Target's Defense",
+      "Adds 15-35 Fire damage",
+      "15% Mana stolen per hit",
+      "20% Deadly Strike",
+      "+2 to Holy Freeze (Paladin Only)",
+      "+25 to Mana",
+      "Magic & Elemental Damage Taken Reduced by 11",
+      "Repairs 1 durability in 10 seconds",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Zakarum's Hand",
+      "Hone Sundan",
+      "Magewrath"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "13a8a9beabc2eb97837d495ae12bda4e8e06f77e8bc27f42a1204cc6c901e773",
+    "friendly_id": 123,
+    "owner": "Friction",
+    "base_type": "Synthesized Yari",
+    "title": "Hone Sundan",
+    "properties": [
+      "20% Chance to cast level 15 Tornado on striking",
+      "+385% Enhanced Damage",
+      "Adds 20-40 damage",
+      "+50 to Attack Rating",
+      "Prevent Monster Heal",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Ichorsting",
+      "Husoldal Evo",
+      "Horizon's Tornado"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "8d5c0a01d5968d206fc55c831a3b9a9bb89fb8df09b77e84f51a8e5d51edf962",
+    "friendly_id": 124,
+    "owner": "Fabulous",
+    "base_type": "Synthesized Tabar",
+    "title": "Stormrider",
+    "properties": [
+      "10% Chance to cast level 20 Charged Bolt on striking",
+      "+50% Increased Attack Speed",
+      "Ignore Target's Defense",
+      "Adds 55-70 cold damage",
+      "40% Chance of Open Wounds",
+      "+5 to Molten Strike (Amazon Only)",
+      "+50 Defense vs. Missile",
+      "+40 to Mana",
+      "Cold Resist +50%"
+    ],
+    "synthesised_from": [
+      "Coldkill",
+      "Stormrider",
+      "The Impaler",
+      "Endlesshail"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "501b1c4375d99d4dff257b9e910642506821d8ded2bb82b5f38c1528763f1356",
+    "friendly_id": 125,
+    "owner": "Totemheim",
+    "base_type": "Synthesized Spear",
+    "title": "The Dragon Chang",
+    "properties": [
+      "5% Chance to cast level 4 Poison Nova on striking",
+      "+63 to Attack Rating",
+      "Adds 1-30 Lightning damage",
+      "+300 poison damage over 8 seconds",
+      "+8 to Strength",
+      "+100 to Mana",
+      "+2 to Light Radius",
+      "Level 1 Teleport (7/20 Charges)"
+    ],
+    "synthesised_from": [
+      "Stormstrike",
+      "Spellsteel",
+      "Plague Bearer"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "049a4e43eeb380e1685ee2a8147f898c6e8409047c8e3ad1c4b4a3d71168f8eb",
+    "friendly_id": 126,
+    "owner": "Lente",
+    "base_type": "Synthesized Mighty Scepter",
+    "title": "Heaven's Light",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "4% Chance to cast level 10 Lower Resist on striking",
+      "+2 to Poison Skills",
+      "+2 to Paladin Skill Levels",
+      "+10% Increased Attack Speed",
+      "+413% Enhanced Damage",
+      "+15 to Maximum Damage",
+      "Ignore Target's Defense",
+      "-25% Target Defense",
+      "+50% Damage to Undead",
+      "10% Chance of Crushing Blow",
+      "80% Chance of Open Wounds",
+      "+90 Wounds Bleed Damage Per Second (Based on Character Level)",
+      "+3 to Poison Dagger",
+      "+50% Increased Sanctuary Area Damage Rate",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Ripsaw",
+      "Skewer of Krintiz",
+      "Pus Spitter"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "9fb6835277c6328b8dc11688fe4b6118435db56a0dc3c991165c64c911224e3d",
+    "friendly_id": 127,
+    "owner": "Scutum-Inferni",
+    "base_type": "Synthesized Gothic Staff",
+    "title": "Warpspear",
+    "properties": [
+      "+30% Increased Attack Speed",
+      "+50 to Attack Rating",
+      "+50% Damage to Undead",
+      "+113 poison damage over 6 seconds",
+      "Prevent Monster Heal",
+      "+3 to Teleport (Sorceress Only)",
+      "+12 to Pulverize",
+      "All Resistances +10",
+      "+60% added chance to release Whirling Axes"
+    ],
+    "synthesised_from": [
+      "Blacktongue",
+      "Warlord's Trust",
+      "Stoneraven"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "7413116ab6cca7b59c7d9b9e5aa4993e972b3e7338a7468a0736061d94239ea4",
+    "friendly_id": 128,
+    "owner": "Pallioneone",
+    "base_type": "Synthesized Holy Water Sprinkler",
+    "title": "The Fetid Sprinkler",
+    "properties": [
+      "10% Chance to cast level 1 Confuse on striking",
+      "+20% Increased Attack Speed",
+      "+165% Enhanced Damage",
+      "Adds 35-57 damage",
+      "+50% Damage to Undead",
+      "Replenish Life 20 per second"
+    ],
+    "synthesised_from": [
+      "Husoldal Evo",
+      "Executioner's Justice"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "25d6503e4923f0ff14f3ce2b07798d1bb9963838208d099985d091a81dca8fd7",
+    "friendly_id": 129,
+    "owner": "Braken",
+    "base_type": "Synthesized Rune Staff",
+    "title": "Skull Collector",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+2 to All Skills",
+      "+1 to Necromancer Skill Levels",
+      "+92 to Maximum Damage (Based on Character Level)",
+      "+50% Damage to Undead",
+      "Adds 5-9 Fire damage",
+      "-10% to Enemy Lightning Resistance",
+      "+1 to Telekinesis",
+      "+30 Defense",
+      "+10% to Maximum Lightning Resist",
+      "Lightning Resist +75%",
+      "Physical Damage Taken Reduced by 5",
+      "+20 to Mana after each Kill",
+      "92% Better Chance of Getting Magic Items (Based on Character Level)",
+      "+2 to Light Radius",
+      "Releases One Additional Telekinesis Burst"
+    ],
+    "synthesised_from": [
+      "Spire of Lazarus",
+      "Cloudcrack",
+      "Torch of Iro"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "f31ce4c36db3051d85e67f9165428cbacb56b50002557d08273b0709f078cb10",
+    "friendly_id": 130,
+    "owner": "MoziDaSin",
+    "base_type": "Synthesized Runic Talons",
+    "title": "Bartuc's Cut-Throat",
+    "properties": [
+      "+30% Increased Attack Speed",
+      "+314% Enhanced Damage",
+      "Adds 25-50 damage",
+      "20% Bonus to Attack Rating",
+      "8% Life stolen per hit",
+      "+20 to Dexterity",
+      "Magic & Elemental Damage Taken Reduced by 12",
+      "Repairs 1 durability in 5 seconds",
+      "Ethereal (Cannot be Repaired)"
+    ],
+    "synthesised_from": [
+      "Ginther's Rift"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "e3f497886cad9e8ebce1864765ebc244dd5208a4e8ae7124cb42c508c30aecf7",
+    "friendly_id": 131,
+    "owner": "SCplebsWhy",
+    "base_type": "Synthesized Maul",
+    "title": "Bonesnap",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+5 to All Skills",
+      "+30% Faster Cast Rate",
+      "+92 to Maximum Damage (Based on Character Level)",
+      "Ignore Target's Defense",
+      "+50% Damage to Undead",
+      "-10% to Enemy Lightning Resistance",
+      "40% Chance of Crushing Blow",
+      "40% Chance of Open Wounds",
+      "Regenerate Mana 10%",
+      "Fire Resist +30%"
+    ],
+    "synthesised_from": [
+      "Rixot's Keen",
+      "The Impaler",
+      "Mang Song's Lesson"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "2c5a9f91306880bfe831fe136238302c4eccb47824882bfc0c94ac52354338a5",
+    "friendly_id": 132,
+    "owner": "Rikku",
+    "base_type": "Synthesized Long Staff",
+    "title": "Serpent Lord",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "10% Chance to cast level 10 Ice Blast on striking",
+      "+11% Increased Attack Speed",
+      "+241% Enhanced Damage",
+      "+50% Damage to Undead",
+      "+12 poison damage over 3 seconds",
+      "100% Mana stolen per hit",
+      "50% Deadly Strike",
+      "+15 to Strength",
+      "+8 to Dexterity",
+      "+10 to Mana"
+    ],
+    "synthesised_from": [
+      "Razortine",
+      "Coldkill",
+      "Warshrike"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "e09ca768ef97f7349472536a5cb233d3ef76f934acb99fb13e9b6fdc3c76fc92",
+    "friendly_id": 133,
+    "owner": "ArmeijaII",
+    "base_type": "Synthesized Ancient Sword",
+    "title": "The Atlantean",
+    "properties": [
+      "+2 to Paladin Skill Levels",
+      "+30% Increased Attack Speed",
+      "+360% Enhanced Damage",
+      "50% Bonus to Attack Rating",
+      "+69 to Attack Rating",
+      "+300 poison damage over 8 seconds",
+      "+16 to Strength",
+      "+12 to Dexterity"
+    ],
+    "synthesised_from": [
+      "The Battlebranch",
+      "Plague Bearer"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "b2007f644651086f581770868fb6368bd67314cfd76cc2b904b177c11f04838e",
+    "friendly_id": 134,
+    "owner": "eG-Storas",
+    "base_type": "Synthesized Highland Blade",
+    "title": "Bing Sz Wang",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "5% Chance to cast level 3 Frozen Orb on striking",
+      "+18% Increased Attack Speed",
+      "+35% Piercing Attack",
+      "+256% Enhanced Damage",
+      "+89 to Maximum Damage (Based on Character Level)",
+      "Adds 50-140 cold damage",
+      "+1 to Multiple Shot",
+      "+12 to Pulverize",
+      "+75 Defense",
+      "+20 to Strength",
+      "+15 to Life",
+      "+60% added chance to release Whirling Axes",
+      "Requirements -30%"
+    ],
+    "synthesised_from": [
+      "Doomslinger",
+      "Warlord's Trust",
+      "Goreshovel"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "33e4ba4d20a17f0e97a03678aa0a3fd3d8c50f3a345555d60059a552015ba16b",
+    "friendly_id": 135,
+    "owner": "Oggisin",
+    "base_type": "Synthesized Tomahawk",
+    "title": "Coldkill",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "10% Chance to cast level 5 Frost Nova when struck",
+      "10% Chance to cast level 10 Ice Blast on striking",
+      "+30% Increased Attack Speed",
+      "+362% Enhanced Damage",
+      "+25 to Maximum Damage",
+      "+89 to Maximum Damage (Based on Character Level)",
+      "+356 Kick Damage (Based on Character Level)",
+      "Ignore Target's Defense",
+      "Adds 1-212 Lightning damage",
+      "+15 to Dexterity",
+      "+15% to Maximum Cold Resist",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Athena's Wrath",
+      "Pompeii's Wrath",
+      "Langer Briser"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "79ca0267d544addd82b50ed7d33f6b4c73d116c03ff57c849d891d3990a7f748",
+    "friendly_id": 136,
+    "owner": "Bredik",
+    "base_type": "Synthesized Dimensional Blade",
+    "title": "Ginther's Rift",
+    "properties": [
+      "+90% Increased Attack Speed",
+      "+412% Enhanced Damage",
+      "+156% Damage to Demons",
+      "+100% Enhanced Defense",
+      "+2 to Light Radius",
+      "Repairs 1 durability in 5 seconds"
+    ],
+    "synthesised_from": [
+      "Bloodrise",
+      "Ribcracker",
+      "Ethereal Edge"
+    ],
+    "location": "MercenaryEquipped"
+  },
+  {
+    "id": "d6531e7c9d35d405ea43542c6fe8f6a7d56964bd700c4d946f99095f2e182f43",
+    "friendly_id": 137,
+    "owner": "REDOAKS",
+    "base_type": "Synthesized Ballista",
+    "title": "Buriza-Do Kyanon",
+    "properties": [
+      "+30% Increased Attack Speed",
+      "+202% Enhanced Damage",
+      "+207 to Maximum Damage (Based on Character Level)",
+      "+128 to Maximum Poison Damage",
+      "Freezes target +3",
+      "+104 Defense",
+      "+35 to Dexterity",
+      "+20 to Mana after each Kill",
+      "83% Better Chance of Getting Magic Items (Based on Character Level)"
+    ],
+    "synthesised_from": [
+      "Rakescar",
+      "Crushflange",
+      "Skull Collector",
+      "Buriza-Do Kyanon"
+    ],
+    "location": "Inventory"
+  },
+  {
+    "id": "cde746905e0d41d8ae319375b96830782d1bcf0da64a8d5cbff9bb1f986e13df",
+    "friendly_id": 138,
+    "owner": "Rozmarin",
+    "base_type": "Synthesized Jagged Star",
+    "title": "Moonfall",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+70% Increased Attack Speed",
+      "Adds 30-65 damage",
+      "+100% Damage to Undead",
+      "Adds 55-115 Fire damage",
+      "90% Chance of Crushing Blow",
+      "+100% Enhanced Defense",
+      "+15 to Dexterity",
+      "Magic & Elemental Damage Taken Reduced by 10",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Bonesnap",
+      "Ripsaw",
+      "Ribcracker"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "061f0b1650e46bbb6fd82a6a7854da3066662abe1997862d8b9b72dbbaa33d8a",
+    "friendly_id": 139,
+    "owner": "VENGEANCELOVE",
+    "base_type": "Synthesized Falcata",
+    "title": "Rixot's Keen",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+20% Increased Attack Speed",
+      "+308% Enhanced Damage",
+      "Adds 10-15 damage",
+      "+146 to Maximum Damage (Based on Character Level)",
+      "20% Bonus to Attack Rating",
+      "25% Chance of Crushing Blow",
+      "-2 to Light Radius",
+      "Level 11 Meteor (60/60 Charges)",
+      "Requirements -25%",
+      "Socketed (1)"
+    ],
+    "synthesised_from": [
+      "Griswold's Edge",
+      "Moonfall",
+      "Blackleach Blade"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "6ef94d29b1033286d0949917150cafb47a9afce9ef4391f536e6c0aa79e7c33c",
+    "friendly_id": 140,
+    "owner": "Van_Leatherman",
+    "base_type": "Synthesized Ogre Maul",
+    "title": "Bonesnap",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "2% Chance to cast level 5 Amplify Damage on striking",
+      "+30% Increased Attack Speed",
+      "+565% Enhanced Damage",
+      "+50% Damage to Undead",
+      "Knockback",
+      "+15 to Strength",
+      "+11 to Dexterity",
+      "All Resistances +40",
+      "Socketed (3)"
+    ],
+    "synthesised_from": [
+      "Razortine",
+      "Raven Claw",
+      "Witchwild String"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "f735b949081eac6803224ffebc2d5e1c1105b20df9ef84033a12b5430561095b",
+    "friendly_id": 141,
+    "owner": "LOW-G",
+    "base_type": "Synthesized War Axe",
+    "title": "Rakescar",
+    "properties": [
+      "+50% Increased Attack Speed",
+      "+50% Faster Hit Recovery",
+      "+155% Enhanced Damage",
+      "Adds 30-65 damage",
+      "+150 to Attack Rating",
+      "+128 to Maximum Poison Damage",
+      "50% Chance of Crushing Blow",
+      "Prevent Monster Heal",
+      "+5 to Molten Strike (Amazon Only)",
+      "+3 to Power Strike (Amazon Only)",
+      "Slows Target by 50%",
+      "+100 Defense",
+      "Poison Resist +50%"
+    ],
+    "synthesised_from": [
+      "Blackbog's Sharp",
+      "The Impaler",
+      "Ribcracker"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "9131bcd2da5d8c003dab5a8e8827362cf76165ebf2530b3c2a6943d2d7e6d261",
+    "friendly_id": 142,
+    "owner": "Delta",
+    "base_type": "Synthesized Matriarchal Spear",
+    "title": "Stoneraven",
+    "properties": [
+      "\u00ffc1Corrupted",
+      "+3 to Javelin and Spear Skills (Amazon Only)",
+      "+2 to Amazon Skill Levels",
+      "+228% Enhanced Damage",
+      "Adds 25-50 damage",
+      "6% Mana stolen per hit",
+      "55% Deadly Strike",
+      "+20 to Dexterity",
+      "+15 to Mana"
+    ],
+    "synthesised_from": [
+      "Knell Striker",
+      "Pierre Tombale Couant",
+      "Lycander's Aim"
+    ],
+    "location": "Equipped"
+  },
+  {
+    "id": "abed645e71a064c5935d9574fe74675ded5658548549c6663317e626b15340b5",
+    "friendly_id": 143,
+    "owner": "FurricaneFrank",
+    "base_type": "Synthesized Cryptic Axe",
+    "title": "The Battlebranch",
+    "properties": [
+      "5% Chance to cast level 1 Iron Maiden when struck",
+      "+90% Increased Attack Speed",
+      "+436% Enhanced Damage",
+      "Adds 20-20 damage",
+      "+75 to Attack Rating",
+      "7% Life stolen per hit",
+      "88% Deadly Strike (Based on Character Level)",
+      "Socketed (2)"
+    ],
+    "synthesised_from": [
+      "The Gavel of Pain",
+      "Witchwild String",
+      "The Cranium Basher"
+    ],
+    "location": "MercenaryEquipped"
+  }
+]
