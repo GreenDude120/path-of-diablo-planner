@@ -2786,6 +2786,7 @@ function updateAllEffects() {
 				if (ctcskill_name == "Volcano") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Poison Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Frozen Orb") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
+				if (ctcskill_name == "Frost Nova") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Hydra") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Fissure") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
 				if (ctcskill_name == "Armageddon") { match = 0 } //without this line, CTC discharge would add lightining damage to attack damage display
@@ -3447,6 +3448,17 @@ function getCTCSkillData(name, lvl, group) {
 			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
 		}
 		forbtext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + ")" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}";
+	}
+	else if (name == "Frost Nova") {
+		if (character.class_name == "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * ((1 + 0.16*skills_all["sorceress"][3].level) * (1 + 0.16*skills_all["sorceress"][4].level) * (1+character.cDamage/100)) ;
+			result.cDamage_max = skill.data.values[1][lvl] * ((1 + 0.16*skills_all["sorceress"][3].level) * (1 + 0.16*skills_all["sorceress"][4].level) * (1+character.cDamage/100)) ;
+		} 
+		if (character.class_name != "Sorceress") {
+			result.cDamage_min = skill.data.values[0][lvl] * (1+character.cDamage/100) ;
+			result.cDamage_max = skill.data.values[1][lvl] * (1+character.cDamage/100) ;
+		}
+		fnovatext = "(" + Math.round(result.cDamage_min) + "-" + Math.round(result.cDamage_max) + ")" + " {" +Math.round((result.cDamage_min+result.cDamage_max)/2) + "}";
 	}
 	else if (name == "Hydra") {
 		if (character.class_name == "Sorceress") {
@@ -6848,6 +6860,11 @@ function updateCTC() {
 					else if (equipped[group].ctc[i][2] == "Frozen Orb") {
 						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
 						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + forbtext;
+					}
+
+					else if (equipped[group].ctc[i][2] == "Frost Nova") {
+						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
+						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fnovatext;
 					}
 
 					else if (equipped[group].ctc[i][2] == "Hydra") {

@@ -7,7 +7,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	/* attack damage		*/	base_damage_min:0, base_damage_max:0, damage_min:0, damage_max:0, fDamage_min:0, fDamage_max:0, cDamage_min:0, cDamage_max:0, lDamage_min:0, lDamage_max:0, pDamage_min:0, pDamage_max:0, pDamage_all:0, pDamage_duration:0, pDamage_duration_override:0, mDamage_min:0, mDamage_max:0, min_damage_per_level:0, max_damage_per_level:0, fDamage_max_per_level:0, cDamage_max_per_level:0, kick_min:2, kick_damage_per_level:0, smite_min:0, smite_max:0, e_damage:0, e_max_damage_per_level:0, lDamage_max_per_2_energy:0, cDamage_per_ice:0, cDamage_per_socketed:0, whirlychance:0, added_whirlychance:0, totalwhirly:0, physicalDamage:0, ftick_min:0, ftick_max:0, ctick_min:0, ctick_max:0, ltick_min:0, ltick_max:0, mtick_min:0, mtick_max:0,
 	/* other				*/	ctc:"", cskill:"", ibc:0, life_per_kill:0, mana_per_kill:0, life_replenish:0, life_regen:0, mana_regen:0, damage_to_mana:0, missile_defense:0, melee_defense:0, damage_vs_demons:0, damage_vs_undead:0, ar_vs_demons:0, ar_vs_undead:0, ar_vs_undead_per_level:0, damage_vs_undead_per_level:0, damage_vs_demons_per_level:0, life_per_demon_kill:0, thorns_lightning:0, thorns:0, thorns_per_level:0, thorns_reflect:0, poison_length_reduced:0, curse_length_reduced:0, light_radius:0, slower_stam_drain:0, heal_stam:0, heal_stam_per_level:0, discount:0, 
 	/* other, affects enemy	*/	enemy_fRes:0, enemy_cRes:0, enemy_lRes:0, enemy_pRes:0, enemy_defense:0, enemy_defense_flat:0, target_defense:0, monster_defense_per_hit:0, slows_target:0, slow_enemies:0, freezes_target:0, flee_on_hit:0, blind_on_hit:0, enemy_mRes:0,
-	/* other, boolean		*/	itd:0, pmh:0, cbf:0, peace:0, knockback:0, half_freeze:0, melee_splash:0, glow:0, fade:0, dischargetext:0, cltext:0, novatext:0, volctext:0, pnovatext:0, forbtext:0,  dae:"0/0/0", hydratext:0, mbtext:0, fireballtext:0,
+	/* other, boolean		*/	itd:0, pmh:0, cbf:0, peace:0, knockback:0, half_freeze:0, melee_splash:0, glow:0, fade:0, dischargetext:0, cltext:0, novatext:0, volctext:0, pnovatext:0, forbtext:0,  dae:"0/0/0", hydratext:0, mbtext:0, fireballtext:0, fnovatext:0,
 	/* item properties		*/	sockets:0, e_def:0, req:0, ethereal:0, indestructible:0, autorepair:0, autoreplenish:0, stack_size:0, twoHanded:0, twoHands:0, range:0, throw_min:0, throw_max:0, base_min_alternate:0, base_max_alternate:0, def_low:0, def_high:0, durability:0, max_sockets:0, tier:0, nonmetal:0, name:"none", group:"", type:"", set_bonuses:"", rarity:"", size:"", not:"", only:"", upgrade:"", downgrade:"", aura:"", aura_lvl:0, special:0, sup:0, req_level:0, req_strength:0, req_dexterity:0, 
 	/* sets					*/	set_IK:0, set_Mav:0, set_Mav2:0, set_Gris:0, set_TO:0, set_TR:0, set_Nat:0, set_Ald:0, set_BK:0, set_Disciple:0, set_Angelic:0, set_Cathan:0, set_Cow:0, set_Brethren:0, set_Hwanin:0, set_Naj:0, set_Orphan:0, set_Sander:0, set_Sazabi:0, set_Arcanna:0, set_Arctic:0, set_Berserker:0, set_Civerb:0, set_Cleglaw:0, set_Death:0, set_Hsarus:0, set_Infernal:0, set_Iratha:0, set_Isenhart:0, set_Milabrega:0, set_Sigon:0, set_Tancred:0, set_Vidala:0,
 	/* misc					*/	bonus_corpse_explosion:0, phys_Lightning_Surge:0, extraValkyrie:0, extraGrizzly:0, extraFireGolem:0, extraHydra:0, radius_FreezingArrow:0, reset_cooldown_on_kill:0, cdr_on_striking:0, cdr_on_kill:0, reanimate:0, half_Battle_Orders:0, bonus_sanctuary_rate:0, extra_Bone_Spears:0, extra_arrows_Cold_Arrow:0, extra_arrows_Magic_Arrow:0, extra_arrows_Fire_Arrow:0, extra_arrows_Ice_Arrow:0, extra_conversion_Magic_Arrow:0, curseGrizzly:0, multiproj:0,
@@ -358,11 +358,11 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Death:1, name:"Death's Hand", req_level:6, poison_length_reduced:75, pRes:50, ar_per_level:3, base:"Leather Gloves", rarity:"set", set_bonuses:["set_Death",{},{ias:30},{}], img:"Death's_Hand"},
 	{set_Cleglaw:1, name:"Cleglaw's Pincers", req_level:4, slows_target:25, knockback:1, base:"Chain Gloves", rarity:"set", set_bonuses:["set_Cleglaw",{},{ar_per_level:10},{}], img:"Cleglaw's_Pincers"},
 	{set_Arctic:1, name:"Arctic Mitts", req_level:2, life:20, ias:10, base:"Light Gauntlets", rarity:"set", set_bonuses:["set_Arctic",{},{ar:50},{dexterity:10},{}], img:"Arctic_Mitts"},
-	{rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
-//	{only:"amazon", rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
+	{rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when struck"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
+//	{only:"amazon", rarity:"craft", name:"Bowyer's Hitpower Vambraces", req_level:51, ctc:[[5,4,"Frost Nova","when struck"]], skills_bows:2, thorns:7, knockback:1, life_leech:5, mana_leech:5, ias:20, fRes:30, cRes:30, base:"Vambraces"},
 	{only:"amazon", rarity:"craft", name:"Spearmaiden's Blood Gloves", req_level:47, skills_javelins:2, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, base:"Vampirebone Gloves"},
 	{only:"amazon", rarity:"craft", name:"Gymnast's Caster Mitts", req_level:42, skills_passives:2, mana_regen:10, mana:20, mana_per_kill:3, mana_leech:5, ias:20, mf:25, fRes:30, lRes:30, base:"Bramble Mitts"},
-	{only:"assassin", rarity:"craft", name:"Sensei's Blood Gloves", req_level:51, ctc:[[5,4,"Frost Nova","when hit"]], skills_martial:2, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, base:"Vampirebone Gloves"},
+	{only:"assassin", rarity:"craft", name:"Sensei's Blood Gloves", req_level:51, ctc:[[5,4,"Frost Nova","when struck"]], skills_martial:2, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, base:"Vampirebone Gloves"},
 	{not:["assassin","amazon"], rarity:"craft", name:"Blood Gloves", req_level:47, life:20, life_leech:8, mana_leech:5, cblow:10, ias:20, fRes:30, cRes:30, lRes:30, base:"Vampirebone Gloves"},
 	{not:["amazon"], rarity:"craft", name:"Caster Mitts", req_level:42, mana_regen:10, mana:20, mana_per_kill:3, mana_leech:5, ias:20, mf:25, fRes:30, cRes:30, lRes:30, base:"Bramble Mitts"},
 
@@ -401,7 +401,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rare", name:"Chromatic Boots", req_level:37, frw:30, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Boots"},
 	{rarity:"craft", name:"Blood Boots", req_level:25, frw:30,life_leech:3, life:20, life_replenish:10,  fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Battle Boots"},
 	{rarity:"craft", name:"Caster Boots", req_level:45, frw:30, mana_regen:10, mana:20, max_mana:5, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
-	{rarity:"craft", name:"Hitpower Boots", req_level:45, frw:30, thorns:7, ctc:[[5,4,"Frost Nova","when hit"]], melee_defense:50, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
+	{rarity:"craft", name:"Hitpower Boots", req_level:45, frw:30, thorns:7, ctc:[[5,4,"Frost Nova","when struck"]], melee_defense:50, fRes:40, cRes:40, lRes:40, mf:25, gf:80, base:"Wyrmhide Boots"},
 
 	{rarity:"magic", name:"Imported magic Boots", req_level:64, base:"Battle Boots"},
 	{rarity:"rare", name:"Imported rare Boots", req_level:64, base:"Battle Boots"},
@@ -439,7 +439,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Arctic:1, name:"Arctic Binding", req_level:2, defense:30, cRes:40, base:"Light Belt", rarity:"set", set_bonuses:["set_Arctic",{},{mf:40},{cRes:10},{}], img:"Arctic_Binding"},
 	{rarity:"craft", name:"Blood Coil", req_level:56, life:80, life_leech:3, owounds:10, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Mithril Coil"},
 	{rarity:"craft", name:"Caster Belt", req_level:51, mana_regen:10, mana:20, fcr:10, life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
-	{rarity:"craft", name:"Hitpower Belt", req_level:51, damage_to_mana:10, thorns:7, ctc:[[5,4,"Frost Nova","when hit"]], life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
+	{rarity:"craft", name:"Hitpower Belt", req_level:51, damage_to_mana:10, thorns:7, ctc:[[5,4,"Frost Nova","when struck"]], life:60, fhr:24, strength:30, fRes:30, cRes:30, lRes:30, base:"Vampirefang Belt"},
 
 	{rarity:"magic", name:"Imported magic Belt", req_level:64, base:"Sash"},
 	{rarity:"rare", name:"Imported rare Belt", req_level:64, base:"Sash"},
@@ -499,7 +499,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"sorceress", rarity:"magic", name:"Volcanic Amulet", req_level:42, skills_fire:3},
 	{rarity:"craft", name:"Blood Amulet", req_level:89, skills_class:2, frw:10, life_leech:4, mana_leech:5, life:20, strength:35, all_res:20},
 	{rarity:"craft", name:"Caster Amulet", req_level:89, skills_class:2, fcr:20, mana_regen:10, mana:20, strength:30, energy:5, all_res:20},
-	{rarity:"craft", name:"Hitpower Amulet", req_level:89, ctc:[[5,4,"Frost Nova","when hit"]], skills_class:2, skills_summon_all:3, fcr:10, all_res:20, strength:30, ar_bonus_per_level:1},
+	{rarity:"craft", name:"Hitpower Amulet", req_level:89, ctc:[[5,4,"Frost Nova","when struck"]], skills_class:2, skills_summon_all:3, fcr:10, all_res:20, strength:30, ar_bonus_per_level:1},
 	{only:"", rarity:"magic", name:"Imported magic Amulet", req_level:64, img:"Amulet_1" },
 	{only:"", rarity:"rare", name:"Imported rare Amulet", req_level:64, img:"Amulet_2" },
 	{only:"", rarity:"craft", name:"Imported crafted Amulet", req_level:64, img:"Amulet_2", itemcode:"amu"},
@@ -525,7 +525,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rare", name:"Emperor's Ring", req_level:95, all_res:11, lRes:30, mana:90, life_leech:8, mana_leech:6, fcr:10},
 	{rarity:"craft", name:"Blood Ring", req_level:65, life_leech:11, life:20, strength:25, ar:120, all_res:11, fcr:10, mana_leech:5},
 	{rarity:"craft", name:"Caster Ring", req_level:65, mana_regen:10, mana:110, energy:20, all_res:11, fcr:10, strength:20, life:40},
-	{rarity:"craft", name:"Hitpower Ring", req_level:65, dex:5, ctc:[[5,4,"Frost Nova","when hit"]], thorns:6, all_res:11, fcr:10, strength:20, life:40},
+	{rarity:"craft", name:"Hitpower Ring", req_level:65, dex:5, ctc:[[5,4,"Frost Nova","when struck"]], thorns:6, all_res:11, fcr:10, strength:20, life:40},
 	{rarity:"magic", name:"Fortuitous Ring of Fortune", req_level:31, mf:40},
 	{rarity:"magic", name:"Imported magic Ring", req_level:64 },
 	{rarity:"rare", name:"Imported rare Ring", req_level:64 },
@@ -604,7 +604,9 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"amazon", name:"Blood Raven's Charge", twoHanded:1, req_level:71, skills_bows:4, e_damage:230, ar_bonus:300, explosive_attack:13, type:"bow", base:"Matriarchal Bow", img:"Hellclap", cskill:[[5,"Revive",30]]},
 	{only:"amazon", name:"Lycander's Aim", twoHanded:1, req_level:42, skills_bows:2, skills_amazon:2, e_damage:200, damage_min:25, damage_max:50, ias:20, mana_leech:8, energy:20, dexterity:20, defense_bonus:20, type:"bow", base:"Ceremonial Bow"},	// bonus defense on weapon
 	{only:"amazon", set_Mav:1, name:"M'avina's Caster", twoHanded:1, req_level:70, all_skills:1, e_damage:188, ias:40, ar:50, magic_attack:1, type:"bow", base:"Grand Matron Bow", rarity:"set", set_bonuses:["set_Mav",{},{mDamage_min:114, mDamage_max:377},{ctc_temp1:1},{skills_bows:2},{}], img:"M'avina's_Caster"},
-	{only:"amazon", set_Mav2:1, name:"M'avina's New Caster", twoHanded:1, req_level:70, all_skills:1, e_damage:188, ias:40, ar:50, magic_attack:1, type:"bow", base:"Grand Matron Bow", rarity:"set", set_bonuses:["set_Mav2",{},{mDamage_min:114, mDamage_max:377},{ctc_temp1:1},{skills_bows:2},{}], img:"M'avina's_Caster"},
+
+	{only:"amazon", set_Mav2:1, name:"M'avina's New Caster", twoHanded:1, req_level:70, all_skills:1, e_damage:188, ias:40, ar:50, magic_attack:1, type:"bow", base:"Grand Matron Bow", rarity:"set", set_bonuses:["set_Mav2",{},{mDamage_min:114, mDamage_max:377},{},{skills_bows:2},{}], img:"M'avina's_Caster", ctc:[[10,15,"Frost Nova","on striking (full set bonus)"]]},
+		
 	{rarity:"magic", only:"amazon", name:"Archer's Bow of Quickness", twoHanded:1, req_level:45, skills_bows:6, ias:40, type:"bow", base:"Grand Matron Bow"},
 	{only:"amazon", name:"Lycander's Flank", twoHanded:1, req_level:42, skills_javelins:2, skills_amazon:2, ias:30, e_damage:200, damage_min:25, damage_max:50, life_leech:9, strength:20, vitality:20, defense_bonus:20, type:"spear", base:"Ceremonial Pike"},	// bonus defense on weapon
 	{only:"amazon", name:"Stoneraven", twoHanded:1, req_level:64, skills_javelins:3, e_damage:280, mDamage_min:101, mDamage_max:187, defense:600, all_res:50, type:"spear", base:"Matriarchal Spear"},
@@ -813,6 +815,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rw", name:"Steel ­ ­ - ­ ­ Scimitar", sup:15, req_level:13, e_damage:20, ias:25, damage_min:3, damage_max:3, ar:50, owounds:50, mana_per_kill:2, light_radius:1, type:"sword", base:"Scimitar"},
 	{rarity:"rw", name:"Strength ­ ­ - ­ ­ Cutlass", sup:15, req_level:25, e_damage:35, life_leech:7, cblow:25, strength:20, vitality:10, mana_per_kill:2, life_per_hit:8, type:"sword", base:"Cutlass", pod_changes:1},
 	{rarity:"rw", name:"Voice of Reason ­ ­ - ­ ­ Highland Blade", sup:15, req_level:49, ctc:[[15,13,"Frozen Orb","on striking"],[18,20,"Glacial Spike","on striking"]], ar:50, damage_vs_demons:350, damage_vs_undead:375, ar_vs_undead:50, cDamage_min:100, cDamage_max:220, enemy_cRes:-24, dexterity:10, cbf:1, gf:75, light_radius:1, twoHanded:1, type:"sword", base:"Highland Blade"},
+	{rarity:"rw", name:"Voice of Reason ­ ­ - ­ ­ Phase Blade", sup:15, req_level:49, ctc:[[15,13,"Frozen Orb","on striking"],[18,20,"Glacial Spike","on striking"]], ar:50, damage_vs_demons:350, damage_vs_undead:375, ar_vs_undead:50, cDamage_min:100, cDamage_max:220, enemy_cRes:-24, dexterity:10, cbf:1, gf:75, light_radius:1, type:"sword", base:"Phase Blade"},
 	{not:["amazon","assassin","necromancer","sorceress"], rarity:"rw", name:"Unbending Will ­ ­ - ­ ­ Colossus Blade", req_level:41, e_damage:350, ctc:[[18,18,"Taunt","on striking"]], skills_combat_barbarian:3, ias:30, damage_max:9, ar:50, damage_vs_undead:75, ar_vs_undead:50, life_leech:10, pmh:1, strength:10, vitality:10, damage_reduced:8, light_radius:1, req:-20, twoHanded:1, type:"sword", base:"Colossus Blade", pod_changes:1},
 	{rarity:"rw", name:"Unbending Will ­ ­ - ­ ­ Phase Blade", req_level:41, e_damage:350, ctc:[[18,18,"Taunt","on striking"]], skills_combat_barbarian:3, ias:30, damage_max:9, ar:50, damage_vs_undead:75, ar_vs_undead:50, life_leech:10, pmh:1, strength:10, vitality:10, damage_reduced:8, light_radius:1, req:-20, type:"sword", base:"Phase Blade", pod_changes:1},
 //	{rarity:"rw", name:"Venom ­ ­ - ­ ­ Fanged Knife", sup:15, req_level:59, itd:1, pDamage_all:273, pDamage_duration:6, mana_leech:7, pmh:1, half_freeze:1, type:"dagger", base:"Fanged Knife", pod_changes:1, cskill:[[13,"Poison Nova",11],[15,"Desecrate",27]]},
@@ -1098,7 +1101,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{rarity:"rare", name:"Heavenly Blade", req_level:54, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:450, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, req:-30, type:"sword", base:"Phase Blade"},
 	{only:"barbarian", rarity:"magic", name:"Echoing Blade Colossus Blade", req_level:54, skills_warcries:3, type:"sword", twoHanded:1, base:"Colossus Sword"},
 	{rarity:"craft", name:"Cruel Master's Blood Axe", req_level:64, ctc:[[10,1,"Amplify Damage","on striking"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, life_leech:4, life:20, req:-30, type:"axe", base:"Berserker Axe"},
-	{rarity:"craft", name:"Grandmaster's Hitpower Maul", req_level:65, ctc:[[5,4,"Frost Nova","when hit"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, damage_max:20, thorns:7, req:-30, twoHanded:1, type:"hammer", base:"Thunder Maul"},
+	{rarity:"craft", name:"Grandmaster's Hitpower Maul", req_level:65, ctc:[[5,4,"Frost Nova","when struck"]], ias:40, e_damage:510, ar:250, ar_per_level:16.5, max_damage_per_level:0.5, damage_max:20, thorns:7, req:-30, twoHanded:1, type:"hammer", base:"Thunder Maul"},
 	// User found synth items
 //	{synth:"true", name:"Testeroo",req_level:71, e_damage:220, pierce:33, life_leech:18, owounds:33, slows_target:25, twoHanded:1, type:"crossbow", base:"Demon Crossbow", img:"Gut_Siphon"},
 	{synth:"true", name:"Synth Aramex's Gargoyle's Bite", req_level:70, damage_min:15, damage_max:45, pDamage_all:1039, pDamage_duration:10, pDamage:14, owounds:30, skill_Desecrate:4, skill_Deadly_Poison:5, slows_target:50, cRes:5, lRes:5, fRes:5, pRes:100, autoreplenish:1, type:"javelin", base:"Winged Harpoon", img:"Gargoyle's_Bite", cskill:[[11,"Plague Javelin",60]]},
@@ -1732,7 +1735,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	var sets = {
 		set_IK:["Immortal King",{},{ar:50},{ar:75},{ar:125},{ar:200},{skills_barbarian:3, life:150, all_res:50, mDamage_reduced:10, glow:1}],
 		set_Mav:["M'avina's Battle Hymn",{},{strength:20},{dexterity:30},{},{skills_amazon:3, all_res:50, defense:100, ar:100, mf:100, glow:1}],
-		set_Mav2:["M'avina's New Battle Hymn",{},{strength:20},{dexterity:30},{},{skills_amazon:3, all_res:50, defense:100, ar:100, mf:100, glow:1}],
+		set_Mav2:["M'avina's New Battle Hymn",{},{strength:20},{dexterity:30},{},{skills_amazon:3, all_res:50, defense:100, ar:100, mf:100, glow:1 }],
 		set_Ald:["Aldur's Watchtower",{},{ar_bonus:150},{mf:50},{skills_druid:3, damage_bonus:350, mana_leech:10, all_res:50, defense:150, mana:150, glow:1}],
 		set_TO:["Trang-Oul's Avatar",{},{oskill_Fire_Ball:18, mana_regen:15},{oskill_Fire_Wall:15, mana_regen:15},{oskill_Meteor:17, mana_regen:15},{skills_necromancer:3, life_leech:20, oskill_Fire_Mastery:3, defense:200, mana:100, mana_regen:15, all_res:50, glow:1}],
 		set_Gris:["Griswold's Legacy",{},{strength:20},{dexterity:30},{skills_paladin:3, fhr:30, ar:200, life:150, all_res:50, glow:1}],
