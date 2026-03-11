@@ -1454,6 +1454,7 @@ explosive_attack:{index:[], format:["Fires Explosive Arrows or Bolts"]},
 magic_attack:{index:[], format:["Fires Magic Arrows"]},
 
 ctc_temp1:{index:[], format:["10% chance to cast level 15 Nova on striking"]},			// TODO: refine equip() & related functions to allow ctc affixes to function as item set bonuses  (M'avina's Caster)
+//^^ ctc properties will now work in set_bonus properties
 ctc_temp2:{index:[], format:["25% chance to cast level 5 Static Field when struck"]},	// TODO: refine equip() & related functions to allow ctc affixes to function as shared set bonuses  (Cow King's Leathers)
 //ctc_temp3:{index:[], format:[ctc:[[25,3,"Nova","when struck"]]]},			// TODO: refine equip() & related functions to allow ctc affixes to function as item set bonuses  (M'avina's Caster)
 

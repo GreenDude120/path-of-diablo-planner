@@ -1452,8 +1452,22 @@ function equip(group, val) {
 			var after = Math.round(old_set_after,0)
 			// remove set bonuses for old item
 			for (let i = 1; i <= before; i++) {
-				for (affix in equipped[group]["set_bonuses"][i]) {
-					character[affix] -= equipped[group]["set_bonuses"][i][affix]
+				var old_bonus = equipped[group]["set_bonuses"][i];
+				if (!old_bonus) { continue; }
+				for (affix in old_bonus) {
+					if (affix === "ctc") {
+						var oldCtcArr = old_bonus[affix];
+						if (Array.isArray(oldCtcArr)) {
+							for (let j = 0; j < oldCtcArr.length; j++) {
+								var oldCtcSkillName = oldCtcArr[j][2];
+								for (ctcskill in effect_ctcskills) {
+									if (ctcskill.split('_').join(' ') == oldCtcSkillName) { removeEffect(ctcskill+"-"+group) }
+								}
+							}
+						}
+					} else {
+						character[affix] -= old_bonus[affix]
+					}
 				}
 			}
 			equipped[group]["set_bonuses"][1] = 0	// save "state" for invalid/outdated set info
@@ -1620,8 +1634,31 @@ function equip(group, val) {
 			var after = Math.round(set_after,0)
 			// add set bonuses for new item
 			for (let i = 1; i <= after; i++) {
-				for (affix in set_bonuses[i]) {
-					character[affix] += set_bonuses[i][affix]
+				var new_bonus = set_bonuses[i];
+				if (!new_bonus) { continue; }
+				for (affix in new_bonus) {
+					if (affix === "ctc") {
+						var newCtcArr = new_bonus[affix];
+						if (Array.isArray(newCtcArr)) {
+							for (let j = 0; j < newCtcArr.length; j++) {
+								var newCtcSkillLevel = newCtcArr[j][1];
+								var newCtcSkillName = newCtcArr[j][2];
+								for (ctcskill in effect_ctcskills) {
+									if (ctcskill.split('_').join(' ') == newCtcSkillName) {
+										for (let k = 0; k < ctcskillName.length; k++) {
+											if (ctcskillName[k] == "" && ctcskillLevel[k] == 0) {
+												ctcskillName[k] = newCtcSkillName;
+												ctcskillLevel[k] = newCtcSkillLevel;
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+					} else {
+						character[affix] += new_bonus[affix]
+					}
 				}
 			}
 			equipped[group]["set_bonuses"][1] = 1	// valid set info
@@ -4198,6 +4235,8 @@ function equipmentHover(group) {
 		for (let i = 1; i < bonuses.length; i++) {
 			if (amount >= i) {
 				for (affix in bonuses[i]) {
+					// Aggregate numeric bonuses; handle CTC separately below for display
+					if (affix === "ctc") { continue; }
 					if (typeof(list_bonuses[affix]) == 'undefined') { list_bonuses[affix] = 0 }
 					list_bonuses[affix] += bonuses[i][affix]
 				}
@@ -4211,7 +4250,7 @@ function equipmentHover(group) {
 				}
 			}
 		}
-		for (affix in list_bonuses) { if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
+		for (affix in list_bonuses) { if (typeof(stats[affix]) != 'undefined' && stats[affix] != unequipped[affix] && stats[affix] != 1) {
 			var source = list_bonuses;
 			var affix_line = "";
 			var value = source[affix];
@@ -4243,7 +4282,7 @@ function equipmentHover(group) {
 			if (halt == true) { value_combined = 0 }
 			if (value_combined != 0) { set_affixes += affix_line+"<br>" }
 		} }
-		for (affix in list_group_bonuses) { if (stats[affix] != unequipped[affix] && stats[affix] != 1) {
+		for (affix in list_group_bonuses) { if (typeof(stats[affix]) != 'undefined' && stats[affix] != unequipped[affix] && stats[affix] != 1) {
 			var source = list_group_bonuses;
 			var affix_line = "";
 			var value = source[affix];
@@ -4275,6 +4314,17 @@ function equipmentHover(group) {
 			if (halt == true) { value_combined = 0 }
 			if (value_combined != 0) { set_group_affixes += affix_line+"<br>" }
 		} }
+		// Add CTC lines from per-item set bonuses (do not aggregate numerically)
+		var set_ctc_text = "";
+		for (let i = 1; i < bonuses.length; i++) {
+			if (amount >= i && bonuses[i] && Array.isArray(bonuses[i].ctc)) {
+				for (let j = 0; j < bonuses[i].ctc.length; j++) {
+					var c = bonuses[i].ctc[j];
+					set_ctc_text += c[0]+"% chance to cast level "+c[1]+" "+c[2]+" "+c[3]+"<br>";
+				}
+			}
+		}
+		if (set_ctc_text != "") { set_affixes += set_ctc_text; }
 		if (set_group_affixes != "") { set_group_affixes = "<br>"+group_bonuses[0]+":<br>"+set_group_affixes }
 	} }
 	if (socketed_affixes != "") { socketed_affixes = "<br>"+socketed_affixes }
@@ -6799,135 +6849,136 @@ function updateTertiaryStats() {
 // ---------------------------------
 function updateCTC() {
 	var stats = "";
-	
-	
-	
+
+	// Helper to build a CTC line and ensure getCTCSkillData is invoked
+	function formatCtcStat(chance, lvl, name, trigger) {
+		var stat = "";
+		if (name == "Discharge") {
+			var danctcdmg = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + dischargetext;
+		}
+		else if (name == "Chain Lightning") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + cltext;
+		}
+		else if (name == "Nova") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + novatext;
+		}
+		else if (name == "Volcano") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + volctext;
+		}
+		else if (name == "Molten Boulder") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + mbouldertext;
+		}
+		else if (name == "Fissure") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + fissuretext;
+		}
+		else if (name == "Hurricane") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + hurritext;
+		}
+		else if (name == "Armageddon") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + armatext;
+		}
+		else if (name == "Ball Lightning") {
+			var lDamage_min = character_all.any.getSkillData(name,lvl,0);
+			var lDamage_max = character_all.any.getSkillData(name,lvl,1);
+			var balltext = "(" + Math.round(lDamage_min) + "-" + Math.round(lDamage_max) + ")" + " {" +Math.round((lDamage_min+lDamage_max)/2) + "}";
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + balltext;
+		}
+		else if (name == "Poison Nova") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + pnovatext;
+		}
+		else if (name == "Frozen Orb") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + forbtext;
+		}
+		else if (name == "Frost Nova") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + fnovatext;
+		}
+		else if (name == "Hydra") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + hydratext;
+		}
+		else if (name == "Fire Ball") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + fireballtext;
+		}
+		else if (name == "Meteor") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + meteotext;
+		}
+		else if (name == "Blizzard") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + blizztext;
+		}
+		else if (name == "Glacial Spike") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + glacialtext;
+		}
+		else if (name == "Ice Arrow") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + icearrowtext;
+		}
+		else if (name == "Static Field") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + staticftext;
+		}
+		else if (name == "War Cry") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + warcrytext;
+		}
+		else if (name == "Cleave") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + warcrytext;
+		}
+		else if (name == "Firestorm") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + firestormtext;
+		}
+		else if (name == "Molten Strike") {
+			var danctcdmg2 = getCTCSkillData(name,lvl);
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger + " " + moltenstext;
+		}
+		else {
+			stat = chance+"% chance to cast level "+lvl+" "+name+" "+trigger;
+		}
+		return stat;
+	}
+
 	for (group in equipped) {
 		if (typeof(equipped[group].ctc) != 'undefined') {
 			if (equipped[group].ctc != "") {
 				for (let i = 0; i < equipped[group].ctc.length; i++) {
-					if (equipped[group].ctc[i][2] == "Discharge") {
-//						getCTCSkillData(ctcname,ctclvl) ;
-						var danctcdmg = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-//						var danctcdmg = character.getCTCSkillData("Discharge",21) ;
-//						ctcdmg = "(" + danctcdmg.result.lDamage_min + "-" + danctcdmg.result.lDamage_max + ")" ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + dischargetext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Chain Lightning") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + cltext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Nova") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + novatext;
-					}
-					else if (equipped[group].ctc[i][2] == "Volcano") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + volctext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Molten Boulder") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + mbouldertext;
-					}
-					else if (equipped[group].ctc[i][2] == "Fissure") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fissuretext;
-					}
-					else if (equipped[group].ctc[i][2] == "Hurricane") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + hurritext;
-					}
-					else if (equipped[group].ctc[i][2] == "Armageddon") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + armatext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Ball Lightning") {
-						lDamage_min = character_all.any.getSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1],0) ;
-						lDamage_max = character_all.any.getSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1],1) ;
-						balltext = "(" + Math.round(lDamage_min) + "-" + Math.round(lDamage_max) + ")" + " {" +Math.round((lDamage_min+lDamage_max)/2) + "}";
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + balltext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Poison Nova") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + pnovatext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Frozen Orb") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + forbtext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Frost Nova") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fnovatext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Hydra") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + hydratext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Fire Ball") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + fireballtext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Meteor") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + meteotext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Blizzard") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + blizztext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Glacial Spike") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + glacialtext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Ice Arrow") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + icearrowtext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Static Field") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + staticftext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "War Cry") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + warcrytext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Cleave") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + warcrytext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Firestorm") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + firestormtext;
-					}
-
-					else if (equipped[group].ctc[i][2] == "Molten Strike") {
-						var danctcdmg2 = getCTCSkillData(equipped[group].ctc[i][2],equipped[group].ctc[i][1]) ;
-						var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] + " " + moltenstext;
-					}
-
-					else {var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
-					}
-
-					//var stat = equipped[group].ctc[i][0]+"% chance to cast level "+equipped[group].ctc[i][1]+" "+equipped[group].ctc[i][2]+" "+equipped[group].ctc[i][3] ;//+ ctcdmg ;// + dischargetext;
+					var ctcEntry = equipped[group].ctc[i];
+					var stat = formatCtcStat(ctcEntry[0], ctcEntry[1], ctcEntry[2], ctcEntry[3]);
 					stats += (stat + "<br>")					
-				}				
+				}			
+			}
+		}
+	}
+
+	// Include CTC granted via set bonuses
+	for (group in equipped) {
+		if (typeof(equipped[group].rarity) != 'undefined' && equipped[group].rarity == "set" && typeof(equipped[group].set_bonuses) != 'undefined') {
+			var bonuses = equipped[group].set_bonuses;
+			var set = bonuses[0];
+			var amount = Math.round(character[set]);
+			for (let i = 1; i < bonuses.length; i++) {
+				if (amount >= i && bonuses[i] && Array.isArray(bonuses[i].ctc)) {
+					for (let j = 0; j < bonuses[i].ctc.length; j++) {
+						var c = bonuses[i].ctc[j];
+						var stat = formatCtcStat(c[0], c[1], c[2], c[3]);
+						stats += (stat + "<br>");
+					}
+				}
 			}
 		}
 	}
