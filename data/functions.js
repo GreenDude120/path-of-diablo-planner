@@ -546,12 +546,14 @@ function loadParams() {
     const params = new URLSearchParams(window.location.search);
 
     // --- Helpers ---
-    function findRunewordByName(name) {
+    function findRunewordByName(name, slot) {
         if (!name) return null;
         const n = String(name).trim().toLowerCase();
         for (let k in runewordProperties) {
             const rp = runewordProperties[k];
             if (!rp) continue;
+			const isSlotMatch = rp.allowedCategories.includes(slot);
+			if (!isSlotMatch) continue; // skip runeword variations that aren't valid for the current slot, eg. phoenix in the offhand slot should skip the first weapon variant
             if ((rp.name && rp.name.toLowerCase() === n) || k.toLowerCase() === n) return rp;
         }
         return null;
@@ -795,7 +797,7 @@ if (rarity === "rw" || name.includes(" - ")) {
 
             // Robustly find the runeword object (works if keys or display name are used)
             const runewordObj =
-                (typeof findRunewordByName === "function" && findRunewordByName(rwName))
+                (typeof findRunewordByName === "function" && findRunewordByName(rwName, slot))
                 || runewordProperties[rwName]
                 || runewordProperties[rwName.toLowerCase()];
 
