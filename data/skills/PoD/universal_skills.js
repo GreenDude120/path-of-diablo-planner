@@ -113,6 +113,13 @@ var character_any = {
 		if (skillName == "Deadly Poison" && elem > 0 && elem < 3) { result *= ((1 + (0.10*skills[15].level + 0.10*skills[19].level)) * (1+character.pDamage/100)) }
 		if (skillName == "Revive" && elem == 0) {					result = (skill.data.values[elem][1] + Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[0][skills[0].level+skills[0].extra_levels]) }
 		if (skillName == "Revive" && elem == 1) {					result = (skill.data.values[elem][1] + Math.min(1,(skills[0].level+skills[0].force_levels))*~~skills[0].data.values[1][skills[0].level+skills[0].extra_levels]) }
+		if (skill.name == "Blood Golem") {
+			var sum_damage = 1; // for necro this is modified by summon mastery, but we can skip that here
+			var sum_life = 1; // for necro this is modified by summon mastery, but we can skip that here
+			var diffResult = skill.data.values[elem][character.difficulty]; // summon base damage and life depends on difficulty 
+			if (skill.name == "Blood Golem" && elem < 2) { 			result = (sum_damage * diffResult) } // elem 0 is the min damage, elem 1 is the max damage
+			if (skill.name == "Blood Golem" && elem == 2) { 		result = (sum_life * diffResult) } // elem 2 is the life
+		}
 
 		// Paladin
 		var phys_min = 0;
@@ -204,6 +211,10 @@ var character_any = {
 
 		if (skill.name == "Whirling Axes") { result.whirlychance = skill.data.values[2][lvl]}
 
+		if (skill.name == "Blood Golem") {
+			if (effects[id].info.enabled == 1) { for (effect_id in effects) { var idName = effect_id.split("-")[0]; if (effect_id != id && (idName == "Blood_Golem" || idName == "Iron_Golem" || idName == "Clay_Golem" || idName == "Fire_Golem")) { disableEffect(effect_id) } } }
+			result.life_per_ranged_hit = skill.data.values[3][lvl]; result.life_per_hit = skill.data.values[4][lvl]; result.radius = skill.data.values[5][lvl];
+		}
 		if (skill.name == "Deadly Poison") {
 			if (effects[id].info.enabled == 1) { for (effect_id in effects) { if (effect_id != id && effect_id.split("-")[0] == id) { disableEffect(effect_id) } } }
 			result.pDamage_min = skill.data.values[1][lvl] * (1 + (0.10*skills[15].level + 0.10*skills[19].level));
@@ -276,6 +287,7 @@ var character_any = {
 		else if (skillName == "Telekinesis") {		attack = 0; spell = 1; lDamage_min = character_any.getSkillData(skillName,lvl,0); lDamage_max = character_any.getSkillData(skillName,lvl,1); }
 		else if (skillName == "Whirlwind") {		attack = 1; spell = 0; ar_bonus = character_any.getSkillData(skillName,lvl,1); damage_bonus = character_any.getSkillData(skillName,lvl,0); }
 		else if (skillName == "Whirling Axes") {	attack = 1; spell = 0; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); }
+		else if (skillName == "Blood Golem") {		attack = 0; spell = 1; damage_min = character_any.getSkillData(skillName,lvl,0); damage_max = character_any.getSkillData(skillName,lvl,1); }
 		
 		//	else if (skillName == "Discharge") {		attack = 0; spell = 1; lvl += character.skills_lightning_all; lDamage_min = character_any.getSkillData(skillName,lvl,1); lDamage_max = character_any.getSkillData(skillName,lvl,2); } 
 	//	TODO: check weapon requirements (only conflict would be a Passion bow, which grants Bash & Zeal...) & werewolf/werebear requirements
