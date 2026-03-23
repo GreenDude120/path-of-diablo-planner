@@ -6152,12 +6152,8 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	
 	if (c.class_name === "Sorceress") {
 		// Check if ES effect is active
-		if (effects["Energy Shield"] && effects["Energy Shield"].info.enabled == 1) {
-			esLevel = effects["Energy Shield"].level;
-		}
-		// Fallback: check if character has skill points in ES (skill index 19)
-		else if (typeof skills !== 'undefined' && skills[19] && skills[19].level > 0) {
-			esLevel = skills[19].level + skills[19].extra_levels;
+		if (effects["Energy_Shield"] && effects["Energy_Shield"].info.enabled == 1) {
+			esLevel = effects["Energy_Shield"].info.level;
 		}
 		
 		if (esLevel > 0) {
@@ -6422,12 +6418,8 @@ function calculateDamageTaken(damageAmount, damageType) {
 	
 	if (c.class_name === "Sorceress") {
 		// Check if ES effect is active
-		if (effects["Energy Shield"] && effects["Energy Shield"].info.enabled == 1) {
-			esLevel = effects["Energy Shield"].level;
-		}
-		// Fallback: check if character has skill points in ES (skill index 19)
-		else if (typeof skills !== 'undefined' && skills[19] && skills[19].level > 0) {
-			esLevel = skills[19].level + skills[19].extra_levels;
+		if (effects["Energy_Shield"] && effects["Energy_Shield"].info.enabled == 1) {
+			esLevel = effects["Energy_Shield"].info.level;
 		}
 		
 		if (esLevel > 0) {
