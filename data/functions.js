@@ -1418,7 +1418,11 @@ function equip(group, val) {
 	var found = 0;
 	if (group == "offhand") { for (item in equipment[group]) { if (equipment[group][item].name == val) { found = 1 } } }
 	if (found == 0 && group == "offhand") { src_group = "weapon" }
-	if (group == "weapon") {applyCustomED('weapon')}
+	// NOTE: Custom on-weapon ED override should only be applied when the user edits
+	// the "Custom On-Wep ED%" input, not every time a weapon is equipped.
+	// Calling applyCustomED() here interferes with character.e_damage when
+	// swapping weapons, so it is intentionally disabled.
+	// if (group == "weapon") { applyCustomED('weapon'); }
 	var itemType = "";
 	var twoHanded = 0;
 	for (item in equipment[src_group]) { if (equipment[src_group][item].name == val) { twoHanded = ~~equipment[src_group][item].twoHanded; if (typeof(equipment[src_group][item].type) != 'undefined') { itemType = equipment[src_group][item].type } } }
@@ -9830,31 +9834,37 @@ document.addEventListener("DOMContentLoaded", () => {
 // Set on-weapon enhanced damage
 function applyCustomED(slot) {
 	const input = document.getElementById('ed_' + slot);
-	const customDelta = parseInt(input.value, 10); // Can be positive or negative
+	const customValue = parseInt(input.value, 10); // Absolute on-weapon ED value
 
 	const item = equipped[slot];
 	if (!item) {
-		character.e_damage = 0;
+		// No equipped item in this slot; nothing to adjust.
 		return;
 	}
 
-	// If there's no original e_damage, default it to 0
+	// Ensure we have a stored "original" ED for this item (from its runeword/base).
 	if (typeof item.baseED !== 'number') {
 		item.baseED = typeof item.e_damage === 'number' ? item.e_damage : 0;
 	}
 
-	// Always reset to baseED before applying adjustment
-	item.e_damage = item.baseED;
+	// Track previous ED so we can adjust character.e_damage by the delta.
+	const previousED = typeof item.e_damage === 'number' ? item.e_damage : 0;
 
-	if (!isNaN(customDelta)) {
-		item.e_damage = customDelta;
-		character.e_damage = customDelta;
-	} else {
-		character.e_damage = 0;
-		item.e_damage = item.baseED; // Keep original
+	// Determine the new ED for this weapon: either the user override, or the base value.
+	let newED = item.baseED;
+	if (!isNaN(customValue)) {
+		newED = customValue;
 	}
 
-//	updateCharacterStats?.();
+	item.e_damage = newED;
+
+	// Adjust the global on-weapon ED by the difference contributed by this slot
+	// so that other sources of ED (offhand, sockets, corruptions, sets) remain intact.
+	if (typeof character.e_damage !== 'number') {
+		character.e_damage = 0;
+	}
+	character.e_damage += (newED - previousED);
+
 	update?.();
 }
 
