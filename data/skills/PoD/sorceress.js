@@ -1,5 +1,5 @@
 
-var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vitality:10, energy:35, life:40, mana:35, stamina:174, levelup_life:1.5, levelup_stamina:1, levelup_mana:2, ar_per_dexterity:5, life_per_vitality:2, stamina_per_vitality:1, mana_per_energy:2, starting_strength:10, starting_dexterity:25, starting_vitality:10, starting_energy:35, ar_const:-15, block_const:5, skill_layout:"./images/skill_trees/PoD/sorceress.png", mana_regen:1.66,
+var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vitality:10, energy:35, life:40, mana:35, stamina:174, levelup_life:1.5, levelup_stamina:1, levelup_mana:2, ar_per_dexterity:5, life_per_vitality:2, stamina_per_vitality:1, mana_per_energy:2, starting_strength:10, starting_dexterity:25, starting_vitality:10, starting_energy:35, ar_const:-15, block_const:5, skill_layout:"./images/skill_trees/PoD/sorceress.png", mana_regen:0,
 	weapon_frames:{dagger:16, sword:[17,21], axe:[17,15], mace:[17,15], thrown:[17,16], staff:15, polearm:15, scepter:17, wand:17, javelin:16, spear:22, bow:16, crossbow:19, orb:17},
 	fcr_frames:13, fcr_bp:[0, 9, 20, 37, 63, 105, 200],
 	fcr_frames_alt:19, fcr_bp_alt:[0, 7, 15, 23, 35, 52, 78, 117, 194],	// Lightning Surge & Chain Lightning

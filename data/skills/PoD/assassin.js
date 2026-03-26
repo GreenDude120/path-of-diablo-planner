@@ -1,5 +1,5 @@
 
-var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vitality:20, energy:25, life:50, mana:25, stamina:195, levelup_life:2, levelup_stamina:1.25, levelup_mana:1.5, ar_per_dexterity:5, life_per_vitality:3, stamina_per_vitality:1.25, mana_per_energy:1.75, starting_strength:20, starting_dexterity:20, starting_vitality:20, starting_energy:25, ar_const:15, block_const:3, skill_layout:"./images/skill_trees/PoD/assassin.png", mana_regen:1.66,
+var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vitality:20, energy:25, life:50, mana:25, stamina:195, levelup_life:2, levelup_stamina:1.25, levelup_mana:1.5, ar_per_dexterity:5, life_per_vitality:3, stamina_per_vitality:1.25, mana_per_energy:1.75, starting_strength:20, starting_dexterity:20, starting_vitality:20, starting_energy:25, ar_const:15, block_const:3, skill_layout:"./images/skill_trees/PoD/assassin.png", mana_regen:0,
 	weapon_frames:{dagger:14, sword:[14,22], axe:[14,18], mace:[14,18], thrown:[14,14], staff:18, polearm:18, scepter:14, wand:14, javelin:14, spear:22, bow:15, crossbow:20, claw:10},
 	// Skills that may adjust IAS breakpoints: Laying Traps, Fists of Ember, Fists of Thunder, Blades of Ice, Dragon Claw, Dragon Tail, Dragon Talon
 	fcr_frames:16, fcr_bp:[0, 8, 16, 27, 42, 65, 102, 174],

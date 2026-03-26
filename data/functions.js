@@ -6550,6 +6550,15 @@ function calculateDamageTaken(damageAmount, damageType) {
 	return result;
 }
 
+function manaRegeneratedPerSecond(character, version) {
+	const c = character;
+	const energyTotal = (c.energy + c.all_attributes)*(1+c.max_energy/100);
+	const mana_addon = (energyTotal-c.starting_energy)*c.mana_per_energy;
+	const maxMana = Math.floor((c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100));
+	const manaRegenSecondsToFull = version === 2 ? 60 : 120; // base mana regen time halved in pod
+	return (25 * Math.trunc(Math.trunc((256 * maxMana) / (25 * manaRegenSecondsToFull)) * (c.mana_regen/100 + 1))) / 256;
+}
+
 // updateTertiaryStats - Updates other stats
 // ---------------------------------
 function updateTertiaryStats() {
@@ -6639,7 +6648,7 @@ function updateTertiaryStats() {
 	if (c.mtick_min > 0) { statlines += "Sanctuary aura tick damage: " + c.mtick_min + "-" + c.mtick_max + "<br>"}
 	if (c.issalvation > 0) { statlines += "Salvation damage bonus: " + "+" + salvdam + "%" + "<br>"}
 	if (c.issalvation > 0) { statlines += "Salvation resistance bonus: " + "+" + salvres + "%" + "<br>"}
-	if (c.mana_regen > 0) {statlines += "Mana Regen: " + Math.ceil(c.mana/120*(1+c.mana_regen/100)) + " per second" + "<br>"}
+	if (c.mana_regen > 0) {statlines += "Mana Regen: " + manaRegeneratedPerSecond(c, game_version).toFixed(4) + " per second" + "<br>"}
 //	if (c.jf_molten > 0) {statlines += "Molten Strike will do " + checkSkill("Molten Strike").output + "<br>"}
 
 	if (character.dodge > 0) { statlines += character.dodge + "% Chance to <b>Dodge</b> melee attack when attacking or standing still" + "<br>"}
