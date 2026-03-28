@@ -2171,8 +2171,8 @@ var runewordProperties = {
         stats: {
             req_level:45, 
             pierce:33, 
-            ar:25, 
-            mana_per_hit:8, 
+            ar_bonus:25, 
+            mana_leech:8, 
             e_def:30, 
             energy:10, 
             thorns_lightning:10, 

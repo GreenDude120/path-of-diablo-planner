@@ -112,7 +112,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{only:"druid", rarity:"rw", name:"Radiance ­ ­ - ­ ­ Sacred Feathers", req_level:27, skill_Cyclone_Armor:3, skill_Armageddon:3, skill_Hurricane:3, e_def:75, aura:"Thorns", aura_lvl:11, missile_defense:30, vitality:10, energy:10, mana:33, all_sorb:5, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Sacred Feathers"},
 	{name:"Radiance ­ ­ - ­ ­ Circlet", req_level:27, aura:"Thorns", aura_lvl:11, missile_defense:30, vitality:10, energy:10, mana:33, all_sorb:5, damage_reduced:7, mDamage_reduced:3, damage_to_mana:15, light_radius:5, base:"Circlet"},
 	{rarity:"rw", name:"Temper ­ ­ - ­ ­ Diadem", req_level:35, fhr:20, e_def:100, vitality:10, fDamage_min:91, fDamage_max:130, fRes:30, fAbsorb:15, life_per_hit:4, life_per_ranged_hit:3, base:"Diadem"},
-	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce:33, ar:25, mana_per_hit:8, e_def:30, energy:10, thorns_lightning:10, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
+	{rarity:"rw", name:"Wisdom ­ ­ - ­ ­ Diadem", req_level:45, pierce:33, ar_bonus:25, mana_leech:8, e_def:30, energy:10, thorns_lightning:10, cbf:1, mana_per_kill:5, damage_to_mana:15, base:"Diadem"},
 	// Iron Golem RW replacements
 		{only:"none", rarity:"rw", name:"Lore ­ ­ - ­ ­ Coronet", req_level:27, all_skills:1, energy:10, lRes:30, damage_reduced:7, mana_per_kill:2, light_radius:2, base:"Coronet"},
 		{only:"none", rarity:"rw", name:"Nadir ­ ­ - ­ ­ Circlet", req_level:13, e_def:50, defense:10, missile_defense:30, strength:5, mana_per_kill:2, gf:-33, light_radius:-3, base:"Circlet", cskill:[[13,"Cloak of Shadows",9]]},
