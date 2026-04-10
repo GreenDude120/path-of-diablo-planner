@@ -142,8 +142,15 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 
 		
 		if (attack == 0) { phys_min = 0; phys_max = 0; phys_mult = 1; nonPhys_min = 0; nonPhys_max = 0; damage_enhanced = 0; }
+		var baseNonPhys_min = nonPhys_min;
+		var baseNonPhys_max = nonPhys_max;
 		nonPhys_min += (fDamage_min + cDamage_min + lDamage_min + pDamage_min + mDamage_min);
 		nonPhys_max += (fDamage_max + cDamage_max + lDamage_max + pDamage_max + mDamage_max);
+		var weapon_mult = 1 + (weapon_damage-100)/100;
+		if (attack != 0 && weapon_mult != 1) {
+			nonPhys_min = baseNonPhys_min*weapon_mult + (nonPhys_min-baseNonPhys_min);
+			nonPhys_max = baseNonPhys_max*weapon_mult + (nonPhys_max-baseNonPhys_max);
+		}
 		if (skill.name == "Whirling Axes") {
 			phys_min = damage_min;
 			phys_max = damage_max;
@@ -151,9 +158,9 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 			damage_bonus == 0; 
 			damage_enhanced = 0
 		} else {
-			phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100)
+			phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * weapon_mult
 					+ (damage_min * (1+(damage_bonus+damage_enhanced)/100)));
-			phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * (1 + (weapon_damage-100)/100)
+			phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * weapon_mult
 					+ (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		}
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }

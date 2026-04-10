@@ -3112,15 +3112,15 @@ function getAuraData(aura, lvl, source) {
 	// Offensive Auras
 	else if (aura == "Might") { result.damage_bonus = auras[a].data.values[0][lvl]; result.radius = 16; }
 //	else if (aura == "Holy Fire") { result.fDamage_min = auras[a].data.values[0][lvl]; result.fDamage_max = auras[a].data.values[1][lvl]; result.radius = 12; }
-	else if (aura == "Holy Fire") { result.fDamage_min = auras[a].data.values[0][lvl]; result.fDamage_max = auras[a].data.values[1][lvl]; result.ftick_min = auras[a].data.values[2][lvl]; result.ftick_max = auras[a].data.values[3][lvl]; result.radius = 12; 
+	else if (aura == "Holy Fire") { result.fDamage_min = auras[a].data.values[0][lvl] * (1+character.fDamage/100); result.fDamage_max = auras[a].data.values[1][lvl] * (1+character.fDamage/100); result.ftick_min = auras[a].data.values[2][lvl]; result.ftick_max = auras[a].data.values[3][lvl]; result.radius = 12; 
 		if (character.class_name == "Sorceress") {
 			result.ftick_min = Math.floor(auras[a].data.values[2][lvl] * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100)* (1+character.fDamage/100)) ; 
 			result.ftick_max = Math.floor(auras[a].data.values[3][lvl] * (1 + Math.min(1,(skills[30].level+skills[30].force_levels))*(~~skills[30].data.values[1][skills[30].level+skills[30].extra_levels])/100)* (1+character.fDamage/100)) ; 
 //			result.addeddmgdisplaywrong = 1
 		}
 		if (character.class_name == "Paladin") {
-			result.fDamage_min = auras[a].data.values[0][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level);
-			result.fDamage_max = auras[a].data.values[1][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level); 
+			result.fDamage_min = (auras[a].data.values[0][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level)) * (1+character.fDamage/100);
+			result.fDamage_max = (auras[a].data.values[1][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level)) * (1+character.fDamage/100); 
 			result.ftick_min = auras[a].data.values[2][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100);
 			result.ftick_max = auras[a].data.values[3][lvl] * (1 + 0.04*skills[1].level + 0.06*skills[9].level) * (1+character.fDamage/100); 
 //			result.addeddmgdisplaywrong = 1
