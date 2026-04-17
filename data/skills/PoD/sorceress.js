@@ -85,10 +85,8 @@ var character_sorceress = {class_name:"Sorceress", strength:10, dexterity:25, vi
 		}
 		if (skill.name == "Enflame") {
 			if (effects[id].info.enabled == 1) { for (effect_id in effects) { if (effect_id != id && effect_id.split("-")[0] == id) { disableEffect(effect_id) } } }
-			result.fDamage_min = skill.data.values[0][lvl] * (1 + (0.08*skills[23].level)) * (1+character.fDamage/100);
-			result.fDamage_max = skill.data.values[1][lvl] * (1 + (0.08*skills[23].level)) * (1+character.fDamage/100);
-			result.fDamage_min = skill.data.values[0][lvl] * (1 + (0.12*skills[22].level)) * (1+character.fDamage/100);
-			result.fDamage_max = skill.data.values[1][lvl] * (1 + (0.12*skills[22].level)) * (1+character.fDamage/100);
+			result.fDamage_min = skill.data.values[0][lvl] * (1 + (0.12*skills[23].level + 0.12*skills[22].level)) * (1+character.fDamage/100);
+			result.fDamage_max = skill.data.values[1][lvl] * (1 + (0.12*skills[23].level + 0.12*skills[22].level)) * (1+character.fDamage/100);
 			result.ar_bonus = skill.data.values[4][lvl]; result.radius = 16;
 		}
 		if (skill.name == "Blaze") {
