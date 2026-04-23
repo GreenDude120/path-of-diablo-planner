@@ -1543,6 +1543,8 @@ obsessiontheory:{index:[], format:["<font color='red'>Theorycrafting Obsession i
 maul_charges:{index:["maul_charges"], format:[""," Max Maul charges"]},
 oskill_Cleave:{index:["oskill_Cleave"], format:["+"," to Cleave"]},
 addeddmgdisplaywrong:{index:[], format:["<font color='red'><br>Display of aura damage added to attack display <b>in this pop up</b> is not<br>properly reflecting % elemental modifiers<br>Aura tick display is correct, overall added damage is correct</font>"]},
+merclawbringer:{index:[], format:["Merc Sanctuary aura from Lawbringer doesn't appyly to character"]},
+
 
 addcraft:{index:[], format:[]},
 customStats:"",
