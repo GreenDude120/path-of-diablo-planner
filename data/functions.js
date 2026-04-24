@@ -5497,6 +5497,22 @@ function update() {
 	if (loaded == 1) { updateURLDebounced() }
 }
 
+// getWeaponSkillBonuses - Gets weapon-type-specific bonuses for the given hand
+//	group: weapon group ('weapon' or 'offhand')
+// return: object with damage/ar/cstrike/pierce bonuses from masteries
+// ---------------------------------
+function getWeaponSkillBonuses(group) {
+	var c = character;
+	var type = equipped[group].type;
+	var bonus = {damage:0,ar:0,cstrike:0,pierce:0};
+	if (type == "sword" || type == "axe" || type == "dagger") { bonus = {damage:c.edged_damage,ar:c.edged_ar,cstrike:c.edged_cstrike,pierce:0}; }
+	else if (type == "polearm" || type == "spear") { bonus = {damage:c.pole_damage,ar:c.pole_ar,cstrike:c.pole_cstrike,pierce:0}; }
+	else if (type == "mace" || type == "scepter" || type == "staff" || type == "hammer" || type == "club" || type == "wand") { bonus = {damage:c.blunt_damage,ar:c.blunt_ar,cstrike:c.blunt_cstrike,pierce:0}; }
+	else if (type == "thrown" || type == "javelin") { bonus = {damage:c.thrown_damage,ar:c.thrown_ar,cstrike:c.thrown_cstrike,pierce:c.thrown_pierce}; }
+	else if (type == "claw") { bonus = {damage:c.claw_damage,ar:c.claw_ar,cstrike:c.claw_cstrike,pierce:0}; }
+	return bonus;
+}
+
 // getWeaponDamage - Calculates physical min/max damage and multiplier for an equipped weapon
 //	str: total strength
 //	dex: total dexterity
@@ -5519,13 +5535,11 @@ function getWeaponDamage(str, dex, group, thrown) {
 		else  { statBonus = (str/100) }
 	}
 	// multiplier from skills
-	var weapon_skillup = 0;
-	if (type == "sword" || type == "axe" || type == "dagger") { weapon_skillup = c.edged_damage; c.ar_skillup2 = c.edged_ar; c.cstrike_skillup = c.edged_cstrike; }
-	else if (type == "polearm" || type == "spear") { weapon_skillup = c.pole_damage; c.ar_skillup2 = c.pole_ar; c.cstrike_skillup = c.pole_cstrike; }
-	else if (type == "mace" || type == "scepter" || type == "staff" || type == "hammer" || type == "club" || type == "wand") { weapon_skillup = c.blunt_damage; c.ar_skillup2 = c.blunt_ar; c.cstrike_skillup = c.blunt_cstrike; }
-	else if (type == "thrown" || type == "javelin") { weapon_skillup = c.thrown_damage; c.ar_skillup2 = c.thrown_ar; c.pierce_skillup = c.thrown_pierce; c.cstrike_skillup = c.thrown_cstrike; }	// check if javelins can benefit from Pole Weapon Mastery
-	else if (type == "claw") { weapon_skillup = c.claw_damage; c.ar_skillup2 = c.claw_ar; c.cstrike_skillup = c.claw_cstrike; }
-	else { weapon_skillup = 0; c.ar_skillup2 = 0; c.cstrike_skillup = 0; c.pierce_skillup = 0; }
+	var weapon_bonus = getWeaponSkillBonuses(group);
+	var weapon_skillup = weapon_bonus.damage;
+	c.ar_skillup2 = weapon_bonus.ar;
+	c.cstrike_skillup = weapon_bonus.cstrike;
+	c.pierce_skillup = weapon_bonus.pierce;
 	var e_damage_other = 0;
 	var phys_min_other = 0;
 	var phys_max_other = 0;
@@ -5992,12 +6006,31 @@ function updateSecondaryStats() {
 	document.getElementById("e_damage").innerHTML = c.e_damage; if (c.e_damage > 0) { document.getElementById("e_damage").innerHTML += "%" }
 	document.getElementById("damage_bonus").innerHTML = c.damage_bonus; if (c.damage_bonus > 0) { document.getElementById("damage_bonus").innerHTML += "%" }
 	document.getElementById("cblow").innerHTML = c.cblow; if (c.cblow > 0) { document.getElementById("cblow").innerHTML += "%" }
-	document.getElementById("dstrike").innerHTML = c.dstrike + Math.floor(c.level*c.dstrike_per_level); if (c.dstrike > 0 || c.dstrike_per_level > 0) { document.getElementById("dstrike").innerHTML += "%" }
-	document.getElementById("cstrike").innerHTML = c.cstrike + c.cstrike_skillup; if (c.cstrike > 0 || c.cstrike_skillup > 0) { document.getElementById("cstrike").innerHTML += "%" }
-	var cstriketotal = c.cstrike + c.cstrike_skillup
-	var doubled = (cstriketotal + (c.dstrike + Math.floor(c.level*c.dstrike_per_level)) * (100 - cstriketotal)/100) ;
-	TooltipElementdoubled = document.getElementById("dstrike");
-	TooltipElementdoubled.title = doubled + "% chance of double damage from " + cstriketotal + "% CS and " + (c.dstrike + Math.floor(c.level*c.dstrike_per_level)) + "% DS chances" ; // \nFormula is Critical Strike + Deadly Strike * (100 - Critical Strike)/100";
+	var dstrike_total = c.dstrike + Math.floor(c.level*c.dstrike_per_level);
+	document.getElementById("dstrike").innerHTML = dstrike_total; if (c.dstrike > 0 || c.dstrike_per_level > 0) { document.getElementById("dstrike").innerHTML += "%" }
+	var global_cstrike = c.cstrike;
+	var mainhand_bonus = getWeaponSkillBonuses("weapon").cstrike;
+	var global_roll = Math.max(0, Math.min(100, global_cstrike));
+	var dstrike_roll = Math.max(0, Math.min(100, dstrike_total));
+	var mainhand_roll = Math.max(0, Math.min(100, mainhand_bonus));
+	var mainhand_double = 100 * (1 - (1 - global_roll/100) * (1 - mainhand_roll/100) * (1 - dstrike_roll/100));
+	var cstrikeElement = document.getElementById("cstrike");
+	var TooltipElementdoubled = document.getElementById("dstrike");
+	if (offhandType == "weapon") {
+		var offhand_bonus = getWeaponSkillBonuses("offhand").cstrike;
+		var offhand_roll = Math.max(0, Math.min(100, offhand_bonus));
+		var offhand_double = 100 * (1 - (1 - global_roll/100) * (1 - offhand_roll/100) * (1 - dstrike_roll/100));
+		cstrikeElement.innerHTML = global_cstrike + "% + " + mainhand_bonus + "% / " + global_cstrike + "% + " + offhand_bonus + "%";
+		cstrikeElement.title = "Critical Strike (Main Hand / Off Hand):\nGlobal CS roll: " + global_cstrike + "%\nMain-hand weapon CS roll: " + mainhand_bonus + "%\nOff-hand weapon CS roll: " + offhand_bonus + "%\n(Each source rolls independently)";
+		mainhand_double = Math.round(mainhand_double * 100) / 100;
+		offhand_double = Math.round(offhand_double * 100) / 100;
+		TooltipElementdoubled.title = "Double-damage chance from 3 independent rolls (Global CS, Weapon CS, DS):\nMain hand: " + mainhand_double + "% (" + global_cstrike + "% G-CS, " + mainhand_bonus + "% W-CS, " + dstrike_total + "% DS)\nOff hand: " + offhand_double + "% (" + global_cstrike + "% G-CS, " + offhand_bonus + "% W-CS, " + dstrike_total + "% DS)";
+	} else {
+		cstrikeElement.innerHTML = global_cstrike + "% + " + mainhand_bonus + "%";
+		cstrikeElement.title = "Critical Strike: " + global_cstrike + "% global roll + " + mainhand_bonus + "% weapon roll (independent)";
+		mainhand_double = Math.round(mainhand_double * 100) / 100;
+		TooltipElementdoubled.title = mainhand_double + "% chance of double damage from 3 independent rolls (" + global_cstrike + "% G-CS, " + mainhand_bonus + "% W-CS, " + dstrike_total + "% DS)";
+	}
 	document.getElementById("owounds").innerHTML = c.owounds; if (c.owounds > 0) { document.getElementById("owounds").innerHTML += "%" }
 
 //	document.getElementById("damage_reduced").innerHTML = c.damage_reduced; if (c.damage_reduced > 0) { document.getElementById("damage_reduced")}
@@ -7327,7 +7360,7 @@ function checkSkill(skillName, num) {
 
 	var artest =  "(1+("+c.ar_skillup +"+"+ c.ar_skillup2+ "+" + c.ar_bonus + "+" + c.level + "*" + c.ar_bonus_per_level+ ")/100) * (1+" + c.ar_shrine_bonus + "/100) * 100";
 	var physDamage = [0,0,1];
-	if (skillName == "Poison Javelin" || skillName == "Lightning Bolt" || skillName == "Plague Javelin" || skillName == "Lightning Fury" || skillName == "Power Throw" || skillName == "Ethereal Throw") {
+	if (skillName == "Poison Javelin" || skillName == "Lightning Bolt" || skillName == "Plague Javelin" || skillName == "Lightning Fury" || skillName == "Power Throw" || skillName == "Double Throw" || skillName == "Ethereal Throw") {
 		physDamage = getWeaponDamage(strTotal,dexTotal,"weapon",1);
 	} else { physDamage = getWeaponDamage(strTotal,dexTotal,"weapon",0); }
 	var dmg = {fMin:0,fMax:0,cMin:0,cMax:0,lMin:0,lMax:0,pMin:0,pMax:0,mMin:0,mMax:0};
