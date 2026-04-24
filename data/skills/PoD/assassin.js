@@ -172,7 +172,23 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 //		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
 		if (spell == 0) { skillAr = Math.floor(character.baseAR*(1+(ar_bonus+character.arBonusPercent)/100)); }
 		console.log("getskilldamage mid AR, skillar = character.baseAR * ar_bonus: ", skillAr, character.baseAR, ar_bonus, character.arBonusPercent)
-
+		if (kick_damage_min > 0) 
+			{
+				console.log("Kick damage calcs:", {
+					skill: skill.name,
+					level: lvl,
+					kickMin: kick_min,
+					kickMax: kick_max,
+					kickBonusFromStrengthAndSkill: kick_bonus,
+					strengthTotalUsedInKickBonus: strTotal,
+					dragonKickSkillBonus: character.getSkillData(skill,lvl,3),
+					skillDamageBonusPercent: damage_bonus,
+					gearAndBuffDamageBonusPercent: character.damage_bonus,
+					enhancedDamagePercent: character.e_damage,
+					offhandEnhancedDamageRemoved: e_damage_offhand,
+					flatPhysicalDamageBonus: character.physicalDamage
+				})
+			}
 				// Get breakdown of sources of skill damage
 		// Get breakdown of sources of skill damage
 		skill2Breakdown = "Skill damage Breakdown-" ;  // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_max  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max ;
@@ -188,7 +204,7 @@ var character_assassin = {class_name:"Assassin", strength:20, dexterity:20, vita
 			addmore = "no"
 		}
 		else{addmore = "yes"}
-		if ((skill.i = 22) || (skill.i = 25) || (skill.i = 29)){
+		if (skill.i == 22 || skill.i == 25 || skill.i == 29){
 			addmore = "yes"
 		}
 

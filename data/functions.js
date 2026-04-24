@@ -1310,11 +1310,32 @@ function equipMerc(group, val) {
 		}
 	}
 
-    // 🔑 FIX: iterate over items from the *right source*
-    // All possible gear is still in equipment[group], runewords included.
-    for (let itemKey in equipment[group]) {
-        let item = equipment[group][itemKey];
-        if (item.name == val) {
+	// Resolve duplicate item names by preferring merc-specific entries.
+	let mercType = "";
+	if (mercenary.name == mercenaries[1].name) { mercType = "Rogue Scout" }
+	if (mercenary.name == mercenaries[2].name || mercenary.name == mercenaries[3].name || mercenary.name == mercenaries[4].name) { mercType = "Desert Guard" }
+	if (mercenary.name == mercenaries[5].name || mercenary.name == mercenaries[6].name || mercenary.name == mercenaries[7].name) { mercType = "Iron Wolf" }
+	if (mercenary.name == mercenaries[8].name) { mercType = "Barb (merc)" }
+
+	let chosenItem = null;
+	for (let itemKey in equipment[group]) {
+		let item = equipment[group][itemKey];
+		if (item.name != val) { continue; }
+
+		let itemOnly = "";
+		if (typeof item.only !== "undefined") { itemOnly = item.only; }
+
+		if (itemOnly == mercType || itemOnly == mercenary.name) {
+			chosenItem = item;
+			break;
+		}
+		if (itemOnly == "" && chosenItem == null) {
+			chosenItem = item;
+		}
+	}
+
+	if (chosenItem != null) {
+		let item = chosenItem;
             // --- add base stats ---
             if (item.base) {
                 let base = getBaseId(item.base);
@@ -1359,7 +1380,6 @@ function equipMerc(group, val) {
                     mercenary[affix] += item[affix];
                 }
             }
-        }
     }
 
     updateMercenary();
