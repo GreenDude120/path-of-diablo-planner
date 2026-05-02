@@ -2977,10 +2977,10 @@ function adjustStackedAuras() {
 		Might		Last Wish weapons
 		Sanctuary	Azurewrath/Lawbringer weapons
 	*/
-//	var stackableAuras = ["Holy_Shock","Holy_Fire","Thorns","Redemption","Holy_Freeze","Fanaticism","Might","Sanctuary"];
+//	var stackableAuras = ["Holy_Shock","Holy_Fire","Thorns","Redemption","Holy_Freeze","Fanaticism","Might","Sanctuary","Cleansing"];
 	var stackableAuras = ["Holy_Shock","Holy_Fire"];
-	var stackedAuras = [0,0,0,0,0,0,0,0];
-	var stackedLevels = [0,0,0,0,0,0,0,0];
+	var stackedAuras = [0,0,0,0,0,0,0,0,0];
+	var stackedLevels = [0,0,0,0,0,0,0,0,0];
 	for (id in effects) {
 		if (typeof(effects[id].info.enabled) != 'undefined' && effects[id].info.origin == "aura" && effects[id].info.other.split('_')[0] != "mercenary" && effects[id].info.other != "combined") {
 			var effect = id.split('-')[0];
