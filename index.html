@@ -1001,11 +1001,64 @@ Imported items might spawn missing properties, you can add them on the right."
 
 </div>	<!-- /interface -->
 <div class="stat-text-wrapper stat-7" id="stats_column_7" >
+	<div class="synth-inline-mock" id="synth-inline-panel" style="display:none;">
+	<h3 class="synth-panel-title">Synth Maker</h3>
+	<p class="synth-panel-copy">Pick a base and donor items, then uncheck properties you want to exclude. Shareable URL's will not preserve these synths.</p>
 
+	<div class="synth-panel-section">
+		<label class="synth-panel-label" for="synth-panel-base-slot">Apply To Slot</label>
+		<select class="synth-select" id="synth-panel-base-slot">
+			<option value="weapon">Weapon</option>
+			<option value="offhand">Offhand</option>
+		</select>
+		<label class="synth-panel-label" for="synth-panel-base-item">Base Item</label>
+		<select class="synth-select" id="synth-panel-base-item"></select>
+		<div class="synth-item-properties" id="synth-panel-base-properties">
+			<div class="synth-preview-affix synth-preview-muted">Select a base item to see its properties here.</div>
+		</div>
+	</div>
+
+	<div class="synth-panel-section">
+		<div class="synth-panel-label">Donor Uniques</div>
+		<div class="synth-donor-list">
+			<div class="synth-donor-slot">
+				<select class="synth-select" id="synth-panel-donor-1"></select>
+				<div class="synth-item-properties" id="synth-panel-donor-properties-1">
+					<div class="synth-preview-affix synth-preview-muted">Select donor item 1 to see its properties here.</div>
+				</div>
+			</div>
+			<div class="synth-donor-slot">
+				<select class="synth-select" id="synth-panel-donor-2"></select>
+				<div class="synth-item-properties" id="synth-panel-donor-properties-2">
+					<div class="synth-preview-affix synth-preview-muted">Select donor item 2 to see its properties here.</div>
+				</div>
+			</div>
+			<div class="synth-donor-slot">
+				<select class="synth-select" id="synth-panel-donor-3"></select>
+				<div class="synth-item-properties" id="synth-panel-donor-properties-3">
+					<div class="synth-preview-affix synth-preview-muted">Select donor item 3 to see its properties here.</div>
+				</div>
+			</div>
+			<div class="synth-donor-slot">
+				<select class="synth-select" id="synth-panel-donor-4"></select>
+				<div class="synth-item-properties" id="synth-panel-donor-properties-4">
+					<div class="synth-preview-affix synth-preview-muted">Select donor item 4 to see its properties here.</div>
+				</div>
+			</div>
+			<div class="synth-donor-slot">
+				<select class="synth-select" id="synth-panel-donor-5"></select>
+				<div class="synth-item-properties" id="synth-panel-donor-properties-5">
+					<div class="synth-preview-affix synth-preview-muted">Select donor item 5 to see its properties here.</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<p class="synth-panel-note" id="synth-panel-note"></p>
+	</div>
 	<br>
 	<div class="synth-inline-mock" id="custom-stats-panel">
 	<h3 class="synth-panel-title">Give Items Custom Stats - Beta</h3>
-	<p class="synth-panel-copy">Use this to create custom items and add/remove properties to existing items.</p>
+	<p class="synth-panel-copy">Use this to create custom items and add properties to existing items.</p>
 
 	<div class="synth-panel-section">
 		<label class="synth-panel-label" for="slotSelect">Choose Slot</label>
@@ -1056,44 +1109,8 @@ Imported items might spawn missing properties, you can add them on the right."
 	</div>
 
 	<br><br>
-
-	<!--
-	<div id="synth-maker">
-		<h2>Synth Maker</h2>
-	  
-		<label for="baseItem">Base Item:</label>
-		<select id="baseItem"></select>
-		<br>
-		<label for="donor1">Synthesized From 1:</label>
-		<select id="donor1"></select>
-		<br>
-		<label for="donor2">Synthesized From 2:</label>
-		<select id="donor2"></select>
-		<br>
-		<label for="donor3">Synthesized From 3:</label>
-		<select id="donor3"></select>
-		<br>
-		<label for="donor4">Synthesized From 4:</label>
-		<select id="donor4"></select>
-		<br>
-		<button onclick="synthesize()">Synthesize!</button>
-	  
-		<pre id="synthResult"></pre>
-	  </div>
-	-->
-	<!-- Export button -->
-<!--
-	<button style="margin-top: 10px; padding: 10px; border: 1px solid #999; background: #222; color: #eee; width: 350px;" onclick="exportEquippedToCSV()">Export Equipped Items</button>
-	<br><br><br>
-	<label for="importCSV" style="margin-top: 10px; padding: 10px; border: 1px solid #999; background: #222; color: #eee; width: 350px; display: inline-block; cursor: pointer;">
-		Import Equipped Items
-	</label>
-	<input type="file" id="importCSV" accept=".csv" style="display: none;">
--->		
-<!--	  <button onclick="resetAllStatsOnItem()">Reset All Stats</button> -->
-
-	  
-</div>	<!-- /full_interface -->
+	</div>	<!-- /full_interface -->
+</div>
 </div>	<!-- /main -->
 <script type="text/javascript" src="./data/functions.js"></script>
 </body>
@@ -1146,4 +1163,9 @@ function initial_load() {
 	skillHover(skills[0])
 	skillOut()
 }
+
+window.addEventListener("load", () => {
+	setTimeout(initLiveSynthPanel, 0);
+	setTimeout(initLiveSynthBuilderDropdownBridge, 0);
+});
 </script>
