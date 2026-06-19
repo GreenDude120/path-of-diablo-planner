@@ -793,7 +793,7 @@ if (rarity === "rw" || name.includes(" - ")) {
 
     if (rwName && baseDisplay) {
         try {
-            console.log("loadparams: selecting runeword", { slot, rwName, baseDisplay });
+            //console.log("loadparams: selecting runeword", { slot, rwName, baseDisplay });
 
             // Robustly find the runeword object (works if keys or display name are used)
             const runewordObj =
@@ -967,7 +967,7 @@ if (rarity === "rw" || name.includes(" - ")) {
 							try { updateURLDebounced(); } catch (e) {}
 						}
 					}
-                console.log(`Loaded imported props for ${slot}:`, props);
+                //console.log(`Loaded imported props for ${slot}:`, props);
 
                 // Optional: stash for later serialization
                 if (!equipped[slot].custom) equipped[slot].custom = {};
@@ -1119,7 +1119,7 @@ for (let i = 0; i < param_custom_charms.length; i++) {
                 }
                 
                 PropertyList.push(propText);
-                console.log(`  🔄 Rebuilt property: ${key} = ${val} → "${propText}"`);
+                //console.log(`  🔄 Rebuilt property: ${key} = ${val} → "${propText}"`);
             } else {
                 // Fallback: just show key: value
                 PropertyList.push(`${key}: ${val}`);
@@ -1136,7 +1136,7 @@ for (let i = 0; i < param_custom_charms.length; i++) {
         ...props
     };
     
-    console.log(`Loading custom charm from URL: ${name} at slot ${invSlot}`, charmData);
+    //console.log(`Loading custom charm from URL: ${name} at slot ${invSlot}`, charmData);
     addCustomCharm(charmData);
 }
 
@@ -1272,7 +1272,7 @@ function corrupt(group, val) {
 //	val: name of item
 // ---------------------------------
 function equipMerc(group, val) {
-    console.log("Merc Equip function kicked off");
+    //console.log("Merc Equip function kicked off");
 
 //    if (val === "[runeword]") {
 //        openRunewordPicker("merc_" + group);  // important: distinguish merc slots!
@@ -1397,7 +1397,7 @@ function equipMerc(group, val) {
 //	val: name of item
 // ---------------------------------
 function equip(group, val) {
-	console.log("[DEBUG equip] Equip function kicked off for", group, val);
+	//console.log("[DEBUG equip] Equip function kicked off for", group, val);
 	// If equip is invoked with an empty string, capture a stack trace to find the caller
 	if (val === "" || (typeof val === 'string' && val.trim().length === 0)) {
 		try {
@@ -1407,7 +1407,7 @@ function equip(group, val) {
 			if (e && e.stack) console.warn(e.stack);
 		}
 	}
-//	console.log("Char STR= ", character.strength, character.strength_added);
+//	//console.log("Char STR= ", character.strength, character.strength_added);
 	
     if (val === "[runeword]") {
         openRunewordPicker(group); // ← you’ll build this UI next
@@ -1529,7 +1529,7 @@ function equip(group, val) {
 			// add affixes from base item
 			if (typeof(equipment[src_group][item]["base"]) != 'undefined') {
 				var base = getBaseId(equipment[src_group][item].base);
-				console.log("Equipping base item:", equipment[src_group][item].name, "of base", base, "in group", group, "sourced from", src_group);
+				//console.log("Equipping base item:", equipment[src_group][item].name, "of base", base, "in group", group, "sourced from", src_group);
 				var multEth = 1;
 				var multED = 1;
 				var multReq = 1;
@@ -1543,7 +1543,7 @@ function equip(group, val) {
 						if (affix == "base_damage_min" || affix == "base_damage_max" || affix == "throw_min" || affix == "throw_max" || affix == "base_min_alternate" || affix == "base_max_alternate") {
 							equipped[group][affix] = Math.ceil(multEth*bases[base][affix])
 							character[affix] += Math.ceil(multEth*bases[base][affix])
-							console.log("  Added damage affix", affix, "=", equipped[group][affix], "(base", bases[base][affix]+")")
+							//console.log("  Added damage affix", affix, "=", equipped[group][affix], "(base", bases[base][affix]+")")
 							try { /* console.debug("DBG:equip base assign", {group:group, affix:affix, assigned:equipped[group][affix], baseId:base, multEth:multEth}); */ } catch(e) {}
 						} else if (affix == "req_strength" || affix == "req_dexterity") {
 //							if (equipment[src_group][item]["req"] != 'undefined')
@@ -1551,7 +1551,7 @@ function equip(group, val) {
 //							else {equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))}
 							equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth))
 //							equipped[group][affix] = Math.max(0,Math.ceil(multReq*bases[base][affix] - reqEth - (equipment[src_group][item]["req"]/100)))
-							console.log("  Added req affix", affix, "=", equipped[group][affix], "(base", bases[base][affix]+")")	
+							//console.log("  Added req affix", affix, "=", equipped[group][affix], "(base", bases[base][affix]+")")	
 						} else if (affix == "tier") {
 							equipped[group][affix] = bases[base][affix]
 							equipped[group]["original_tier"] = bases[base][affix]
@@ -1808,7 +1808,7 @@ function equip(group, val) {
 			addEffect("ctcskill",ctcskillName[i],ctcskillLevel[i],group)
 		}
 	}
-//	console.log("Char STR at end of equip function", character.strength, character.strength_added);
+//	//console.log("Char STR at end of equip function", character.strength, character.strength_added);
 
 //	applyCustomED('weapon');
 //	if (equipped.weapon.name == "none") {equip(group, "none");}
@@ -2141,7 +2141,7 @@ function testCharmURL() {
     if (!charm || !charm.name || charm.name === "none") continue;
     params.append("charm", charm.name.trim());
   }
-  console.log("Test URL:", params.toString());
+  //console.log("Test URL:", params.toString());
 }
 
 testCharmURL();
@@ -2151,7 +2151,7 @@ testCharmURL();
 //	charmData: object with {name, size, invSlot, PropertyList, custom, ...stats}
 // ---------------------------------
 function addCustomCharm(charmData) {
-	console.log("🎯 addCustomCharm called with:", charmData);
+	//console.log("🎯 addCustomCharm called with:", charmData);
 
 	if (!equipped.charms) equipped.charms = {};
 
@@ -2166,7 +2166,7 @@ function addCustomCharm(charmData) {
 	const targetSlot = charmData.invSlot;
 	const nameVal = charmData.name;
 
-	console.log(`  📏 Size: ${size}, Target slot: ${targetSlot}, Name: ${nameVal}`);
+	//console.log(`  📏 Size: ${size}, Target slot: ${targetSlot}, Name: ${nameVal}`);
 
 	let charmImage = charm_img.prefix + "debug_plus.png";
 	let charmHeight = "";
@@ -2196,7 +2196,7 @@ function addCustomCharm(charmData) {
 		charmImage = charm_img.prefix + "charm2u.png";
 	}
 
-	console.log(`  🖼️ Image: ${charmImage}, Height: ${charmHeight}, Y-size: ${charm_y}`);
+	//console.log(`  🖼️ Image: ${charmImage}, Height: ${charmHeight}, Y-size: ${charm_y}`);
 
 	// Generate unique ID
 	const append = Math.floor(Math.random() * 999999 + 1);
@@ -2209,26 +2209,26 @@ function addCustomCharm(charmData) {
 	let insertion = "";
 	let empty = 1;
 
-	console.log(`  🔍 Checking slot availability: slot ${i} (valid range: 1-40)`);
+	//console.log(`  🔍 Checking slot availability: slot ${i} (valid range: 1-40)`);
 
 	if (i > 0 && i <= 40) {
 		// Check if slot and required vertical space are empty
-		console.log(`    Slot ${i} empty: ${inv[i].empty === 1}`);
+		//console.log(`    Slot ${i} empty: ${inv[i].empty === 1}`);
 		if (inv[i].empty === 0) empty = 0;
 		if (charm_y > 1) {
-			console.log(`    Slot ${i + 10} empty: ${inv[i + 10]?.empty === 1}`);
+			//console.log(`    Slot ${i + 10} empty: ${inv[i + 10]?.empty === 1}`);
 			if (i + 10 <= 40 && inv[i + 10].empty === 0) empty = 0;
 		}
 		if (charm_y > 2) {
-			console.log(`    Slot ${i + 20} empty: ${inv[i + 20]?.empty === 1}`);
+			//console.log(`    Slot ${i + 20} empty: ${inv[i + 20]?.empty === 1}`);
 			if (i + 20 <= 40 && inv[i + 20].empty === 0) empty = 0;
 		}
 
-		console.log(`  📍 Slot availability result: ${empty === 1 ? 'AVAILABLE' : 'OCCUPIED'}`);
+		//console.log(`  📍 Slot availability result: ${empty === 1 ? 'AVAILABLE' : 'OCCUPIED'}`);
 
 		if (empty === 1) {
 			insertion = inv[i].id;
-			console.log(`  🎨 Creating charm HTML element with id: ${uniqueID}, inserting into: ${insertion}`);
+			//console.log(`  🎨 Creating charm HTML element with id: ${uniqueID}, inserting into: ${insertion}`);
 			
 			inv[i].empty = 0;
 			inv[0].in[i] = uniqueID;
@@ -2245,7 +2245,7 @@ function addCustomCharm(charmData) {
 			if (!element) {
 				console.error(`  ❌ DOM element not found: ${insertion}`);
 			} else {
-				console.log(`  ✅ Found DOM element, adding HTML`);
+				//console.log(`  ✅ Found DOM element, adding HTML`);
 				element.innerHTML += charmHTML;
 			}
 
@@ -2259,7 +2259,7 @@ function addCustomCharm(charmData) {
 				PropertyList: charmData.PropertyList || []
 			};
 
-			console.log(`  💾 Created equipped charm object:`, equipped[ch][uniqueID]);
+			//console.log(`  💾 Created equipped charm object:`, equipped[ch][uniqueID]);
 
 			// Apply all custom stats from charmData
 			let statsApplied = 0;
@@ -2272,7 +2272,7 @@ function addCustomCharm(charmData) {
 				if (typeof charmData[affix] === "number") {
 					const oldVal = character[affix] || 0;
 					character[affix] = oldVal + charmData[affix];
-					console.log(`    ➕ Applied ${affix}: ${oldVal} + ${charmData[affix]} = ${character[affix]}`);
+					//console.log(`    ➕ Applied ${affix}: ${oldVal} + ${charmData[affix]} = ${character[affix]}`);
 					statsApplied++;
 				} else if (affix === "ctc" || affix === "cskill") {
 					// Handle arrays (ctc/cskill)
@@ -2282,12 +2282,12 @@ function addCustomCharm(charmData) {
 					} else {
 						character[affix].push(charmData[affix]);
 					}
-					console.log(`    ➕ Applied ${affix}:`, charmData[affix]);
+					//console.log(`    ➕ Applied ${affix}:`, charmData[affix]);
 					statsApplied++;
 				}
 			}
 
-			console.log(`✅ Successfully added custom charm: ${nameVal} (${statsApplied} stats applied)`);
+			//console.log(`✅ Successfully added custom charm: ${nameVal} (${statsApplied} stats applied)`);
 		} else {
 			console.warn(`❌ Slot ${targetSlot} not available for charm ${nameVal} - occupied`);
 		}
@@ -4676,7 +4676,7 @@ function equipmentHover(group) {
 		document.getElementById("tooltip_inventory").style.left = offset_x+"px"
 	}
 	if (name == "") { document.getElementById("tooltip_inventory").style.left = 950+"px" }
-//	console.log("Hover pup up rarity: " + equipped[group].name+ equipped[group].rarity);
+//	//console.log("Hover pup up rarity: " + equipped[group].name+ equipped[group].rarity);
 }
 
 // equipmentOut - stops showing equipment info (mouse-over ends)
@@ -5099,7 +5099,7 @@ function handleSocket(event, group, source) {
 //   source: inventory space to drag from if event is null (used when loading a character)
 // ---------------------------------
 function socket(event, group, source) {
-	console.log("socket() called with event:", event, "group:", group, "source:", source);
+	//console.log("socket() called with event:", event, "group:", group, "source:", source);
     let socketItem;
 
     // Case 1: Called from drag-and-drop
@@ -6328,15 +6328,15 @@ function updateSecondaryStats() {
 	document.getElementById("life_regen").innerHTML = lifeRegen
 //	Testing mana regen formulas, how much per second
 //	var energyTotal = Math.floor((c.energy + c.all_attributes)*(1+c.max_energy/100));	
-//	console.log(energyTotal, "Energy total")
+//	//console.log(energyTotal, "Energy total")
 //	var mana_addon = (energyTotal-c.starting_energy)*c.mana_per_energy;
-//	console.log(mana_addon, "Mana addon")
+//	//console.log(mana_addon, "Mana addon")
 //	var manaTotal = (c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100);
-//	console.log(manaTotal, "Mana total")
+//	//console.log(manaTotal, "Mana total")
 ////	Math.floor((c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100))
 //	manaRegeneratedPerSecond = Math.round(10 * (5 * ((256 * manaTotal / (25 * 120)) * (100 + c.mana_regen) / 100) / 256)) / 10;
 ////	manaRegeneratedPerSecond = 	Math.round(manaTotal * (100 + c.mana_regen) / 12000)
-//	console.log(manaRegeneratedPerSecond, "Mana per second")
+//	//console.log(manaRegeneratedPerSecond, "Mana per second")
 	document.getElementById("mana_regen").innerHTML = Math.round(c.mana_regen,1)+"%"//+" ("+manaRegeneratedPerSecond+" per second)"	// TODO: mana_regen should multiply base regen (1.66%) instead of being additive? Or is the 1.66 value meant to be 166%?
 //	document.getElementById("mana_regen").innerHTML = Math.round(c.mana_regen,1)+"%"+" ("+manaRegeneratedPerSecond+" per second)"	// TODO: mana_regen should multiply base regen (1.66%) instead of being additive? Or is the 1.66 value meant to be 166%?
 	//var manaTotal = Math.floor((c.mana + c.level*c.mana_per_level + mana_addon) * (1 + c.max_mana/100));
@@ -6408,8 +6408,8 @@ function toggleMixedAttack() {
 function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg) {
 	var c = character;
 	
-	console.log("=== MIXED DAMAGE ATTACK CALCULATION ===");
-	console.log("Initial Damage: Phys=" + physDmg + " Fire=" + fireDmg + " Cold=" + coldDmg + " Light=" + lightDmg + " Magic=" + magicDmg);
+	//console.log("=== MIXED DAMAGE ATTACK CALCULATION ===");
+	//console.log("Initial Damage: Phys=" + physDmg + " Fire=" + fireDmg + " Cold=" + coldDmg + " Light=" + lightDmg + " Magic=" + magicDmg);
 	
 	var result = {
 		damageToLife: 0,
@@ -6427,9 +6427,9 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	var boneArmorRemaining = c.absorb_melee || 0;
 	var cycloneArmorRemaining = c.absorb_elemental || 0;
 	
-	console.log("Bone Armor / Cyclone Armor");
-	console.log("  Bone Armor Available: " + boneArmorRemaining);
-	console.log("  Cyclone Armor Available: " + cycloneArmorRemaining);
+	//console.log("Bone Armor / Cyclone Armor");
+	//console.log("  Bone Armor Available: " + boneArmorRemaining);
+	//console.log("  Cyclone Armor Available: " + cycloneArmorRemaining);
 	
 	// Step 1: Apply Bone/Cyclone Armor to all damage types (shared pools)
 	var damages = {
@@ -6468,14 +6468,14 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	
 	result.armorAbsorbed = armorAbsorbed.physical + armorAbsorbed.fire + armorAbsorbed.cold + armorAbsorbed.lightning + armorAbsorbed.magic;
 	
-	console.log("  After Armor Absorption:");
-	console.log("    Phys=" + damages.physical + " (absorbed " + armorAbsorbed.physical + ")");
-	console.log("    Fire=" + damages.fire + " (absorbed " + armorAbsorbed.fire + ")");
-	console.log("    Cold=" + damages.cold + " (absorbed " + armorAbsorbed.cold + ")");
-	console.log("    Light=" + damages.lightning + " (absorbed " + armorAbsorbed.lightning + ")");
-	console.log("    Magic=" + damages.magic + " (absorbed " + armorAbsorbed.magic + ")");
-	console.log("    Bone Armor Remaining: " + boneArmorRemaining);
-	console.log("    Cyclone Armor Remaining: " + cycloneArmorRemaining);
+	//console.log("  After Armor Absorption:");
+	//console.log("    Phys=" + damages.physical + " (absorbed " + armorAbsorbed.physical + ")");
+	//console.log("    Fire=" + damages.fire + " (absorbed " + armorAbsorbed.fire + ")");
+	//console.log("    Cold=" + damages.cold + " (absorbed " + armorAbsorbed.cold + ")");
+	//console.log("    Light=" + damages.lightning + " (absorbed " + armorAbsorbed.lightning + ")");
+	//console.log("    Magic=" + damages.magic + " (absorbed " + armorAbsorbed.magic + ")");
+	//console.log("    Bone Armor Remaining: " + boneArmorRemaining);
+	//console.log("    Cyclone Armor Remaining: " + cycloneArmorRemaining);
 	
 	// Step 2: Apply Energy Shield (shared pool converts all damage types)
 	var esPercent = 0;
@@ -6501,9 +6501,9 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		esEfficiency = 6 + (4 * skills[13].level); // +4% per Telekinesis level
 	}
 	
-	console.log("Energy Shield: " + esPercent + "%" + (esPercent > 0 ? " (level " + esLevel + ")" : ""));
+	//console.log("Energy Shield: " + esPercent + "%" + (esPercent > 0 ? " (level " + esLevel + ")" : ""));
 	if (esPercent > 0) {
-		console.log("  ES Efficiency: " + esEfficiency + "% (from Telekinesis level " + (skills[13] ? skills[13].level : 0) + ")");
+		//console.log("  ES Efficiency: " + esEfficiency + "% (from Telekinesis level " + (skills[13] ? skills[13].level : 0) + ")");
 	}
 	
 	// Step 3-4: Physical Damage Reduction (track excess DR for later)
@@ -6526,11 +6526,11 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		}
 	}
 	
-	console.log("Damage Reduced (Physical)");
-	console.log("  Flat DR: " + (c.damage_reduced || 0));
-	console.log("  % DR: " + (c.pdr || 0) + "%");
-	console.log("  Physical Damage After DR: " + physDamageAfterArmor);
-	console.log("  Excess Physical DR: " + excessPhysDR);
+	//console.log("Damage Reduced (Physical)");
+	//console.log("  Flat DR: " + (c.damage_reduced || 0));
+	//console.log("  % DR: " + (c.pdr || 0) + "%");
+	//console.log("  Physical Damage After DR: " + physDamageAfterArmor);
+	//console.log("  Excess Physical DR: " + excessPhysDR);
 	
 	// Apply ES to physical damage
 	var physToLife = physDamageAfterArmor * (100 - esPercent) / 100;
@@ -6541,10 +6541,10 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		physToMana = physToMana * (160 - esEfficiency) / 80;
 	}
 	
-	console.log("  Physical After ES: " + physToLife + " to life, " + physToMana + " to mana");
+	//console.log("  Physical After ES: " + physToLife + " to life, " + physToMana + " to mana");
 	
 	// Step 5-6: Process elemental damages: ES first, then MDR/Resist/%Absorb on life portion only
-	console.log("Energy Shield / Magic Damage Reduced / Resistances (Elemental)");
+	//console.log("Energy Shield / Magic Damage Reduced / Resistances (Elemental)");
 	var elementalDamages = {};
 	var damageTypes = ["fire", "cold", "lightning", "magic"];
 	
@@ -6604,18 +6604,18 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 			dmgToLife = dmgToLife * (100 - absorbPercent) / 100;
 		}
 		
-		console.log("  " + type + ": " + damages[type] + " -> " + Math.round(dmgToLife) + " life, " + Math.round(dmgToMana) + " mana (ES=" + esPercent + "%, MDR=" + mdr + ", Res=" + Math.round(resistance) + "%, Absorb%=" + absorbPercent + "%)");
+		//console.log("  " + type + ": " + damages[type] + " -> " + Math.round(dmgToLife) + " life, " + Math.round(dmgToMana) + " mana (ES=" + esPercent + "%, MDR=" + mdr + ", Res=" + Math.round(resistance) + "%, Absorb%=" + absorbPercent + "%)");
 		
 		elementalDamages[type] = dmgToLife;
 	}
 	
 	// Step 7: Apply excess Physical DR to sum of remaining elemental damage
-	console.log("Excess Physical DR Application to Elemental");
+	//console.log("Excess Physical DR Application to Elemental");
 	if (excessPhysDR > 0) {
 		var totalElemental = elementalDamages.fire + elementalDamages.cold + elementalDamages.lightning + elementalDamages.magic;
 		
-		console.log("  Total Elemental Before: " + totalElemental);
-		console.log("  Applying Excess Phys DR: " + excessPhysDR);
+		//console.log("  Total Elemental Before: " + totalElemental);
+		//console.log("  Applying Excess Phys DR: " + excessPhysDR);
 		
 		if (totalElemental > 0) {
 			totalElemental = Math.max(0, totalElemental - excessPhysDR);
@@ -6631,14 +6631,14 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 			}
 		}
 		
-		console.log("  Total Elemental After: " + totalElemental);
-		console.log("  Fire=" + elementalDamages.fire + " Cold=" + elementalDamages.cold + " Light=" + elementalDamages.lightning + " Magic=" + elementalDamages.magic);
+		//console.log("  Total Elemental After: " + totalElemental);
+		//console.log("  Fire=" + elementalDamages.fire + " Cold=" + elementalDamages.cold + " Light=" + elementalDamages.lightning + " Magic=" + elementalDamages.magic);
 	} else {
-		console.log("  No excess Physical DR to apply");
+		//console.log("  No excess Physical DR to apply");
 	}
 	
 	// Step 8: Apply flat absorb to each elemental type
-	console.log("Flat Absorb");
+	//console.log("Flat Absorb");
 	var totalFlatAbsorb = 0;
 	var absorbTypes = ["fire", "cold", "lightning", "magic"];
 	
@@ -6668,13 +6668,13 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	totalDamageToLife += physToLife;
 	totalDamageToMana += physToMana;
 	
-	console.log("Final Results:");
-	console.log("  Total Damage to Life: " + Math.round(totalDamageToLife));
+	//console.log("Final Results:");
+	//console.log("  Total Damage to Life: " + Math.round(totalDamageToLife));
 	if (totalDamageToMana > 0) {
-		console.log("  Total Damage to Mana: " + Math.round(totalDamageToMana) + " (Energy Shield efficiency: " + esEfficiency + "%)");
+		//console.log("  Total Damage to Mana: " + Math.round(totalDamageToMana) + " (Energy Shield efficiency: " + esEfficiency + "%)");
 	}
-	console.log("  Healing from Absorb: " + Math.round(totalHealing));
-	console.log("=== END MIXED DAMAGE CALCULATION ===\n");
+	//console.log("  Healing from Absorb: " + Math.round(totalHealing));
+	//console.log("=== END MIXED DAMAGE CALCULATION ===\n");
 	
 	// Final results
 	result.damageToLife = Math.max(1, Math.round(totalDamageToLife));
@@ -6700,8 +6700,8 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 function calculateDamageTaken(damageAmount, damageType) {
 	var c = character;
 	
-	console.log("=== SINGLE DAMAGE TYPE CALCULATION: " + damageType.toUpperCase() + " ===");
-	console.log("Initial Damage: " + damageAmount);
+	//console.log("=== SINGLE DAMAGE TYPE CALCULATION: " + damageType.toUpperCase() + " ===");
+	//console.log("Initial Damage: " + damageAmount);
 	
 	var result = {
 		damageToLife: 0,
@@ -6714,16 +6714,16 @@ function calculateDamageTaken(damageAmount, damageType) {
 	
 	// Step 1: Skill-Based Absorption (Bone Armor, Cyclone Armor)
 	// These absorb damage first, before any other calculations
-	console.log("Bone Armor / Cyclone Armor");
+	//console.log("Bone Armor / Cyclone Armor");
 	if (damageType === "physical") {
 		// Bone Armor absorbs physical damage only (Necromancer)
 		if (c.class_name === "Necromancer" && c.absorb_melee > 0) {
 			var absorbed = Math.min(damage, c.absorb_melee);
 			damage = Math.max(0, damage - absorbed);
 			result.armorAbsorbed = absorbed;
-			console.log("  Bone Armor absorbed: " + absorbed + ", remaining damage: " + damage);
+			//console.log("  Bone Armor absorbed: " + absorbed + ", remaining damage: " + damage);
 		} else {
-			console.log("  No Bone Armor (class=" + c.class_name + ")");
+			//console.log("  No Bone Armor (class=" + c.class_name + ")");
 		}
 	}
 	
@@ -6733,14 +6733,14 @@ function calculateDamageTaken(damageAmount, damageType) {
 			var absorbed = Math.min(damage, c.absorb_elemental);
 			damage = Math.max(0, damage - absorbed);
 			result.armorAbsorbed = absorbed;
-			console.log("  Cyclone Armor absorbed: " + absorbed + ", remaining damage: " + damage);
+			//console.log("  Cyclone Armor absorbed: " + absorbed + ", remaining damage: " + damage);
 		} else {
-			console.log("  No Cyclone Armor (class=" + c.class_name + ")");
+			//console.log("  No Cyclone Armor (class=" + c.class_name + ")");
 		}
 	}
 	
 	// Step 2: Energy Shield (Sorceress) - Splits damage AFTER armor, BEFORE reductions
-	console.log("Energy Shield");
+	//console.log("Energy Shield");
 	var damageToMana = 0;
 	var damageToLife = damage;
 	var esPercent = 0;
@@ -6772,37 +6772,37 @@ function calculateDamageTaken(damageAmount, damageType) {
 		// Formula: manaCost = damageAbsorbed * (160 - efficiency) / 80
 		// At 80% efficiency: 1:1 ratio. Above 80%: reduced mana cost. Below 80%: increased mana cost.
 		damageToMana = damageToMana * (160 - esEfficiency) / 80;
-		console.log("  " + esPercent + "% to mana: " + damageToMana + " (efficiency: " + esEfficiency + "%), " + (100 - esPercent) + "% to life: " + damageToLife);
+		//console.log("  " + esPercent + "% to mana: " + damageToMana + " (efficiency: " + esEfficiency + "%), " + (100 - esPercent) + "% to life: " + damageToLife);
 	} else {
-		console.log("  No Energy Shield active (class=" + c.class_name + ")");
+		//console.log("  No Energy Shield active (class=" + c.class_name + ")");
 	}
 	
 	// Step 3-4: Physical Damage Reduction (flat then %, for physical damage only)
 	// Only applies to the LIFE portion
 	if (damageType === "physical") {
-		console.log("Damage Reduced (Physical)");
+		//console.log("Damage Reduced (Physical)");
 		// Flat reduction first
 		damageToLife = Math.max(0, damageToLife - c.damage_reduced);
-		console.log("  After Flat DR (" + c.damage_reduced + "): " + damageToLife + " to life, " + damageToMana + " to mana");
+		//console.log("  After Flat DR (" + c.damage_reduced + "): " + damageToLife + " to life, " + damageToMana + " to mana");
 		
 		// Then percentage reduction
 		damageToLife = damageToLife * (1 - Math.min(50, c.pdr) / 100);
-		console.log("  After % DR (" + Math.min(50, c.pdr) + "%): " + damageToLife + " to life, " + damageToMana + " to mana");
+		//console.log("  After % DR (" + Math.min(50, c.pdr) + "%): " + damageToLife + " to life, " + damageToMana + " to mana");
 	}
 	
 	// Step 5: Magic Damage Reduction (flat amount, applies to ALL elemental and magic damage)
 	// Only applies to the LIFE portion
 	if (damageType === "fire" || damageType === "cold" || damageType === "lightning" || damageType === "magic") {
-		console.log("Magic Damage Reduced");
-		console.log("  MDR: " + c.mDamage_reduced);
+		//console.log("Magic Damage Reduced");
+		//console.log("  MDR: " + c.mDamage_reduced);
 		damageToLife = Math.max(0, damageToLife - c.mDamage_reduced);
-		console.log("  After MDR: " + damageToLife + " to life, " + damageToMana + " to mana");
+		//console.log("  After MDR: " + damageToLife + " to life, " + damageToMana + " to mana");
 	}
 	
 	// Step 6: Resistances (for elemental damage)
 	// Only applies to the LIFE portion
 	if (damageType === "fire" || damageType === "cold" || damageType === "lightning") {
-		console.log("Resistances");
+		//console.log("Resistances");
 		var resistance = 0;
 		var resistMax = 75;
 		
@@ -6819,14 +6819,14 @@ function calculateDamageTaken(damageAmount, damageType) {
 		
 		resistance = Math.min(resistance, resistMax);
 		damageToLife = damageToLife * (100 - resistance) / 100;
-		console.log("  Resistance: " + resistance + "% (max: " + resistMax + "%)");
-		console.log("  After Resistance: " + damageToLife + " to life, " + damageToMana + " to mana");
+		//console.log("  Resistance: " + resistance + "% (max: " + resistMax + "%)");
+		//console.log("  After Resistance: " + damageToLife + " to life, " + damageToMana + " to mana");
 	}
 	
 	// Step 7-8: Absorb (applied LAST, after all other reductions)
 	// Reduces damage AND heals you by the amount that exceeds the remaining damage
 	// Only applies to the LIFE portion
-	console.log("% Absorb / Flat Absorb");
+	//console.log("% Absorb / Flat Absorb");
 	var absorbAmount = 0;
 	var absorbPercent = 0;
 	
@@ -6853,26 +6853,26 @@ function calculateDamageTaken(damageAmount, damageType) {
 	var damageBeforeFlatAbsorb = damageToLife;
 	damageToLife = damageToLife - absorbAmount;
 	
-	console.log("  % Absorb: " + absorbPercent + "%, Flat Absorb: " + absorbAmount);
-	console.log("  Damage before flat absorb: " + damageBeforeFlatAbsorb);
+	//console.log("  % Absorb: " + absorbPercent + "%, Flat Absorb: " + absorbAmount);
+	//console.log("  Damage before flat absorb: " + damageBeforeFlatAbsorb);
 	
 	if (damageToLife < 0) {
 		// Absorb exceeded damage - you heal for the excess
 		result.healingFromAbsorb = Math.abs(damageToLife);
 		damageToLife = 0;
-		console.log("  Healing from excess absorb: " + result.healingFromAbsorb);
+		//console.log("  Healing from excess absorb: " + result.healingFromAbsorb);
 	} else {
 		// Absorb didn't exceed damage - no healing
 		result.healingFromAbsorb = 0;
-		console.log("  No healing (absorb didn't exceed damage)");
+		//console.log("  No healing (absorb didn't exceed damage)");
 	}
 	
 	// Final results
 	result.damageToLife = Math.max(1, Math.round(damageToLife)); // Min 1 damage
 	result.damageToMana = Math.round(damageToMana);
 	
-	console.log("Final Result: " + result.damageToLife + " HP" + (result.damageToMana > 0 ? ", " + result.damageToMana + " Mana (ES efficiency: " + esEfficiency + "%)" : "") + (result.healingFromAbsorb > 0 ? ", Healing: " + result.healingFromAbsorb : ""));
-	console.log("=== END " + damageType.toUpperCase() + " CALCULATION ===\n");
+	//console.log("Final Result: " + result.damageToLife + " HP" + (result.damageToMana > 0 ? ", " + result.damageToMana + " Mana (ES efficiency: " + esEfficiency + "%)" : "") + (result.healingFromAbsorb > 0 ? ", Healing: " + result.healingFromAbsorb : ""));
+	//console.log("=== END " + damageType.toUpperCase() + " CALCULATION ===\n");
 	
 	return result;
 }
@@ -7613,24 +7613,24 @@ function checkSkill(skillName, num) {
 	(c.level * safe(c.ar_per_level)) +
 	safe(c.ar_const) +
 	(safe(c.ar_per_socketed) * safe((socketed && socketed.offhand) ? socketed.offhand.socketsFilled : 0));
-//	console.log("Character base AR: ", baseAR)
+//	//console.log("Character base AR: ", baseAR)
 	// Additive % bonuses (excluding shrine, which is applied separately)
 	let arBonusPercent =
 	safe(c.ar_skillup) +
 	safe(c.ar_skillup2) +
 	safe(c.ar_bonus) +
 	(c.level * safe(c.ar_bonus_per_level));
-//	console.log("Character bonus AR: ", arBonusPercent)
+//	//console.log("Character bonus AR: ", arBonusPercent)
 
 	character.baseAR = baseAR;
 
 	character.arBonusPercent = arBonusPercent;
-//	console.log("Base AR, Bonus AR: ", baseAR, arBonusPercent)
+//	//console.log("Base AR, Bonus AR: ", baseAR, arBonusPercent)
 
 	// Total AR after % increases - guard shrine bonus
 	let ar = baseAR * (1 + arBonusPercent / 100) * (1 + safe(c.ar_shrine_bonus) / 100);
 //	const ar = baseAR 
-//	console.log("Character AR: ", ar)
+//	//console.log("Character AR: ", ar)
 
 	var artest =  "(1+("+c.ar_skillup +"+"+ c.ar_skillup2+ "+" + c.ar_bonus + "+" + c.level + "*" + c.ar_bonus_per_level+ ")/100) * (1+" + c.ar_shrine_bonus + "/100) * 100";
 	var physDamage = [0,0,1];
@@ -7646,7 +7646,7 @@ function checkSkill(skillName, num) {
 		var outcome = {min:0,max:0,ar:0};
 		if (native_skill == 0) { outcome = character_all.any.getSkillDamage(skillName, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
 		else { outcome = c.getSkillDamage(skill, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
-//		console.log("Skill AR right after getskilldamage: ", character.ar_skillup, outcome.ar)
+//		//console.log("Skill AR right after getskilldamage: ", character.ar_skillup, outcome.ar)
 		//		ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level - outcome.ar *c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
 		
 		//var enemy_lvl = ~~MonStats[monsterID][4+c.difficulty];
@@ -7831,13 +7831,13 @@ for (let slot of [
 			.join(",");
 		if (propList) {
 			arr.push(propList);
-			console.log(`✅ Added props for ${slot}:`, propList);
+			//console.log(`✅ Added props for ${slot}:`, propList);
 		}
 	}
 
   // --- Set URL parameter ---
   params.set(slot, arr.join(","));
-  console.log(`Saved ${slot} to URL (inlined):`, arr.join(","));
+  //console.log(`Saved ${slot} to URL (inlined):`, arr.join(","));
 
 		// Optional: write custom_<slot> JSON only when the custom blob was explicitly saved
 	// by the user (to avoid extremely long URLs). saveImportedItemToUrl() will mark
@@ -7899,7 +7899,7 @@ for (let charm in equipped.charms) {
             // Format: custom_charm=slot:size:name:prop1:val1,prop2:val2,...
             const encoded = `${ch.invSlot}:${ch.size}:${encodeURIComponent(ch.name)}:${propList.join(",")}`;
             params.append("custom_charm", encoded);
-            console.log(`✅ Encoded custom charm ${ch.name} at slot ${ch.invSlot}:`, encoded);
+            //console.log(`✅ Encoded custom charm ${ch.name} at slot ${ch.invSlot}:`, encoded);
         } else {
             // Standard preset charms
             const code = getCharmUrlCode(ch.name);
@@ -8220,7 +8220,7 @@ async function importChar() {
 	// API call to get character
 	//characterName = "PIG_ASN"
 	if (characterName) {
-		console.log("Character Name:", characterName);
+		//console.log("Character Name:", characterName);
 		// Fetch character data and process it
 		try {
 			const characterData = await fetchCharacterData(characterName);
@@ -8234,20 +8234,20 @@ async function importChar() {
 
 //	reset("sorceress")
 	async function fetchCharacterData(characterName) {
-		console.log("Start function fetchCharacterData");
+		//console.log("Start function fetchCharacterData");
 	//    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
 		const url = 'https://beta.pathofdiablo.com/api/characters/'+characterName+'/summary'
-		//    console.log("API URL:", url);
+		//    //console.log("API URL:", url);
 
 		try {
 			const response = await fetch(url);
-			console.log("fetch worked");
+			//console.log("fetch worked");
 
 			if (!response.ok) {
 				throw new Error(`API call failed with status: ${response.status}`);
 			}
 			const data = await response.json();
-			console.log("Character Data fetched:", data);
+			//console.log("Character Data fetched:", data);
 			return data;
 		} catch (error) {
 			console.error("Error fetching character data:", error);
@@ -8263,7 +8263,7 @@ async function importChar() {
 			return;
 		}
 
-		console.log("Processing character data for direct item equipping...");
+		//console.log("Processing character data for direct item equipping...");
 		
 		reset(characterData.Class.toLowerCase())
 	//    character.class = characterData.Class;
@@ -8282,7 +8282,7 @@ async function importChar() {
 		// Loop through equipped items and equip them directly
 		characterData.Equipped.forEach(item => {
 			if (item.SynthesisedFrom && item.SynthesisedFrom.length > 0) {
-				console.log(`Synthesized item detected: ${item.Title}`);
+				//console.log(`Synthesized item detected: ${item.Title}`);
 				item = synthesizeFromAPI(item, characterData); // Merge donor properties
 			}
 	//	character.skills_sorceress.skillName["Warmth"] = 10
@@ -8305,7 +8305,7 @@ async function importChar() {
 				
 				if (skillObject) {
 					skillObject.level = apiSkill.Level;
-	//                console.log(`Updated ${skillObject.name} to level ${skillObject.level}`);
+	//                //console.log(`Updated ${skillObject.name} to level ${skillObject.level}`);
 				} else {
 					console.warn(`Skill not found for class ${characterData.Class}: ${apiSkill.Name}`);
 				}
@@ -8373,9 +8373,9 @@ async function importChar() {
 					addCharm("Annihilus");
 					addCharm(charmMap[charClass][dominantTab.Name]);
 				}
-				console.log(`Added charms for ${charClass} / ${dominantTab.Name}`);
+				//console.log(`Added charms for ${charClass} / ${dominantTab.Name}`);
 			} else {
-				console.log("Skipped charms — assume charms not checked");
+				//console.log("Skipped charms — assume charms not checked");
 			}
 		} else {
 			console.warn(`No charm mapped for class/tab: ${charClass} / ${dominantTab.Name}`);
@@ -8418,7 +8418,7 @@ async function importChar() {
 			return;
 		}
 
-		console.log("🔍 Processing character charms from inventory...", inventoryData.length, "items");
+		//console.log("🔍 Processing character charms from inventory...", inventoryData.length, "items");
 
 		let charmCount = 0;
 		let skippedCount = 0;
@@ -8434,29 +8434,29 @@ async function importChar() {
 
 			// Only process charms in bottom 4 rows (y >= 5)
 			if (!isCharm(item)) {
-				console.log(`  ⏭️ Skipped: Not a charm (TextTag: ${item.TextTag})`);
+				//console.log(`  ⏭️ Skipped: Not a charm (TextTag: ${item.TextTag})`);
 				skippedCount++;
 				return;
 			}
 
 			if (!item.Position) {
-				console.log(`  ⏭️ Skipped: No position data`);
+				//console.log(`  ⏭️ Skipped: No position data`);
 				skippedCount++;
 				return;
 			}
 
 			if (item.Position.y < 5) {
-				console.log(`  ⏭️ Skipped: Row ${item.Position.y} < 5 (top inventory)`);
+				//console.log(`  ⏭️ Skipped: Row ${item.Position.y} < 5 (top inventory)`);
 				skippedCount++;
 				return;
 			}
 
 			const size = determineCharmSize(item);
 			const invSlot = apiPositionToInvSlot(item.Position.x, item.Position.y);
-			console.log(`  ✅ Processing charm: ${item.Title} | Size: ${size} | Slot: ${invSlot}`);
+			//console.log(`  ✅ Processing charm: ${item.Title} | Size: ${size} | Slot: ${invSlot}`);
 
 			const props = buildPropsFromPropertyList(item.PropertyList || []);
-			console.log(`  📊 Parsed props:`, props);
+			//console.log(`  📊 Parsed props:`, props);
 
 			const charmData = {
 				name: item.Title || "Custom Charm",
@@ -8467,12 +8467,12 @@ async function importChar() {
 				...props
 			};
 
-			console.log(`  🎯 Adding custom charm with data:`, charmData);
+			//console.log(`  🎯 Adding custom charm with data:`, charmData);
 			charmCount++;
 			addCustomCharm(charmData);
 		});
 
-		console.log(`✅ Charm processing complete: ${charmCount} charms added, ${skippedCount} items skipped`);
+		//console.log(`✅ Charm processing complete: ${charmCount} charms added, ${skippedCount} items skipped`);
 	}
 
 	// Equip items from api response
@@ -8539,13 +8539,13 @@ async function importChar() {
 		const props = {};
 		if (!Array.isArray(PropertyList)) return props;
 
-		console.log("🔍 buildPropsFromPropertyList called with:", PropertyList);
+		//console.log("🔍 buildPropsFromPropertyList called with:", PropertyList);
 
 		for (const propTextRaw of PropertyList) {
 			const propText = String(propTextRaw).trim();
 			if (!propText) continue;
 
-			console.log(`  📝 Processing: "${propText}"`);
+			//console.log(`  📝 Processing: "${propText}"`);
 
 			// try to get matches via your existing matcher (guarded: may be undefined
 			// in some nested scopes when import functions are executed)
@@ -8565,14 +8565,14 @@ async function importChar() {
 
 			// If matcher returned a single object (non-array form), normalize to array
 			const arrMatches = Array.isArray(matches) ? matches : [matches];
-			console.log(`    🎯 Matches:`, arrMatches);
+			//console.log(`    🎯 Matches:`, arrMatches);
 
 			// fallback parse numeric value if matcher didn't return a value
 			const numericFallback = (() => {
 				const m = propText.match(/[-+]?\d+(\.\d+)?/);
 				return m ? (m[0].indexOf('.') >= 0 ? parseFloat(m[0]) : parseInt(m[0], 10)) : null;
 			})();
-			console.log(`    🔢 Numeric fallback:`, numericFallback);
+			//console.log(`    🔢 Numeric fallback:`, numericFallback);
 
 			for (const mm of arrMatches) {
 				if (!mm || !mm.statKey) continue;
@@ -8586,7 +8586,7 @@ async function importChar() {
 					v = 1;
 				}
 
-				console.log(`    ✅ Applying: ${k} = ${v}`);
+				//console.log(`    ✅ Applying: ${k} = ${v}`);
 
 				if (k === "ctc" || k === "cskill") {
 					if (!props[k]) props[k] = [];
@@ -8602,7 +8602,7 @@ async function importChar() {
 			}
 		}
 
-		console.log("✅ buildPropsFromPropertyList result:", props);
+		//console.log("✅ buildPropsFromPropertyList result:", props);
 		return props;
 	}
 
@@ -8662,7 +8662,7 @@ async function importChar() {
 			// If this item was originally imported from API and had QualityCode metadata
 			// it may have been stashed in pendingPropertyLists already; preserve that.
 			pendingPropertyLists[slot] = equippedItem.PropertyList;
-			console.log(`✅ Stashed PropertyList for slot ${slot}`, equippedItem.PropertyList);
+			//console.log(`✅ Stashed PropertyList for slot ${slot}`, equippedItem.PropertyList);
 		}
 
 		equippedItem.PropertyList.forEach(propText => {
@@ -8679,11 +8679,11 @@ async function importChar() {
 			if (statKey === "ctc") {
 				if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
 				equippedItem.ctc.push(value);
-				console.log(`✅ Added CTC:`, value);
+				//console.log(`✅ Added CTC:`, value);
 			} else if (statKey === "cskill") {
 				if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
 				equippedItem.cskill.push(value);
-				console.log(`✅ Added Charged Skill:`, value);
+				//console.log(`✅ Added Charged Skill:`, value);
 			} else {
 				const valueToApply = typeof value === "number" ? value : numericValue;
 				equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
@@ -8703,8 +8703,8 @@ async function importChar() {
 
     // Robust display name for logs
     const displayName = equippedItem.name || equippedItem.Title || (equippedItem.custom && equippedItem.custom.name) || slot || "unknown";
-//    console.log(`🔄 UI refreshed for item: ${displayName}`, equippedItem.PropertyList, equippedItem.PropertyList);
-    console.log(`🔄 UI refreshed for item: ${displayName}`);
+//    //console.log(`🔄 UI refreshed for item: ${displayName}`, equippedItem.PropertyList, equippedItem.PropertyList);
+    //console.log(`🔄 UI refreshed for item: ${displayName}`);
 }
 
 // Apply a normalized props object to an equipped item and update character stats/UI
@@ -8745,7 +8745,7 @@ function applyInlinePropsToEquipped(slot, props) {
 
 
 	function findMatchingStat(propertyText, stats) {
-//		console.log(`Checking property: "${propertyText}" against stats`);
+//		//console.log(`Checking property: "${propertyText}" against stats`);
 		const afterKillStat = parseAfterKillStat(propertyText);
 		if (afterKillStat) {
 			return [afterKillStat];
@@ -8753,12 +8753,12 @@ function applyInlinePropsToEquipped(slot, props) {
 
 		const ctcParsed = parseChanceToCast(propertyText);
 		if (ctcParsed) {
-//			console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+//			//console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
 			return [ctcParsed];  // Return in array form for compatibility
 		}
 		const cskillParsed = parseChargedSkill(propertyText);
 		if (cskillParsed) {
-//			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+//			//console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
 			return [cskillParsed];
 		}
 		
@@ -8822,7 +8822,7 @@ function applyInlinePropsToEquipped(slot, props) {
 				// fall through: unknown/empty means physical
 			}
 
-//			console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+//			//console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
 			return [
 				{ statKey: `${prefix}_min`, value: parseInt(min, 10) },
 				{ statKey: `${prefix}_max`, value: parseInt(max, 10) }
@@ -8841,7 +8841,7 @@ function applyInlinePropsToEquipped(slot, props) {
 			);
 
 			if (formatPattern.test(propertyText)) {
-//				console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
+//				//console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
 				return [{ statKey }];
 			}
 		}
@@ -8956,7 +8956,7 @@ function applyInlinePropsToEquipped(slot, props) {
 				if (checkbox && !checkbox.checked) {
 					checkbox.checked = true;
 					checkbox.dispatchEvent(new Event("change"));
-					console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+					//console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
 				}
 			} else {
 				console.warn(`❌ No matching synth checkbox found for: "${apiProp}"`);
@@ -9015,11 +9015,11 @@ function applyInlinePropsToEquipped(slot, props) {
 			// Avoid duplicates in PropertyList
 			if (!baseItem.PropertyList.includes(propString) && !key.includes("PropertyList")) {
 				baseItem.PropertyList.push(propString);
-				console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
+				//console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
 			}
 		});
 
-		console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
+		//console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
 		updateSelectedItemSummary(baseItem.Worn);
 		update();
 	}
@@ -9108,7 +9108,7 @@ function applyInlinePropsToEquipped(slot, props) {
 			);
 
 			if (match) {
-				console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
+				//console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
 				const checkbox = document.querySelector(`input[type="checkbox"][data-key="${key}"][data-value="${value}"]`);
 				if (checkbox && !checkbox.checked) {
 					checkbox.checked = true;
@@ -9134,7 +9134,7 @@ function applyInlinePropsToEquipped(slot, props) {
 
 
 	function applyItemStatToCharacter(property) {
-		console.log(`Applying property: ${property}`);
+		//console.log(`Applying property: ${property}`);
 		
 		// Check if the property is numerical
 		const numericMatch = property.match(/(\d+)/);
@@ -9261,7 +9261,7 @@ function applyInlinePropsToEquipped(slot, props) {
 
 		apiStatStrings.forEach(apiText => {
 			apiText = apiText.trim();
-			console.log(`🔍 Matching API stat: "${apiText}"`);
+			//console.log(`🔍 Matching API stat: "${apiText}"`);
 
 			let matchedKey = null;
 			let matchedValue = null;
@@ -9292,7 +9292,7 @@ function applyInlinePropsToEquipped(slot, props) {
 				console.warn(`❌ No matching stat key for "${apiText}"`);
 				return;
 			}
-	console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
+	//console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
 	//console.table(synthProperties);
 
 			// Now match with synthProperties using resolved key and value
@@ -9306,7 +9306,7 @@ function applyInlinePropsToEquipped(slot, props) {
 				if (checkbox && !checkbox.checked) {
 					checkbox.checked = true;
 					checkbox.dispatchEvent(new Event("change"));
-					console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+					//console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
 				}
 			} else {
 				console.warn(`❌ No synth property matched for resolved stat "${matchedKey}: ${matchedValue}"`);
@@ -9334,7 +9334,7 @@ async function justthesynth() {
 // API call to get character
 //characterName = "Zardragon"
 if (characterName) {
-	console.log("Character Name:", characterName);
+	//console.log("Character Name:", characterName);
 	
 	// Fetch character data and process it
 	try {
@@ -9348,20 +9348,20 @@ if (characterName) {
 }
 
 async function fetchCharacterData(characterName) {
-	console.log("Start function fetchCharacterData");
+	//console.log("Start function fetchCharacterData");
 //    const url = `https://beta.pathofdiablo.com/api/characters/${encodeURIComponent("sorcsallsuck")}/summary`;
 	const url = 'https://beta.pathofdiablo.com/api/characters/'+characterName+'/summary'
-	//    console.log("API URL:", url);
+	//    //console.log("API URL:", url);
 
     try {
         const response = await fetch(url);
-        console.log("fetch worked");
+        //console.log("fetch worked");
 
         if (!response.ok) {
             throw new Error(`API call failed with status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Character Data fetched:", data);
+        //console.log("Character Data fetched:", data);
         return data;
     } catch (error) {
         console.error("Error fetching character data:", error);
@@ -9377,12 +9377,12 @@ function processCharacterData(characterData) {
         return;
     }
 
-    console.log("Processing character data for direct item equipping...");
+    //console.log("Processing character data for direct item equipping...");
     
     // Loop through equipped items and equip them directly
     characterData.Equipped.forEach(item => {
         if (item.SynthesisedFrom && item.SynthesisedFrom.length > 0) {
-            console.log(`Synthesized item detected: ${item.Title}`);
+            //console.log(`Synthesized item detected: ${item.Title}`);
             item = synthesizeFromAPI(item, characterData); // Merge donor properties
 		    equipItemDirectly(item);
 		}
@@ -9449,14 +9449,14 @@ function equipItemDirectly(item) {
 		case "q_runeword":
 //			equipName = `${item.Title} ­ ­ - ­ ­ ${item.Tag}`;
 			selectRuneword(rawSlot,item.Title,item.Tag)
-			console.log("equipitemdirectly called selectRuneword with:", rawSlot,item.Title,item.Tag)
+			//console.log("equipitemdirectly called selectRuneword with:", rawSlot,item.Title,item.Tag)
 			break;
 		case "q_magic":
 		case "q_rare":
 		case "q_crafted":
 			// Check if Tag is Bolts or Arrows
 			if (item.Tag === "Bolts" || item.Tag === "Arrows") {
-				console.log("Offhand equipped: ", offhandtag)
+				//console.log("Offhand equipped: ", offhandtag)
 				equipName = `Imported ${item.QualityCode.slice(2)} ${offhandtag}`;
 			} else {
 				equipName = `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
@@ -9468,7 +9468,7 @@ function equipItemDirectly(item) {
 	// Save the real properties for use *after* placeholder is equipped
 	if (item.PropertyList && ["q_magic", "q_rare", "q_crafted"].includes(item.QualityCode)) {
 		pendingPropertyLists[slot] = item.PropertyList;
-		console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
+		//console.log(`✅ Stashed PropertyList for slot ${slot}`, item.PropertyList);
 	}
 
 	// Equip the placeholder item via dropdown
@@ -9477,7 +9477,7 @@ function equipItemDirectly(item) {
 	if (dropdown) {
 		dropdown.value = equipName;
 		dropdown.dispatchEvent(new Event("change"));
-		console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
+		//console.log(`Dropdown updated and change event triggered: ${dropdownId} -> ${equipName}`);
 	} else {
 		console.warn(`Dropdown not found for slot: ${slot}`);
 	}
@@ -9492,7 +9492,7 @@ function equipItemDirectly(item) {
 
 			// Inject PropertyList temporarily into the equipped item
 			equipped[slot].PropertyList = pendingPropertyLists[slot];
-			console.log(`✅ Injecting PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
+			//console.log(`✅ Injecting PropertyList into equipped[${slot}]`, equipped[slot].PropertyList);
 
 			applyMatchedProperties(slot);
 			delete pendingPropertyLists[slot]; // Clean up
@@ -9518,7 +9518,7 @@ function applyMatchedProperties(slot) {
         const formattedQuality = qualityName.charAt(0).toUpperCase() + qualityName.slice(1);
         const formattedSlot = formatSlotName(slot);
         equippedItem.Title = `Imported ${formattedQuality} ${formattedSlot}`;
-        console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
+        //console.log(`⚠️ Adjusted item name: "${equippedItem.Title}"`);
     }
 
     equippedItem.PropertyList.forEach(propText => {
@@ -9535,11 +9535,11 @@ function applyMatchedProperties(slot) {
 			if (statKey === "ctc") {
 				if (!Array.isArray(equippedItem.ctc)) equippedItem.ctc = [];
 				equippedItem.ctc.push(value);
-				console.log(`✅ Added CTC:`, value);
+				//console.log(`✅ Added CTC:`, value);
 			} else if (statKey === "cskill") {
 				if (!Array.isArray(equippedItem.cskill)) equippedItem.cskill = [];
 				equippedItem.cskill.push(value);
-				console.log(`✅ Added Charged Skill:`, value);
+				//console.log(`✅ Added Charged Skill:`, value);
 			} else {
 				const valueToApply = typeof value === "number" ? value : numericValue;
 				equippedItem[statKey] = (equippedItem[statKey] || 0) + valueToApply;
@@ -9554,7 +9554,7 @@ function applyMatchedProperties(slot) {
 	// Mark applied to avoid duplicate application on reload
 	if (!equipped[slot]) equipped[slot] = {};
 	equipped[slot]._propsApplied = true;
-    console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
+    //console.log(`🔄 UI refreshed for item: ${equippedItem.Title}`);
 }
 
 
@@ -9567,15 +9567,15 @@ function findMatchingStat(propertyText, stats) {
 
 	const ctcParsed = parseChanceToCast(propertyText);
     if (ctcParsed) {
-        console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+        //console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
         return [ctcParsed];  // Return in array form for compatibility
     }
     const cskillParsed = parseChargedSkill(propertyText);
     if (cskillParsed) {
-        console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+        //console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
         return [cskillParsed];
     }	
-    console.log(`Checking property: "${propertyText}" against stats`);
+    //console.log(`Checking property: "${propertyText}" against stats`);
 
     // Try to match "Adds #–# [Element] Damage"
     const damageMatch = propertyText.match(/Adds\s+(\d+)[–-](\d+)\s*(\w*)\s*Damage/i);
@@ -9592,7 +9592,7 @@ function findMatchingStat(propertyText, stats) {
             // fall through: unknown/empty means physical
         }
 
-        console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+        //console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
         return [
             { statKey: `${prefix}_min`, value: parseInt(min, 10) },
             { statKey: `${prefix}_max`, value: parseInt(max, 10) }
@@ -9611,7 +9611,7 @@ function findMatchingStat(propertyText, stats) {
         );
 
         if (formatPattern.test(propertyText)) {
-            console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
+            //console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
             return [{ statKey }];
         }
     }
@@ -9725,7 +9725,7 @@ function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
 
 	apiStatStrings.forEach(apiText => {
 		apiText = apiText.trim();
-//		console.log(`🔍 Matching API stat: "${apiText}"`);
+//		//console.log(`🔍 Matching API stat: "${apiText}"`);
 
 		let matchedKey = null;
 		let matchedValue = null;
@@ -9756,7 +9756,7 @@ function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
 			console.warn(`❌ No matching stat key for "${apiText}"`);
 			return;
 		}
-		console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
+		//console.log("🔍 Searching synthProperties for:", matchedKey, matchedValue);
 		//console.table(synthProperties);
 
 		// Now match with synthProperties using resolved key and value
@@ -9770,7 +9770,7 @@ function matchSynthStatsFromAPIStrings(apiStatStrings, synthProperties, stats) {
 			if (checkbox && !checkbox.checked) {
 				checkbox.checked = true;
 				checkbox.dispatchEvent(new Event("change"));
-				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+				//console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
 			}
 		} else {
 			console.warn(`❌ No synth property matched for resolved stat "${matchedKey}: ${matchedValue}"`);
@@ -9795,7 +9795,7 @@ function matchSynthStatsFromAPI(apiPropertyList, synthProperties) {
 			if (checkbox && !checkbox.checked) {
 				checkbox.checked = true;
 				checkbox.dispatchEvent(new Event("change"));
-				console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
+				//console.log(`✅ Auto-checked: ${match.key}: ${match.value}`);
 			}
 		} else {
 			console.warn(`❌ No matching synth checkbox found for: "${apiProp}"`);
@@ -9878,11 +9878,11 @@ function mergeItemProperties(baseItem, donor) {
         // Avoid duplicates in PropertyList
         if (!baseItem.PropertyList.includes(propString) && !key.includes("PropertyList")) {
             baseItem.PropertyList.push(propString);
-            console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
+            //console.log(`Added stat: ${key}: ${value} to ${baseItem.Title}`);
         }
     });
 
-    console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
+    //console.log("Final Synthesized Item:", JSON.stringify(baseItem, null, 2));
     updateSelectedItemSummary(baseItem.Worn);
     update();
 }
@@ -10027,7 +10027,7 @@ if (parsed) {
         );
 
         if (match) {
-            console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
+            //console.log(`✅ Matched adds-damage property: "${key}: ${value}" from "${propertyText}"`);
             const checkbox = document.querySelector(`input[type="checkbox"][data-key="${key}"][data-value="${value}"]`);
             if (checkbox && !checkbox.checked) {
                 checkbox.checked = true;
@@ -10051,7 +10051,7 @@ if (parsed) {
 
 
 function applyItemStatToCharacter(property) {
-    console.log(`Applying property: ${property}`);
+    //console.log(`Applying property: ${property}`);
     
     // Check if the property is numerical
     const numericMatch = property.match(/(\d+)/);
@@ -10162,7 +10162,7 @@ document.addEventListener("DOMContentLoaded", () => {
             [selectedStat]: selectedNumber,
         };
 
-		console.log("Generated Item:", customItem);
+		//console.log("Generated Item:", customItem);
 		outputDiv.textContent = `Generated Item: ${JSON.stringify(customItem, null, 2)}`;
 	});
 
@@ -10283,9 +10283,9 @@ function addCustomStat() {
     const rawValue = document.getElementById('statValue').value.trim();
     const selectedSlot = document.getElementById("slotSelect").value;
 
-    console.log("addCustomStat called");
-    console.log("equipped:", equipped);
-    console.log("selectedSlot:", selectedSlot);
+    //console.log("addCustomStat called");
+    //console.log("equipped:", equipped);
+    //console.log("selectedSlot:", selectedSlot);
 
     // Detect numeric vs string
     const numericValue = parseFloat(rawValue);
@@ -10308,9 +10308,9 @@ function addCustomStat() {
 
         const itemName = customNames[selectedSlot];
         const slotItems = equipment[selectedSlot];
-        console.log("Trying to equip from slot:", selectedSlot);
-        console.log("Looking for item named:", itemName);
-        console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));
+        //console.log("Trying to equip from slot:", selectedSlot);
+        //console.log("Looking for item named:", itemName);
+        //console.log("Items available in slot:", equipment[selectedSlot].map(i => i.name));
 
         if (itemName && Array.isArray(slotItems)) {
             const found = slotItems.find(item => item.name.trim().toLowerCase() === itemName.toLowerCase());
@@ -10352,9 +10352,9 @@ function larzuk() {
 	const statKey = "sockets";
 	const value = 1;
 	const selectedSlot = document.getElementById("slotSelect").value;
-	console.log("larzuk called");
-	console.log("equipped:", equipped);
-	console.log("selectedSlot:", selectedSlot);
+	//console.log("larzuk called");
+	//console.log("equipped:", equipped);
+	//console.log("selectedSlot:", selectedSlot);
 
 	// Only allow specific slots
 	const allowedSlots = ["weapon", "offhand", "helm", "armor"];
@@ -10458,7 +10458,7 @@ function updateSelectedItemSummary() {
 			line.appendChild(text);
 			line.appendChild(removeButton);
 			container.appendChild(line);
-//		console.log("Item passed into summary:", JSON.stringify(item, null, 2));
+//		//console.log("Item passed into summary:", JSON.stringify(item, null, 2));
 		}
 
 	}
@@ -10551,7 +10551,7 @@ function importFromCSV(csvText) {
 		// Strip all properties except core identifiers
 		for (const prop in item) {
 			if (!["name", "base", "rarity", "img"].includes(prop)) {
-//				console.log(item[prop])
+//				//console.log(item[prop])
 				character[prop] -= item[prop]
 				delete item[prop];
 				update?.(); // Optional: update character stats
@@ -10602,7 +10602,7 @@ const synthableItems = equipment.weapon
 
   document.addEventListener('DOMContentLoaded', () => {
 	function populateDropdowns() {
-	console.log("Populating dropdowns with:", synthableItems);
+	//console.log("Populating dropdowns with:", synthableItems);
 	const dropdownIds = ['baseItem', 'donor1', 'donor2', 'donor3', 'donor4'];
 	for (const id of dropdownIds) {
 	  const select = document.getElementById(id);
@@ -10715,7 +10715,7 @@ function createQuicklink() {
 
     // Copy to clipboard
     navigator.clipboard.writeText(currentUrl).then(() => {
-        console.log("Copied long URL to clipboard.");
+        //console.log("Copied long URL to clipboard.");
     }).catch(err => {
         console.error("Failed to copy URL to clipboard:", err);
     });
@@ -11191,7 +11191,7 @@ function flattenRuneword(runeword, baseItem) {
 }
 
 function selectRuneword(slot, runeword, baseItem, context = "player") {
-    console.log("selectruneword kicked off for", slot, runeword, baseItem, context);
+    //console.log("selectruneword kicked off for", slot, runeword, baseItem, context);
 
     const flatRuneword = flattenRuneword(runeword, baseItem);
     if (!flatRuneword) return;
@@ -11254,7 +11254,7 @@ function selectRuneword(slot, runeword, baseItem, context = "player") {
 	setDropdownToItem(slotId, flatRuneword.name, true);
 	
 
-    console.log("✅ Equipped runeword (URL-safe):", flatRuneword.name);
+    //console.log("✅ Equipped runeword (URL-safe):", flatRuneword.name);
 }
 
 
@@ -11294,7 +11294,7 @@ function equipItemDirectly(item) {
 
     // ignore swap weapons
     if (typeof rawSlot === "string" && rawSlot.startsWith("sweapon")) {
-        console.log("Skipping swap weapon slot:", rawSlot);
+        //console.log("Skipping swap weapon slot:", rawSlot);
         return;
     }
 
@@ -11355,12 +11355,12 @@ function equipItemDirectly(item) {
 		equipment[slot] = equipment[slot].filter(it => !(it && it.name === flatRuneword.name));
 		equipment[slot].unshift(flatRuneword);
 
-		console.log(`Import: equipping runeword ${flatRuneword.name} -> slot ${slot}`);
+		//console.log(`Import: equipping runeword ${flatRuneword.name} -> slot ${slot}`);
 		// Use selectRuneword so the runeword is flattened and equipped correctly
 		// (importItem/equip paths often pass only the short Title which doesn't
 		// match the flattened "Name - Base" display and can fail to equip).
 		try {
-//			console.log("Import: calling selectRuneword for import", slot, rw.name, baseKey);
+//			//console.log("Import: calling selectRuneword for import", slot, rw.name, baseKey);
 			selectRuneword(slot, rw, baseKey);
 		} catch (e) {
 			console.error("Import: selectRuneword failed, falling back to importItem", e);
@@ -11397,7 +11397,7 @@ function equipItemDirectly(item) {
             equipName = (offhandtag === "Bolts" || offhandtag === "Arrows")
                 ? `Imported ${item.QualityCode.slice(2)} ${offhandtag}`
                 : `Imported ${item.QualityCode.slice(2)} ${formatSlotName(slot)}`;
-				console.log("Import: equipName for magic/rare/crafted:", equipName, slot, item);
+				//console.log("Import: equipName for magic/rare/crafted:", equipName, slot, item);
             break;
 
     }
@@ -11405,7 +11405,7 @@ function equipItemDirectly(item) {
     // Stash PropertyList if present
 	if (["q_magic", "q_rare", "q_crafted", "q_normal", "q_high"].includes(item.QualityCode)) {
 		pendingPropertyLists[slot] = Array.isArray(item.PropertyList) ? item.PropertyList.slice() : [];
-		console.log(`Import: stashed PropertyList for slot ${slot}`, pendingPropertyLists[slot]);
+		//console.log(`Import: stashed PropertyList for slot ${slot}`, pendingPropertyLists[slot]);
 	}
 
     // Update dropdown UI
@@ -11419,7 +11419,7 @@ function equipItemDirectly(item) {
     // Equip item directly
 	try {
 		if (["q_magic", "q_rare", "q_crafted", "q_normal", "q_high"].includes(item.QualityCode)) {
-			console.log("Trying to equipItemDirectly:  ",slot,item)
+			//console.log("Trying to equipItemDirectly:  ",slot,item)
 			// importItem should create the internal representation and return a display name
 //			equipName = importItem(slot, item);
 
@@ -11470,7 +11470,7 @@ if (["q_normal", "q_high", "q_magic", "q_rare", "q_crafted"].includes(item.Quali
     if (!base) {
         console.warn(`No valid base found for slot "${slot}" (Tag=${item.Tag}, baseKey=${baseKey})`);
     } else {
-        console.log(`Import: equipping base ${baseKey} for ${item.QualityCode} in slot ${slot}`);
+        //console.log(`Import: equipping base ${baseKey} for ${item.QualityCode} in slot ${slot}`);
 
 //        const flatBase = flattenBaseItem(baseKey);
 const rarity = (item.QualityCode || "").replace(/^q_/, "");
@@ -11515,7 +11515,7 @@ const flatBase = flattenBaseItem(baseKey, rarity);
 
         // Equip visually + functionally
         equip(slot, flatBase.name);
-        console.log("✅ Equipped base item:", flatBase);
+        //console.log("✅ Equipped base item:", flatBase);
     }
 
     // Save URL immediately so item stats can attach correctly later
@@ -11546,7 +11546,7 @@ const flatBase = flattenBaseItem(baseKey, rarity);
 			update();
 		} else {
 			// non-custom known items
-			console.log("equipItemDirectly failed, falling back to equip ",slot,equipName)
+			//console.log("equipItemDirectly failed, falling back to equip ",slot,equipName)
 			equip(slot, equipName);
 		}
 	} catch (e) {
@@ -11562,7 +11562,7 @@ const flatBase = flattenBaseItem(baseKey, rarity);
 				equipped[slot].PropertyList = pendingPropertyLists[slot].slice();
 			}
 
-			console.log(`Import: applying pending properties to equipped[${slot}]`, equipped[slot].PropertyList);
+			//console.log(`Import: applying pending properties to equipped[${slot}]`, equipped[slot].PropertyList);
 			applyMatchedProperties(slot);
 
 			// Defensive: some code paths later reset equipped[slot] to a default 'none'.
@@ -11573,7 +11573,7 @@ const flatBase = flattenBaseItem(baseKey, rarity);
 					if (!equipped[slot]) equipped[slot] = {};
 					equipped[slot].name = finalDisplay;
 					equipped[slot].Title = finalDisplay;
-					console.log(`Import: forced equipped[${slot}] display to '${finalDisplay}'`);
+					//console.log(`Import: forced equipped[${slot}] display to '${finalDisplay}'`);
 					try { updateSelectedItemSummary(slot); } catch (e) { try { updateSelectedItemSummary(equipped[slot]); } catch (e2) {} }
 					try { update(); } catch (e) {}
 					try { updateURLDebounced(); } catch (e) {}
@@ -11781,7 +11781,7 @@ function applyMatchedProperties(slot) {
 
     // --- Preserve and stash raw PropertyList copy (so other code has access) ---
     pendingPropertyLists[slot] = equippedItem.PropertyList.slice();
-    console.log(`✅ Stashed PropertyList for slot ${slot}`, pendingPropertyLists[slot]);
+    //console.log(`✅ Stashed PropertyList for slot ${slot}`, pendingPropertyLists[slot]);
 
     // --- Apply textual PropertyList --> item stats (existing behavior) ---
     equippedItem.PropertyList.forEach(propText => {
@@ -11869,7 +11869,7 @@ function applyMatchedProperties(slot) {
 
 
 	function findMatchingStat(propertyText, stats) {
-//		console.log(`Checking property: "${propertyText}" against stats`);
+//		//console.log(`Checking property: "${propertyText}" against stats`);
 		const afterKillStat = parseAfterKillStat(propertyText);
 		if (afterKillStat) {
 			return [afterKillStat];
@@ -11885,12 +11885,12 @@ function applyMatchedProperties(slot) {
 
 		const ctcParsed = parseChanceToCast(propertyText);
 		if (ctcParsed) {
-//			console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
+//			//console.log(`🎯 Parsed CTC: ${JSON.stringify(ctcParsed.value)}`);
 			return [ctcParsed];  // Return in array form for compatibility
 		}
 		const cskillParsed = parseChargedSkill(propertyText);
 		if (cskillParsed) {
-//			console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
+//			//console.log(`🎯 Parsed Charged Skill: ${JSON.stringify(cskillParsed.value)}`);
 			return [cskillParsed];
 		}	
 		// Try to match "Adds #–# [Element] Damage"
@@ -11908,7 +11908,7 @@ function applyMatchedProperties(slot) {
 				// fall through: unknown/empty means physical
 			}
 
-//			console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
+//			//console.log(`🎯 Range match: ${prefix}_min = ${min}, ${prefix}_max = ${max}`);
 			return [
 				{ statKey: `${prefix}_min`, value: parseInt(min, 10) },
 				{ statKey: `${prefix}_max`, value: parseInt(max, 10) }
@@ -11927,7 +11927,7 @@ function applyMatchedProperties(slot) {
 			);
 
 			if (formatPattern.test(propertyText)) {
-//				console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
+//				//console.log(`✅ Matched property: "${propertyText}" → ${statKey}`);
 				return [{ statKey }];
 			}
 		}
@@ -12445,12 +12445,16 @@ function upsertLiveSynthBuilderOption(selectEl, enabled) {
 		const opt = document.createElement("option");
 		opt.value = LIVE_SYNTH_BUILDER_OPTION_VALUE;
 		opt.textContent = LIVE_SYNTH_BUILDER_OPTION_LABEL;
-		selectEl.insertBefore(opt, selectEl.firstChild);
+//		selectEl.insertBefore(opt, selectEl.firstChild);
+		selectEl.insertBefore(opt, selectEl.children[1] || null);
 		return;
 	}
 
-	if (selectEl.firstChild !== existing) {
-		selectEl.insertBefore(existing, selectEl.firstChild);
+//	if (selectEl.firstChild !== existing) {
+//		selectEl.insertBefore(existing, selectEl.firstChild);
+//	}
+	if (selectEl.children[1] !== existing) {
+		selectEl.insertBefore(existing, selectEl.children[1] || null);
 	}
 }
 
@@ -12515,18 +12519,22 @@ function clearLiveSynthPanelSelectionForSlot(slot) {
 
 function handleMainEquipChange(group, selectEl) {
 	if (!selectEl) return;
+
 	if (selectEl.value === LIVE_SYNTH_BUILDER_OPTION_VALUE) {
 		if (group === "weapon" || group === "offhand") {
 			LIVE_SYNTH_STATE.preferredPanelSlot = group;
 		}
+
 		syncLiveSynthBuilderDropdownOptions();
 		updateLiveSynthPanelVisibility();
 		return;
 	}
+
 	equip(group, selectEl.value);
 	syncLiveSynthBuilderDropdownOptions();
 	updateLiveSynthPanelVisibility();
 }
+
 
 function initLiveSynthBuilderDropdownBridge() {
 	const weaponEl = document.getElementById("dropdown_weapon");
@@ -12553,10 +12561,10 @@ function initLiveSynthBuilderDropdownBridge() {
 		});
 	}
 
-	setInterval(() => {
-		syncLiveSynthBuilderDropdownOptions();
-		updateLiveSynthPanelVisibility();
-	}, 400);
+//	setInterval(() => {
+//		syncLiveSynthBuilderDropdownOptions();
+//		updateLiveSynthPanelVisibility();
+//	}, 400);
 }
 
 

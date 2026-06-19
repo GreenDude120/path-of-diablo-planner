@@ -569,17 +569,17 @@ Imported items might spawn missing properties, you can add them on the right."
 <select class="dropdown" id="dropdown_ring2" onChange="equip('ring2', this.value)" onContextMenu="equip('ring2', 'ring2')"></select>
 <!--<select class="dropdown" id="dropdown_weapon" onChange="equip('weapon', this.value)" onContextMenu="equip('weapon', 'weapon')"></select>-->
 <div class="dropdown-wrapper">
-  <select class="dropdown" id="dropdown_weapon"
-          onChange="equip('weapon', this.value)"
-          onContextMenu="equip('weapon', 'weapon')"></select>
+	<select class="dropdown" id="dropdown_weapon"
+			onChange="handleMainEquipChange('weapon', this)"
+			onContextMenu="equip('weapon', 'weapon')"></select>
   <div class="dropdown popover" id="popover_weapon"></div>
 </div>
 <!--<select class="dropdown" id="dropdown_offhand" onChange="equip('offhand', this.value)" onContextMenu="equip('offhand', 'offhand')"></select>-->
 <div class="dropdown-wrapper">
-  <select class="dropdown" id="dropdown_offhand"
-          onChange="equip('offhand', this.value)"
-          onContextMenu="equip('offhand', 'offhand')"></select>
-  <div class="dropdown popover" id="popover_offhand"></div>
+	<select class="dropdown" id="dropdown_offhand"
+			onChange="handleMainEquipChange('offhand', this)"
+			onContextMenu="equip('offhand', 'offhand')"></select>
+	<div class="dropdown popover" id="popover_offhand"></div>
 </div>
 <br><br>
 </div>
