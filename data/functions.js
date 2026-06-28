@@ -1822,7 +1822,7 @@ function equip(group, val) {
 
 
 const SYNTH_EQUIP_METADATA_KEYS = new Set([
-	"name", "type", "base", "img", "rarity", "only", "not", "req","autorepair", "autoreplenish",
+	"name", "type", "base", "img", "rarity", "only", "not", "req","autorepair", "autoreplenish", "ethereal",
 	"stack_size", "set_bonuses", "pod_changes", "twoHanded", "sockets", "e_def", "req_strength", "req_dexterity", "req_level",
 	"baseSpeed", "tier", "max_sockets", "original_tier", "size", "group", "special", "upgrade", "downgrade", "nonmetal", "glow"
 ]);
@@ -1942,7 +1942,7 @@ function buildSynthPropsFromSelection(selectedProps) {
 			return;
 		}
 
-		if (key === "indestructible" || key === "ethereal") {
+		if (key === "indestructible") {
 			aggregated[key] = Number(rawValue) || rawValue;
 			return;
 		}
@@ -1978,6 +1978,11 @@ function applySynthPropsToEquipped(slot, props) {
 	for (const key in props) {
 		const value = props[key];
 
+		if (key === "ethereal") {
+			delete eq[key];
+			continue;
+		}
+
 		if (key === "ctc" || key === "cskill") {
 			eq[key] = Array.isArray(value) ? value.slice() : [value];
 			continue;
@@ -1995,7 +2000,7 @@ function applySynthPropsToEquipped(slot, props) {
 			continue;
 		}
 
-		if (key === "indestructible" || key === "ethereal") {
+		if (key === "indestructible") {
 			eq[key] = value;
 			continue;
 		}
@@ -12828,7 +12833,7 @@ function refreshLiveSynthPanel() {
 	}
 
 	const props = getLiveSynthPanelProperties([selection.baseItem, ...selection.donorItems]);
-	const excludedPrefixes = ["img", "base", "twoHanded", "name", "req_", "type"];
+	const excludedPrefixes = ["img", "base", "twoHanded", "name", "req_", "type", "ethereal"];
 	const excludedKeys = new Set(["name", "type", "base", "img", "req_level"]);
 	const filteredProps = props.filter(p => {
 		if (!p || !p.key) return false;
