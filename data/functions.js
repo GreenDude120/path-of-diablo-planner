@@ -1534,7 +1534,8 @@ function equip(group, val) {
 				var multED = 1;
 				var multReq = 1;
 				var reqEth = 0;
-				if (typeof(equipment[src_group][item]["ethereal"]) != 'undefined') { if (equipment[src_group][item]["ethereal"] == 1) { multEth = getEthMultiplier(true); reqEth = 10; } }
+//				if (typeof(equipment[src_group][item]["ethereal"]) != 'undefined') { if (equipment[src_group][item]["ethereal"] == 1) { multEth = getEthMultiplier(true); reqEth = 10; } }
+				if (typeof(equipment[src_group][item]["ethereal"]) != 'undefined') { if (equipment[src_group][item]["ethereal"] == 1) { multEth = 1.5; reqEth = 10; } }
 				if (typeof(equipment[src_group][item]["e_def"]) != 'undefined') { multED += (equipment[src_group][item]["e_def"]/100) }
 				if (typeof(equipment[src_group][item]["req"]) != 'undefined') { multReq += (equipment[src_group][item]["req"]/100) }
 				if (typeof(bases[base]) != 'undefined') { for (affix in bases[base]) {
@@ -1821,7 +1822,7 @@ function equip(group, val) {
 
 
 const SYNTH_EQUIP_METADATA_KEYS = new Set([
-	"name", "type", "base", "img", "rarity", "only", "not", "req", "ethereal", "indestructible", "autorepair", "autoreplenish",
+	"name", "type", "base", "img", "rarity", "only", "not", "req","autorepair", "autoreplenish",
 	"stack_size", "set_bonuses", "pod_changes", "twoHanded", "sockets", "e_def", "req_strength", "req_dexterity", "req_level",
 	"baseSpeed", "tier", "max_sockets", "original_tier", "size", "group", "special", "upgrade", "downgrade", "nonmetal", "glow"
 ]);
@@ -1941,6 +1942,11 @@ function buildSynthPropsFromSelection(selectedProps) {
 			return;
 		}
 
+		if (key === "indestructible" || key === "ethereal") {
+			aggregated[key] = Number(rawValue) || rawValue;
+			return;
+		}
+
 		if (typeof rawValue === "number") {
 			aggregated[key] = (typeof aggregated[key] === "number" ? aggregated[key] : 0) + rawValue;
 			return;
@@ -1986,6 +1992,11 @@ function applySynthPropsToEquipped(slot, props) {
 			const valueToApply = (key === "e_damage" && value > 511) ? 511 : value;
 			eq[key] = (typeof eq[key] === "number" ? eq[key] : 0) + valueToApply;
 			character[key] = (typeof character[key] === "number" ? character[key] : 0) + valueToApply;
+			continue;
+		}
+
+		if (key === "indestructible" || key === "ethereal") {
+			eq[key] = value;
 			continue;
 		}
 
