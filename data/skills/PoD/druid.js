@@ -203,43 +203,70 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 //		if (spell == 0) { skillAr = Math.floor(ar*((1+ar_bonus)/100)); }
 //		if (spell == 0) { skillAr = Math.floor(character.baseAR*(1+(ar_bonus+character.arBonusPercent)/100)); }
 //		console.log("getskilldamage mid AR, skillar = character.baseAR * ar_bonus: ", skillAr, character.baseAR, ar_bonus, character.arBonusPercent)
-if (spell == 0) {
-    var skillArMultiplier = 1 + ar_bonus / 100;
-skillAr = Math.floor(
-    character.baseAR *
-    (
-        1 +
-        (
-            character.ar_bonus +
-            character.ar_shrine_bonus +
-            (skillArMultiplier - 1) * 100
-        ) / 100
-    )
-);
-console.log(`
-=== Skill Attack Rating Calculation ===
+		if (spell == 0) {
+			var skillArMultiplier = 1 + ar_bonus / 100;
 
-Base AR:
-    ar:                 ${ar}
+			skillAr = Math.floor(
+				character.baseAR *
+				(
+					1 +
+					(
+						character.ar_bonus +
+						character.ar_shrine_bonus +
+						(skillArMultiplier - 1) * 100
+					) / 100
+				)
+			);
 
-Skill AR Bonus:
-    ar_bonus:           ${ar_bonus}%
+			var skillArBonusPercent = (skillArMultiplier - 1) * 100;
+			var totalSkillArBonus =
+				character.ar_bonus +
+				character.ar_shrine_bonus +
+				skillArBonusPercent;
 
-Multiplier:
-    1 + ${ar_bonus} / 100
-    = ${skillArMultiplier}
+			var skillArUnfloored =
+				character.baseAR *
+				(1 + totalSkillArBonus / 100);
 
-Final:
-    ${ar} × ${skillArMultiplier}
-    = ${ar * skillArMultiplier}
+			console.log(`
+		=== Skill Attack Rating Calculation ===
 
-Floored:
-    floor(${ar * skillArMultiplier})
-    = ${skillAr}
+		Base AR:
+			${character.baseAR}
 
-========================================
-`);
-}
+
+		General AR Bonus:
+			${character.ar_bonus}%
+
+
+		Shrine AR Bonus:
+			${character.ar_shrine_bonus}%
+
+
+		Skill AR Bonus:
+			${skillArBonusPercent}%
+
+
+		Total AR Bonus:
+			${character.ar_bonus}%
+			+ ${character.ar_shrine_bonus}%
+			+ ${skillArBonusPercent}%
+			= ${totalSkillArBonus}%
+
+
+		Final:
+			${character.baseAR} × (1 + ${totalSkillArBonus} / 100)
+			= ${skillArUnfloored}
+
+
+		Floored:
+			floor(${skillArUnfloored})
+			= ${skillAr}
+
+
+		========================================
+		`);
+		}
 //		if (spell == 0) { skillAr = Math.floor(ar * (ar_bonus/100)); }
 
 	// Get breakdown of sources of skill damage

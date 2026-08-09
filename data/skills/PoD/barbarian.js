@@ -165,44 +165,77 @@ var character_barbarian = {class_name:"Barbarian", strength:30, dexterity:20, vi
 		}
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
 //		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
-if (spell == 0) {
-    var skillArMultiplier = 1 + ar_bonus / 100;
-skillAr = Math.floor(
-    character.baseAR *
-    (
-        1 +
-        (
-            character.ar_bonus +
-            character.ar_shrine_bonus +
-            (skillArMultiplier - 1) * 100
-        ) / 100
-    )
-);
-console.log(`
-=== Skill Attack Rating Calculation ===
+		if (spell == 0) {
+			var weaponSkillBonuses = getWeaponSkillBonuses("weapon");
+			var weaponArBonus = weaponSkillBonuses.ar;
+			var skillArMultiplier = 1 + ar_bonus / 100;
 
-Base AR:
-    ar:                 ${ar}
+			skillAr = Math.floor(
+				character.baseAR *
+				(
+					1 +
+					(
+						character.ar_bonus +
+						weaponArBonus +
+						character.ar_shrine_bonus +
+						(skillArMultiplier - 1) * 100
+					) / 100
+				)
+			);
 
-Skill AR Bonus:
-    ar_bonus:           ${ar_bonus}%
+			var skillArBonusPercent = (skillArMultiplier - 1) * 100;
+			var totalSkillArBonus =
+				character.ar_bonus +
+				weaponArBonus +
+				character.ar_shrine_bonus +
+				skillArBonusPercent;
 
-Multiplier:
-    1 + ${ar_bonus} / 100
-    = ${skillArMultiplier}
+			var skillArUnfloored =
+				character.baseAR *
+				(1 + totalSkillArBonus / 100);
 
-Final:
-    ${ar} × ${skillArMultiplier}
-    = ${ar * skillArMultiplier}
+			console.log(`
+		=== Skill Attack Rating Calculation ===
 
-Floored:
-    floor(${ar * skillArMultiplier})
-    = ${skillAr}
+		Base AR:
+			${character.baseAR}
 
-========================================
-`);
-}
 
+		General AR Bonus:
+			${character.ar_bonus}%
+		
+		Weapon Mastery AR Bonus:
+			${weaponArBonus}%
+				
+		Shrine AR Bonus:
+			${character.ar_shrine_bonus}%
+
+
+		Skill AR Bonus:
+			${skillArBonusPercent}%
+
+
+		Total AR Bonus:
+			${character.ar_bonus}%
+			+ ${weaponArBonus}%
+			+ ${character.ar_shrine_bonus}%
+			+ ${skillArBonusPercent}%
+			= ${totalSkillArBonus}%
+
+
+		Final:
+			${character.baseAR} × (1 + ${totalSkillArBonus} / 100)
+			= ${skillArUnfloored}
+
+
+		Floored:
+			floor(${skillArUnfloored})
+			= ${skillAr}
+
+
+		========================================
+		`);
+		}
 		
 		// Get breakdown of sources of skill damage
 		skill2Breakdown = "Skill damage Breakdown-" ;  // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_max  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max ;
