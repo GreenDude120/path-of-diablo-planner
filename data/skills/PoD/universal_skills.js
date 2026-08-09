@@ -310,8 +310,34 @@ var character_any = {
 		phys_min = (~~phys_min * (phys_mult + damage_bonus/100) * weapon_mult + (damage_min * (1+(damage_bonus+damage_enhanced)/100)));
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * weapon_mult + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
-		if (spell == 0) { skillAr = Math.floor(ar*(1+ar_bonus/100)); }
+if (spell == 0) {
+    var skillArMultiplier = 1 + ar_bonus / 100;
+    skillAr = Math.floor(ar * skillArMultiplier);
 
+    console.log(`
+=== Skill Attack Rating Calculation ===
+
+Base AR:
+    ar:                 ${ar}
+
+Skill AR Bonus:
+    ar_bonus:           ${ar_bonus}%
+
+Multiplier:
+    1 + ${ar_bonus} / 100
+    = ${skillArMultiplier}
+
+Final:
+    ${ar} × ${skillArMultiplier}
+    = ${ar * skillArMultiplier}
+
+Floored:
+    floor(${ar * skillArMultiplier})
+    = ${skillAr}
+
+========================================
+`);
+}
 		// Get breakdown of sources of skill damage
 		skill2Breakdown = "Skill damage Breakdown-" ;  // \nPhys Damage: " + phys_min + "-" + phys_max +  "\nFire Damage: " + fDamage_min + "-" + fDamage_max + "\nCold Damage: " + cDamage_min + "-" + cDamage_max + "\nLight Damage: " + lDamage_min + "-" + lDamage_max  + "\nMagic Damage: " + mDamage_min + "-" + mDamage_max  + "\nPoison Damage: " + pDamage_min + "-" + pDamage_max ;
 		if (damage_min > 0) {skill2Breakdown += "\nSkill Damage: " + Math.floor(damage_min) + "-" + Math.floor(damage_max)};

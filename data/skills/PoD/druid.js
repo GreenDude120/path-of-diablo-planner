@@ -201,8 +201,45 @@ var character_druid = {class_name:"Druid", strength:15, dexterity:20, vitality:2
 		phys_max = (~~phys_max * (phys_mult + damage_bonus/100) * weapon_mult + (damage_max * (1+(damage_bonus+damage_enhanced+(character.level*character.e_max_damage_per_level))/100)));
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
 //		if (spell == 0) { skillAr = Math.floor(ar*((1+ar_bonus)/100)); }
-		if (spell == 0) { skillAr = Math.floor(character.baseAR*(1+(ar_bonus+character.arBonusPercent)/100)); }
-		console.log("getskilldamage mid AR, skillar = character.baseAR * ar_bonus: ", skillAr, character.baseAR, ar_bonus, character.arBonusPercent)
+//		if (spell == 0) { skillAr = Math.floor(character.baseAR*(1+(ar_bonus+character.arBonusPercent)/100)); }
+//		console.log("getskilldamage mid AR, skillar = character.baseAR * ar_bonus: ", skillAr, character.baseAR, ar_bonus, character.arBonusPercent)
+if (spell == 0) {
+    var skillArMultiplier = 1 + ar_bonus / 100;
+skillAr = Math.floor(
+    character.baseAR *
+    (
+        1 +
+        (
+            character.ar_bonus +
+            character.ar_shrine_bonus +
+            (skillArMultiplier - 1) * 100
+        ) / 100
+    )
+);
+console.log(`
+=== Skill Attack Rating Calculation ===
+
+Base AR:
+    ar:                 ${ar}
+
+Skill AR Bonus:
+    ar_bonus:           ${ar_bonus}%
+
+Multiplier:
+    1 + ${ar_bonus} / 100
+    = ${skillArMultiplier}
+
+Final:
+    ${ar} × ${skillArMultiplier}
+    = ${ar * skillArMultiplier}
+
+Floored:
+    floor(${ar * skillArMultiplier})
+    = ${skillAr}
+
+========================================
+`);
+}
 //		if (spell == 0) { skillAr = Math.floor(ar * (ar_bonus/100)); }
 
 	// Get breakdown of sources of skill damage

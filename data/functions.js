@@ -5946,7 +5946,103 @@ function updatePrimaryStats() {
 	}
 	var def = (item_def + c.defense + c.level*c.defense_per_level + Math.floor(dexTotal/4)) * (1 + (c.defense_bonus + c.defense_skillup)/100);
 	var ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const + (c.ar_per_socketed*socketed.offhand.socketsFilled)) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
-	
+//	console.debug("AR calculated as: " + ar + " = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const + (c.ar_per_socketed*socketed.offhand.socketsFilled)) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level*c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100)");
+var dexAR = (dexTotal - 7) * 5;
+var levelAR = c.level * c.ar_per_level;
+var socketedAR = c.ar_per_socketed * socketed.offhand.socketsFilled;
+
+var baseAR =
+    dexAR +
+    c.ar +
+    levelAR +
+    c.ar_const +
+    socketedAR;
+
+var bonusAR =
+    c.ar_skillup +
+    c.ar_skillup2 +
+    c.ar_bonus +
+    (c.level * c.ar_bonus_per_level);
+
+var skillMultiplier = 1 + bonusAR / 100;
+var shrineMultiplier = 1 + c.ar_shrine_bonus / 100;
+
+var ar = baseAR * skillMultiplier * shrineMultiplier;
+
+console.log(`
+========================================
+       ATTACK RATING CALCULATION
+========================================
+
+DEXTERITY AR
+    dexTotal:             ${dexTotal}
+    (${dexTotal} - 7) × 5
+    = ${dexAR}
+
+BASE CHARACTER AR
+    c.ar:                 ${c.ar}
+
+LEVEL AR
+    level:                ${c.level}
+    ar_per_level:         ${c.ar_per_level}
+    ${c.level} × ${c.ar_per_level}
+    = ${levelAR}
+
+CONSTANT AR
+    c.ar_const:           ${c.ar_const}
+
+SOCKETED AR
+    ar_per_socketed:      ${c.ar_per_socketed}
+    socketsFilled:        ${socketed.offhand.socketsFilled}
+    ${c.ar_per_socketed} × ${socketed.offhand.socketsFilled}
+    = ${socketedAR}
+
+----------------------------------------
+BASE AR
+    ${dexAR}
+    + ${c.ar}
+    + ${levelAR}
+    + ${c.ar_const}
+    + ${socketedAR}
+    = ${baseAR}
+
+
+AR BONUS
+    ar_skillup:            ${c.ar_skillup}
+    ar_skillup2:           ${c.ar_skillup2}
+    ar_bonus:              ${c.ar_bonus}
+    level bonus:
+        ${c.level} × ${c.ar_bonus_per_level}
+        = ${c.level * c.ar_bonus_per_level}
+
+    Total bonus:
+        ${c.ar_skillup}
+        + ${c.ar_skillup2}
+        + ${c.ar_bonus}
+        + ${c.level * c.ar_bonus_per_level}
+        = ${bonusAR}%
+
+    Multiplier:
+        1 + ${bonusAR} / 100
+        = ${skillMultiplier}
+
+
+SHRINE BONUS
+    ar_shrine_bonus:       ${c.ar_shrine_bonus}
+    1 + ${c.ar_shrine_bonus} / 100
+    = ${shrineMultiplier}
+
+
+FINAL AR
+    ${baseAR}
+    × ${skillMultiplier}
+    × ${shrineMultiplier}
+
+    = ${ar}
+
+========================================
+`);
+
 /*	// Poison Calculation Testing
 	var pDamage = c.pDamage_all;
 	var pDuration = c.pDamage_duration;
@@ -7660,9 +7756,12 @@ function checkSkill(skillName, num) {
 	
 	if (skillName != " ­ ­ ­ ­ Skill 1" && skillName != " ­ ­ ­ ­ Skill 2") {
 		var outcome = {min:0,max:0,ar:0};
-		if (native_skill == 0) { outcome = character_all.any.getSkillDamage(skillName, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
-		else { outcome = c.getSkillDamage(skill, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
-//		//console.log("Skill AR right after getskilldamage: ", character.ar_skillup, outcome.ar)
+		if (native_skill == 0) { outcome = character_all.any.getSkillDamage(skillName, baseAR, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
+		else { outcome = c.getSkillDamage(skill, baseAR, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
+//		if (native_skill == 0) { outcome = character_all.any.getSkillDamage(skillName, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
+//		else { outcome = c.getSkillDamage(skill, ar, physDamage[0], physDamage[1], physDamage[2], nonPhys_min, nonPhys_max); }
+
+		//		//console.log("Skill AR right after getskilldamage: ", character.ar_skillup, outcome.ar)
 		//		ar = ((dexTotal - 7) * 5 + c.ar + c.level*c.ar_per_level + c.ar_const) * (1+(c.ar_skillup + c.ar_skillup2 + c.ar_bonus + c.level - outcome.ar *c.ar_bonus_per_level)/100) * (1+c.ar_shrine_bonus/100);
 		
 		//var enemy_lvl = ~~MonStats[monsterID][4+c.difficulty];
@@ -7676,6 +7775,7 @@ function checkSkill(skillName, num) {
 		
 		var output = ": " + outcome.min + "-" + outcome.max + " {"+Math.ceil((outcome.min+outcome.max)/2)+"}";
 		if (~~outcome.min != 0 && ~~outcome.max != 0) { document.getElementById("skill"+num+"_info").innerHTML = output } else { document.getElementById("skill"+num+"_info").innerHTML = ":" }
+//		outcome.ar = outcome.ar * (1 + c.ar_skillup / 100) * (1 + c.ar_skillup2 / 100) * (1 + c.ar_bonus / 100) * (1 + c.level * c.ar_bonus_per_level / 100) * (1 + c.ar_shrine_bonus / 100);
 		if (outcome.ar != 0) { document.getElementById("ar_skill"+num).innerHTML = "AR: " + outcome.ar + " ("+hit_chance+"%)" } else { document.getElementById("ar_skill"+num).innerHTML = "" }
 //		if (outcome.ar != 0) { document.getElementById("ar_skill"+num).innerHTML = "AR: " + outcome.ar + " ("+hit_chance+"%) Bonus: " + c.ar_bonus +"%" } else { document.getElementById("ar_skill"+num).innerHTML = "" }
 
@@ -7715,7 +7815,7 @@ function checkSkill(skillName, num) {
 	if (skillName == "Multiple Shot") {
 		c.multiproj = c.all_skills + 1
 	}
-	 
+
 	updateSkills()
 }
 
