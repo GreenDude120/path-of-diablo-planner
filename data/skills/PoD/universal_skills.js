@@ -312,9 +312,18 @@ var character_any = {
 		if (spell != 2) { skillMin = Math.floor(phys_min+nonPhys_min); skillMax = Math.floor(phys_max+nonPhys_max); }
 if (spell == 0) {
     var skillArMultiplier = 1 + ar_bonus / 100;
-    skillAr = Math.floor(ar * skillArMultiplier);
-
-    console.log(`
+skillAr = Math.floor(
+    character.baseAR *
+    (
+        1 +
+        (
+            character.ar_bonus +
+            character.ar_shrine_bonus +
+            (skillArMultiplier - 1) * 100
+        ) / 100
+    )
+);
+console.log(`
 === Skill Attack Rating Calculation ===
 
 Base AR:
