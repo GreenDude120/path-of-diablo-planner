@@ -5425,6 +5425,7 @@ function trashSocketable(event, ident, override) {
 	showBaseLevels
 	hoverStatOn
 	hoverStatOff
+	ShowBaseSkillLevels
 */
 
 // addStat - Raises the selected stat
@@ -5744,6 +5745,23 @@ function hoverStatOff(stat) {
 	checkRequirements()
 }
 
+// ShowBaseSkillLevels - shows aall skills base levels (on alt key press)
+// ---------------------------------
+window.addEventListener('keydown', function(event) {
+  if (event.altKey) {
+    ShowBaseSkillLevels();
+  }
+});
+
+function ShowBaseSkillLevels() {
+	for (let s = 0; s < skills.length; s++) { showBaseLevels(skills[s]) }
+}
+
+window.addEventListener('keyup', function(event) {
+  if (event.key === 'Alt') {
+    checkRequirements();
+  }
+});
 
 
 //=========================================================================================================================
@@ -12987,6 +13005,7 @@ function initLiveSynthPanel() {
 
 	refreshLiveSynthPanel();
 }
+
 
 
 
