@@ -1530,6 +1530,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{debug:1, name:"BO buff lvl 40", oskill_Battle_Orders:40},
 	{debug:1, name:"Enflame sorc in party", fDamage_min:837, fDamage_max:1113},
 	{debug:1, name:"Frigerate sorc in party", cDamage_min:552, cDamage_max:758},
+	{debug:1, name:"Oath on Swap (Lvl 12 HoTW)", oskill_Heart_of_Wolverine:12},
 
 ],
 	};
