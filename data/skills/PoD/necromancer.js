@@ -422,7 +422,15 @@ var character_necromancer = {class_name:"Necromancer", strength:15, dexterity:25
 		["duration",3,3.2,3.4,3.7,4,4.2,4.4,4.7,5,5.2,5.4,5.7,6,6.2,6.4,6.7,7,7.2,7.4,7.7,8,8.2,8.4,8.7,9,9.2,9.4,9.7,10,10.2,10.4,10.7,11,11.2,11.4,11.7,12,12.2,12.4,12.7,13,13.2,13.4,13.7,14,14.2,14.4,14.7,15,15.2,15.4,15.7,16,16.2,16.4,16.7,17,17.2,17.4,17.7,], 
 ]};
 /*[22] Hemorrhage		*/ var d322 = {values:[
-		["damage",2,5,8,11,15,18,21,24,31,37,43,49,55,62,68,74,84,93,102,112,121,131,146,162,177,193,209,224,248,271.5,295,318.5,342,365.5,389,412,435.5,459,482.5,506,529.5,553,576,599.5,623,647,671,695,719,743,767,791,815,839,863,887,911,935,959,983,], 
+//		["damage",2,5,8,11,15,18,21,24,31,37,43,49,55,62,68,74,84,93,102,112,121,131,146,162,177,193,209,224,248,271.5,295,318.5,342,365.5,389,412,435.5,459,482.5,506,529.5,553,576,599.5,623,647,671,695,719,743,767,791,815,839,863,887,911,935,959,983,], 
+		["damage",
+			2, 5, 8, 11, 15, 18, 21, 24, 27.5, 32,
+			36, 40, 44, 48, 52, 55.5, 63.5, 71, 78.5, 86,
+			93, 100.5, 112, 124.5, 136, 148, 160.5, 172, 190.5, 208.5,
+			226.5, 244.5, 262.5, 280.5, 298.5, 316.5, 334.5, 352.5, 370.5, 388.5,
+			406.5, 424.5, 442.5, 460.5, 478.5, 497, 515, 533.5, 552, 570.5,
+			589, 607.5, 626, 644, 662.5, 681, 699.5, 718, 736.5, 755
+		],
 		["duration",4,4.1,4.3,4.4,4.6,4.8,4.9,5.1,5.2,5.4,5.6,5.7,5.9,6,6.2,6.4,6.5,6.7,6.8,7,7.2,7.3,7.5,7.6,7.8,8,8.1,8.3,8.4,8.6,8.8,8.9,9.1,9.2,9.4,9.6,9.7,9.9,10,10.2,10.4,10.5,10.7,10.8,11,11.2,11.3,11.5,11.6,11.8,12,12.1,12.3,12.4,12.6,12.8,12.9,13.1,13.2,13.4,], 
 		["mana cost",6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,], 
 //		["radius",], 
@@ -489,7 +497,7 @@ var skills_necromancer = [
 
 {data:d312, key:"312", code:86, name:"Amplify Damage", i:20, req:[], reqlvl:1, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies, increasing<br>the non-magic damage they receive<br><br>Damage Taken: +100 percent", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 4",""]},
 {data:d321, key:"321", code:87, name:"Dim Vision", i:21, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of monsters,<br>reducing their vision radius", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 9",""]},
-{data:d322, key:"322", code:88, name:"Hemorrhage", i:22, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies to cause<br>bleeding which drains their life away<br><br>Ignores curse overrides/immunities", syn_title:"<br>Hemorrhage Receives Bonuses From:<br>", syn_text:"Life Tap: +20% Life Damage per Level<br>Weaken: +20% Life Damage per Level<br>Iron Maiden: +20% Life Damage per Level", graytext:"", index:[0,""], text:["Radius: 7.3 yards<br>Life Damage: "," per second<br>Duration: "," seconds<br>Mana Cost: ",""], notupdated:0, damagetoohigh:1},
+{data:d322, key:"322", code:88, name:"Hemorrhage", i:22, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies to cause<br>bleeding which drains their life away<br><br>Ignores curse overrides/immunities", syn_title:"<br>Hemorrhage Receives Bonuses From:<br>", syn_text:"Life Tap: +18% Life Damage per Level<br>Weaken: +18% Life Damage per Level<br>Iron Maiden: +18% Life Damage per Level", graytext:"", index:[0,""], text:["Radius: 7.3 yards<br>Life Damage: "," per second<br>Duration: "," seconds<br>Mana Cost: ",""], notupdated:0, damagetoohigh:1},
 {data:d323, key:"323", code:89, name:"Weaken", i:23, req:[], reqlvl:6, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies,<br>reducing the amount of damage they inflict<br><br>Target's Damage: -33 percent", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 4",""]},
 {data:d332, key:"332", code:90, name:"Iron Maiden", i:24, req:[], reqlvl:12, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of enemies, causing them<br>to damage themselves when damaging others", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:[""," percent damage returned<br>Duration: "," seconds<br>Radius: "," yards<br>Mana Cost: 5",""]},
 {data:d333, key:"333", code:91, name:"Terror", i:25, req:[], reqlvl:12, level:0, extra_levels:0, force_levels:0, bindable:1, description:"Curses a group of monsters,<br>causing them to flee in terror", syn_title:"", syn_text:"", graytext:"", index:[0,""], text:["Radius: "," yards<br>Duration: "," seconds<br>Mana Cost: 7",""]},
