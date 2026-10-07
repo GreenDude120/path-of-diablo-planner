@@ -20,7 +20,6 @@
 //			setSkillAmounts
 //=========================================================================================================================
 
-
 //=========================================================================================================================
 // BASIC ....
 //=========================================================================================================================
@@ -6704,9 +6703,9 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		var mdr = c.mDamage_reduced || 0;
 		dmgToLife = Math.max(0, dmgToLife - mdr);
 		
-		// Resistances (not for magic damage)
+		// Resistances
 		var resistance = 0;
-		if (type !== "magic" && dmgToLife > 0) {
+		if (dmgToLife > 0) {
 			var resistMax = 75;
 			
 			if (type === "fire") {
@@ -6718,6 +6717,9 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 			} else if (type === "lightning") {
 				resistance = c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup;
 				resistMax = (c.lRes_max_base || 75) + (c.lRes_max || 0);
+			} else if (type === "magic") {
+				resistance = c.mRes || 0;
+				resistMax = (c.mRes_max_base || 75) + (c.mRes_max || 0);
 			}
 			
 			resistance = Math.min(resistance, resistMax);
@@ -6782,6 +6784,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 		if (type === "fire") flatAbsorb = c.fAbsorb_flat || 0;
 		else if (type === "cold") flatAbsorb = c.cAbsorb_flat || 0;
 		else if (type === "lightning") flatAbsorb = c.lAbsorb_flat || 0;
+		else if (type === "magic") flatAbsorb = c.mAbsorb_flat || 0;
 		
 		if (flatAbsorb > 0) {
 			dmgToLife = dmgToLife - flatAbsorb;
@@ -6790,6 +6793,7 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 				dmgToLife = 0;
 			}
 		}
+		elementalDamages[type] = dmgToLife;
 		
 		totalDamageToLife += dmgToLife;
 	}
@@ -6812,10 +6816,10 @@ function calculateMixedDamageTaken(physDmg, fireDmg, coldDmg, lightDmg, magicDmg
 	result.healingFromAbsorb = Math.round(totalHealing);
 	result.breakdown = {
 		physical: Math.round(physToLife),
-		fire: Math.round(elementalDamages.fire * (100 - esPercent) / 100),
-		cold: Math.round(elementalDamages.cold * (100 - esPercent) / 100),
-		lightning: Math.round(elementalDamages.lightning * (100 - esPercent) / 100),
-		magic: Math.round(elementalDamages.magic * (100 - esPercent) / 100),
+		fire: Math.round(elementalDamages.fire),
+		cold: Math.round(elementalDamages.cold),
+		lightning: Math.round(elementalDamages.lightning),
+		magic: Math.round(elementalDamages.magic),
 		excessPhysDR: Math.round(excessPhysDR)
 	};
 	
@@ -6929,12 +6933,12 @@ function calculateDamageTaken(damageAmount, damageType) {
 		//console.log("  After MDR: " + damageToLife + " to life, " + damageToMana + " to mana");
 	}
 	
-	// Step 6: Resistances (for elemental damage)
+	// Step 6: Resistances (elemental and magic damage)
 	// Only applies to the LIFE portion
-	if (damageType === "fire" || damageType === "cold" || damageType === "lightning") {
+	if (damageType === "fire" || damageType === "cold" || damageType === "lightning" || damageType === "magic") {
 		//console.log("Resistances");
 		var resistance = 0;
-		var resistMax = 75;
+		var resistMax = (c.mRes_max_base || 75) + (c.mRes_max || 0);
 		
 		if (damageType === "fire") {
 			resistance = c.fRes + c.all_res - c.fRes_penalty + c.resistance_skillup;
@@ -6945,6 +6949,8 @@ function calculateDamageTaken(damageAmount, damageType) {
 		} else if (damageType === "lightning") {
 			resistance = c.lRes + c.all_res - c.lRes_penalty + c.resistance_skillup;
 			resistMax = (c.lRes_max_base || 75) + (c.lRes_max || 0);
+		} else if (damageType === "magic") {
+			resistance = c.mRes || 0;
 		}
 		
 		resistance = Math.min(resistance, resistMax);
@@ -7172,7 +7178,7 @@ function updateTertiaryStats() {
 			drCalcText += "\n1. Bone Armor (physical) / Cyclone Armor (elemental) - shared pool";
 			drCalcText += "\n2. Energy Shield - splits ALL damage into Life & Mana - shared pool";
 			drCalcText += "\n3. Physical: Flat DR → % DR (only on life portion)";
-			drCalcText += "\n4. Elemental: Flat MDR → Resist → % Absorb → Flat Absorb (only on life portion)";
+			drCalcText += "\n4. Elemental and Magic: Flat MDR; elemental also uses Resist → % Absorb → Flat Absorb (only on life portion)";
 			drCalcText += "\n5. If Physical DR exceeds physical damage, excess applies to elementals";
 			
 			statlines += "<span id='drcalc_display' title='" + drCalcText + "' style='cursor:help; text-decoration:underline dotted;'>";
@@ -7183,20 +7189,20 @@ function updateTertiaryStats() {
 		var baseDamage = parseInt(document.getElementById("drcalcbase").value) || 1000;
 		
 		var physResult = calculateDamageTaken(baseDamage, "physical");
-		// var magicResult = calculateDamageTaken(baseDamage, "magic");  // TODO: PoD-specific magic damage mechanics
+		var magicResult = calculateDamageTaken(baseDamage, "magic");
 		var fireResult = calculateDamageTaken(baseDamage, "fire");
 		var coldResult = calculateDamageTaken(baseDamage, "cold");
 		var lightResult = calculateDamageTaken(baseDamage, "lightning");
 		
 		// Set character calc properties
 		c.drcalc = physResult.damageToLife;
-		// c.mdrcalc = magicResult.damageToLife;  // TODO: PoD-specific magic damage mechanics
+		c.mdrcalc = magicResult.damageToLife;
 		c.mdrfirecalc = fireResult.damageToLife;
 		c.mdrcoldcalc = coldResult.damageToLife;
 		c.mdrlightcalc = lightResult.damageToLife;
 		
 		// Only show if there's any meaningful damage reduction (less than base damage taken)
-		var hasDR = (physResult.damageToLife < baseDamage || // magicResult.damageToLife < baseDamage || 
+		var hasDR = (physResult.damageToLife < baseDamage || magicResult.damageToLife < baseDamage ||
 					 fireResult.damageToLife < baseDamage || coldResult.damageToLife < baseDamage || 
 					 lightResult.damageToLife < baseDamage);
 		
@@ -7209,15 +7215,12 @@ function updateTertiaryStats() {
 			if (physResult.armorAbsorbed > 0) { drCalcText += " (Bone Armor: " + Math.round(physResult.armorAbsorbed) + ")"; }
 		}
 		
-		// Magic damage calc commented out - TODO: PoD-specific magic damage mechanics
-		/*
 		if (magicResult.damageToLife < baseDamage) {
 			drCalcText += "\nMagic: " + magicResult.damageToLife + " HP";
 			if (magicResult.damageToMana > 0) { drCalcText += " + " + magicResult.damageToMana + " Mana"; }
-			if (magicResult.armorAbsorbed > 0) { drCalcText += " (Bone Armor: " + Math.round(magicResult.armorAbsorbed) + ")"; }
+			if (magicResult.armorAbsorbed > 0) { drCalcText += " (Magic Armor: " + Math.round(magicResult.armorAbsorbed) + ")"; }
 			if (magicResult.healingFromAbsorb > 0) { drCalcText += " [Heal: " + Math.round(magicResult.healingFromAbsorb) + "]"; }
 		}
-		*/
 		
 		if (fireResult.damageToLife < baseDamage) {
 			drCalcText += "\nFire: " + fireResult.damageToLife + " HP";
@@ -7243,7 +7246,7 @@ function updateTertiaryStats() {
 		var orderExplanation = "\n\nOrder of Operations:";
 		orderExplanation += "\n1. Bone Armor (physical) / Cyclone Armor (elemental)";
 		orderExplanation += "\n2. Energy Shield - splits damage into Life & Mana";
-		if (physResult.damageToMana > 0 || fireResult.damageToMana > 0 || coldResult.damageToMana > 0 || lightResult.damageToMana > 0) {
+		if (physResult.damageToMana > 0 || magicResult.damageToMana > 0 || fireResult.damageToMana > 0 || coldResult.damageToMana > 0 || lightResult.damageToMana > 0) {
 			var esEff = 6;
 			if (typeof skills !== 'undefined' && skills[13]) {
 				esEff = 6 + (4 * skills[13].level);
@@ -7252,8 +7255,8 @@ function updateTertiaryStats() {
 			orderExplanation += "\n   Mana cost = damage absorbed × (160-efficiency)/80";
 		}
 		orderExplanation += "\n3. Damage Reduced (flat, then %) - physical only";
-		orderExplanation += "\n4. Magic Damage Reduced (flat) - elemental only";
-		orderExplanation += "\n5. Resistances - elemental only";
+		orderExplanation += "\n4. Magic Damage Reduced (flat) - elemental and magic damage";
+		orderExplanation += "\n5. Resistances - elemental only (magic damage has no resistance)";
 		orderExplanation += "\n6. % Absorb - reduces damage";
 		orderExplanation += "\n7. Flat Absorb - reduces damage, excess becomes healing";
 		
@@ -7261,7 +7264,7 @@ function updateTertiaryStats() {
 		
 		statlines += "<span id='drcalc_display' title='" + drCalcText + "' style='cursor:help; text-decoration:underline dotted;'>";
 		statlines += "Damage Calc: Phys=" + physResult.damageToLife;
-		// if (magicResult.damageToLife < 1000) { statlines += " Mag=" + magicResult.damageToLife; }
+		if (magicResult.damageToLife < baseDamage) { statlines += " Mag=" + magicResult.damageToLife; }
 		statlines += " Fire=" + fireResult.damageToLife + " Cold=" + coldResult.damageToLife + 
 		             " Light=" + lightResult.damageToLife + "</span><br>";
 		}

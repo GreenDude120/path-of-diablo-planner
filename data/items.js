@@ -1225,7 +1225,7 @@ var unequipped = {			strength:0, dexterity:0, vitality:0, energy:0, life:0, mana
 	{set_Sigon:1, name:"Sigon's Guard", req_level:6, all_skills:1, ibc:20, type:"shield", base:"Tower Shield", rarity:"set", set_bonuses:["set_Sigon",{},{},{},{},{},{}], img:"Bverrit_Keep"},
 	{set_Cleglaw:1, name:"Cleglaw's Claw", req_level:4, defense:17, owounds:20, poison_length_reduced:75, type:"shield", base:"Small Shield", rarity:"set", set_bonuses:["set_Cleglaw",{},{all_res:15},{}], img:"Cleglaw's_Claw"},
 	{set_Hsarus:1, name:"Hsarus' Iron Fist", req_level:3, damage_reduced:2, strength:10, type:"shield", base:"Buckler", rarity:"set", set_bonuses:["set_Hsarus",{},{defense_per_level:2.5},{}], img:"Hsarus'_Iron_Fist"},
-	{only:"paladin", rarity:"craft", name:"Priest's Safety Monarch", req_level:58, skills_paladin:2, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch", nonmetal:1},
+	{only:"paladin", rarity:"craft", name:"Crafted Safety Monarch", req_level:58, skills_paladin:2, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch", nonmetal:1},
 	{not:["paladin"], rarity:"craft", name:"Safety Monarch", req_level:43, damage_reduced:4, mDamage_reduced:2, mRes:10, e_def:230, all_res:20, defense_per_level:3, ibc:20, fbr:30, fhr:17, req:-30, type:"shield", base:"Monarch"},
 	{only:"", name:"Vortex Shield", req_level:68, all_res:45, type:"shield", base:"Vortex Shield", img:"Griswold's_Honor"},
 	{only:"", name:"Custom Offhand", req_level:75, type:"shield", base:"Troll Nest", img:"Wall_of_the_Eyeless"},

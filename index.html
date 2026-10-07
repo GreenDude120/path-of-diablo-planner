@@ -165,19 +165,19 @@
       </div></div>
 	  <div id="mixedattack_controls" style="display:none;">
 	    <div class="nav-dropdown-content-item"><div class="nav-option">
-          <input id="mixedphys" type="textbox" size="5" name="mixedphys" value="100" oninput="updateTertiaryStats()";>
+          <input id="mixedphys" type="textbox" size="5" name="mixedphys" value="0" oninput="updateTertiaryStats()";>
           <label for="mixedphys">&nbsp;&nbsp;&nbsp;&nbsp;Physical Damage&nbsp;&nbsp;</label>
         </div></div>
 	    <div class="nav-dropdown-content-item"><div class="nav-option">
-          <input id="mixedfire" type="textbox" size="5" name="mixedfire" value="100" oninput="updateTertiaryStats()";>
+          <input id="mixedfire" type="textbox" size="5" name="mixedfire" value="0" oninput="updateTertiaryStats()";>
           <label for="mixedfire">&nbsp;&nbsp;&nbsp;&nbsp;Fire Damage&nbsp;&nbsp;</label>
         </div></div>
 	    <div class="nav-dropdown-content-item"><div class="nav-option">
-          <input id="mixedcold" type="textbox" size="5" name="mixedcold" value="100" oninput="updateTertiaryStats()";>
+          <input id="mixedcold" type="textbox" size="5" name="mixedcold" value="0" oninput="updateTertiaryStats()";>
           <label for="mixedcold">&nbsp;&nbsp;&nbsp;&nbsp;Cold Damage&nbsp;&nbsp;</label>
         </div></div>
 	    <div class="nav-dropdown-content-item"><div class="nav-option">
-          <input id="mixedlight" type="textbox" size="5" name="mixedlight" value="100" oninput="updateTertiaryStats()";>
+          <input id="mixedlight" type="textbox" size="5" name="mixedlight" value="0" oninput="updateTertiaryStats()";>
           <label for="mixedlight">&nbsp;&nbsp;&nbsp;&nbsp;Lightning Damage&nbsp;&nbsp;</label>
         </div></div>
 	    <div class="nav-dropdown-content-item"><div class="nav-option">
@@ -1160,6 +1160,7 @@ function initial_load() {
 	}
 	loaded = 1
 	loadParams()
+	toggleMixedAttack()
 	skillHover(skills[0])
 	skillOut()
 }
