@@ -7175,8 +7175,8 @@ function updateTertiaryStats() {
 			drCalcText += "\n• Excess Physical DR applies to remaining elemental damage";
 			
 			drCalcText += "\n\nOrder of Operations:";
-			drCalcText += "\n1. Bone Armor (physical) / Cyclone Armor (elemental) - shared pool";
-			drCalcText += "\n2. Energy Shield - splits ALL damage into Life & Mana - shared pool";
+			drCalcText += "\n1. Bone Armor (physical) / Cyclone Armor (elemental)";
+			drCalcText += "\n2. Energy Shield - splits ALL damage into Life & Mana";
 			drCalcText += "\n3. Physical: Flat DR → % DR (only on life portion)";
 			drCalcText += "\n4. Elemental and Magic: Flat MDR; elemental also uses Resist → % Absorb → Flat Absorb (only on life portion)";
 			drCalcText += "\n5. If Physical DR exceeds physical damage, excess applies to elementals";
