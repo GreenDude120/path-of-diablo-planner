@@ -1412,7 +1412,7 @@ function equip(group, val) {
         openRunewordPicker(group); // ← you’ll build this UI next
         // reset dropdown to current selection so selecting “Runeword…” doesn’t clear the item
         const dd = document.getElementById(`dropdown_${group}`);
-        if (equipped[group]?.name) dd.val = equipped[group].name;
+        if (equipped[group]?.name && [...dd.options].some(o => o.value === equipped[group].name)) dd.value = equipped[group].name;
         else dd.selectedIndex = 0;
         return;
     }	
@@ -2618,13 +2618,6 @@ function loadItems(group, dropdown, className) {
 							// Insert at top if you want
 							addon += `<option class="dropdown-runeword" value="${RUN_EWORD_VALUE}">Runeword Picker</option>`;
 
-							// Hover logic for pop-out panel
-							rwOpt.addEventListener("mouseenter", () => {
-								openRunewordPicker(group, rwOpt); // pass slot and reference element
-							});
-							rwOpt.addEventListener("mouseleave", () => {
-								closeRunewordPicker();
-							});
 							// Remove Runeword Picker from merc dropdowns for now
 							["weapon", "offhand", "armor", "helm"].forEach(slot => {
 							const mercDropdown = document.getElementById(`dropdown_merc_${slot}`);
@@ -2634,14 +2627,6 @@ function loadItems(group, dropdown, className) {
 							}
 							});
 
-							attachRunewordHover("dropdown_weapon");
-							attachRunewordHover("dropdown_offhand");
-							attachRunewordHover("dropdown_armor");
-							attachRunewordHover("dropdown_helm");
-//							attachRunewordHover("dropdown_merc_weapon");
-//							attachRunewordHover("dropdown_merc_offhand");
-//							attachRunewordHover("dropdown_merc_armor");
-//							attachRunewordHover("dropdown_merc_helm");
 
 						}
 
@@ -11100,53 +11085,54 @@ function openRunewordPicker(slot, context = "player") {
     return true;
   });
 
-  availableRunewords.forEach(rw => {
-    const rwDiv = document.createElement("div");
-    rwDiv.className = "runeword-option";
-    rwDiv.textContent = rw.name;
-    rwDiv.onmouseenter = () => showRunewordBases(rw, slot, rwDiv, context);
-    rwDiv.onclick = () => showRunewordBases(rw, slot, rwDiv, context);
-    picker.appendChild(rwDiv);
+  const runewordCol = document.createElement("div");
+  runewordCol.className = "rw-col";
+  const search = document.createElement("input");
+  search.type = "text";
+  search.className = "rw-search";
+  search.placeholder = "Search runewords";
+  search.autocomplete = "off";
+  search.spellcheck = false;
+  const list = document.createElement("div");
+  list.className = "rw-list";
+  const basesCol = document.createElement("div");
+  basesCol.className = "rw-bases-col";
+  runewordCol.appendChild(search);
+  runewordCol.appendChild(list);
+  picker.appendChild(runewordCol);
+  picker.appendChild(basesCol);
+
+  const renderList = () => {
+    const terms = search.value.toLowerCase().split(/\s+/).filter(Boolean);
+    list.innerHTML = "";
+    availableRunewords.forEach(rw => {
+      if (!terms.every(t => rw.name.toLowerCase().includes(t))) return;
+      const rwDiv = document.createElement("div");
+      rwDiv.className = "runeword-option";
+      rwDiv.textContent = rw.name;
+      rwDiv.onclick = () => showRunewordBases(rw, slot, rwDiv, context);
+      list.appendChild(rwDiv);
+    });
+  };
+  search.addEventListener("input", renderList);
+  search.addEventListener("keydown", e => {
+    if (e.key === "Escape") hideRunewordPopover(slot, context);
+    else if (e.key === "Enter") { list.firstChild?.click(); e.preventDefault(); }
   });
+  renderList();
 
-  picker.style.display = "block";
+  picker.style.display = "flex";
+  search.focus();
 }
 
 
-function attachRunewordHover(slot, context = "player") {
-    const slotId = getSlotId(context, slot);
-    const wrapper = document.querySelector(`#dropdown_${slotId}`)?.closest(".dropdown-wrapper");
-    const dropdown = document.getElementById(`dropdown_${slotId}`);
-    const popover = document.getElementById(`popover_${slotId}`);
-    if (!wrapper || !dropdown || !popover) return;
-
-    wrapper.addEventListener("mouseenter", () => {
-        if (dropdown.value === "[runeword]") {
-            popover.style.display = "block";
-            openRunewordPicker(slot, context);
-        }
-    });
-
-    wrapper.addEventListener("mouseleave", () => {
-        popover.style.display = "none";
-    });
-}
-
-
-
-
+// Close any open runeword picker when clicking outside it
 document.addEventListener("click", (e) => {
-	const popovers = document.querySelectorAll(".popover");
-	popovers.forEach(p => {
-	if (!p.contains(e.target) && !p.previousElementSibling?.contains?.(e.target)) {
-		p.style.display = "none";
-	}
+	document.querySelectorAll(".popover").forEach(p => {
+		if (p.style.display !== "none" && !p.contains(e.target) && !p.closest(".dropdown-wrapper")?.contains(e.target)) {
+			p.style.display = "none";
+		}
 	});
-
-	const basePanel = document.getElementById("runeword-bases");
-	if (basePanel && !basePanel.contains(e.target)) {
-	basePanel.remove();
-	}
 });
 
 function hideRunewordPopover(slot, context = "player") {
@@ -11180,51 +11166,27 @@ function positionPopoverRelative(dropdown, popover) {
 
 function showRunewordBases(runeword, slot, anchorElement, context = "player") {
 	// slot is unprefixed
-	const basePanelOld = document.getElementById("runeword-bases");
-	if (basePanelOld) {
-	const prevActive = document.querySelector(".runeword-option.active");
-	if (prevActive) prevActive.classList.remove("active");
-	basePanelOld.remove();
-	}
+	const picker = document.getElementById(`popover_${getSlotId(context, slot)}`);
+	const basesCol = picker?.querySelector(".rw-bases-col");
+	if (!basesCol) return;
 
-	const basePanel = document.createElement("div");
-	basePanel.id = "runeword-bases";
-	basePanel.className = "sidepanel";
+	picker.querySelectorAll(".runeword-option.active").forEach(el => el.classList.remove("active"));
 	anchorElement.classList.add("active");
+	basesCol.innerHTML = "";
 
 	const charRef = context === "merc" ? merc : character;
-
-	const availableBases = Object.entries(bases).filter(([key, item]) =>
-	isRunewordValidForBase(runeword, item, slot, key, charRef) // pass charRef
-	);
-
-	availableBases.forEach(([key]) => {
-	const baseDiv = document.createElement("div");
-	baseDiv.className = "base-option";
-	baseDiv.textContent = key.replace(/_/g, " ");
-	baseDiv.onclick = () => selectRuneword(slot, runeword, key, context);
-	basePanel.appendChild(baseDiv);
-	});
-
-	const rect = anchorElement.getBoundingClientRect();
-	const dropdownRect = anchorElement.parentElement.getBoundingClientRect();
-	basePanel.style.position = "absolute";
-	basePanel.style.top = `${dropdownRect.top + window.scrollY}px`;
-	basePanel.style.left = `${rect.right}px`;
-
-	document.body.appendChild(basePanel);
-
-	const removePanelIfOutside = () => {
-	setTimeout(() => {
-		if (!basePanel.matches(':hover') && !anchorElement.matches(':hover')) {
-		basePanel.remove();
-		anchorElement.classList.remove("active");
-		}
-	}, 100);
-	};
-
-	anchorElement.addEventListener("mouseleave", removePanelIfOutside);
-	basePanel.addEventListener("mouseleave", removePanelIfOutside);
+	Object.entries(bases)
+		.filter(([key, item]) => isRunewordValidForBase(runeword, item, slot, key, charRef))
+		.forEach(([key]) => {
+			const baseDiv = document.createElement("div");
+			baseDiv.className = "base-option";
+			baseDiv.textContent = key.replace(/_/g, " ");
+			baseDiv.onclick = () => {
+				selectRuneword(slot, runeword, key, context);
+				hideRunewordPopover(slot, context);
+			};
+			basesCol.appendChild(baseDiv);
+		});
 }
 
 function isRunewordValidForBase(runeword, base, slotCategory, baseKey, charRef) {

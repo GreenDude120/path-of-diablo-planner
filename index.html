@@ -1113,6 +1113,94 @@ Imported items might spawn missing properties, you can add them on the right."
 </div>
 </div>	<!-- /main -->
 <script type="text/javascript" src="./data/functions.js"></script>
+<script>
+// Turns each equipment select into a type-to-filter combobox; the hidden select stays the source of truth
+(function() {
+	var slots = ["helm", "armor", "gloves", "boots", "belt", "amulet", "ring1", "ring2", "weapon", "offhand", "charms", "socketables"];
+	var valueDesc = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
+	var indexDesc = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "selectedIndex");
+	slots.forEach(function(slot) {
+		var select = document.getElementById("dropdown_" + slot);
+		if (!select) return;
+		var combo = document.createElement("span");
+		combo.className = "equip-combo";
+		var input = document.createElement("input");
+		input.type = "text";
+		input.className = "equip-filter";
+		input.autocomplete = "off";
+		input.spellcheck = false;
+		var list = document.createElement("div");
+		list.className = "equip-list";
+		combo.appendChild(input);
+		combo.appendChild(list);
+		select.insertAdjacentElement("beforebegin", combo);
+		select.style.display = "none";
+
+		function sync() {
+			var o = select.options[select.selectedIndex];
+			input.value = o ? o.text : "";
+			input.style.color = o && !o.classList.contains("gray") ? getComputedStyle(o).color : "";
+		}
+		function render() {
+			var terms = input.dataset.filtering ? input.value.toLowerCase().split(/\s+/).filter(Boolean) : [];
+			list.innerHTML = "";
+			for (var i = 0; i < select.options.length; i++) {
+				var o = select.options[i];
+				if (o.disabled) continue;
+				if (!terms.every(function(t) { return o.text.toLowerCase().indexOf(t) != -1 })) continue;
+				var d = document.createElement("div");
+				d.className = "equip-item " + o.className;
+				d.textContent = o.text;
+				d.dataset.index = i;
+				list.appendChild(d);
+			}
+			list.style.display = list.firstChild ? "block" : "none";
+		}
+		function close() {
+			delete input.dataset.filtering;
+			list.style.display = "none";
+			sync();
+		}
+		function choose(i) {
+			select.selectedIndex = i;
+			select.dispatchEvent(new Event("change"));
+			close();
+			input.blur();
+		}
+		input.addEventListener("focus", function() { input.select(); render(); if (typeof hideRunewordPopover == "function" && /^(helm|armor|weapon|offhand)$/.test(slot)) hideRunewordPopover(slot); });
+		input.addEventListener("input", function() { input.dataset.filtering = "1"; render(); });
+		input.addEventListener("blur", close);
+		input.addEventListener("keydown", function(e) {
+			if (e.key == "Enter") {
+				if (list.firstChild) choose(+list.firstChild.dataset.index);
+				e.preventDefault();
+			} else if (e.key == "Escape") { input.blur(); }
+		});
+		// mousedown is cancelled so the input keeps focus until the click completes
+		list.addEventListener("mousedown", function(e) { e.preventDefault(); });
+		list.addEventListener("click", function(e) {
+			var t = e.target.closest(".equip-item");
+			if (t) choose(+t.dataset.index);
+		});
+		input.addEventListener("contextmenu", function(e) {
+			e.preventDefault();
+			select.dispatchEvent(new MouseEvent("contextmenu"));
+			sync();
+		});
+		// keep the text in step with programmatic changes (loading builds, class switches)
+		Object.defineProperty(select, "value", {
+			get: function() { return valueDesc.get.call(this) },
+			set: function(v) { valueDesc.set.call(this, v); sync(); }
+		});
+		Object.defineProperty(select, "selectedIndex", {
+			get: function() { return indexDesc.get.call(this) },
+			set: function(v) { indexDesc.set.call(this, v); sync(); }
+		});
+		new MutationObserver(sync).observe(select, {childList: true});
+		sync();
+	});
+})();
+</script>
 </body>
 </html>
 

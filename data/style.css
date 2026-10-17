@@ -1119,9 +1119,7 @@ Added 23 Dec
 /*    border: 1px solid #333; */
     min-width: 180px;
     z-index: 999;
-    max-height: 400px;
-    overflow: scroll;
-    scrollbar-gutter: stable; /* Chrome/Edge */    
+    overflow: visible;
 }
 
 .sidepanel {
@@ -1155,8 +1153,34 @@ Added 23 Dec
     background-color: #222; /* same as hover highlight */
 }
 
-.dropdown-wrapper:hover .popover {
-    display: block;
+.popover .rw-col, .popover .rw-bases-col {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.popover .rw-bases-col:empty {
+    display: none;
+}
+.rw-search {
+    box-sizing: border-box;
+    width: 200px;
+    height: 26px;
+    flex: none;
+    position: sticky;
+    top: 0;
+    background-color: black;
+    color: #ddd;
+    border: 1px solid #333;
+    padding: 0 7px;
+    font: inherit;
+}
+.rw-search:focus {
+    outline: none;
+    background-color: #222;
+}
+.rw-list .runeword-option, .rw-bases-col .base-option {
+    flex: none;
 }
 
 /* temporary debug
@@ -1164,3 +1188,44 @@ Added 23 Dec
     border: 1px solid limegreen;  
 }
 */
+
+.equip-combo {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+.equip-filter {
+  box-sizing: border-box;
+  width: 200px;
+  height: 29px;
+  background-color: black;
+  color: #ddd;
+  border: 1px solid #333;
+  padding: 0 7px;
+  font: inherit;
+}
+.equip-filter:focus {
+  background-color: #222;
+  outline: none;
+}
+.equip-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  max-height: 320px;
+  overflow-y: auto;
+  background-color: black;
+  border: 1px solid #333;
+  z-index: 50;
+  white-space: nowrap;
+}
+.equip-item {
+  padding: 2px 7px;
+  cursor: pointer;
+  background-color: black;
+}
+.equip-item:hover {
+  background-color: #444;
+}
