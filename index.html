@@ -1139,7 +1139,7 @@ Imported items might spawn missing properties, you can add them on the right."
 		function sync() {
 			var o = select.options[select.selectedIndex];
 			input.value = o ? o.text : "";
-			input.style.color = o && !o.classList.contains("gray") ? getComputedStyle(o).color : "";
+			input.style.color = o && !o.disabled && !o.classList.contains("gray") ? getComputedStyle(o).color : "";
 		}
 		function render() {
 			var terms = input.dataset.filtering ? input.value.toLowerCase().split(/\s+/).filter(Boolean) : [];
